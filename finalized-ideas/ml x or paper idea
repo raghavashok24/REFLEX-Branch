@@ -1,0 +1,302 @@
+# The ML x OR Paper, Explained (main-track-grade version)
+
+## "The Price of Self-Knowledge: Minimax Information-Cost Tradeoffs and Optimal Exploration in Performative Systems"
+
+**Workshop:** ML x OR @ NeurIPS 2026 (Atlanta, Dec 12/13). Submit **Aug 31,
+2026**. 4 pages main body + unlimited appendix. Non-anonymous. Journal
+designation: **Mathematics of Operations Research**.
+
+**Scope statement.** This document specifies the *full* paper - the theory
+program at NeurIPS-main-track depth - and marks the **workshop cut**: what
+goes in the 4 pages, with the appendix carrying the full development (the
+appendix doubles as the MOR journal draft, which is what the workshop's
+pipeline invites). Every claim carries a status flag:
+**[VERIFIED]** = already checked numerically / proved;
+**[PROVABLE]** = proof strategy is standard machinery, low risk;
+**[HARD]** = genuine technical work, the main-track-grade content.
+
+---
+
+## 1. The idea in one paragraph
+
+When a deployed model reshapes the distribution it is trained on, every
+method that corrects for the feedback (performative gradient descent and its
+relatives) first needs the response Jacobian `dD/dphi` - and in a live
+system, every data point that identifies it is a real decision taken at a
+real price. The literature treats this as an estimation step with a sample
+budget; it is actually a control problem with a value budget. This paper
+builds the complete theory of that trade-off: a **saturation theorem** (a
+converging loop's own trajectory contains a bounded amount of information
+about its own feedback - safety implies blindness), an **exact exchange
+rate** between estimator precision and foregone value, a **minimax lower
+bound** showing no adaptive exploration scheme and no estimator can beat that
+rate, a **matrix version** whose equality case *derives the optimal shape of
+exploration* (explore where the objective is flat: exploration covariance
+proportional to `Gamma_PO^{-1/2}`), a **regret-optimal safe exploration
+algorithm** that never destabilizes the system it probes, and a
+**crossover theorem** for when structural anchoring beats nonparametric
+estimation - turning the base project's documented empirical negative result
+into a decision rule.
+
+## 2. Why this is a new framework, and why it clears the main-track bar
+
+**The framework.** Call it *performative information economics*: the joint
+treatment of (i) what a decision-dependent system can learn about its own
+feedback, (ii) at what objective-denominated price, (iii) under a dynamical
+stability constraint. None of the three adjacent literatures contains it:
+performative prediction (Perdomo et al.; Izzo et al.; Mendler-Dunner et al.)
+bounds estimation error but never prices it in the objective; optimal
+experimental design prices designs but with no decision-coupled budget and no
+plant-stability constraint; adaptive control has persistent excitation but no
+performative-risk accounting. The framework is the pairwise intersection made
+exact.
+
+**Why main-track depth now.** The earlier version's core was two clean but
+elementary identities. The upgraded core adds the three things a NeurIPS
+theory reviewer requires: a **minimax lower bound over all adaptive policies
+and all estimators** (Theorem 3 - the identity becomes an impossibility
+result), **general d-dimensional theory with a new structural object**
+(Theorem 4 - the optimal exploration shape), and a **proved algorithmic
+guarantee** (Theorem 5 - regret + safety). The scalar identities survive as
+the equality benchmarks the lower bounds are tight against.
+
+**Why still REFLEX-based.** The market model is the instantiation where every
+constant in every theorem is computable from primitives (`gamma_PO` from
+theory 1.2, `Gamma_PO` from the 1.5 modulus machinery, `m` from 1.1), where a
+working retraining loop exists to falsify every statement, and where the
+phenomenon the theory explains - the free-form learned correction failing
+because the converged loop stops generating identifying variation - was
+documented as an honest negative result before the theory existed.
+Retrodiction of a published failure is evidence no synthetic example can buy.
+
+## 3. Setup
+
+General decision-dependent system: decision `h in R^d`, induced distribution
+`D(h)`, strongly concave true objective `Phi` with curvature matrix
+`Gamma_PO`, retraining loop with Jacobian `-M` at the stable point `h*`
+(`rho(M) = m < 1`), response observations
+
+```
+   y_t = r(h_t) + zeta_t ,    E[zeta] = 0, Cov = sigma^2 I ,
+```
+
+estimand: the local response Jacobian `E = Dr(h*)` (scalar case: the slope
+`epsilon`). The operator may inject exploration `u_t` into deployments.
+
+Two budget notions, kept distinct (this distinction is load-bearing, see
+Theorem 3):
+
+```
+   deviation budget:   D_T = sum_t || h_t - h* ||^2          (tracking-error / risk-limit form)
+   value budget:       C_T = E[ sum_t ( Phi(h*) - Phi(h_t) ) ]  (realized P&L form)
+```
+
+In the stationary regime `C_T = (1/2) E[ (h_t-h*)' Gamma_PO (h_t-h*) ]`
+summed - the quadratic form of the deviation - because the linear term of the
+expansion is zero-mean **for non-anticipating symmetric exploration**; the
+general adaptive case is exactly where Theorem 3 has content.
+
+## 4. The results
+
+### Theorem 1 - Information saturation [VERIFIED scalar / PROVABLE d-dim]
+
+With no exploration and `rho(M) < 1`, the total design energy of the loop's
+own trajectory is bounded:
+scalar `sum_t (h_t-h*)^2 -> (h_0-h*)^2/(1-m^2)` (verified to 1e-16);
+in `R^d`, `sum_t ||h_t - h*||^2 <= K(M) ||h_0-h*||^2 / (1 - rho(M)^2)` with
+`K(M)` a computable non-normality constant. Fisher information for `E` is
+proportional to design energy, hence **bounded uniformly in the horizon**: a
+converging retraining loop can never identify its own performativity beyond a
+fixed floor, in any direction.
+
+- **Corollary 1.1 (safety implies blindness).** The information cap is
+  increasing in `m`: precise self-knowledge is available exactly when the
+  system is nearly unstable. [VERIFIED scalar]
+- **Corollary 1.2 (what trajectories never identify).** The noiseless design
+  degenerates (period-2 support at the boundary; geometrically-collapsing
+  support inside it), so curvature parameters of the response - in REFLEX,
+  the toxic decay `c_t` - are unidentified from *any* trajectory. Upgrades
+  the repo's "exponential fits need a wide spread range" gotcha to a theorem.
+  [VERIFIED]
+- **Remark (free information from non-normality).** When `M` is non-normal
+  (heterogeneous multi-dealer Jacobians are), transient pseudospectral growth
+  temporarily *inflates* design energy: badly-conditioned ecosystems leak
+  extra information about themselves. Stated as a remark with a numerical
+  illustration; full pseudospectral treatment deferred to the journal
+  version. [PROVABLE, scoped]
+
+### Theorem 2 - The exchange-rate identity (equality benchmark) [VERIFIED]
+
+Scalar, stationary regime, symmetric exploration of any intensity:
+
+```
+   Var(eps_hat) x C_T = (1/2) gamma_PO sigma^2 ,
+```
+
+invariant to exploration intensity, horizon, and modulus. Verified to
+relative error 0.0 across a grid of `(m, sigma_e)`; the naively-anchored
+version (cost measured from `h_PO` instead of the incremental cost from `h*`)
+was implemented and shown to break exactly as predicted - the falsification
+check ships as a permanent regression test. The identity is the *achievable*
+point that Theorems 3-4 prove is unimprovable.
+
+### Theorem 3 - The minimax lower bound [HARD - the main-track theorem]
+
+Over **all** adaptive exploration policies (each `u_t` may depend on the full
+history) and **all** estimators (biased included):
+
+```
+   inf_{policy, estimator}  sup_{eps in E}   Var(eps_hat) x (deviation cost)   >=   (1/2) gamma_PO sigma^2 (1 - o(1)) .
+```
+
+*Proof strategy.* Two ingredients. (i) *Information side:* the van Trees
+inequality bounds any estimator's risk by `sigma^2 / E[S_xx]` under any
+adaptive design - information is design energy, however the design was
+chosen. (ii) *Cost side, where the subtlety lives:* because `h*` is not the
+performative optimum, `Phi'(h*) != 0`, so a policy could try to *earn while
+exploring* by deviating toward `h_PO` - the linear term of the cost expansion
+is exploitable. The resolution is the theorem's actual content: the
+profitable direction is determined by the sign and size of the correction
+`Delta(h*) = -beta (h*-psi) eps(h*)`, i.e. **by the quantity being
+estimated**. A symmetrized two-point prior over the response class (Le Cam)
+makes the expected first-order gain of any non-anticipating policy zero,
+leaving the quadratic cost; the residual exploitation of a fully adaptive
+policy is bounded by its own estimation error, giving the `(1-o(1))` factor
+with an explicit finite-sample form. Under the deviation-budget formulation
+(`D_T` capped - the desk-risk-limit reading) the bound is exact with no
+correction term, which is why both budget notions are kept.
+
+*Why it matters.* This converts a cute identity into an impossibility
+theorem: self-knowledge in a performative system has a price floor that no
+cleverness - adaptive scheduling, biased estimation, exploit-while-you-learn
+- can beat by more than the very information it is trying to buy. That
+self-referential structure is the paper's signature.
+
+### Theorem 4 - The matrix uncertainty principle and the shape of optimal exploration [PROVABLE core / HARD refinements]
+
+In `R^d`, for any stationary exploration covariance, with A-optimal risk
+`R_A = E[tr Cov(vec E_hat)]` and cost the `Gamma_PO`-quadratic form:
+
+```
+   R_A x C_T >= (sigma^2 / 2) ( tr Gamma_PO^{1/2} )^2 ,
+```
+
+with equality iff the exploration second-moment satisfies
+
+```
+   M* ∝ Gamma_PO^{-1/2}        - "explore where the objective is flat."
+```
+
+*Proof:* convex duality - minimize `tr(M^{-1})` under `tr(Gamma M) <= B`;
+stationarity gives `M ∝ Gamma^{-1/2}`, convexity certifies globality; the
+`d = 1` case collapses to Theorem 2. (Diagonal case verified by hand;
+numerical certificate planned on the calibrated `Gamma_PO`.)
+
+- **Corollary 4.1 (the price of isotropic jitter).** Isotropic exploration
+  (what the base project's `collection_jitter` does) pays a factor
+  `d * tr(Gamma_PO) / (tr Gamma_PO^{1/2})^2 >= 1` over the optimal shape -
+  the factor is exactly the curvature dispersion of the objective, `= 1` iff
+  all directions are equally curved. On the 128-bond calibrated `Gamma_PO`
+  from theory 1.5 this factor is directly computable - a headline number the
+  experiments deliver.
+- **New structural object.** The optimal exploration shape
+  `Gamma_PO^{-1/2}` is, to our knowledge, new: experimental design under a
+  decision-coupled budget produces a design that is a *function of the
+  objective's curvature*, not of the parameter space. This is the paper's
+  second framework-level contribution.
+
+### Theorem 5 - Safe optimal exploration with regret and stability guarantees [HARD]
+
+Algorithm: maximize `log det` information for the structural response family
+subject to (i) the value budget, (ii) a closed-loop spectral margin
+`rho(closed loop) <= 1 - c` - the probing must never destabilize the plant -
+and (iii) a trust region. Relaxed design problem is convex (Frank-Wolfe on
+the design simplex; numpy/scipy only). Unknown `(gamma_PO, m, family)`
+handled by certainty-equivalent re-solving, *pessimistic on stability,
+optimistic on information*. Guarantees to prove: identification regret
+`O(sqrt(T))` against the oracle design and `P(rho_t < 1 for all t) >= 1 -
+delta`. *Proof strategy:* elliptical-potential argument from linear-bandit
+experimental design for the regret; a supermartingale confidence sequence on
+the modulus (composes with the base project's CRN probe theory, 1.4) for the
+safety half. The pessimism/optimism asymmetry is the technically interesting
+part.
+
+### Theorem 6 - The anchoring crossover [PROVABLE]
+
+Semiparametric framing: anchored estimation in a correctly-specified
+`p`-dimensional family attains the parametric rate with the Theorem 4
+constant improved by the design-optimality ratio; misspecification `delta`
+adds irreducible bias `O(delta)`. Crossover rule: **anchor iff
+`delta^2 < (1/2) gamma_PO sigma^2 / B`.** This is the base project's
+headline empirical finding - "anchoring, not capacity, closes the gap" -
+turned into a decision rule with a computable threshold, and it also bounds
+when the finding would have reversed, which no experiment in the base
+project does.
+
+### Corollary - The ROI of self-knowledge [VERIFIED, given Thm 2]
+
+The echo-chamber gap (`O(eps^2)` value lost per step, forever, by staying
+blind) is a perpetuity recoverable by the corrected update; identification is
+a one-off cost priced by Theorems 2-4. The break-even discount rate is closed
+form: **a performative system should explore iff it is patient enough, and
+"patient enough" is computable from primitives.**
+
+## 5. Experiments (all in REFLEX; CPU, deterministic, certified)
+
+1. **Saturation curves** - cumulative design energy vs the closed-form cap
+   across `m in [0.1, 0.95]`; plus the non-normal transient illustration on a
+   heterogeneous 2-dealer Jacobian.
+2. **The exchange rate** - `Var x Cost` flat at `(1/2) gamma_PO sigma^2`
+   across jitter intensities; measured drift where the simulator's
+   nonlinearities engage (the drift curve is a *result* - the scope boundary
+   of the local theory, reported, not hidden); the wrong-anchor falsification
+   as a certificate.
+3. **The shape of exploration** - on the calibrated multi-bond `Gamma_PO`
+   (theory 1.5): isotropic jitter vs `Gamma_PO^{-1/2}`-shaped exploration at
+   matched budget; measured risk ratio vs the Corollary 4.1 dispersion
+   factor. New headline figure.
+4. **Safe design beats jitter** - matched-budget comparison (iid jitter /
+   two-point probe / the Theorem 5 scheduler) on the curvature parameter
+   `c_t` that Corollary 1.2 says trajectories never identify.
+5. **Anchoring crossover table** - structural fit vs free-form MLP across
+   injected misspecification; empirical crossover vs the Theorem 6 threshold;
+   retrodicts the v3 negative result.
+
+Every closed form ships a numerical certificate in the project's
+verification layer (adds ~10 to the existing 66).
+
+## 6. The workshop cut vs the full paper
+
+**The 4-page body (Aug 31):** the framework paragraph; Theorems 1-2 with the
+unified free-transient/priced-stationary reading; Theorem 3 *stated* with the
+proof strategy and the self-referential exploitation bound highlighted;
+Theorem 4 with Corollary 4.1 and experiment 3's figure; one paragraph on
+Theorem 5 + experiment 4; limitations. **The appendix (unlimited, written
+first):** full proofs of 1, 2, 4, 6; the Theorem 3 proof to the extent
+complete (minimum: the deviation-budget version, which is exact and fully
+provable by Aug 31, with the value-budget `(1-o(1))` version stated as the
+journal deliverable); Theorem 5's algorithm + empirical safety with the
+regret proof as far as it goes; all experiments; certificates. **The journal
+/ main-track version (MOR designation; alternatively a NeurIPS 2027
+main-track submission):** completes Theorem 3's adaptive-policy bound,
+Theorem 5's regret, and the pseudospectral remark. The honest line for the
+workshop build: nothing is *claimed* beyond what is proved or verified at
+submission time; [HARD] items are stated as the program with partial results.
+
+## 7. Honest limitations
+
+Local-quadratic scope with measured drift; predetermined-not-exogenous
+regressors (`O(1/T)` bias, stated and measured); one domain instantiated
+deeply, strategic-classification instantiation sketched; Theorem 3's
+value-budget version carries the `(1-o(1))` adaptive-exploitation correction
+- presented as the theorem's content, not buried.
+
+## 8. Build plan (Aug 31 deadline)
+
+Aug 17-19: theory module + certificates (Thms 1, 2, 6 + Cor 4.1 constants);
+deviation-budget Theorem 3 proof drafted. Aug 20-22: design module
+(Frank-Wolfe) + shaped-exploration experiment 3. Aug 23-25: experiments 1, 2,
+4, 5. Aug 26-28: 4-page body written from the appendix. Aug 29-30: claim-list
+review, freeze, non-anonymous build, MOR designation. De-scope order:
+Thm 5 regret proof -> pseudospectral remark -> experiment 5. Never cut
+experiments 2-3 or the deviation-budget Theorem 3.
