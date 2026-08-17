@@ -18,5 +18,6 @@
 
 ## To Do
 
-- [ ] Get endorsement for cs.LG (ML) on arXiv and preprint the original REFLEX paper. Cite it in both workshop papers
-- [ ] Ideate workshop submissions tonight (8/14) and compare on Sunday (8/16)
+- [x] Ideate workshop submissions today (8/14) and call to finalize this weekend (8/16).
+- [ ] Get endorsement for cs.LG (ML) on arXiv and preprint the original REFLEX paper. Cite it in both workshop papers.
+- [ ] Split paper by person for writing/research, swap midway for peer-review / validation, then continue.
