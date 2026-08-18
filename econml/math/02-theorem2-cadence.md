@@ -3,6 +3,11 @@
 The base theory contains, separately, the `N_eff` amplification law and a
 single-dealer lazy-deployment result. Nobody has composed them.
 
+**Complete proof:** [`derivations/03-cadence-composition.md`](derivations/03-cadence-composition.md),
+certified by
+[`verify_theorem2_cadence.py`](../ml-contributions/certificates/verify_theorem2_cadence.py),
+59 checks. This note stays the summary.
+
 ## Inherited pieces
 
 **Lazy deployment, single dealer.** A dealer taking only `K` gradient steps per
@@ -116,13 +121,30 @@ cell on common-random-number seeds, against the predicted frontier, with `s`
 contours overlaid and the critical-crowding column where the window closes. One
 panel, fully falsifiable.
 
+## What the proof added
+
+**The binding-mode argument is simpler than this note's.** `mu_i(K)` is strictly
+decreasing in `nu_i`, so the extreme mode sits at `lambda_max` for any sign pattern
+of `R`, and the upper side of `|mu_N| < 1` never binds for any `K >= 1`. No claim
+about the size of the differential modes is needed, and neither is the
+Perron-Frobenius condition Theorem 1 carries. `derivations/03`, Proposition 9.
+
+**Critical crowding is not a separate result.** The frontier in the form
+`m_N < (1 + c^K)/(1 - c^K)` makes it the `K = 1` instance, since `K` is a positive
+integer. One derivation instead of two.
+
+**The boundary `m_N = 1`.** Lazy retraining strictly stabilizes the marginal market
+at every finite `K`, with margin `2c^K`. Worth the one line it costs.
+
 ## Open items
 
-1. Confirm the lazy-deployment lemma's linearization at the frozen best response
-   is unaffected by `N`. It should be, because `c` is own-objective curvature.
-   This is the one place the composition could fail, so it gets a certificate
-   rather than an argument. [TO BUILD]
+1. ~~Confirm the lazy-deployment lemma's linearization at the frozen best response
+   is unaffected by `N`.~~ **Done.** C12 measures the realized inner contraction
+   inside the joint market across 45 configurations, spread `4.4e-16`. This was
+   the one place the composition could fail.
 2. `K` is an integer, so `K_max` is a real-valued frontier and the realized
    window is `floor(K_max)`. State that in the paper; the figure's cells are
-   integer `K` and the frontier is drawn continuous.
+   integer `K` and the frontier is drawn continuous. Verified in Q4.
 3. Asynchronous cadences are out of scope under A3 and named as an extension.
+   Heterogeneous `K_i` across firms breaks the eigenvector sharing the proof
+   uses, so it is a genuine extension rather than bookkeeping. [DEFERRED]
