@@ -16,9 +16,9 @@ writes into that same folder.
 | | Cluster | Why it is here |
 |---|---|---|
 | A | Algorithmic monoculture and model multiplicity | The venue's home literature and the nearest prior art on the paper's headline object |
-| B | Multiplayer and multi-agent performative prediction | Where the dynamics live, and the strongest technical prior-art threat |
+| B | Multiplayer and multi-agent performative prediction | Where the dynamics live, and the strongest technical prior-art threat. **Holds REFLEX (B13), the base paper, with the claim-by-claim non-overlap statement** |
 | C | Externalities, public goods, and corrective taxation | The economics apparatus Sections 7 and 8 use |
-| D | Systemic risk, crowding, and the regulator's dilemma | Where private-versus-systemic stability was posed before, without learners |
+| D | Systemic risk, crowding, and the regulator's dilemma | Where private-versus-systemic stability was posed before, without learners. Also holds PEBSA (D9), the exogenous-signal contrast |
 | E | Epidemic thresholds and herd immunity | The law Result 3 lands on, and its spectral form on networks |
 | F | Effective counts and spectra of correlation matrices | The ancestry of `lambda_max(R)` as an effective count, conceded up front |
 | G | AI supply chains and market concentration | The policy conversation the paper turns into a term in a condition |

@@ -100,6 +100,29 @@ the survey corresponds to pricing identification, information saturation of
 RRM, or stability-constrained exploration** - the cleanest available
 evidence that the gap is real, from the field's founders.
 
+**A9. REFLEX (*Reflexive Equilibrium Fixed-point Learning for Endogenous
+eXchanges*), arXiv:2608.16155, <https://doi.org/10.48550/arXiv.2608.16155>.**
+[V1]
+**The direct base, and the largest overlap surface in this review.** It
+instantiates A1's framework in a structural OTC market-making model where every
+constant in every theorem here is computable from primitives rather than
+assumed: `gamma_PO` and `Gamma_PO` from its theory modules, `m` from its
+modulus machinery. Its retraining loop is what falsifies the statements in M2,
+and its documented "anchoring, not capacity" negative result - the free-form
+learned correction failing because the converged loop stops generating
+identifying variation - is the phenomenon M2's saturation theorem explains and
+Theorem 6 turns into a decision rule.
+
+**The non-overlap statement, claim by claim.** REFLEX supplies constants and a
+falsification harness; it prices nothing. It contains no information-cost
+frontier, no saturation cap tied to the modulus, no minimax lower bound, no
+matrix uncertainty principle or optimal exploration shape, and no
+stability-constrained design problem. Its negative result is an empirical
+finding reported without a theory of why, which is precisely the gap M2 fills.
+Retrodiction of a published failure is evidence no synthetic example can buy,
+and it is only evidence because the failure was documented before the theory
+existed.
+
 **Frontier check (2024-26, arXiv-level, non-load-bearing).** [V2, abstracts
 via search only] "Plug-in Performative Optimization" (Lin, Zrnic, ICML 2024
 - see Cluster B, it is the closest paper to M2's Theorem 6); "Learning the
@@ -335,6 +358,16 @@ Efficient Markets." American Economic Review 70(3):393-408, 1980.** [V3]
 Cited for the framing sentence only: information must be paid for in
 equilibrium, or no one gathers it. M2 is a micro-founded instance where
 the price of information is stated as an identity.
+**F7. PEBSA (*Predicting Economic Behavior via Sentiment Analysis*), IJECS
+13(12), 2024, <https://doi.org/10.18535/ijecs/v13i12.4950>.** [V1]
+One line in related work, as the contrasting **cost structure**, and placed
+here because F6 is the cluster's other citation about what information costs.
+PEBSA infers economic behavior through a channel whose sampling design is
+chosen freely: more data costs collection effort and nothing else, and the
+observations are not decisions. M2's premise is the opposite - the design *is*
+the decision, and every observation is taken at a price in the objective -
+which is the gap the framework fills. Positioned as a contrast, never as a
+dependency.
 
 ---
 
