@@ -129,3 +129,99 @@ the market: the factor by which a common perturbation is amplified per
 retraining round. `m_N < 1` and perturbations die out; `m_N > 1` and they
 compound. Everything that follows is the economics of controlling `R_0`, and
 Section 5 is about what actually determines it.
+
+## 5. Result 1 - The effective number of independent learners
+
+The base result counts firms. Counting firms is wrong, and the correction is
+where the monoculture and supply-chain content enters.
+
+**The alignment object.** Let firm `i` have response Jacobian `E_i`, the
+`d x d` matrix describing how its own deployment reshapes the flow it faces.
+Define pairwise alignment and the alignment matrix
+
+```
+   r_ij = <vec E_i, vec E_j> / (||E_i||_F ||E_j||_F) ,      R = (r_ij) .
+```
+
+`R` is a correlation matrix of *models' feedback directions*, and
+`lambda_max(R)` runs from `1` (all responses orthogonal, every firm perturbs
+the environment its own way) to `N` (monoculture, all firms perturb it
+identically).
+
+**Theorem 1 (alignment sets the reproduction number).** With equal moduli
+`m_i = m_1` and heterogeneous response *directions*,
+
+```
+   m_N = N_eff * m_1 ,      N_eff = 1 + kappa ( lambda_max(R) - 1 ) ,
+```
+
+so the base result is the monoculture corner and nothing more. Anchors, each
+checked independently: `R = 1 1'` recovers `N_eff = 1 + kappa(N-1)` and the
+measured `1.74x / 3.16x`; orthogonal responses give `m_N = m_1`, so a hundred
+firms perturbing the environment in a hundred orthogonal directions are
+dynamically one firm; maximal diversity (simplex responses) gives
+`m_1(1-kappa)`, independently matching the differential-mode eigenvalue the
+base theory derives by a completely different route. Two derivations landing
+on one number. [VERIFIED anchors / DERIVED]
+
+**The supply chain.** Decompose each firm's response into shared and
+idiosyncratic parts, `E_i = sqrt(s) E_shared + sqrt(1-s) Xi_i`, where
+`s in [0,1]` is the fraction attributable to a shared foundation model,
+vendor, or pretraining corpus. Alignments concentrate at `r_ij -> s`, so
+`lambda_max(R) -> 1 + s(N-1)` and
+
+```
+   N_eff  =  1 + kappa * s * (N - 1) ,
+   m_N    =  m_1 ( 1 + kappa * s * (N - 1) ) .
+```
+
+**The effective number of learners is the number of independent models, not
+the number of firms.** Fifty dealers fine-tuning one vendor's model are
+dynamically `~ 1 + 49 kappa` learners at `s ~ 1` and barely more than one at
+`s ~ 0`. The critical population generalizes from `N_c = 1/m_1` to a
+critical-crowding surface, and the `(N, s)` phase diagram is the paper's
+first figure. [DERIVED]
+
+**Why this changes every result downstream.** Sections 6 through 8 are stated
+for `m_N`, so each one inherits `s` for free, and each inheritance is a claim
+neither predecessor draft could make. The cadence window narrows as the
+market's *vendor concentration* rises, not merely as firms enter. The
+herd-immunity threshold depends on how much model diversity the market
+already has. The Pigouvian wedge prices shared-model adoption alongside
+adaptation aggressiveness. This propagation is the reason the two drafts were
+worth merging rather than choosing between.
+
+**Naming, and the defensive footnote.** `lambda_max(R)` is called the
+effective number of independent learners, but the paper does not present the
+*quantity* as new, only its role. Spectral summaries of a correlation matrix
+have a long history as effective counts: participation ratio and inverse
+participation ratio in physics, effective rank in signal processing
+(Roy-Vetterli), and the leading-eigenvalue market mode in the
+random-matrix-theory finance literature (Laloux et al.; Plerou et al.), where
+`lambda_max` of a return correlation matrix is already read as the strength
+of the common factor. Conceding this costs one footnote and disarms the
+cheapest available referee objection ("you renamed effective rank"). What is
+new is the object it is computed from - response Jacobians rather than
+returns - and the condition it enters.
+
+**Why the naive diversity index fails.** Mean alignment understates
+*clustered* alignment: three tightly-aligned firms among ten
+otherwise-orthogonal ones destabilize a subspace the average barely
+registers. The vendor-with-a-plurality topology, not the monopoly, is the
+realistic case, and it gets its own experimental panel. Rule the paper
+follows: **all stability claims use the spectral form, never a mean.**
+[DERIVED by counterexample]
+
+**Scope line, stated honestly.** Theorem 1 is exact for equal moduli. With
+heterogeneous `m_i` the tempting mean-modulus formula is *provably false* -
+orthogonal responses decouple the firms entirely, giving `max_i m_i`, not the
+mean - and the correct object is the modulus-weighted matrix
+`M^{1/2} R M^{1/2}`, which yields two-sided bounds exact in the equal-moduli
+and `kappa = 0` limits. Stated as a remark with the bound; tightness measured
+rather than asserted. Two further extensions are named and deferred rather
+than attempted: share-weighted alignment for unequal-sized firms (the honest
+version needs a majorization condition on the share vector, since the naive
+"any reweighting raises `lambda_max`" claim is false), and the exact
+block-secular reduction for fully heterogeneous ecosystems. Both are journal
+material, and saying so is what keeps this plan inside twelve days.
+[DEFERRED]
