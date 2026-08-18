@@ -1,6 +1,6 @@
 # EconML @ NeurIPS 2026 (P2)
 
-## "Herd Immunity for Markets of Adaptive Models: Learning Externalities and the Effective Number of Independent Learners"
+## "Herd Immunity and Learning Externalities in Markets of Adaptive Models"
 
 | | |
 |---|---|

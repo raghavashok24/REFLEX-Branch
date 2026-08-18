@@ -1,4 +1,4 @@
-# Literature Review: "Herd Immunity for Markets of Adaptive Models"
+# Literature Review: "Herd Immunity and Learning Externalities in Markets of Adaptive Models"
 
 ## Monoculture, multi-agent learning dynamics, and the economics of systemic instability: the seven literatures the paper touches, the gaps between them, and the novelty verdict
 
