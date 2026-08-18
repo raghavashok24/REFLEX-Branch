@@ -186,126 +186,202 @@ audience checks): the PSNE of the quoting game; the Nash equilibrium of the
 point is notation, not a fourth concept, and is introduced as such to save a
 column inch.
 
-## 4. The results
+## 5. The results
 
-### Theorem 1 - Exact spectral characterization of heterogeneous ecosystems [HARD - the main-track theorem]
+Ordered by economic interest. Results 1-4 are the 9-page body. The general
+spectral theory that used to open this section is now Section 5.5, stated in
+the body and proved in the appendix, because its interest is computational
+and this is not a computational venue.
 
-**(a) General reduction.** `J` is a block matrix of the form
-"block-diagonal + spillover times block-one structure": the spillover part
-has block-rank `d`. Its spectrum therefore reduces *exactly* to the roots of
-a `d x d` secular equation
+### Result 1 - The alignment identity and the supply-chain boundary [VERIFIED anchors / PROVABLE]
 
-```
-   det( I_d  +  kappa * sum_i  E_i ( lambda I + (1-kappa) Gamma_i^{-1} beta E_i )^{-1} Gamma_i^{-1} beta )  =  0
-```
-
-(plus the block-diagonal spectra) - computable in `O(N d^3)` rather than
-`O((Nd)^3)`, using exactly the Woodbury reduction pattern the base project's
-theory 1.5 already ships and certifies. This is an *exact characterization
-for arbitrary heterogeneous ecosystems*, not a bound - the structural result
-the earlier version lacked. *Proof strategy:* block low-rank determinant
-identity (matrix determinant lemma at block level); reduction verified
-against dense eigensolves as a certificate.
-
-**(b) The interpretable case.** Equal moduli `m_i = m`, heterogeneous
-directions: the reduction collapses to the exact identity
+Equal moduli `m_i = m`, heterogeneous response *directions*. The joint
+spectral radius is exactly
 
 ```
    rho(J) = m ( 1 + kappa ( lambda_max(R) - 1 ) ) ,
 ```
 
-with the verified anchors: monoculture (`R = 11'`) recovers
-`N_eff = 1 + kappa(N-1)` and the measured `1.74x / 3.16x`; orthogonal
-responses give `rho = m` (a hundred firms perturbing in a hundred orthogonal
-directions are, dynamically, one firm); maximal diversity (simplex responses)
-gives `1 - kappa`, independently matching the homogeneous theory's
-differential-mode eigenvalue - two derivations, one number. [VERIFIED anchors]
+so the ecosystem is stable iff
+`epsilon < (gamma/beta) / (1 + kappa (lambda_max(R) - 1))`. Three anchors,
+each checked independently: monoculture (`R = 11'`) recovers
+`N_eff = 1 + kappa(N-1)` and the published `1.74x / 3.16x` measurements;
+orthogonal responses give `rho = m`, so a hundred firms perturbing the
+environment in a hundred orthogonal directions are dynamically one firm; and
+maximal diversity (simplex responses) gives `1 - kappa`, independently
+matching the differential-mode eigenvalue the homogeneous theory derives by a
+completely different route. Two derivations landing on one number is the kind
+of consistency the base project's verification layer exists to certify.
+[VERIFIED anchors]
 
-**(c) Heterogeneous moduli.** The mean-modulus formula is **provably false**
-(orthogonal responses decouple: `rho = max_i m_i`). The correct interpolant
-is the modulus-weighted alignment matrix `M^{1/2} R M^{1/2}`
-(`M = diag(m_i)`): two-sided bounds sandwiching the secular roots, exact in
-the equal-moduli and `kappa = 0` limits, with tightness quantified by the
-modulus dispersion. And the policy-relevant corollary: **mean-alignment
-diversity indices are the wrong instrument** - three tightly-aligned firms
-among ten orthogonal ones destabilize a subspace the mean barely registers
-(the vendor-with-a-plurality topology, which gets its own experiment).
-[PROVABLE given (a)]
-
-### Theorem 2 - Global theory: existence, uniqueness, convergence, and a converse [HARD]
-
-Beyond linearization. If the alignment-weighted spectral condition of
-Theorem 1 holds *uniformly over the operating region* (not just at the
-equilibrium), the joint best-response map is a contraction in an explicit
-weighted norm: a unique PSNE exists and simultaneous retraining converges to
-it globally, at the linear rate the spectrum names. Conversely, if the
-linearized `rho(J) > 1` at the fixed point, retraining diverges from generic
-initial conditions (center-stable-manifold argument: the stable set has
-measure zero). *Proof strategy:* Banach in the `Gamma`-weighted norm,
-following the structure of the base project's homogeneous global statement
-(1.3 proves its symmetric case via the 2-norm; the weighted norm is what
-heterogeneity costs); the converse via standard unstable-manifold theory.
-This is the theorem that answers "your spectral theory is just
-linearization" before a reviewer asks it.
-
-### Theorem 3 - The concentration boundary, with finite-size theory [PROVABLE core / HARD refinement]
-
-Under the supply-chain decomposition, alignments concentrate: `r_ij -> s`,
-and
+Under the supply-chain decomposition the alignments concentrate at
+`r_ij -> s`, so `lambda_max(R) -> 1 + s(N-1)` and the boundary becomes
 
 ```
-   lambda_max(R) = 1 + s(N-1) + O_P( sqrt(N/d) ) ,
+   epsilon  <  gamma / ( beta ( 1 + kappa s (N - 1) ) ) .
 ```
 
-the correction coming from the Wishart-type fluctuation of the idiosyncratic
-Gram matrix (Davidson-Szarek-style concentration over the `d^2` entries).
-Hence the stability boundary
-
-```
-   epsilon  <  gamma / ( beta ( 1 + kappa s (N-1) ) )         (+ explicit finite-d band)
-```
-
-- **the effective number of learners is the number of independent models,
-not the number of firms.** Fifty dealers fine-tuning one vendor's model are
+**The effective number of learners is the number of independent models, not
+the number of firms.** Fifty dealers fine-tuning one vendor's model are
 dynamically `~ 1 + 49 kappa` learners at `s ~ 1` and barely more than one at
-`s ~ 0`. The `(N, s)` phase diagram with its finite-`d` uncertainty band is
-the central figure; foundation-model concentration becomes a *term in a
-stability condition* with error bars, not a talking point.
+`s ~ 0`. The `(N, s)` phase diagram is the paper's central figure, and it is
+the sentence the abstract is built around: foundation-model concentration
+becomes a term in a stability condition rather than a talking point. The
+`O(1/d)` correction to the concentration is stated; the finite-size
+random-matrix refinement is **deliberately cut** and noted as the journal
+extension, because an error band on a phase diagram is not what this audience
+is reading for and it was the most expensive `[HARD]` item per page of
+interest it bought.
 
-### Theorem 4 - The adoption game: monoculture as Nash destination [PROVABLE]
+Share-weighted version: substituting `R_w` for `R` throughout gives the same
+identity with `lambda_max(R_w)`, and the compounding statement of Section 4
+follows immediately. [PROVABLE]
 
-Model provider choice as a population game: adopting the market-leading
-model yields private quality gain `q`; one firm's adoption moves ecosystem
-alignment by `O(1/N)`, so the private share of the instability cost a firm
-creates vanishes as the market grows while `q` does not - a textbook
-externality, and the paper says so plainly. Results: (a) the game admits a
-potential; Nash equilibrium is full monoculture whenever `q` exceeds a
-threshold **decreasing in `N`** (bigger markets tip on smaller quality
-edges); (b) the social optimum keeps interior diversity `s* < 1`
-(marginal quality = marginal instability); (c) the **price of anarchy in
-stability** is `(1 + kappa(N-1)) / (1 + kappa s* (N-1))`, growing linearly
-in `N`; (d) the minimal restoring intervention - a diversity floor or a
-Pigouvian fee on shared-model adoption - in closed form, with the fee equal
-to the externalized marginal instability cost. Discharges the CFP's
-"ecosystem-level incentive design" with an actual mechanism.
+### Result 2 - The certification gap: private stability does not imply systemic stability [PROVABLE]
 
-### Theorem 5 - Supervision theory: estimating distance-to-instability from public prices [HARD]
+This is the paper's headline claim in words, and the reason a non-technical
+reader should care. Two questions that sound like one:
 
-Near instability the aligned mode of cross-firm decisions exhibits critical
-slowing down: the leading principal component of public quotes has lag-1
-autocorrelation `-> 1` and variance share growing like `1/(1 - rho)`. We
-give the estimator (PC1 extraction + AR coefficient) and prove:
-**consistency and a CLT** for the distance `1 - rho` under the linearized
-dynamics, with the rate improving as the boundary nears - the near-unit-root
-superconsistency phenomenon means **supervision is easiest exactly where it
-matters most**. (Note the deliberate mirror of the companion identification
-paper's inversion: a *firm* learns its own feedback most easily near
-instability, and a *supervisor* measures the ecosystem's distance most
-easily near instability. Criticality is loud.) Detection sample complexity
-for the composite test "certified stable vs not" stated explicitly; the
-supervisor needs no access to any firm's model, data, or code. *Proof
-strategy:* classical AR / near-unit-root asymptotics applied to the aligned-mode
-projection; the novelty is the object, not the asymptotics - stated as such.
+> Is this model stable when deployed?
+> Is the ecosystem of models stable?
+
+They come apart, and Result 1 says by exactly how much. Every firm can
+satisfy its own condition `m_i < 1` while `rho(J) > 1`, because the
+individual condition prices only a firm's effect on its own environment and
+none of its effect on everyone else's. In the monoculture corner this has a
+single memorable number: with full spillover and identical models the
+ecosystem crosses the boundary at a **critical population**
+
+```
+   N_c  =  1 / m_1 ,
+```
+
+so a market of learners each certified at, say, `m_1 = 0.2` is fragile from
+the fifth entrant onward, with no firm having done anything wrong. Away from
+that corner `N_c` generalizes to the `(N, s, kappa)` surface of Result 1, and
+the paper presents the scalar version first precisely because it is the
+version a policymaker repeats.
+
+**Why the naive diversity index fails.** Two ways, both with a constructed
+counterexample and both stated as rules the paper follows. (i) *Mean
+alignment understates clustered alignment*: three tightly-aligned firms among
+ten otherwise-orthogonal ones destabilize a subspace the average barely
+registers. The vendor-with-a-plurality topology, not the monopoly, is the
+realistic case, and it gets its own experimental panel. (ii) *Headcount
+understates share concentration*: by Section 4's `R_w`, the same alignment
+pattern is more dangerous when the aligned firms are the large ones. Rule:
+**all stability claims use the spectral form of the share-weighted matrix,
+never a mean or a count.**
+
+**Honest scope line.** The exact identity is proved for equal moduli. With
+heterogeneous `m_i` the tempting mean-modulus formula is **provably false** -
+orthogonal responses decouple the firms entirely, giving `max_i m_i`, not the
+mean. The correct object is the modulus-weighted alignment matrix
+`M^{1/2} R M^{1/2}` (`M = diag(m_i)`), which yields two-sided bounds, exact
+in the equal-moduli and `kappa = 0` limits, with tightness measured against
+modulus dispersion in simulation rather than asserted.
+
+### Result 3 - The adoption game: monoculture as the Nash destination [PROVABLE]
+
+Why would an ecosystem end up at high `s`? Because every private incentive
+points there. Model provider choice as a population game: adopting the
+market-leading model yields private quality gain `q`; one firm's adoption
+moves ecosystem alignment by `O(1/N)`, so the private share of the
+instability cost a firm creates vanishes as the market grows while `q` does
+not. A textbook externality, and the paper says so plainly rather than
+dressing it up. Results: (a) the game admits a potential, and Nash
+equilibrium is full monoculture whenever `q` exceeds a threshold
+**decreasing in `N`**, so bigger markets tip on smaller quality edges; (b)
+the social optimum keeps interior diversity `s* < 1`, characterized by
+marginal quality equal to marginal instability; (c) the **price of anarchy in
+stability** is `(1 + kappa(N-1)) / (1 + kappa s* (N-1))`, growing linearly in
+`N`; (d) the minimal restoring interventions in closed form (Section 5.4).
+
+This discharges the CFP's "ecosystem-level incentive design" bullet with an
+actual mechanism, and it supplies the paper's most important qualitative
+claim: the unstable configuration is not an edge case to be guarded against
+but the *destination* of unregulated adoption dynamics.
+
+### Result 4 - Two interventions, and which one is available to whom [PROVABLE]
+
+The paper deliberately carries two levers, because they act on different
+parts of the mechanism and are available to different actors.
+
+**Diversity floor / Pigouvian fee (the regulator's lever).** From Result 3,
+the minimal intervention restoring `s <= s*` in closed form: either a floor
+on the shared-model fraction, or a per-firm fee on shared-model adoption set
+equal to the externalized marginal instability cost. Standard, correct, and
+what an economics referee expects to see. It is also slow, requires a
+supervisor who can observe model provenance, and is the harder sell.
+
+**Retraining cadence (the operational lever).** The spillover `kappa` and the
+per-step modulus are not fixed constants; they are functions of how often
+firms refit relative to how fast the shared environment mixes. Slowing or
+desynchronizing retraining shrinks the effective coupling, moving the
+ecosystem inside the boundary *without* changing anyone's model, market
+share, or vendor. This lever is already implemented and characterized in the
+base project for the single-firm case, so it is nearly free here, and it is
+the only intervention a firm or an exchange can deploy unilaterally and
+immediately. The paper states the cadence-vs-stability tradeoff and notes the
+cost side honestly: slower retraining means staler models, so this buys
+stability with accuracy rather than for free.
+
+The framing that ties them together, and the sentence to end the policy
+section on: **both levers act on the interaction structure, not on any
+individual learner's predictive quality.** No amount of making each model
+better fixes an externality.
+
+### Result 5 - Supervision from public prices [HARD - consistency at the workshop]
+
+Everything above involves `R`, which no outsider observes; supervisors do not
+get to inspect firms' models. But near the boundary the system tells on
+itself. As `rho(J) -> 1` the *aligned* combination of firms' decisions
+exhibits critical slowing down: the leading principal component of public
+quotes has lag-1 autocorrelation tending to one and variance share growing
+like `1/(1 - rho)`. We give the estimator (PC1 extraction plus AR
+coefficient) and prove **consistency** for the distance `1 - rho` under the
+linearized dynamics, with the rate improving as the boundary nears. The
+near-unit-root superconsistency phenomenon means **supervision is easiest
+exactly where it matters most**. The supervisor needs no access to any firm's
+model, data, or code.
+
+Workshop scope: consistency plus simulation in the body; the CLT, the
+detection sample complexity for the composite test "certified stable vs not",
+and the full near-unit-root treatment are appendix-and-journal. Stated
+plainly: the asymptotics are classical, the object they are applied to is
+new, and the paper claims only the second.
+
+### 5.5 The general spectral theory [HARD - stated in the body, proved in the appendix]
+
+Both of these were the previous draft's headline theorems. They are correct
+and worth doing, but their interest is machinery, so they are stated in half
+a column each with proof sketches and carried in full by the appendix, which
+doubles as the journal draft.
+
+**Exact reduction for arbitrary heterogeneous ecosystems.** `J` is
+block-diagonal plus a spillover term of block-rank `d`, so its spectrum
+reduces exactly to the roots of a `d x d` secular equation
+
+```
+   det( I_d  +  kappa * sum_i  E_i ( lambda I + (1-kappa) Gamma_i^{-1} beta E_i )^{-1} Gamma_i^{-1} beta )  =  0
+```
+
+plus the block-diagonal spectra, computable in `O(N d^3)` rather than
+`O((Nd)^3)` by a block matrix determinant lemma. This is what makes Result 1
+an instance of a general characterization rather than an isolated identity,
+and that role is why it stays in the body at all. Fallback if the proof
+resists: ship it verified to machine precision against dense eigensolves as a
+numerical certificate, worded as such.
+
+**Global convergence beyond linearization.** If Result 1's condition holds
+uniformly over the operating region rather than only at the equilibrium, the
+joint best-response map is a contraction in an explicit `Gamma`-weighted
+norm: a unique PSNE exists and simultaneous retraining converges to it
+globally at the rate the spectrum names. The contraction half is Banach and
+low-risk, and it is the half that ships. The converse (linearized
+`rho(J) > 1` implies divergence from generic initial conditions, via a
+center-stable-manifold argument) is stated and deferred. Half a column here
+answers "your whole theory is a linearization" before a referee has to ask.
 
 ## 5. The experiments
 
