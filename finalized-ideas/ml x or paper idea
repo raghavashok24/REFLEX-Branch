@@ -69,6 +69,25 @@ because the converged loop stops generating identifying variation - was
 documented as an honest negative result before the theory existed.
 Retrodiction of a published failure is evidence no synthetic example can buy.
 
+**Citations to carry.** Two prior papers are cited by DOI. **REFLEX**
+(*Reflexive Equilibrium Fixed-point Learning for Endogenous eXchanges*,
+arXiv:2608.16155, <https://doi.org/10.48550/arXiv.2608.16155>) is the base
+and is cited throughout: `gamma_PO`, `Gamma_PO` and `m` all come from its
+theory modules, its retraining loop is what falsifies the statements here,
+and its documented "anchoring, not capacity" negative result is what Theorem
+6 turns into a decision rule. **PEBSA** (*Predicting Economic Behavior via
+Sentiment Analysis*, IJECS 13(12), 2024,
+<https://doi.org/10.18535/ijecs/v13i12.4950>) gets one line in related work,
+as the contrasting cost structure: it infers economic behavior through a
+channel whose sampling design is chosen freely, where more data costs
+collection effort and nothing else. The premise here is the opposite - the
+design *is* the decision, and every observation is taken at a price in the
+objective - which is precisely the gap the framework fills. Brief, and
+positioned as a contrast rather than a dependency. This venue is
+non-anonymous, so no third-person phrasing is needed for either; the EconML
+plan handles the same two citations under double-blind and its rules there do
+not apply here.
+
 ## 3. Setup
 
 General decision-dependent system: decision `h in R^d`, induced distribution
