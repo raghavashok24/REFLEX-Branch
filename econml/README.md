@@ -1,1 +1,101 @@
-all documentation for neurips econml paper
+# EconML @ NeurIPS 2026 (P2)
+
+## "Herd Immunity for Markets of Adaptive Models: Learning Externalities and the Effective Number of Independent Learners"
+
+| | |
+|---|---|
+| **Venue** | EconML workshop @ NeurIPS 2026, Atlanta, Dec 12/13 |
+| **Deadline** | **Aug 29, 2026** |
+| **Format** | Long paper: 9 pages main body, unlimited references and appendix |
+| **Review** | Double-blind. In-person presentation required |
+| **Base paper** | REFLEX, arXiv:2608.16155 (public at submission; cited in third person) |
+| **Plan of record** | [`../finalized-ideas/econml paper idea`](../finalized-ideas/econml%20paper%20idea) |
+
+The finalized plan is the specification. This folder is the build against it.
+Where a file here disagrees with the plan, the file states the disagreement
+explicitly and the claims ledger records which one is right.
+
+---
+
+## Thesis in three sentences
+
+An individual learning agent can pass every stability test we know how to run
+and still help destabilize the market it operates in, because each agent's
+retraining reshapes the data every other agent will learn from next. The
+strength of that **learning externality** is set not by the number of firms but
+by the **effective number of independent learners**, a spectral measure of how
+aligned the firms' feedback directions are, so foundation-model concentration
+enters the stability condition as a term rather than as a talking point. Three
+closed-form levers follow, and the last two trade off against each other:
+model diversity and corrected learning are substitutes, and the paper gives the
+frontier along which a market can buy stability with either.
+
+## The four results
+
+| # | Result | Object | Status |
+|---|---|---|---|
+| 1 | Effective number of independent learners | `N_eff = 1 + kappa(lambda_max(R) - 1)`; supply chain `N_eff = 1 + kappa*s*(N-1)` | anchors verified, identity derived |
+| 2 | Crowding-cadence frontier | `K_max = ln((m_N-1)/(m_N+1)) / ln c`; critical crowding `(1+c)/(1-c)` | derived, arithmetic checked |
+| 3 | Herd immunity and the substitution frontier | `rho*(s) = max(0, 1 - N_c(s)/N)`, collapsing to `1 - 1/m_N` | derived, limit case checked |
+| 4 | Pigouvian wedge | `t*` from stationary variance `1/(1-m_N^2)`; over-adaptation corollary | derived, needs welfare page |
+
+Everything reduces to one substitution: `m_N = N_eff * m_1`, with `N_eff` set by
+model alignment rather than by headcount. Results 2 through 4 are all stated in
+`m_N`, so each inherits the supply-chain parameter `s` for free.
+
+## Directory map
+
+| Path | Holds |
+|---|---|
+| [`literature/`](literature/) | The literature review, cluster by cluster, with gaps, novelty verdict and verification debt |
+| [`math/`](math/) | Notation, standing assumptions, and one note per theorem: statement, derivation, anchors, open issues |
+| [`ml-contributions/`](ml-contributions/) | Theory-module spec, experiment specs, numerical certificate list |
+| [`writing/`](writing/) | Section-by-section paper content, page budget, claims ledger |
+
+## Status board
+
+| Piece | State |
+|---|---|
+| Literature review | **complete** (`literature/LITERATURE-REVIEW-P2.md`) |
+| Introduction | **complete** (`writing/01-introduction.md`) |
+| Abstract | drafted, re-write after Result 3's experiment lands |
+| Theorem 1 algebra | derived; one anchor in the plan corrected (see `math/01`) |
+| Theorem 2 algebra | derived; the plan's three `K_max` figures recomputed and confirmed |
+| Theorem 3 algebra | limit case derived; exact two-block root outstanding |
+| Theorem 4 algebra | sketched; welfare page outstanding |
+| Theory module | specified, not written |
+| Experiments 1-6 | specified, not run |
+| Remaining sections | planned, not written |
+
+## Conventions
+
+**Status flags**, used everywhere and meaning the same thing each time:
+
+- `[VERIFIED]` follows from certified base results, or already checked numerically
+- `[DERIVED]` worked out for this paper, derivation recorded, low proof risk
+- `[TO BUILD]` new experiment or configuration
+- `[DEFERRED]` stated in the body, completed for the journal version
+
+**Double-blind rules.** No author block, no repository URL anywhere, scrubbed
+PDF metadata and figure paths, simulator described generically with an
+anonymized-artifact promise. REFLEX and PEBSA are both public at submission time
+and are cited as ordinary third-party references. The only rule to enforce is
+that no sentence positions either as the authors' own work: no "our earlier
+framework", no "we previously showed", no "building on our REFLEX".
+
+**Notation.** ASCII math in all markdown here, matching the plan of record.
+LaTeX happens once, at the end, from these files. Nothing in this folder is
+LaTeX.
+
+**Prose.** No em dashes. House style is enforced by `prose-guard`.
+
+## De-scope order
+
+Fixed in advance so the decision is not made under deadline pressure. In order:
+supervision from public prices (already scoped to one paragraph), then
+experiment 6, then the exact two-block root, then the free-riding diagnostic,
+then the clustered companion in experiment 2.
+
+**Never cut:** experiment 1's anchor, experiment 4, experiment 5, or the
+private-versus-systemic framing, which is the paper's reason to exist at this
+venue.
