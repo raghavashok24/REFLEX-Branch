@@ -4,6 +4,12 @@ One module holding every closed form in the paper. Every experiment checks
 itself against this module, so it is written first and certified before any
 panel runs.
 
+**Status: written.** [`theory/econml_theory.py`](theory/econml_theory.py), with
+acceptance tests in
+[`certificates/verify_theory_module.py`](certificates/verify_theory_module.py),
+50 checks, all passing. This file remains the spec; where the implementation
+departs from it, the departure is recorded at the bottom.
+
 **Dependencies:** numpy and scipy only. CPU-only, deterministic, no state.
 Every function is pure: same arguments give the same result, no globals, no
 caching.
@@ -124,3 +130,28 @@ The module is not done until all of these pass.
 
 Tests 1 and 2 are the ones that catch a wrong sign convention. Test 3 is the
 one that catches a regression back to the plan's version. Test 5 is the paper.
+
+## Departures from this spec, as built
+
+Recorded rather than silently absorbed.
+
+**Added, because the derivations produced them after this spec was written.**
+`simplex_R` and `monoculture_R` as named anchors; `joint_jacobian`;
+`n_eff_mean_index`, the second foil; `hetero_modulus_bounds`, returning the
+bracket and the exact value together; `is_stable_mixed`, `min_corrected`,
+`rho_star_imperfect` and `critical_efficacy` from Theorem 3's exact treatment.
+
+**Changed.** `mixed_market_radius` branches on empty blocks. The spec describes
+it as the two-block secular root with a dense fallback; with `n_blind` equal to
+`0` or `N` the quadratic leaves a phantom root behind, so those cases take the
+single-block form. This is a correctness fix, not a shortcut.
+
+**Not built.** `pigouvian_wedge`, because Theorem 4's welfare page is not
+derived. An acceptance test asserts its absence so it cannot arrive by accident.
+
+**Cautions attached to two functions.** `mean_alignment` and `n_eff_mean_index`
+carry docstrings saying they are foils. `rho_star` carries one saying it is the
+policy object and not the exact criterion, since `rho > rho_star` mispredicts the
+all-blind stable market; `is_stable_mixed` is the verdict function. Acceptance
+test A5 confirms those mispredictions are real, so the caution is load-bearing
+rather than decorative.
