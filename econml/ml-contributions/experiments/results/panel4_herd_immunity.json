@@ -1,0 +1,564 @@
+{
+  "panel": "4. herd immunity",
+  "tests": "Theorem 3",
+  "params": {
+    "d": 8,
+    "kappa": 0.8,
+    "m_1": 0.15,
+    "N": 20,
+    "s": 1.0
+  },
+  "m_N": 2.43,
+  "rho_star_limit": 0.5958333333333334,
+  "critical_efficacy_gamma_PO_over_gamma": 2.43,
+  "series": [
+    {
+      "gamma_ratio": 1e-09,
+      "efficacy": 0.999999999,
+      "points": [
+        {
+          "n_corrected": 0,
+          "rho": 0.0,
+          "measured_radius": 2.43,
+          "stable": false
+        },
+        {
+          "n_corrected": 1,
+          "rho": 0.05,
+          "measured_radius": 2.3100000001184418,
+          "stable": false
+        },
+        {
+          "n_corrected": 2,
+          "rho": 0.1,
+          "measured_radius": 2.1900000002367124,
+          "stable": false
+        },
+        {
+          "n_corrected": 3,
+          "rho": 0.15,
+          "measured_radius": 2.0700000003547823,
+          "stable": false
+        },
+        {
+          "n_corrected": 4,
+          "rho": 0.2,
+          "measured_radius": 1.9500000004726152,
+          "stable": false
+        },
+        {
+          "n_corrected": 5,
+          "rho": 0.25,
+          "measured_radius": 1.830000000590164,
+          "stable": false
+        },
+        {
+          "n_corrected": 6,
+          "rho": 0.3,
+          "measured_radius": 1.7100000007073684,
+          "stable": false
+        },
+        {
+          "n_corrected": 7,
+          "rho": 0.35,
+          "measured_radius": 1.590000000824151,
+          "stable": false
+        },
+        {
+          "n_corrected": 8,
+          "rho": 0.4,
+          "measured_radius": 1.4700000009404082,
+          "stable": false
+        },
+        {
+          "n_corrected": 9,
+          "rho": 0.45,
+          "measured_radius": 1.350000001056,
+          "stable": false
+        },
+        {
+          "n_corrected": 10,
+          "rho": 0.5,
+          "measured_radius": 1.2300000011707317,
+          "stable": false
+        },
+        {
+          "n_corrected": 11,
+          "rho": 0.55,
+          "measured_radius": 1.1100000012843243,
+          "stable": false
+        },
+        {
+          "n_corrected": 12,
+          "rho": 0.6,
+          "measured_radius": 0.9900000013963636,
+          "stable": true
+        },
+        {
+          "n_corrected": 13,
+          "rho": 0.65,
+          "measured_radius": 0.8700000015062068,
+          "stable": true
+        },
+        {
+          "n_corrected": 14,
+          "rho": 0.7,
+          "measured_radius": 0.7500000016128,
+          "stable": true
+        },
+        {
+          "n_corrected": 15,
+          "rho": 0.75,
+          "measured_radius": 0.6300000017142857,
+          "stable": true
+        },
+        {
+          "n_corrected": 16,
+          "rho": 0.8,
+          "measured_radius": 0.5100000018070588,
+          "stable": true
+        },
+        {
+          "n_corrected": 17,
+          "rho": 0.85,
+          "measured_radius": 0.39000000188307693,
+          "stable": true
+        },
+        {
+          "n_corrected": 18,
+          "rho": 0.9,
+          "measured_radius": 0.27000000192000007,
+          "stable": true
+        },
+        {
+          "n_corrected": 19,
+          "rho": 0.95,
+          "measured_radius": 0.15000000182400003,
+          "stable": true
+        },
+        {
+          "n_corrected": 20,
+          "rho": 1.0,
+          "measured_radius": 2.430000000000011e-09,
+          "stable": true
+        }
+      ],
+      "measured_threshold_firms": 12,
+      "predicted_limit_threshold_firms": 12,
+      "imperfect_law_rho": 0.5884773668436215,
+      "imperfect_law_firms": 12,
+      "imperfect_law_matches": true
+    },
+    {
+      "gamma_ratio": 0.1,
+      "efficacy": 0.9,
+      "points": [
+        {
+          "n_corrected": 0,
+          "rho": 0.0,
+          "measured_radius": 2.43,
+          "stable": false
+        },
+        {
+          "n_corrected": 1,
+          "rho": 0.05,
+          "measured_radius": 2.321860276186829,
+          "stable": false
+        },
+        {
+          "n_corrected": 2,
+          "rho": 0.1,
+          "measured_radius": 2.2137068810860705,
+          "stable": false
+        },
+        {
+          "n_corrected": 3,
+          "rho": 0.15,
+          "measured_radius": 2.1055377015121763,
+          "stable": false
+        },
+        {
+          "n_corrected": 4,
+          "rho": 0.2,
+          "measured_radius": 1.9973501642674287,
+          "stable": false
+        },
+        {
+          "n_corrected": 5,
+          "rho": 0.25,
+          "measured_radius": 1.8891411034959171,
+          "stable": false
+        },
+        {
+          "n_corrected": 6,
+          "rho": 0.3,
+          "measured_radius": 1.780906579219222,
+          "stable": false
+        },
+        {
+          "n_corrected": 7,
+          "rho": 0.35,
+          "measured_radius": 1.67264162466574,
+          "stable": false
+        },
+        {
+          "n_corrected": 8,
+          "rho": 0.4,
+          "measured_radius": 1.5643398874127945,
+          "stable": false
+        },
+        {
+          "n_corrected": 9,
+          "rho": 0.45,
+          "measured_radius": 1.4559931081685062,
+          "stable": false
+        },
+        {
+          "n_corrected": 10,
+          "rho": 0.5,
+          "measured_radius": 1.3475903441415318,
+          "stable": false
+        },
+        {
+          "n_corrected": 11,
+          "rho": 0.55,
+          "measured_radius": 1.2391167772612095,
+          "stable": false
+        },
+        {
+          "n_corrected": 12,
+          "rho": 0.6,
+          "measured_radius": 1.1305518214542143,
+          "stable": false
+        },
+        {
+          "n_corrected": 13,
+          "rho": 0.65,
+          "measured_radius": 1.0218659921595061,
+          "stable": false
+        },
+        {
+          "n_corrected": 14,
+          "rho": 0.7,
+          "measured_radius": 0.9130154693488388,
+          "stable": true
+        },
+        {
+          "n_corrected": 15,
+          "rho": 0.75,
+          "measured_radius": 0.8039320696672576,
+          "stable": true
+        },
+        {
+          "n_corrected": 16,
+          "rho": 0.8,
+          "measured_radius": 0.6945032894578645,
+          "stable": true
+        },
+        {
+          "n_corrected": 17,
+          "rho": 0.85,
+          "measured_radius": 0.5845284076800762,
+          "stable": true
+        },
+        {
+          "n_corrected": 18,
+          "rho": 0.9,
+          "measured_radius": 0.47360750751557656,
+          "stable": true
+        },
+        {
+          "n_corrected": 19,
+          "rho": 0.95,
+          "measured_radius": 0.36079459768295646,
+          "stable": true
+        },
+        {
+          "n_corrected": 20,
+          "rho": 1.0,
+          "measured_radius": 0.24299999999999994,
+          "stable": true
+        }
+      ],
+      "measured_threshold_firms": 14,
+      "predicted_limit_threshold_firms": 12,
+      "imperfect_law_rho": 0.6538637402834935,
+      "imperfect_law_firms": 14,
+      "imperfect_law_matches": true
+    },
+    {
+      "gamma_ratio": 0.25,
+      "efficacy": 0.75,
+      "points": [
+        {
+          "n_corrected": 0,
+          "rho": 0.0,
+          "measured_radius": 2.43,
+          "stable": false
+        },
+        {
+          "n_corrected": 1,
+          "rho": 0.05,
+          "measured_radius": 2.3397105750195846,
+          "stable": false
+        },
+        {
+          "n_corrected": 2,
+          "rho": 0.1,
+          "measured_radius": 2.249397831613482,
+          "stable": false
+        },
+        {
+          "n_corrected": 3,
+          "rho": 0.15,
+          "measured_radius": 2.1590588219204747,
+          "stable": false
+        },
+        {
+          "n_corrected": 4,
+          "rho": 0.2,
+          "measured_radius": 2.0686900771404124,
+          "stable": false
+        },
+        {
+          "n_corrected": 5,
+          "rho": 0.25,
+          "measured_radius": 1.9782874865895148,
+          "stable": false
+        },
+        {
+          "n_corrected": 6,
+          "rho": 0.3,
+          "measured_radius": 1.8878461412443348,
+          "stable": false
+        },
+        {
+          "n_corrected": 7,
+          "rho": 0.35,
+          "measured_radius": 1.7973601289152892,
+          "stable": false
+        },
+        {
+          "n_corrected": 8,
+          "rho": 0.4,
+          "measured_radius": 1.7068222625460638,
+          "stable": false
+        },
+        {
+          "n_corrected": 9,
+          "rho": 0.45,
+          "measured_radius": 1.6162237145227873,
+          "stable": false
+        },
+        {
+          "n_corrected": 10,
+          "rho": 0.5,
+          "measured_radius": 1.5255535164426761,
+          "stable": false
+        },
+        {
+          "n_corrected": 11,
+          "rho": 0.55,
+          "measured_radius": 1.4347978623130795,
+          "stable": false
+        },
+        {
+          "n_corrected": 12,
+          "rho": 0.6,
+          "measured_radius": 1.3439391178454438,
+          "stable": false
+        },
+        {
+          "n_corrected": 13,
+          "rho": 0.65,
+          "measured_radius": 1.2529543786182393,
+          "stable": false
+        },
+        {
+          "n_corrected": 14,
+          "rho": 0.7,
+          "measured_radius": 1.1618133145648044,
+          "stable": false
+        },
+        {
+          "n_corrected": 15,
+          "rho": 0.75,
+          "measured_radius": 1.0704748451516217,
+          "stable": false
+        },
+        {
+          "n_corrected": 16,
+          "rho": 0.8,
+          "measured_radius": 0.97888181783756,
+          "stable": true
+        },
+        {
+          "n_corrected": 17,
+          "rho": 0.85,
+          "measured_radius": 0.8869521035267487,
+          "stable": true
+        },
+        {
+          "n_corrected": 18,
+          "rho": 0.9,
+          "measured_radius": 0.7945628594279873,
+          "stable": true
+        },
+        {
+          "n_corrected": 19,
+          "rho": 0.95,
+          "measured_radius": 0.7015207247527528,
+          "stable": true
+        },
+        {
+          "n_corrected": 20,
+          "rho": 1.0,
+          "measured_radius": 0.6075,
+          "stable": true
+        }
+      ],
+      "measured_threshold_firms": 16,
+      "predicted_limit_threshold_firms": 12,
+      "imperfect_law_rho": 0.7846364883401922,
+      "imperfect_law_firms": 16,
+      "imperfect_law_matches": true
+    },
+    {
+      "gamma_ratio": 0.4,
+      "efficacy": 0.6,
+      "points": [
+        {
+          "n_corrected": 0,
+          "rho": 0.0,
+          "measured_radius": 2.4299999999999997,
+          "stable": false
+        },
+        {
+          "n_corrected": 1,
+          "rho": 0.05,
+          "measured_radius": 2.3576316557214367,
+          "stable": false
+        },
+        {
+          "n_corrected": 2,
+          "rho": 0.1,
+          "measured_radius": 2.2852398514398264,
+          "stable": false
+        },
+        {
+          "n_corrected": 3,
+          "rho": 0.15,
+          "measured_radius": 2.2128222583672326,
+          "stable": false
+        },
+        {
+          "n_corrected": 4,
+          "rho": 0.2,
+          "measured_radius": 2.1403762269300546,
+          "stable": false
+        },
+        {
+          "n_corrected": 5,
+          "rho": 0.25,
+          "measured_radius": 2.0678987291841393,
+          "stable": false
+        },
+        {
+          "n_corrected": 6,
+          "rho": 0.3,
+          "measured_radius": 1.9953862882734188,
+          "stable": false
+        },
+        {
+          "n_corrected": 7,
+          "rho": 0.35,
+          "measured_radius": 1.922834891372715,
+          "stable": false
+        },
+        {
+          "n_corrected": 8,
+          "rho": 0.4,
+          "measured_radius": 1.8502398813832721,
+          "stable": false
+        },
+        {
+          "n_corrected": 9,
+          "rho": 0.45,
+          "measured_radius": 1.7775958210211995,
+          "stable": false
+        },
+        {
+          "n_corrected": 10,
+          "rho": 0.5,
+          "measured_radius": 1.704896320646085,
+          "stable": false
+        },
+        {
+          "n_corrected": 11,
+          "rho": 0.55,
+          "measured_radius": 1.6321338179013443,
+          "stable": false
+        },
+        {
+          "n_corrected": 12,
+          "rho": 0.6,
+          "measured_radius": 1.559299292483123,
+          "stable": false
+        },
+        {
+          "n_corrected": 13,
+          "rho": 0.65,
+          "measured_radius": 1.4863818923316827,
+          "stable": false
+        },
+        {
+          "n_corrected": 14,
+          "rho": 0.7,
+          "measured_radius": 1.4133684369642265,
+          "stable": false
+        },
+        {
+          "n_corrected": 15,
+          "rho": 0.75,
+          "measured_radius": 1.3402427474003789,
+          "stable": false
+        },
+        {
+          "n_corrected": 16,
+          "rho": 0.8,
+          "measured_radius": 1.266984726500579,
+          "stable": false
+        },
+        {
+          "n_corrected": 17,
+          "rho": 0.85,
+          "measured_radius": 1.1935690720522254,
+          "stable": false
+        },
+        {
+          "n_corrected": 18,
+          "rho": 0.9,
+          "measured_radius": 1.1199634357066293,
+          "stable": false
+        },
+        {
+          "n_corrected": 19,
+          "rho": 0.95,
+          "measured_radius": 1.0461257212123543,
+          "stable": false
+        },
+        {
+          "n_corrected": 20,
+          "rho": 1.0,
+          "measured_radius": 0.9719999999999999,
+          "stable": true
+        }
+      ],
+      "measured_threshold_firms": 20,
+      "predicted_limit_threshold_firms": 12,
+      "imperfect_law_rho": 0.9807956104252402,
+      "imperfect_law_firms": 20,
+      "imperfect_law_matches": true
+    }
+  ]
+}

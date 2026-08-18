@@ -1,0 +1,16 @@
+{
+  "panel": "2b. the clustered companion",
+  "tests": "Theorem 1, the mean index is a lower bound",
+  "params": {
+    "N": 10,
+    "cluster": 3,
+    "kappa": 0.8,
+    "m_1": 0.5
+  },
+  "measured_m_N": 1.3000000000000003,
+  "predicted_m_N": 1.3000000000000003,
+  "mean_index_m_N": 0.7400000000000002,
+  "truly_unstable": true,
+  "mean_index_says_stable": true,
+  "understatement_factor": 1.7567567567567566
+}

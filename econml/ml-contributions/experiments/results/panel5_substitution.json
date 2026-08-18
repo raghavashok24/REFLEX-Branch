@@ -1,0 +1,141 @@
+{
+  "panel": "5. the substitution frontier",
+  "tests": "Theorem 3, the synthesis result",
+  "params": {
+    "d": 10,
+    "kappa": 0.8,
+    "m_1": 0.15,
+    "N": 20,
+    "gamma_ratio": 1e-09
+  },
+  "curve": [
+    {
+      "s": 0.15,
+      "measured_threshold_firms": 0,
+      "measured_rho": 0.0,
+      "predicted_threshold_firms": 0,
+      "predicted_rho_star": 0.0
+    },
+    {
+      "s": 0.2,
+      "measured_threshold_firms": 0,
+      "measured_rho": 0.0,
+      "predicted_threshold_firms": 0,
+      "predicted_rho_star": 0.0
+    },
+    {
+      "s": 0.25,
+      "measured_threshold_firms": 0,
+      "measured_rho": 0.0,
+      "predicted_threshold_firms": 0,
+      "predicted_rho_star": 0.0
+    },
+    {
+      "s": 0.3,
+      "measured_threshold_firms": 0,
+      "measured_rho": 0.0,
+      "predicted_threshold_firms": 0,
+      "predicted_rho_star": 0.0
+    },
+    {
+      "s": 0.35,
+      "measured_threshold_firms": 0,
+      "measured_rho": 0.0,
+      "predicted_threshold_firms": 0,
+      "predicted_rho_star": 0.0
+    },
+    {
+      "s": 0.4,
+      "measured_threshold_firms": 2,
+      "measured_rho": 0.1,
+      "predicted_threshold_firms": 2,
+      "predicted_rho_star": 0.06458333333333344
+    },
+    {
+      "s": 0.45,
+      "measured_threshold_firms": 4,
+      "measured_rho": 0.2,
+      "predicted_threshold_firms": 4,
+      "predicted_rho_star": 0.16296296296296298
+    },
+    {
+      "s": 0.5,
+      "measured_threshold_firms": 5,
+      "measured_rho": 0.25,
+      "predicted_threshold_firms": 5,
+      "predicted_rho_star": 0.2416666666666667
+    },
+    {
+      "s": 0.55,
+      "measured_threshold_firms": 7,
+      "measured_rho": 0.35,
+      "predicted_threshold_firms": 7,
+      "predicted_rho_star": 0.30606060606060614
+    },
+    {
+      "s": 0.6,
+      "measured_threshold_firms": 8,
+      "measured_rho": 0.4,
+      "predicted_threshold_firms": 8,
+      "predicted_rho_star": 0.35972222222222217
+    },
+    {
+      "s": 0.65,
+      "measured_threshold_firms": 9,
+      "measured_rho": 0.45,
+      "predicted_threshold_firms": 9,
+      "predicted_rho_star": 0.40512820512820513
+    },
+    {
+      "s": 0.7,
+      "measured_threshold_firms": 9,
+      "measured_rho": 0.45,
+      "predicted_threshold_firms": 9,
+      "predicted_rho_star": 0.444047619047619
+    },
+    {
+      "s": 0.75,
+      "measured_threshold_firms": 10,
+      "measured_rho": 0.5,
+      "predicted_threshold_firms": 10,
+      "predicted_rho_star": 0.47777777777777786
+    },
+    {
+      "s": 0.8,
+      "measured_threshold_firms": 11,
+      "measured_rho": 0.55,
+      "predicted_threshold_firms": 11,
+      "predicted_rho_star": 0.5072916666666667
+    },
+    {
+      "s": 0.85,
+      "measured_threshold_firms": 11,
+      "measured_rho": 0.55,
+      "predicted_threshold_firms": 11,
+      "predicted_rho_star": 0.5333333333333333
+    },
+    {
+      "s": 0.9,
+      "measured_threshold_firms": 12,
+      "measured_rho": 0.6,
+      "predicted_threshold_firms": 12,
+      "predicted_rho_star": 0.5564814814814815
+    },
+    {
+      "s": 0.95,
+      "measured_threshold_firms": 12,
+      "measured_rho": 0.6,
+      "predicted_threshold_firms": 12,
+      "predicted_rho_star": 0.5771929824561404
+    },
+    {
+      "s": 1.0,
+      "measured_threshold_firms": 12,
+      "measured_rho": 0.6,
+      "predicted_threshold_firms": 12,
+      "predicted_rho_star": 0.5958333333333334
+    }
+  ],
+  "exact_matches": 18,
+  "points": 18
+}

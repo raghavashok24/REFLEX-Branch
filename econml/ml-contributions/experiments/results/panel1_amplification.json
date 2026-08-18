@@ -1,0 +1,65 @@
+{
+  "panel": "1. amplification replication",
+  "tests": "Section 3, the base result",
+  "params": {
+    "d": 8,
+    "kappa": 1.0,
+    "m_1": 0.15
+  },
+  "rows": [
+    {
+      "N": 1,
+      "predicted_n_eff": 1.0,
+      "predicted_radius": 0.15,
+      "measured_radius": 0.1499999999999999,
+      "measured_amplification": 1.0
+    },
+    {
+      "N": 2,
+      "predicted_n_eff": 2.0,
+      "predicted_radius": 0.3,
+      "measured_radius": 0.3000000000000001,
+      "measured_amplification": 2.0000000000000018
+    },
+    {
+      "N": 3,
+      "predicted_n_eff": 2.9999999999999996,
+      "predicted_radius": 0.4499999999999999,
+      "measured_radius": 0.45,
+      "measured_amplification": 3.0000000000000018
+    },
+    {
+      "N": 4,
+      "predicted_n_eff": 3.999999999999999,
+      "predicted_radius": 0.5999999999999999,
+      "measured_radius": 0.6000000000000001,
+      "measured_amplification": 4.000000000000003
+    },
+    {
+      "N": 5,
+      "predicted_n_eff": 5.0,
+      "predicted_radius": 0.75,
+      "measured_radius": 0.75,
+      "measured_amplification": 5.000000000000003
+    },
+    {
+      "N": 8,
+      "predicted_n_eff": 8.0,
+      "predicted_radius": 1.2,
+      "measured_radius": 1.2,
+      "measured_amplification": 8.000000000000005
+    }
+  ],
+  "max_rel_error": 5.551115123125783e-16,
+  "external_anchor": {
+    "published_simulator": {
+      "N=2": 1.74,
+      "N=3": 3.16
+    },
+    "predicted": {
+      "N=2": 2.0,
+      "N=3": 3.0
+    },
+    "status": "OUTSTANDING. The published values are simulator measurements; the gap is nonlinearity and flow saturation, which this environment does not model. Comparing against them requires the simulator."
+  }
+}

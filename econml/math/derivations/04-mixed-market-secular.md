@@ -233,6 +233,15 @@ threshold comes from setting the quadratic's larger root to one. The imperfect
 correction law remains accurate to well under one firm's granularity at the
 parameters the paper uses, which is stated rather than hidden.
 
+**Measured evidence that it generalizes further than it is proved to.** Panel 4,
+run at `N = 20`, `m_1 = 0.15`, `kappa = 0.8`, `s = 1`, where the law is *not*
+exact, measured thresholds of `12`, `14`, `16` and `20` firms at efficacies
+`1.00`, `0.90`, `0.75` and `0.60`. The law predicts `12`, `14`, `16` and `20`:
+four out of four, at the integer granularity that is what a market actually
+faces. This is measured in the linearized reference environment and is recorded
+as evidence, not as a proof. The exact statement away from `kappa = s = 1`
+remains the quadratic's root. [MEASURED, panel 4]
+
 ## 8. The threshold, and which form is exact
 
 **Proposition 12.** The strong-correction limit is stable if and only if
