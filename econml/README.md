@@ -102,9 +102,13 @@ LaTeX.
 
 Fixed in advance so the decision is not made under deadline pressure. In order:
 supervision from public prices (already scoped to one paragraph), then
-experiment 6, then the exact two-block root, then the free-riding diagnostic,
-then the clustered companion in experiment 2.
+experiment 6, then the free-riding diagnostic, then the clustered companion in
+experiment 2.
 
-**Never cut:** experiment 1's anchor, experiment 4, experiment 5, or the
-private-versus-systemic framing, which is the paper's reason to exist at this
-venue.
+**Never cut:** experiment 1's anchor, experiment 4, experiment 5, the exact
+two-block root, or the private-versus-systemic framing, which is the paper's
+reason to exist at this venue.
+
+The exact two-block root was third in this order until 18 Aug 2026. It came out
+once the strong-correction limit was shown to err in the unsafe direction: the
+exact root is what makes the stability criterion honest, not a refinement of it.

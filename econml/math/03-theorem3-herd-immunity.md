@@ -5,6 +5,13 @@ anchored) stabilizes a *single* firm beyond its boundary, because the corrected
 dynamics are governed by the objective curvature `gamma_PO` rather than by the
 cobweb. It has never been asked what correction does in the *game*.
 
+**Complete proof:** [`derivations/04-mixed-market-secular.md`](derivations/04-mixed-market-secular.md),
+certified by
+[`verify_theorem3_herd_immunity.py`](../ml-contributions/certificates/verify_theorem3_herd_immunity.py),
+70 checks. **Where this note and the derivation disagree, the derivation is
+right.** Three of this note's statements did not survive contact with the exact
+root, and they are marked inline below.
+
 ## Setup
 
 A mixed market: `N_b` blind firms with response slope `m_1`, and `N - N_b`
@@ -149,14 +156,44 @@ is the headline. [TO BUILD]
 Companion diagnostic: private P&L of corrected against blind firms, exhibiting
 the public-good structure directly. Fifth in the de-scope order.
 
+## Corrections this note needs
+
+Recorded inline rather than by silent edit, so the disagreement is visible.
+
+**1. The stability criterion above is not exact as written.** `rho > rho*(s)`
+with `rho* = max(0, 1 - N_c/N)` mispredicts the all-blind market that is stable
+because it needs no correction, since the clamp at zero combined with a strict
+inequality excludes `N_b = N`. The primitive form `N_b < N_c(s)` is exact, on
+4000 draws with zero mismatches. Use it as the theorem and keep `rho*` as the
+policy object.
+
+**2. The verification claim above is about the limit, not the market.** "Checked
+against dense eigensolves on 4000 random draws with zero mismatches" holds for
+the strong-correction limit's radius. It says nothing about the market at finite
+`gamma_PO`, which is a different and larger number.
+
+**3. The limit is optimistic, not conservative.** See below.
+
 ## Open items
 
-1. Write out the two-block quadratic. [TO BUILD]
-2. Check whether `rho*` should be reported as a fraction or as an integer count
-   of firms. `rho* N` is generally not an integer, so the realized threshold is
-   `ceil(rho* N)` firms. State that; it matters at small `N`, which is the
-   regime the experiment runs in.
-3. Confirm the strong-correction limit is approached from the stable side as
-   `gamma_PO` grows, so the limit theorem is conservative rather than optimistic.
-   If it is not, the paper must say which direction the approximation errs in.
-   [TO BUILD]
+1. ~~Write out the two-block quadratic.~~ **Done**, `derivations/04` Section 3,
+   exact to `2.5e-14`. Empty blocks need the single-block form; the quadratic
+   leaves a phantom root otherwise.
+2. ~~Check whether `rho*` should be reported as a fraction or an integer count.~~
+   **Done.** The count is `N - ceil(N_c) + 1`, not `ceil(rho* N)`. The two agree
+   except at exact-integer `N_c`, where the latter is off by one.
+3. ~~Confirm the strong-correction limit is approached from the stable side.~~
+   **Done, and it is not.** See below.
+
+**The limit is optimistic.** The radius is nondecreasing in `gamma/gamma_PO`, by
+Perron-Frobenius on an entrywise-nonnegative matrix, so the limit under-states it.
+On random draws it calls `11.8%` of configurations stable that are unstable at
+finite correction. The paper must state the direction, and the exact root moves
+out of the de-scope order.
+
+**The repair is a better result than the thing it repairs.** At `kappa = s = 1`
+the exact threshold is `(1 - 1/m_N)/(1 - theta)` with `theta = gamma/gamma_PO`,
+the epidemiological **imperfect-vaccine** coverage law, and it carries a critical
+efficacy `gamma_PO/gamma > m_N` past which no corrected fraction works. The
+correspondence the paper claims now transfers a refinement and not just a
+threshold, which is evidence the analogy is structural.

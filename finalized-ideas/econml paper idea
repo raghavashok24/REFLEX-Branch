@@ -369,6 +369,31 @@ draws with zero mismatches before this plan was written. The exact
 finite-`gamma_PO` version replaces the clean formula with the quadratic's
 root, and the paper reports both. [VERIFIED numerically / DERIVED]
 
+**Correction, 18 Aug 2026.** The exact quadratic has since been derived and the
+limit's error direction measured. Three amendments, detailed in
+`econml/math/derivations/04-mixed-market-secular.md`:
+
+1. **The limit is optimistic, not conservative.** The radius is nondecreasing in
+   `gamma/gamma_PO`, so the strong-correction limit under-states it and calls
+   roughly one configuration in eight stable that is unstable at finite
+   correction. The paper states the direction alongside the limit.
+2. **The exact two-block root leaves the de-scope order.** It cannot be cut, since
+   shipping the limit alone would state a stability criterion that errs unsafe
+   without flagging it. See the amended de-scope order in Section 14.
+3. **The clean law generalizes rather than merely failing.** At `kappa = s = 1`
+   the exact threshold is `(1 - 1/m_N)/e` with efficacy `e = 1 - gamma/gamma_PO`.
+
+That third item is the epidemiological imperfect-vaccine coverage law, and it
+carries a critical efficacy: correction stops working entirely below
+`gamma_PO/gamma = m_N`. The `R_0` correspondence therefore transfers a refinement
+and not just a threshold, which strengthens the claim that it is structural.
+
+The verification claim above should also be read narrowly: those 4000 draws
+check the limit's radius, not the market's at finite `gamma_PO`. And the
+criterion `rho > rho*(s)` is not exact as written, since the clamp at zero
+excludes the all-blind market that is stable without any correction; the
+primitive form `N_b < N_c(s)` is exact.
+
 **The synthesis result: diversity and correction are substitutes.** Because
 `rho*(s)` is *increasing* in `s`, a market can reach stability along either
 axis. Un-blind more agents, or share fewer models. At `N = 20`, `m_1 = 0.15`,
@@ -606,11 +631,18 @@ silently; beyond-boundary probe readings are diagnostics, not slopes.
 - **Aug 29:** submit, with the day as buffer rather than as work.
 
 **De-scope order**, in order: Section 9 entirely (it is already scoped to one
-paragraph) -> experiment 6 (keep Theorem 4 as theory) -> the exact two-block
-root (keep the limit theorem plus simulation) -> the free-riding diagnostic
--> the clustered companion in experiment 2. **Never cut:** experiment 1's
-anchor, experiment 4, experiment 5, or the private-vs-systemic framing, which
-is the paper's reason to exist at this venue.
+paragraph) -> experiment 6 (keep Theorem 4 as theory) -> the free-riding
+diagnostic -> the clustered companion in experiment 2. **Never cut:**
+experiment 1's anchor, experiment 4, experiment 5, the exact two-block root, or
+the private-vs-systemic framing, which is the paper's reason to exist at this
+venue.
+
+**Amended 18 Aug 2026.** The exact two-block root was third in this order and has
+been removed from it. The strong-correction limit is now known to err in the
+unsafe direction, so the exact root is what makes Section 7's stability criterion
+honest rather than a refinement of it. Cutting it would leave the paper asserting
+an optimistic criterion without saying so, which is the one failure mode the
+claims ledger exists to prevent.
 
 **Anonymization checklist (double-blind).** No author block; no repository
 URL anywhere; scrubbed PDF metadata and figure paths; simulator described

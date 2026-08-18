@@ -69,17 +69,27 @@ Proof in [`../math/derivations/03-cadence-composition.md`](../math/derivations/0
 
 ## Section 6, Theorem 3
 
+Proof in [`../math/derivations/04-mixed-market-secular.md`](../math/derivations/04-mixed-market-secular.md),
+which supersedes `../math/03` where they disagree.
+
 | # | Claim | Status | Evidence |
 |---|---|---|---|
-| 6.1 | Strong-correction limit: stability iff the blind block is stable | `[DERIVED]` | `../math/03`; C13 |
-| 6.2 | `rho*(s) = max(0, 1 - N_c(s)/N)` | `[VERIFIED]` numerically | C14, 4000 draws, zero mismatches |
-| 6.3 | Collapse to `rho* = 1 - 1/m_N` at `kappa = s = 1` | `[DERIVED]` | C15 |
-| 6.4 | The `R_0` correspondence is structural, both being spectral radii | argument | Diekmann et al., 1990 |
-| 6.5 | `rho*` increasing in `s`, so diversity and correction are substitutes | `[DERIVED]` | C16 |
-| 6.6 | Worked thresholds: `0.596 / 0.242 / 0` at `s = 1 / 0.5 / 0.2` | `[VERIFIED]` by recomputation | C17 |
-| 6.7 | Exact two-block secular root | `[TO BUILD]` | third in de-scope order |
-| 6.8 | The limit is approached from the stable side | `[TO BUILD]` | C18. **If it fails, say which way it errs** |
+| 6.0 | **Exact radius from the two-block quadratic**, with the single-block branch for empty blocks | `[VERIFIED]` | `derivations/04`; H1, `2.5e-14` on 6000 draws; H2 |
+| 6.1 | Strong-correction limit: stability iff the blind block is stable | `[VERIFIED]` | now a corollary of 6.0; H3, C13 |
+| 6.2 | Stability iff `N_b < N_c(s)` | `[VERIFIED]` | C14, 4000 draws, zero mismatches |
+| 6.2a | The clamped `rho > rho*` is **not** an exact restatement of 6.2 | `[VERIFIED]` | C14, 134 mismatches, all the all-blind stable market. **Note corrected** |
+| 6.3 | Collapse to `rho* = 1 - 1/m_N` at `kappa = s = 1` | `[VERIFIED]` | C15 |
+| 6.4 | The `R_0` correspondence is structural, both being spectral radii | argument, now supported by 6.10 | Diekmann et al., 1990 |
+| 6.5 | `rho*` increasing in `s`, so diversity and correction are substitutes | `[VERIFIED]` | C16, strict where `rho* > 0` |
+| 6.6 | Worked thresholds: `0.596 / 0.242 / 0` at `s = 1 / 0.5 / 0.2` | `[VERIFIED]` | C17 |
+| 6.7 | Exact two-block secular root | `[VERIFIED]` | 6.0. **Removed from the de-scope order, see 6.8** |
+| 6.8 | **The limit is approached from the UNSTABLE side: it is optimistic, not conservative** | `[VERIFIED]` | C18, zero monotonicity violations on 3000 draws; `11.8%` of draws flip verdict. **The plan's hoped-for direction is false** |
 | 6.9 | Correction is a public good, under-supplied in equilibrium | argument | Bergstrom, Blume and Varian, 1986 |
+| 6.10 | **Imperfect correction: `rho*(e) = (1 - 1/m_N)/e` at `kappa = s = 1`, with efficacy `e = 1 - gamma/gamma_PO`** | `[VERIFIED]` | `derivations/04` Thm 3'; H5, `1.8e-15`. The epidemiological imperfect-vaccine law |
+| 6.11 | **Critical efficacy: no corrected fraction stabilizes unless `gamma_PO/gamma > m_N`** | `[VERIFIED]` | H6. Structural parallel of 5.3 |
+| 6.12 | Realized threshold is `N - ceil(N_c) + 1` firms, not `ceil(rho* N)` | `[VERIFIED]` | H4, exact on 3000 draws; the two differ at exact-integer `N_c` |
+| 6.13 | Correction never backfires: the radius is monotone in `gamma/gamma_PO` | `[VERIFIED]` | C18, Perron-Frobenius |
+| 6.14 | Three or more correction levels; correction that moves `R` | `[DEFERRED]` | named, not attempted |
 
 ## Section 7, Theorem 4
 
@@ -118,12 +128,25 @@ Proof in [`../math/derivations/03-cadence-composition.md`](../math/derivations/0
    **Closed.** `../math/derivations/02` proves the entrywise bound and its
    spectral consequence with an explicit failure probability. The sharp
    operator-norm rate is now tracked separately as 4.14, `[DEFERRED]`.
-2. **6.7** and **6.8** are the two outstanding pieces of Theorem 3. 6.8 is the
-   more important one, because a failure changes what the paper claims rather
-   than only what it proves.
+2. ~~**6.7** and **6.8** are the two outstanding pieces of Theorem 3.~~
+   **Closed, and 6.8 failed.** See the note below.
 3. **7.1** and the welfare page are the whole of Theorem 4's remaining work.
 4. Every `[TO BUILD]` experiment. Until a panel runs, the claim it tests holds
    at `[DERIVED]` and the paper must not imply measurement.
+
+## Note on 6.8, the one claim that failed
+
+The strong-correction limit is optimistic rather than conservative. As the
+previous version of this ledger anticipated, that changed what the paper claims
+and not only what it proves: the exact root is now the theorem, the limit is a
+corollary carrying a stated error direction, and two new results (6.10, 6.11)
+replace the clean law with a strictly larger claim. The de-scope order is amended
+in the plan of record, since shipping the limit alone would state an unsafe
+criterion without flagging it.
+
+Worth recording that the ledger did its job here. 6.8 was flagged in advance as
+the claim whose failure would matter most, and it was checked before the section
+was written rather than after.
 
 ## Note on the Section 4 and 5 upgrades
 
