@@ -36,4 +36,4 @@ Recorded here so they are not lost between the plan and the paper.
 
 | Where | Issue | Resolution |
 |---|---|---|
-| Plan Section 5, Theorem 1 anchors | "maximal diversity (simplex responses) gives `m_1(1-kappa)`" is not the spectral radius | The simplex configuration matches `m_1(1-kappa)` on one eigenvalue, not on `lambda_max`. Its spectral radius is `m_1(1 + kappa/(N-1))`. Detail and the corrected anchor in [`01`](01-theorem1-alignment.md) |
+| Plan Section 5, Theorem 1 anchors | "maximal diversity (simplex responses) gives `m_1(1-kappa)`" is not the spectral radius | The simplex configuration matches `m_1(1-kappa)` on one eigenvalue, not on `lambda_max`. Its spectral radius is `m_1(1 + kappa/(N-1))`. Verified numerically and **the plan of record has been corrected**. Detail in [`01`](01-theorem1-alignment.md), evidence in [`verify_theorem1_anchors.py`](../ml-contributions/certificates/verify_theorem1_anchors.py) |

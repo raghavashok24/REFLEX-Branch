@@ -71,6 +71,15 @@ in the spectrum and **does** match the base theory's differential-mode
 eigenvalue, so the consistency check the plan wanted is real. It is not the
 spectral radius. The spectral radius is `m_1(1 + kappa/(N-1))`.
 
+**Verified numerically**, by `../ml-contributions/certificates/verify_theorem1_anchors.py`,
+two independent ways. Analytically from `R_simplex`, and constructively from
+actual unit response vectors summing to zero, whose measured Gram matrix
+reproduces the analytic form to `4e-16`. The constructive check is the one that
+matters: it rules out the possibility that the result is an artifact of how the
+matrix was written down. At `m_1 = 0.15`, `kappa = 0.8`, across `N` in
+`{3, 5, 10, 30, 50}`, `m_1(1-kappa) = 0.03` is in the spectrum in every case
+and is the radius in none. [VERIFIED]
+
 Two things follow, both worth keeping.
 
 *The mode labels swap.* Under monoculture the all-ones direction carries the
@@ -89,7 +98,8 @@ forces mean off-diagonal alignment `>= -1/(N-1)`, with equality iff the
 responses sum to zero. So a mean-alignment index calls the simplex the most
 diverse configuration available. Spectrally it is *worse* than orthogonality:
 `N/(N-1) > 1`. The mean index does not merely understate risk, it does not order
-configurations correctly. [DERIVED]
+configurations correctly. Checked at `N` in `{5, 10, 30}`: the simplex has
+strictly lower mean and strictly higher `lambda_max` in every case. [VERIFIED]
 
 ## The supply chain
 
@@ -140,9 +150,10 @@ At `kappa = 0.8`:
 | Clustered (true) | `3.0` | `2.60` | `m_1 = 0.385` |
 | Uniform, same mean | `1.6` | `1.48` | `m_1 = 0.676` |
 
-A market at `m_1 = 0.5` is unstable, and a mean-similarity index calls it safe
-with margin. The understatement in `N_eff` is a factor of `1.76`. This panel is
-experiment 2's companion. [DERIVED by counterexample]
+A market at `m_1 = 0.5` is unstable, running `m_N = 1.30`, and a mean-similarity
+index reports `0.74` and calls it safe with margin. The understatement in
+`N_eff` is a factor of `1.757`. This panel is experiment 2's companion.
+[VERIFIED by counterexample]
 
 **Rule, stated in the paper and enforced in every note here: all stability
 claims use the spectral form, never a mean.**
@@ -209,8 +220,11 @@ enters. See literature cluster F.
 
 1. Prove the `O(1/d)` concentration statement at the level of a bound, not an
    expectation. Currently stated in expectation. [TO BUILD]
-2. Certificate for the simplex spectrum, since it is now a correction to the
-   plan rather than a confirmation of it. [TO BUILD]
+2. ~~Certificate for the simplex spectrum.~~ **Done**, and the plan of record
+   was corrected to match. See
+   `../ml-contributions/certificates/verify_theorem1_anchors.py`.
 3. Decide whether the Perron-Frobenius condition on A5 goes in the body or a
    footnote. Leaning body, one sentence, because it is cheap and a spectral
    referee will look for it.
+4. Fold the script into the base project's verification layer. It prints a
+   report rather than asserting, so it cannot fail loudly yet. [TO BUILD]

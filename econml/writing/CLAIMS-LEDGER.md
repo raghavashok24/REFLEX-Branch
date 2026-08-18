@@ -33,12 +33,12 @@ diff.
 | 4.1 | `m_N = m_1 (1 + kappa(lambda_max(R) - 1))` for equal moduli | `[DERIVED]` | `../math/01`; certificates C1, C2, C3 |
 | 4.2 | Monoculture corner recovers the base law | `[VERIFIED]` | C1 |
 | 4.3 | Orthogonal responses give `m_N = m_1` | `[VERIFIED]` | C3 |
-| 4.4 | Simplex spectrum contains `m_1(1-kappa)`; radius is `m_1(1+kappa/(N-1))` | `[DERIVED]` | C4. **Corrects the plan of record** |
+| 4.4 | Simplex spectrum contains `m_1(1-kappa)`; radius is `m_1(1+kappa/(N-1))` | `[VERIFIED]` | C4, run. **Plan of record corrected to match** |
 | 4.5 | The binding mode is the common one iff `R` has nonnegative entries | `[DERIVED]` | Perron-Frobenius; `../math/01` |
 | 4.6 | Supply chain: `N_eff = 1 + kappa*s*(N-1)` | `[DERIVED]` | C2, C6 |
 | 4.7 | `r_ij -> s` with `O(1/d)` relative fluctuation | `[DERIVED]` in expectation | C6. **Open: needs a bound, not an expectation** |
-| 4.8 | Clustered counterexample: `N_eff` 2.60 against 1.48 by the mean index | `[DERIVED]` | C5 |
-| 4.9 | Mean alignment does not order configurations correctly | `[DERIVED]` | simplex against orthogonal; `../math/01` |
+| 4.8 | Clustered counterexample: `N_eff` 2.60 against 1.48 by the mean index | `[VERIFIED]` | C5, run. Factor 1.757 |
+| 4.9 | Mean alignment does not order configurations correctly | `[VERIFIED]` | C4, run. Simplex against orthogonal at `N` in {5,10,30} |
 | 4.10 | Heterogeneous moduli: `max_i m_i <= rho(J) <= max_i m_i * N_eff` | `[DERIVED]` | C7, exact in three limits |
 | 4.11 | Share-weighted alignment, fully heterogeneous reduction | `[DEFERRED]` | named, not attempted |
 

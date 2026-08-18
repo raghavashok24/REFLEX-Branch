@@ -159,10 +159,40 @@ so the base result is the monoculture corner and nothing more. Anchors, each
 checked independently: `R = 1 1'` recovers `N_eff = 1 + kappa(N-1)` and the
 measured `1.74x / 3.16x`; orthogonal responses give `m_N = m_1`, so a hundred
 firms perturbing the environment in a hundred orthogonal directions are
-dynamically one firm; maximal diversity (simplex responses) gives
-`m_1(1-kappa)`, independently matching the differential-mode eigenvalue the
-base theory derives by a completely different route. Two derivations landing
-on one number. [VERIFIED anchors / DERIVED]
+dynamically one firm; and maximal diversity (simplex responses,
+`r_ij = -1/(N-1)`) puts `m_1(1-kappa)` in the spectrum, on the all-ones
+direction, independently matching the differential-mode eigenvalue the base
+theory derives by a completely different route. Two derivations landing on one
+number. [VERIFIED anchors / DERIVED]
+
+**Correction to the third anchor, and it improves the result.** Earlier drafts
+of this plan said the simplex configuration *gives* `m_1(1-kappa)`, meaning the
+spectral radius. It does not. `R_simplex = (N/(N-1)) I - (1/(N-1)) 1 1'` has
+eigenvalue `0` on the all-ones direction and `N/(N-1)` on its complement, so
+`m_1(1-kappa)` is the *most stable* mode and the radius is
+
+```
+   rho(J)|_simplex  =  m_1 ( 1 + kappa/(N-1) )   ->   m_1   as N grows.
+```
+
+The consistency check survives intact, since `m_1(1-kappa)` still appears in
+the spectrum by two independent routes; only the claim that it is the governing
+eigenvalue was wrong. Verified numerically two ways: analytically from
+`R_simplex`, and constructively from actual unit response vectors summing to
+zero, whose measured Gram matrix reproduces the analytic form to `4e-16`, so
+this is not an artifact of how the matrix was written down.
+
+Two things follow, both worth keeping. **The mode labels swap.** Under
+monoculture the all-ones direction carries the largest eigenvalue; under the
+simplex it carries `0`, and the binding modes are the differential ones. So
+"the common mode binds" needs a stated condition: it holds when `R` has
+nonnegative entries, where Perron-Frobenius puts the leading eigenvector in the
+nonnegative orthant, which is exactly "no firm's feedback anti-aligns with
+another's". Shared vendors and shared corpora produce positive alignment, so
+the realistic regime satisfies it. State the condition in the body rather than
+assuming it silently. **And the simplex becomes a second counterexample to
+mean-based diversity indices**, sharper than the clustered one; see below.
+[VERIFIED numerically]
 
 **The supply chain.** Decompose each firm's response into shared and
 idiosyncratic parts, `E_i = sqrt(s) E_shared + sqrt(1-s) Xi_i`, where
@@ -204,13 +234,23 @@ cheapest available referee objection ("you renamed effective rank"). What is
 new is the object it is computed from - response Jacobians rather than
 returns - and the condition it enters.
 
-**Why the naive diversity index fails.** Mean alignment understates
-*clustered* alignment: three tightly-aligned firms among ten
-otherwise-orthogonal ones destabilize a subspace the average barely
-registers. The vendor-with-a-plurality topology, not the monopoly, is the
-realistic case, and it gets its own experimental panel. Rule the paper
-follows: **all stability claims use the spectral form, never a mean.**
-[DERIVED by counterexample]
+**Why the naive diversity index fails, now with two counterexamples of
+different character.** Mean alignment understates *clustered* alignment: three
+tightly-aligned firms among ten otherwise-orthogonal ones give
+`lambda_max(R) = 3` and `N_eff = 2.60` at `kappa = 0.8`, against `1.48` for the
+uniform configuration with the identical mean of `0.0667`, an understatement of
+`1.76x`. Concretely, a market at `m_1 = 0.5` runs `m_N = 1.30` and is unstable
+while the mean index reports `0.74` and calls it safe with margin. The
+vendor-with-a-plurality topology, not the monopoly, is the realistic case, and
+it gets its own experimental panel.
+
+The simplex makes the sharper point in fewer words: it *minimizes* mean
+alignment at `-1/(N-1)`, yet its `lambda_max = N/(N-1)` exceeds orthogonality's
+`1`. So the mean does not merely understate risk, it **does not order
+configurations correctly**, and fails as a ranking rather than only as a level.
+Both counterexamples verified numerically. Rule the paper follows: **all
+stability claims use the spectral form, never a mean.**
+[VERIFIED by counterexample]
 
 **Scope line, stated honestly.** Theorem 1 is exact for equal moduli. With
 heterogeneous `m_i` the tempting mean-modulus formula is *provably false* -

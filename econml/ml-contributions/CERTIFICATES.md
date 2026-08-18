@@ -11,19 +11,32 @@ is the thing the simulator does.
 
 ## Theorem 1
 
-| # | Checks | Tolerance |
-|---|---|---|
-| C1 | `n_eff(1 1', kappa)` equals the base law `1 + kappa(N-1)`, `N` in `2..50` | machine |
-| C2 | `n_eff_supply_chain` equals `n_eff(supply_chain_R(...))`, two routes to one number | machine |
-| C3 | `n_eff(I, kappa) == 1`, so orthogonal responses are dynamically one firm | machine |
-| C4 | **Simplex spectrum.** `lambda_max(R_simplex) == N/(N-1)`, and `m_1(1-kappa)` is in the Jacobian's spectrum but is not its radius | machine |
-| C5 | **Clustered counterexample.** `N_eff` from `lambda_max` exceeds `N_eff` from the mean-alignment index by the factor recorded in the math note | `1e-12` |
-| C6 | **Concentration.** `r_ij -> s` as `d` grows, with the residual scaling as `O(1/d)` | fit, `R^2 > 0.95` |
-| C7 | Heterogeneous-modulus bounds hold: `max_i m_i <= rho(J) <= max_i m_i * N_eff`, on random draws, exact in the three stated limits | machine at limits |
+| # | Checks | Tolerance | State |
+|---|---|---|---|
+| C1 | `n_eff(1 1', kappa)` equals the base law `1 + kappa(N-1)`, `N` in `2..50` | machine | **run** |
+| C2 | `n_eff_supply_chain` equals `n_eff(supply_chain_R(...))`, two routes to one number | machine | |
+| C3 | `n_eff(I, kappa) == 1`, so orthogonal responses are dynamically one firm | machine | **run** |
+| C4 | **Simplex spectrum.** `lambda_max(R_simplex) == N/(N-1)`, and `m_1(1-kappa)` is in the Jacobian's spectrum but is not its radius. Also the ordering failure: simplex has lower mean alignment and higher `lambda_max` than orthogonality | machine | **run** |
+| C5 | **Clustered counterexample.** `N_eff` from `lambda_max` exceeds `N_eff` from the mean-alignment index by 1.757 at `kappa = 0.8` | `1e-12` | **run** |
+| C6 | **Concentration.** `r_ij -> s` as `d` grows, with the residual scaling as `O(1/d)` | fit, `R^2 > 0.95` | |
+| C7 | Heterogeneous-modulus bounds hold: `max_i m_i <= rho(J) <= max_i m_i * N_eff`, on random draws, exact in the three stated limits | machine at limits | |
 
-C4 exists because the plan of record stated this anchor incorrectly. It is a
-regression guard against reverting to the wrong version, and its docstring says
-so.
+C1, C3, C4 and C5 are implemented in
+[`certificates/verify_theorem1_anchors.py`](certificates/verify_theorem1_anchors.py)
+and have been run. C4 exists because the plan of record stated this anchor
+incorrectly; the plan has since been corrected, so C4 is now a regression guard
+against reverting to the wrong version rather than a live disagreement.
+
+The script checks the simplex two independent ways: analytically from
+`R_simplex`, and constructively from actual unit response vectors summing to
+zero. The constructive path is the load-bearing one, since it rules out the
+result being an artifact of how the matrix was written down, and it reproduces
+the analytic form to `4e-16`.
+
+**Outstanding on this file:** the script is written as a standalone report, not
+as an assertion-based check that fails loudly, which is what the definition at
+the top of this document requires. Convert it and fold it into the base
+project's verification layer. [TO BUILD]
 
 ## Theorem 2
 
