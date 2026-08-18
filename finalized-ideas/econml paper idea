@@ -1,557 +1,131 @@
 # The EconML Paper, Explained (finalized plan)
 
-## "Algorithmic Monoculture as Systemic Risk: the Effective Number of Independent Models"
+## "Herd Immunity for Markets of Adaptive Models: Learning Externalities and the Effective Number of Independent Learners"
 
 **Workshop:** EconML @ NeurIPS 2026 (Atlanta, Dec 12/13). Submit **Aug 29,
 2026**. Long format: 9 pages main content + unlimited appendix.
 **Double-blind.** In-person presentation required.
 
-**Scope statement.** This document specifies the paper that ships on Aug 29
-and separates it from the longer program the appendix carries toward a
-journal or main-track version. Status flags: **[VERIFIED]** = checked
-numerically / follows from certified base results; **[PROVABLE]** = standard
-machinery, low risk; **[HARD]** = genuine technical work, stated with proof
-sketch at the workshop and completed later.
+**What this document is.** The single finalized EconML plan, merging the
+two drafts that preceded it: the learning-externality spine with its
+cadence, herd-immunity and Pigouvian results, and the effective-number-of-
+independent-models layer with its monoculture and AI-supply-chain reach. The
+merge is not a staple job. The two drafts meet at one substitution -
+`m_N = N_eff * m_1` with `N_eff` set by *model alignment* rather than by
+headcount - and that substitution makes every control result inherit the
+supply-chain story, which is where the paper's new content comes from.
+
+**Status flags.** **[VERIFIED]** = follows from certified base results or
+already checked numerically; **[DERIVED]** = worked out for this paper,
+derivation sketched here, low proof risk; **[TO BUILD]** = new experiment or
+configuration; **[DEFERRED]** = stated in the body, completed for the journal
+version.
 
 **Design principle.** This is an economics workshop. The economic mechanism
-leads, the spectral machinery serves it. Results are ordered by how much an
-EconML reviewer will care, not by technical difficulty. Anything whose
-interest is computational rather than economic lives in the appendix.
+leads and the spectral machinery serves it. Results are ordered by how much
+an EconML reviewer will care, not by technical difficulty. Anything whose
+interest is computational lives in the appendix.
 
 ---
 
 ## 1. The idea in one paragraph
 
-The monoculture literature says shared models correlate *outcomes* - a
-static harm. This paper asks what monoculture does to ecosystems of models
-that **retrain** on data their own deployments generate, and the answer is a
-different kind of harm with different mathematics: shared models align the
-*directions* of the learners' performative feedback, and aligned feedback
-resonates. The systemic variable is not the number of firms but the
-**effective number of independent models**, the leading eigenvalue of the
-correlation matrix of the firms' performative responses. Fifty dealers
-fine-tuning one vendor's foundation model are, dynamically, close to one very
-large learner, and the market they share inherits that learner's instability.
-Three consequences follow, and they are the paper. First, a **certification
-gap**: every firm can pass an individual stability test while the ecosystem
-fails a market-level one, so per-model evaluation is structurally
-insufficient in a shared endogenous environment. Second, a **supply-chain
-stability boundary** in (number of firms) x (shared-model fraction) that
-turns foundation-model concentration from a talking point into a term in a
-condition. Third, an **adoption game** in which monoculture is the Nash
-destination of unregulated model choice, with a price of anarchy in stability
-growing linearly in market size and two closed-form interventions. A
-supervision result closes the loop: because `R` is unobservable to any
-outsider, we give a statistic a regulator can compute from public prices
-alone, and show it sharpens exactly as the ecosystem approaches the boundary.
+An individual learning agent can pass every stability test we know how to run
+and still help destabilize the market it operates in. When adaptive agents
+share an environment that reacts to their decisions - dealers whose quotes
+reshape a common pool of informed flow, recommenders competing for one
+attention pool, pricers facing one demand curve - each agent's retraining
+changes the data every *other* agent will learn from next. That coupling is a
+**learning externality**: no agent internalizes the effect of its own
+adaptation on the environment its competitors face, and feedback that is
+harmless in one agent compounds across many. Two questions follow, and the
+paper answers both. *What sets the strength of the externality?* Not the
+number of firms but the **effective number of independent learners**, a
+spectral measure of how aligned the firms' feedback directions are: fifty
+dealers fine-tuning one vendor's foundation model are dynamically close to
+one very large learner, so foundation-model concentration enters the
+stability condition as a term rather than as a talking point. *What can be
+done about it?* Three closed-form levers, all expressed in that one quantity:
+a **crowding-cadence frontier** saying how much slower everyone must retrain
+as the market's effective crowding rises, and the crowding level past which
+no cadence helps; a **herd-immunity threshold** saying the market is stable
+iff the fraction of agents running feedback-aware corrected updates exceeds
+`1 - 1/m_N`, exactly the epidemiological `1 - 1/R_0` law with the systemic
+modulus as the reproduction number; and a **Pigouvian wedge** pricing the
+externality. The synthesis result is that the last two trade off against each
+other: **model diversity and corrected learning are substitutes**, and the
+paper gives the frontier along which a market can buy stability with either.
 
-## 2. Why this is a new framework, and why this venue wants it
+## 2. Fit to the EconML call
 
-**The framework.** `N` heterogeneous learners, each reshaping a shared
-environment, coupled through spillover; stability, welfare, adoption
-incentives, and observability all expressed through one object, the alignment
-structure of the learners' response Jacobians. The three adjacent literatures
-each lack a piece: monoculture (Kleinberg-Raghavan; Bommasani et al.) is
-static and has no dynamics; multiplayer performative prediction (Brown et
-al.; Narang et al.; Piliouras-Yu) has dynamics but homogeneous-coupling
-conditions and no model-provenance structure, no adoption game, no
-observability theory; the systemic-risk literature has spectra and early
-warning but no learning micro-foundation. The related-work section proves the
-deltas rather than asserting them - in particular against Narang et al.'s
-heterogeneous decision-dependent games, whose conditions bound couplings by
-magnitudes and are blind to direction: alignment is precisely the directional
-information their sufficient conditions discard, and the paper exhibits an
-ecosystem that their magnitude conditions call borderline that alignment
-shows is stable, and vice versa. [PROVABLE - construct the two examples
-explicitly]
-
-**What the venue asked for.** EconML's Theme 2 ("Ecosystems with many
-interacting models") lists, verbatim: *"Algorithmic monoculture and model
+Verbatim Theme 2 bullets hit: *"Algorithmic monoculture and model
 multiplicity"*, *"Feedback loops and performative prediction effects"*,
 *"Market concentration among AI service providers"*, *"AI supply chains and
 their dynamics"*, *"Multi-agent learning dynamics in economic environments"*,
-and *"Ecosystem-level incentive design"*. One model hits all six. The paper
-also carries the three things an economics-literate audience checks for and
-ML submissions usually lack: an explicit equilibrium analysis, a welfare
-statement (the instability externality and its price of anarchy), and an
-identification argument (what an outside observer can and cannot infer, with
-a placebo design on real data).
+and *"Ecosystem-level incentive design"*. All six, with one model. Neither
+predecessor draft managed that: the externality draft carried the policy
+apparatus but no monoculture or supply-chain angle, and the alignment draft
+carried those but spent its page budget on spectral machinery this audience
+does not grade on.
 
-**Why still REFLEX-based.** The base project supplies the only setting we
-know of where all of this is *falsifiable end-to-end*: a genuine `N`-dealer
-simulator (bit-for-bit single-dealer reduction at `N = 1`), the homogeneous
-special case already verified against theory (measured amplification
-`1.74x / 3.16x` vs predicted `N_eff = 2 / 3` - the new theory must reproduce
-these as its `R = 11'` column, an external validation checkpoint), closed-form
-constants computed from microstructure primitives rather than fitted, and a
-36-year real-data panel for the supervision leg.
+The paper also carries the three things an economics-literate audience checks
+for and pure-ML submissions usually lack: an explicit externality model with
+a welfare statement, closed-form policy levers of all three standard types
+(quantity, technology, price), and an honest empirical design with a placebo.
+Its central message - individual model evaluation cannot certify a market of
+models - is an economics claim argued with economics tools.
 
-## 3. Prior work this paper builds on and cites
+## 3. Background: the base result this builds on
 
-Beyond the three literatures above, two prior papers are load-bearing and
-both are cited by DOI. Under double-blind both are cited neutrally in the
-third person, as any public preprint or published article would be; neither
-is described as the authors' own work, and no phrasing of the form "our
-earlier paper" appears anywhere in the submission.
-
-**REFLEX** (*Reflexive Equilibrium Fixed-point Learning for Endogenous
-eXchanges*, arXiv:2608.16155,
-<https://doi.org/10.48550/arXiv.2608.16155>) is the direct base. It derives
-the performative retraining modulus `m = epsilon*beta/gamma` from
-microstructure primitives rather than treating its constants as unobservable,
-validates predicted against measured stability within 8% in simulation, proves
-the multi-dealer case for *identical* dealers sharing one pool of informed
-flow, and calibrates on 36 years of corporate-bond data where the stability
-margin contracts roughly `4.3-4.4x` from calm to crisis. Everything this
-paper does sits strictly above that: REFLEX's multi-dealer result is the
-homogeneous corner `R = 1 1'` of the alignment matrix, and it carries no
-alignment object, no supply chain, no adoption game, no welfare statement and
-no observability result. The relationship is stated plainly in related work,
-and REFLEX's published `1.74x / 3.16x` amplification numbers are used as an
-external validation checkpoint the new theory must reproduce.
-
-**PEBSA** (*Predicting Economic Behavior via Sentiment Analysis*, IJECS
-13(12), 2024, <https://doi.org/10.18535/ijecs/v13i12.4950>) is cited once,
-briefly, and for a real reason rather than for completeness. It belongs to
-the same broad question this paper's supervision result asks - what can be
-inferred about the state of an economy from aggregate public signals that no
-single participant controls - and the contrast is the point. PEBSA's
-measurement channel is *exogenous*: sentiment is a signal about an economy the
-observer stands outside of, and the accuracy of the inference does not depend
-on the economy's own dynamics. The observable in this paper is *endogenous*:
-the public prices a supervisor reads are generated by the very adaptive agents
-being monitored, so the measurement channel is part of the system, and the
-striking consequence is that the signal gets *stronger* as the system nears
-instability. One sentence in related work, framed as exogenous-signal versus
-endogenous-signal macro inference. Do not oversell the link; the value is the
-contrast, not a shared method.
-
-## 4. Model
-
-`N` firms, each deploying a learned policy over a `d`-dimensional decision.
-Firm `i` has objective curvature `Gamma_i` (SPD) and response Jacobian
-`E_i in R^{d x d}` - how its own deployment reshapes the flow it faces.
-Spillover `kappa in [0,1]` routes each firm's response into competitors'
-environments. Joint retraining Jacobian `J` with blocks
-`J_ii = -Gamma_i^{-1} beta E_i`, `J_ij = -kappa Gamma_i^{-1} beta E_j`.
-
-Alignment objects: pairwise `r_ij = <vec E_i, vec E_j> / (||E_i||_F
-||E_j||_F)`; alignment matrix `R = (r_ij)`; **effective number of
-independent models** `lambda_max(R) in [1, N]`. Supply chain:
-`E_i = sqrt(s) E_shared + sqrt(1-s) Xi_i` with independent idiosyncratic
-parts; `s` = shared-foundation-model fraction.
-
-**Naming, and the defensive footnote.** `lambda_max(R)` is called the
-effective number of independent models, but the paper does not present the
-*quantity* as new - only its role. Spectral summaries of a correlation matrix
-have a long history as effective counts: the participation ratio and inverse
-participation ratio in physics, effective rank in signal processing
-(Roy-Vetterli), and the leading-eigenvalue market mode in the
-random-matrix-theory finance literature (Laloux et al.; Plerou et al.), where
-`lambda_max` of a return correlation matrix is *already* read as the strength
-of the common factor. Saying so costs one footnote and buys two things: it
-disarms the cheapest available referee objection ("you renamed effective
-rank"), and it lets the paper claim the thing that actually is new, which is
-that this familiar statistic, computed on **response Jacobians rather than
-returns**, is the argument of a stability condition. The novelty is the
-object it is computed from and the theorem it enters, and the paper says
-exactly that.
-
-**Market shares.** Firms are not equal-sized, and in an AI supply chain they
-are conspicuously unequal - a vendor's customer list runs from one bulge
-bracket desk to fifty small ones. Firm `i` intermediates share `w_i` of flow,
-`sum_i w_i = 1`, which scales how much of the shared environment its
-deployment actually moves. The object that governs stability is then the
-**share-weighted alignment matrix**
+REFLEX (Section 4) derives, for a structural OTC market-making model, the
+performative retraining modulus `m_1 = eps*beta/gamma` of a single dealer,
+every constant computed from microstructure primitives rather than fitted,
+and its multi-dealer extension: `N` symmetric dealers sharing one pool of
+informed flow with spillover `kappa in [0,1]` have joint retraining Jacobian
 
 ```
-   R_w = W^{1/2} R W^{1/2} ,        W = diag(N w_i) ,
+   J = -m_1 [ (1-kappa) I + kappa 1 1' ] ,
 ```
 
-normalized so `w_i = 1/N` for all `i` recovers `R` exactly, and note
-`tr(R_w) = tr(R) = N`, so reweighting redistributes spectral mass rather than
-adding it. Two consequences worth a paragraph each in the paper. (i) **Share
-concentration and model concentration compound**: a market where the large
-firms are also the ones sharing a vendor is more fragile than either measure
-alone suggests. The clean statement to prove is monotonicity of
-`lambda_max(R_w)` under majorization of the share vector when the aligned
-block and the large block coincide - *not* the false general claim that any
-reweighting raises `lambda_max`, which orthogonal responses immediately
-refute. Get the condition right before the claim goes in the paper.
-[PROVABLE - state the majorization condition explicitly, verify numerically
-on the clustered topology first] (ii) The relevant policy quantity is a
-*share-weighted* diversity index; a headcount-based one (regulate by number
-of firms on each model) is defeated by the same clustered topology that
-defeats mean alignment. [PROVABLE by counterexample, same construction as the
-clustered panel] This is the economically meaningful direction of
-heterogeneity for this audience, and it is the direction the earlier draft
-did not have.
-
-Three equilibrium concepts, kept typographically distinct throughout (this
-audience checks): the PSNE of the quoting game; the Nash equilibrium of the
-*adoption* game; the social optimum. The single-firm performatively stable
-point is notation, not a fourth concept, and is introduced as such to save a
-column inch.
-
-## 5. The results
-
-Ordered by economic interest. Results 1-5 are the 9-page body. The general
-spectral theory that used to open this section is now Section 5.6, stated in
-the body and proved in the appendix, because its interest is computational
-and this is not a computational venue.
-
-### Result 1 - The alignment identity and the supply-chain boundary [VERIFIED anchors / PROVABLE]
-
-Equal moduli `m_i = m`, heterogeneous response *directions*. The joint
-spectral radius is exactly
+whose spectrum splits into a common mode with eigenvalue `-m_1 * N_eff`
+(`N_eff = 1 + kappa(N-1)`) and differential modes with eigenvalue
+`-m_1 (1-kappa)`. The common mode dominates, so the market destabilizes at
 
 ```
-   rho(J) = m ( 1 + kappa ( lambda_max(R) - 1 ) ) ,
+   m_N = N_eff * m_1 = 1 ,   i.e. at the critical population  N_c = 1/m_1
+                                                              (at kappa = 1),
 ```
 
-so the ecosystem is stable iff
-`epsilon < (gamma/beta) / (1 + kappa (lambda_max(R) - 1))`. Three anchors,
-each checked independently: monoculture (`R = 11'`) recovers
-`N_eff = 1 + kappa(N-1)` and the published `1.74x / 3.16x` measurements;
-orthogonal responses give `rho = m`, so a hundred firms perturbing the
-environment in a hundred orthogonal directions are dynamically one firm; and
-maximal diversity (simplex responses) gives `1 - kappa`, independently
-matching the differential-mode eigenvalue the homogeneous theory derives by a
-completely different route. Two derivations landing on one number is the kind
-of consistency the base project's verification layer exists to certify.
-[VERIFIED anchors]
+a factor `N_eff` before any individual dealer's own loop would. Measured in a
+genuine shared-pool simulator: amplification `1.74x` at `N = 2` and `3.16x`
+at `N = 3`, against predicted `2` and `3`. [VERIFIED - base result]
 
-Under the supply-chain decomposition the alignments concentrate at
-`r_ij -> s`, so `lambda_max(R) -> 1 + s(N-1)` and the boundary becomes
+This paper takes that mechanism as its starting point and asks the economics
+questions: what kind of market failure is this, what actually sets its
+strength, and what are the levers?
 
-```
-   epsilon  <  gamma / ( beta ( 1 + kappa s (N - 1) ) ) .
-```
+## 4. The framing
 
-**The effective number of learners is the number of independent models, not
-the number of firms.** Fifty dealers fine-tuning one vendor's model are
-dynamically `~ 1 + 49 kappa` learners at `s ~ 1` and barely more than one at
-`s ~ 0`. The `(N, s)` phase diagram is the paper's central figure, and it is
-the sentence the abstract is built around: foundation-model concentration
-becomes a term in a stability condition rather than a talking point. The
-`O(1/d)` correction to the concentration is stated; the finite-size
-random-matrix refinement is **deliberately cut** and noted as the journal
-extension, because an error band on a phase diagram is not what this audience
-is reading for and it was the most expensive `[HARD]` item per page of
-interest it bought.
+**Private vs. systemic stability.** Two different questions: is each agent
+stable considered alone (`m_1 < 1`), and is the collection stable when they
+interact (`m_N < 1`)? The shared environment makes these different. Dealer A
+adapts, the pool changes, dealer B observes a changed environment and adapts,
+which changes the pool again, which A retrains on. Each agent behaves
+rationally and passes its own stability test while the interaction amplifies
+the loop. **Agent count is not a descriptive market characteristic; it enters
+the stability condition.** Systemic instability is an emergent property of
+the interaction structure, not a property of any agent.
 
-Share-weighted version: substituting `R_w` for `R` throughout gives the same
-identity with `lambda_max(R_w)`, and the compounding statement of Section 4
-follows immediately. [PROVABLE]
+**The externality reading.** Each participant does not internalize the effect
+of its adaptive behavior on the environment faced by other adaptive
+participants. This is why "is this model stable when deployed?" is the wrong
+certification question in a shared endogenous environment, and why "is the
+ecosystem of interacting models stable?" is the right one. The gap between
+the two questions is precisely the externality, and closing it is what
+Sections 6 through 8 are about.
 
-### Result 2 - The certification gap: private stability does not imply systemic stability [PROVABLE]
-
-This is the paper's headline claim in words, and the reason a non-technical
-reader should care. Two questions that sound like one:
-
-> Is this model stable when deployed?
-> Is the ecosystem of models stable?
-
-They come apart, and Result 1 says by exactly how much. Every firm can
-satisfy its own condition `m_i < 1` while `rho(J) > 1`, because the
-individual condition prices only a firm's effect on its own environment and
-none of its effect on everyone else's. In the monoculture corner this has a
-single memorable number: with full spillover and identical models the
-ecosystem crosses the boundary at a **critical population**
-
-```
-   N_c  =  1 / m_1 ,
-```
-
-so a market of learners each certified at, say, `m_1 = 0.2` is fragile from
-the fifth entrant onward, with no firm having done anything wrong. Away from
-that corner `N_c` generalizes to the `(N, s, kappa)` surface of Result 1, and
-the paper presents the scalar version first precisely because it is the
-version a policymaker repeats.
-
-**Why the naive diversity index fails.** Two ways, both with a constructed
-counterexample and both stated as rules the paper follows. (i) *Mean
-alignment understates clustered alignment*: three tightly-aligned firms among
-ten otherwise-orthogonal ones destabilize a subspace the average barely
-registers. The vendor-with-a-plurality topology, not the monopoly, is the
-realistic case, and it gets its own experimental panel. (ii) *Headcount
-understates share concentration*: by Section 4's `R_w`, the same alignment
-pattern is more dangerous when the aligned firms are the large ones. Rule:
-**all stability claims use the spectral form of the share-weighted matrix,
-never a mean or a count.**
-
-**Honest scope line.** The exact identity is proved for equal moduli. With
-heterogeneous `m_i` the tempting mean-modulus formula is **provably false** -
-orthogonal responses decouple the firms entirely, giving `max_i m_i`, not the
-mean. The correct object is the modulus-weighted alignment matrix
-`M^{1/2} R M^{1/2}` (`M = diag(m_i)`), which yields two-sided bounds, exact
-in the equal-moduli and `kappa = 0` limits, with tightness measured against
-modulus dispersion in simulation rather than asserted.
-
-### Result 3 - The adoption game: monoculture as the Nash destination [PROVABLE]
-
-Why would an ecosystem end up at high `s`? Because every private incentive
-points there. Model provider choice as a population game: adopting the
-market-leading model yields private quality gain `q`; one firm's adoption
-moves ecosystem alignment by `O(1/N)`, so the private share of the
-instability cost a firm creates vanishes as the market grows while `q` does
-not. A textbook externality, and the paper says so plainly rather than
-dressing it up. Results: (a) the game admits a potential, and Nash
-equilibrium is full monoculture whenever `q` exceeds a threshold
-**decreasing in `N`**, so bigger markets tip on smaller quality edges; (b)
-the social optimum keeps interior diversity `s* < 1`, characterized by
-marginal quality equal to marginal instability; (c) the **price of anarchy in
-stability** is `(1 + kappa(N-1)) / (1 + kappa s* (N-1))`, growing linearly in
-`N`; (d) the minimal restoring interventions in closed form (Result 4).
-
-This discharges the CFP's "ecosystem-level incentive design" bullet with an
-actual mechanism, and it supplies the paper's most important qualitative
-claim: the unstable configuration is not an edge case to be guarded against
-but the *destination* of unregulated adoption dynamics.
-
-### Result 4 - Two interventions, and which one is available to whom [PROVABLE]
-
-The paper deliberately carries two levers, because they act on different
-parts of the mechanism and are available to different actors.
-
-**Diversity floor / Pigouvian fee (the regulator's lever).** From Result 3,
-the minimal intervention restoring `s <= s*` in closed form: either a floor
-on the shared-model fraction, or a per-firm fee on shared-model adoption set
-equal to the externalized marginal instability cost. Standard, correct, and
-what an economics referee expects to see. It is also slow, requires a
-supervisor who can observe model provenance, and is the harder sell.
-
-**Retraining cadence (the operational lever).** The spillover `kappa` and the
-per-step modulus are not fixed constants; they are functions of how often
-firms refit relative to how fast the shared environment mixes. Slowing or
-desynchronizing retraining shrinks the effective coupling, moving the
-ecosystem inside the boundary *without* changing anyone's model, market
-share, or vendor. This lever is already implemented and characterized in the
-base project for the single-firm case, so it is nearly free here, and it is
-the only intervention a firm or an exchange can deploy unilaterally and
-immediately. The paper states the cadence-vs-stability tradeoff and notes the
-cost side honestly: slower retraining means staler models, so this buys
-stability with accuracy rather than for free.
-
-The framing that ties them together, and the sentence to end the policy
-section on: **both levers act on the interaction structure, not on any
-individual learner's predictive quality.** No amount of making each model
-better fixes an externality.
-
-### Result 5 - Supervision from public prices [HARD - consistency at the workshop]
-
-Everything above involves `R`, which no outsider observes; supervisors do not
-get to inspect firms' models. But near the boundary the system tells on
-itself. As `rho(J) -> 1` the *aligned* combination of firms' decisions
-exhibits critical slowing down: the leading principal component of public
-quotes has lag-1 autocorrelation tending to one and variance share growing
-like `1/(1 - rho)`. We give the estimator (PC1 extraction plus AR
-coefficient) and prove **consistency** for the distance `1 - rho` under the
-linearized dynamics, with the rate improving as the boundary nears. The
-near-unit-root superconsistency phenomenon means **supervision is easiest
-exactly where it matters most**. The supervisor needs no access to any firm's
-model, data, or code.
-
-Workshop scope: consistency plus simulation in the body; the CLT, the
-detection sample complexity for the composite test "certified stable vs not",
-and the full near-unit-root treatment are appendix-and-journal. Stated
-plainly: the asymptotics are classical, the object they are applied to is
-new, and the paper claims only the second.
-
-### 5.6 The general spectral theory [HARD - stated in the body, proved in the appendix]
-
-Both of these were the previous draft's headline theorems. They are correct
-and worth doing, but their interest is machinery, so they are stated in half
-a column each with proof sketches and carried in full by the appendix, which
-doubles as the journal draft.
-
-**Exact reduction for arbitrary heterogeneous ecosystems.** `J` is
-block-diagonal plus a spillover term of block-rank `d`, so its spectrum
-reduces exactly to the roots of a `d x d` secular equation
-
-```
-   det( I_d  +  kappa * sum_i  E_i ( lambda I + (1-kappa) Gamma_i^{-1} beta E_i )^{-1} Gamma_i^{-1} beta )  =  0
-```
-
-plus the block-diagonal spectra, computable in `O(N d^3)` rather than
-`O((Nd)^3)` by a block matrix determinant lemma. This is what makes Result 1
-an instance of a general characterization rather than an isolated identity,
-and that role is why it stays in the body at all. Fallback if the proof
-resists: ship it verified to machine precision against dense eigensolves as a
-numerical certificate, worded as such.
-
-**Global convergence beyond linearization.** If Result 1's condition holds
-uniformly over the operating region rather than only at the equilibrium, the
-joint best-response map is a contraction in an explicit `Gamma`-weighted
-norm: a unique PSNE exists and simultaneous retraining converges to it
-globally at the rate the spectrum names. The contraction half is Banach and
-low-risk, and it is the half that ships. The converse (linearized
-`rho(J) > 1` implies divergence from generic initial conditions, via a
-center-stable-manifold argument) is stated and deferred. Half a column here
-answers "your whole theory is a linearization" before a referee has to ask.
-
-## 6. The experiments
-
-All in the base project's genuine `N`-dealer simulator; CPU, deterministic,
-certified. Each maps to exactly one result, and the mapping is stated in the
-paper so a referee can check coverage at a glance.
-
-1. **The `(N, s)` phase diagram** (Result 1) - measured joint modulus over
-   firms x shared-model fraction with the boundary overlaid. The `s = 1`
-   column must reproduce the published `1.74x / 3.16x` numbers: an external
-   validation checkpoint against a prior curated run, not a self-consistency
-   check.
-2. **Diversity buys stability** (Result 1) - fix `N` and the feedback gain
-   beyond the monoculture boundary, then decorrelate the responses. Same
-   market, same feedback strength, same number of firms: divergent at high
-   alignment, convergent at low. The single most persuasive dynamic figure in
-   the paper and the one that should be on the poster.
-3. **The two ways diversity indices fail** (Result 2) - the clustered-vendor
-   topology (three aligned firms among ten) going unstable at mean-alignment
-   values a naive index calls safe, and the share-weighted companion where
-   the same alignment pattern is safe among small firms and unstable among
-   large ones. Reports `lambda_max(R_w)` against mean alignment and against
-   headcount on the same axes.
-4. **The adoption game** (Result 3) - Nash versus socially optimal `s` across
-   quality gaps; price of anarchy against `N`.
-5. **The two levers at matched cost** (Result 4) - the diversity floor and
-   the retraining-cadence adjustment applied to the same unstable ecosystem,
-   plotted as stability restored per unit of accuracy or quality given up.
-   Directly reuses the base project's existing cadence machinery, which is
-   what makes it affordable this late in the build. This is the panel that
-   makes the policy section concrete rather than rhetorical.
-6. **Real-data supervision** (Result 5) - PC1 variance share and lag-1
-   autocorrelation of cross-sectional spread co-movement on the 212-CUSIP
-   panel, 1990-2026, overlaid on the model-implied fragility index (which
-   contracts roughly `4.3-4.4x` from calm to crisis in the base project's
-   calibration); **placebo** on Treasury/macro series where no dealer-model
-   channel exists. Framed as consistency evidence, never identification:
-   co-movement is macro-contaminated and the data is not trade-level TRACE
-   (provenance caveat carried verbatim from the base project).
-
-**Cut from the previous plan:** the secular-reduction certification panel
-(random heterogeneous `(Gamma_i, E_i)` versus dense eigensolves). It is a
-correctness check on appendix machinery, it persuades nobody at this venue,
-and it moves to the appendix as a table rather than a figure.
-
-## 7. What is genuinely new
-
-Stated compactly, because a referee will look for exactly this list.
-
-- **The reframing.** Monoculture's harm relocated from static allocation
-  welfare to dynamical stability. A market can be statically fine and
-  dynamically fragile at the same shared-model fraction, and experiment 2
-  exhibits precisely that.
-- **The certification gap.** Individually certified learners composing into
-  an uncertified ecosystem, with `N_c = 1/m_1` in the clean corner and the
-  `(N, s, kappa)` surface in general. The claim that per-model evaluation is
-  *structurally* insufficient, not merely incomplete, in a shared endogenous
-  environment.
-- **The effective number of independent models as the systemic variable** -
-  a familiar spectral statistic computed on response Jacobians rather than
-  returns, entering a stability condition, with the exact equal-moduli
-  identity, the modulus-weighted general bound, and two counterexamples
-  (clustered alignment, share concentration) invalidating the diversity
-  indices a policymaker would otherwise reach for.
-- **The supply-chain boundary** in `(N, s)`, turning foundation-model
-  concentration into a term in a condition.
-- **A price of anarchy in a dynamical-stability metric** for model adoption,
-  with two closed-form interventions that act on interaction structure rather
-  than on any learner's predictive quality.
-- **The supervisor-side observable**: distance-to-instability estimable from
-  public prices alone, with a consistency proof, a real-data panel and a
-  placebo, and the inversion that measurement sharpens as fragility rises.
-
-## 8. The workshop cut vs the full paper
-
-**The 9-page body (Aug 29)**, a long-format venue, carries the full arc:
-framework and model (including `R_w`); Result 1 in full with both anchors;
-Result 2 in full with both counterexamples; Result 3 in full; Result 4 with
-the matched-cost panel; Result 5's estimator and consistency statement;
-Section 5.6's two theorems stated in half a column each with proof sketches;
-experiments 1, 2, 3, 5, 6; policy and limitations. **Appendix:** all proofs;
-experiment 4 in full; the secular-reduction certification table; the
-Narang-delta examples; the placebo; the numerical certificates. Result 3 is
-the one body result carrying no figure of its own, deliberately: the adoption
-game's content is its closed forms (the threshold decreasing in `N`, the
-price of anarchy), which read better as displayed equations than as a plot,
-and five panels is already the ceiling for nine pages. **The journal
-or main-track version** (NeurIPS 2027 or an economics/finance journal)
-completes the global converse, the finite-size random-matrix refinement,
-Result 5's CLT and detection theory, and the endogenous-participation
-extension. Nothing is claimed at the workshop beyond what is proved or
-verified at submission time; `[HARD]` items ship with partial results
-labeled as such.
-
-**Anonymization checklist (double-blind).** No author block; no repository
-URL anywhere; scrubbed PDF metadata and figure paths; the simulator described
-generically with an anonymized-artifact promise. On citations: REFLEX and
-PEBSA are both public at submission time (arXiv and IJECS respectively), so
-they are cited as ordinary third-party references with full bibliographic
-detail, which is *cleaner* than the third-person-concurrent-submission
-phrasing the earlier plan required. The rule to enforce during the
-anonymization pass is only that no sentence positions either as the authors'
-own work: no "our earlier framework", no "we previously showed", no "building
-on our REFLEX". Write them as any other cited paper and the blind holds.
-
-## 9. Honest limitations
-
-Stated in the paper, not buried.
-
-- The spectral theory is a linearization around the joint equilibrium.
-  Section 5.6's contraction result extends it, but its uniform condition is
-  checkable and conservative; the simulator experiments are the nonlinear
-  check.
-- The exact identity is proved for equal moduli. The heterogeneous case is a
-  two-sided bound whose tightness is *measured* against modulus dispersion,
-  not asserted.
-- Alignment `R` is not directly observable to anyone outside a firm. Result 5
-  exists precisely because of that, and the limitation is stated in those
-  terms rather than hidden.
-- Result 5's asymptotics are classical near-unit-root theory. The object they
-  are applied to is new, the rates are not, and the paper says so.
-- The real-data leg is consistency evidence plus a placebo, not
-  identification of monoculture. Spread co-movement is contaminated by common
-  macro shocks and the data is public proxies, not trade-level TRACE. The
-  base project's provenance caveat is carried verbatim.
-- The retraining-cadence lever buys stability with model staleness. The paper
-  quantifies the tradeoff in experiment 5 rather than presenting the lever as
-  free.
-- Market shares `w_i` are exogenous here. Endogenizing entry and share
-  formation is named as the natural next paper, not waved at.
-
-## 10. Build plan (Aug 29 deadline, 12 days from Aug 17)
-
-- **Aug 17-18:** theory module (alignment matrix, `R_w`, exact identity,
-  modulus-weighted bound, supply-chain map) plus numerical certificates;
-  prove Result 1.
-- **Aug 19-20:** heterogeneous-dealer environment (per-firm response
-  parameters hitting a target `R`, clustered and share-concentrated
-  topologies; reduction to the existing homogeneous environment at
-  `R = 11'` is the test) plus experiments 1 and 3.
-- **Aug 21:** experiment 2, the diversity-buys-stability figure. Protected
-  time; this panel carries the paper.
-- **Aug 22:** adoption game, price of anarchy, both interventions in closed
-  form; experiment 4.
-- **Aug 23:** cadence lever wired to the existing base-project machinery;
-  experiment 5.
-- **Aug 24:** supervision estimator, experiment 6, placebo.
-- **Aug 25-27:** write the 9 pages; proofs to the appendix. Section 5.6's
-  sketches written last, from whatever is actually proved by then.
-- **Aug 28:** claim-list review against this document; anonymization pass;
-  freeze.
-- **Aug 29:** submit, with the day as buffer rather than as work.
-
-**De-scope order**, in order: Section 5.6's global converse (keep the
-contraction half) -> Result 5's consistency proof (keep the estimator and the
-simulation) -> experiment 4 -> the share-weighted companion in experiment 3.
-**Never cut:** experiment 2, the `s = 1` validation column against the
-published `1.74x / 3.16x`, the placebo, or Result 2's certification-gap
-framing, which is the paper's reason to exist at this venue.
-
-**Fallbacks.** If Section 5.6's reduction resists a full proof in time, ship
-it verified to machine precision against dense eigensolves as a certificate
-with the proof sketch, worded accordingly. If the heterogeneous-dealer
-environment slips past Aug 20, drop the share-concentrated topology first and
-keep the clustered one, since the clustered counterexample is the one Result
-2 depends on.
+**The reproduction number.** `m_N` is the **feedback reproduction number** of
+the market: the factor by which a common perturbation is amplified per
+retraining round. `m_N < 1` and perturbations die out; `m_N > 1` and they
+compound. Everything that follows is the economics of controlling `R_0`, and
+Section 5 is about what actually determines it.
