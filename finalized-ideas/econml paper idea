@@ -483,28 +483,64 @@ anonymization pass is only that no sentence positions either as the authors'
 own work: no "our earlier framework", no "we previously showed", no "building
 on our REFLEX". Write them as any other cited paper and the blind holds.
 
-## 7. Honest limitations
+## 9. Honest limitations
 
-Theorem 2's uniform condition is checkable but conservative; Theorem 5's
-asymptotics are classical (the object is new, the rates are not - said
-plainly); the real-data leg is consistency-plus-placebo, not identification
-of monoculture; alignment `R` is unobservable directly - Theorem 5 exists
-precisely because of that, and the limitation section says so rather than
-hiding it.
+Stated in the paper, not buried.
 
-## 8. Build plan (Aug 29 deadline)
+- The spectral theory is a linearization around the joint equilibrium.
+  Section 5.6's contraction result extends it, but its uniform condition is
+  checkable and conservative; the simulator experiments are the nonlinear
+  check.
+- The exact identity is proved for equal moduli. The heterogeneous case is a
+  two-sided bound whose tightness is *measured* against modulus dispersion,
+  not asserted.
+- Alignment `R` is not directly observable to anyone outside a firm. Result 5
+  exists precisely because of that, and the limitation is stated in those
+  terms rather than hidden.
+- Result 5's asymptotics are classical near-unit-root theory. The object they
+  are applied to is new, the rates are not, and the paper says so.
+- The real-data leg is consistency evidence plus a placebo, not
+  identification of monoculture. Spread co-movement is contaminated by common
+  macro shocks and the data is public proxies, not trade-level TRACE. The
+  base project's provenance caveat is carried verbatim.
+- The retraining-cadence lever buys stability with model staleness. The paper
+  quantifies the tradeoff in experiment 5 rather than presenting the lever as
+  free.
+- Market shares `w_i` are exogenous here. Endogenizing entry and share
+  formation is named as the natural next paper, not waved at.
 
-Aug 16-17: theory module (secular reduction, identity, weighted bounds,
-supply-chain map, adoption game, PoA, fee) + certificates; Theorem 1a/1b
-proofs. Aug 18-19: heterogeneous-dealer environment (target-`R`
-construction, cluster topologies; reduction to the homogeneous env at
-`R = 11'` as a test) + experiments 1, 3. Aug 20-21: experiment 2; adoption
-game + experiment 4; Theorem 2 contraction half. Aug 22: supervision
-estimator + experiment 5 + placebo. Aug 23-25: write the 9 pages; proofs to
-appendix. Aug 26-27: claim-list review; anonymization pass. Aug 28: freeze.
-De-scope order: Theorem 3's RMT band (keep the concentration statement) ->
-Theorem 5's CLT (keep consistency + simulation) -> experiment 4's
-intervention curve. Never cut experiment 2, the `s = 1` validation column,
-or the placebo. Fallback if Theorem 1a's reduction resists full proof in
-time: ship it verified-to-machine-precision as a certificate with the proof
-sketch, worded accordingly.
+## 10. Build plan (Aug 29 deadline, 12 days from Aug 17)
+
+- **Aug 17-18:** theory module (alignment matrix, `R_w`, exact identity,
+  modulus-weighted bound, supply-chain map) plus numerical certificates;
+  prove Result 1.
+- **Aug 19-20:** heterogeneous-dealer environment (per-firm response
+  parameters hitting a target `R`, clustered and share-concentrated
+  topologies; reduction to the existing homogeneous environment at
+  `R = 11'` is the test) plus experiments 1 and 3.
+- **Aug 21:** experiment 2, the diversity-buys-stability figure. Protected
+  time; this panel carries the paper.
+- **Aug 22:** adoption game, price of anarchy, both interventions in closed
+  form; experiment 4.
+- **Aug 23:** cadence lever wired to the existing base-project machinery;
+  experiment 5.
+- **Aug 24:** supervision estimator, experiment 6, placebo.
+- **Aug 25-27:** write the 9 pages; proofs to the appendix. Section 5.6's
+  sketches written last, from whatever is actually proved by then.
+- **Aug 28:** claim-list review against this document; anonymization pass;
+  freeze.
+- **Aug 29:** submit, with the day as buffer rather than as work.
+
+**De-scope order**, in order: Section 5.6's global converse (keep the
+contraction half) -> Result 5's consistency proof (keep the estimator and the
+simulation) -> experiment 4 -> the share-weighted companion in experiment 3.
+**Never cut:** experiment 2, the `s = 1` validation column against the
+published `1.74x / 3.16x`, the placebo, or Result 2's certification-gap
+framing, which is the paper's reason to exist at this venue.
+
+**Fallbacks.** If Section 5.6's reduction resists a full proof in time, ship
+it verified to machine precision against dense eigensolves as a certificate
+with the proof sketch, worded accordingly. If the heterogeneous-dealer
+environment slips past Aug 20, drop the share-concentrated topology first and
+keep the clustered one, since the clustered counterexample is the one Result
+2 depends on.
