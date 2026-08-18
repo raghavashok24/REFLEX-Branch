@@ -80,22 +80,43 @@ says so where a later reader would otherwise misread it.
 
 ## Theorem 3
 
-| # | Checks | Tolerance |
-|---|---|---|
-| C13 | Limit case: `mixed_market_radius` with `gamma_ratio -> 0` converges to the blind-block radius | `1e-8` |
-| C14 | `rho_star` predicts the stability sign change on 4000 random `(m_1, kappa, s, N_b)` draws against dense eigensolves, zero mismatches | exact, boolean |
-| C15 | Herd-immunity collapse: at `kappa = s = 1`, `rho_star == 1 - 1/m_N` | machine |
-| C16 | `rho_star` is increasing in `s`, which is what makes diversity and correction substitutes | exact, monotone |
-| C17 | The worked thresholds reproduce: `0.596 / 0.242 / 0` at `s = 1 / 0.5 / 0.2` with `N = 20`, `m_1 = 0.15`, `kappa = 0.8` | `1e-3` |
-| C18 | The strong-correction limit is approached from the stable side, so the limit theorem is conservative | sign check |
+Proof in [`../math/derivations/04-mixed-market-secular.md`](../math/derivations/04-mixed-market-secular.md).
 
-C14 was already run before the plan of record was written, with zero mismatches.
-It is recorded here so it ships with the paper rather than living only in the
-plan's prose.
+| # | Checks | Tolerance | State |
+|---|---|---|---|
+| C13 | Limit case: `mixed_market_radius` with `gamma_ratio -> 0` converges to the blind-block radius | `1e-8` | **run** |
+| C14 | The stability criterion predicts the sign change on 4000 random draws against dense eigensolves | exact, boolean | **run**, see below |
+| C15 | Herd-immunity collapse: at `kappa = s = 1`, `rho_star == 1 - 1/m_N` | machine | **run** |
+| C16 | `rho_star` is increasing in `s`, which is what makes diversity and correction substitutes | exact, monotone | **run**, strict where positive |
+| C17 | The worked thresholds reproduce: `0.596 / 0.242 / 0` at `s = 1 / 0.5 / 0.2` with `N = 20`, `m_1 = 0.15`, `kappa = 0.8` | `1e-3` | **run** |
+| C18 | The strong-correction limit is approached from the stable side, so the limit theorem is conservative | sign check | **run, and it FAILED** |
+| C27 | **Exact two-block root** against dense eigensolves, all block splits | `1e-10` | **run**, `2.5e-14` on 6000 draws |
+| C28 | **Degenerate blocks.** An empty block needs the single-block form; the quadratic otherwise leaves a phantom root that exceeds the true radius | `1e-12` | **run** |
+| C29 | **Integer threshold.** Minimum corrected firms is `N - ceil(N_c) + 1`, and `ceil(rho* N)` is off by one at exact-integer `N_c` | exact | **run**, 3000 draws |
+| C30 | **Imperfect correction.** At `kappa = s = 1` the exact threshold is `(1 - 1/m_N)/(1 - gamma_ratio)` | `1e-14` | **run**, `1.8e-15` |
+| C31 | **Critical efficacy.** The threshold passes 1 exactly at `gamma_ratio = 1/m_N`, and all-corrected is unstable above it | `1e-12` | **run** |
 
-C18 answers an open item in the math note. If it fails, the paper must state
-which direction the approximation errs in, so a failure is informative rather
-than fatal.
+**C18 failed, and the failure is the most consequential result of the build.**
+The radius is nondecreasing in `gamma_ratio`, by Perron-Frobenius on an
+entrywise-nonnegative matrix, so the limit under-states it. The limit theorem is
+**optimistic**, not conservative: on random draws it calls `11.8%` of
+configurations stable that are unstable at finite correction. The plan of record
+anticipated this possibility and required the error direction be stated, which the
+paper now does. The exact two-block root has left the de-scope order as a result.
+
+**C14 needed restating.** The note claims `rho*` predicts the sign change with
+zero mismatches on 4000 draws. The primitive condition `N_b < N_c(s)` does, and
+the clamped comparison `rho > rho*` does not: it mispredicts the all-blind market
+that is stable without any correction, on `134` of the same draws. The certificate
+now checks all three candidate forms and records which are exact.
+
+C30 and C31 are the results that replaced the clean law. They are stronger than
+what they replaced, since the imperfect-vaccine correspondence means the
+epidemiological analogy transfers a refinement of the law and not merely the law.
+
+All eleven are implemented in
+[`certificates/verify_theorem3_herd_immunity.py`](certificates/verify_theorem3_herd_immunity.py),
+70 checks, assertion-based, all passing.
 
 ## Theorem 4
 
@@ -105,14 +126,44 @@ than fatal.
 | C20 | `pigouvian_wedge` is increasing in `N`, in `kappa`, and in `m_N` | exact, monotone |
 | C21 | Over-adaptation: the decentralized equilibrium exceeds the social optimum for every `N >= 2` on a grid | exact, sign |
 
+## Infrastructure certificates
+
+Not closed forms, but the same rule applies: the code every panel depends on is
+certified before a panel runs.
+
+| # | Checks | State |
+|---|---|---|
+| C32 | **Theory module acceptance.** The six tests the spec names, plus guards, each re-deriving its expectation against a dense eigensolve or brute force rather than importing the module's own answer | **run**, 50 checks |
+| C33 | **Environment reduction.** At `R = 1 1'` the heterogeneous-response environment reproduces the base project's homogeneous market in alignment, `N_eff` and Jacobian, and the built Jacobian equals the closed form on arbitrary topologies | **run**, 32 checks |
+
+C33 is the acceptance test the experiment specs name, and it runs before any
+measurement is taken from the environment.
+
 ## Running total
 
-26 new certificates against the base project's 66, for 92. Every one of them is
+33 new certificates against the base project's 66, for 99. Every one of them is
 deterministic, CPU-only, and runs from `(config, seed)`.
 
-Of the 26, the 17 covering Theorems 1 and 2 are written and passing, spread across
-182 individual assertions in two files. The 9 covering Theorems 3 and 4 are
-specified and not yet written.
+Of the 33, the 31 covering Theorems 1 through 3 and the infrastructure are written
+and passing, spread across **334 individual assertions in five files**. The
+remaining 2 belong to Theorem 4 (C19 through C21, less the two now covered), whose
+welfare page is not derived.
+
+```bash
+for f in econml/ml-contributions/certificates/verify_*.py; do python "$f" || break; done
+```
+
+| File | Assertions |
+|---|---|
+| `verify_theorem1_proof.py` | 123 |
+| `verify_theorem2_cadence.py` | 59 |
+| `verify_theorem3_herd_immunity.py` | 70 |
+| `verify_theory_module.py` | 50 |
+| `verify_hetero_env.py` | 32 |
+
+`verify_theorem1_anchors.py` is the original report-style script and is not
+counted, since it cannot fail loudly. Converting it is the one outstanding item
+on this file.
 
 ## Rule
 

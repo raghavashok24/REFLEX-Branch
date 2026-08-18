@@ -59,22 +59,36 @@ model alignment rather than by headcount. Results 2 through 4 are all stated in
 | Literature review | **complete** (`literature/LITERATURE-REVIEW-P2.md`) |
 | Introduction | **complete** (`writing/01-introduction.md`) |
 | Abstract | drafted, re-write after Result 3's experiment lands |
-| Theorem 1 | **proved and certified** (`math/derivations/01`, `02`); 123 checks passing |
-| Theorem 2 | **proved and certified** (`math/derivations/03`); 59 checks passing |
-| Theorem 3 algebra | limit case derived; exact two-block root outstanding |
-| Theorem 4 algebra | sketched; welfare page outstanding |
+| Theorem 1 | **proved and certified** (`math/derivations/01`, `02`); 123 checks |
+| Theorem 2 | **proved and certified** (`math/derivations/03`); 59 checks |
+| Theorem 3 | **proved and certified** (`math/derivations/04`); 70 checks. **C18 failed and changed the claim** |
+| Theorem 4 algebra | sketched; welfare page outstanding. The only theorem still on a sketch |
 | Section 4, Result 1 | **drafted** (`writing/04`) |
 | Section 5, Result 2 | **drafted** (`writing/05`) |
-| Theory module | specified, not written |
-| Experiments 1-6 | specified, not run |
+| Section 6, Result 3 | replanned around the exact root (`writing/06`), not yet drafted |
+| Theory module | **written and certified** (`ml-contributions/theory/`); 50 checks |
+| Heterogeneous-response environment | **built and certified** (`ml-contributions/environment/`); 32 checks |
+| Experiments 1-6 | specified, not run. The environment they need is ready |
 | Remaining sections | planned, not written |
 
-Results 1 and 2 have moved from `[DERIVED]` to `[VERIFIED]` in the claims ledger,
-each against an assertion-based certificate that fails loudly. Two open items are
-closed: the supply-chain concentration statement now carries a probability bound
-rather than holding in expectation, and the invariance of the inner contraction
-`c` to firm count is measured rather than argued. The next block of work is
-Theorem 3, on the same pattern.
+Theorems 1 through 3 have moved from `[DERIVED]` to `[VERIFIED]` in the claims
+ledger, each against assertion-based certificates that fail loudly. 334 assertions
+across five files, all passing.
+
+**One claim failed, and it was the one the ledger flagged in advance.** The
+strong-correction limit in Theorem 3 is optimistic rather than conservative, so it
+can call a market stable that is unstable at finite correction strength. The exact
+two-block root is now the theorem, the limit is a corollary that states its own
+error direction, and the exact root has left the de-scope order. What replaced the
+clean law is larger than the clean law: the exact threshold is the epidemiological
+imperfect-vaccine coverage requirement, and it carries a critical efficacy below
+which correction stops working at all.
+
+Three open items closed along the way: supply-chain concentration now carries a
+probability bound rather than holding in expectation, the invariance of the inner
+contraction `c` to firm count is measured rather than argued, and the realized
+herd-immunity threshold in whole firms has a formula that is right at the corner
+where the obvious one is off by one.
 
 ## Conventions
 

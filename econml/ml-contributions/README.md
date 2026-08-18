@@ -1,14 +1,27 @@
 # ML contributions
 
-Code, experiments and certificates. Specs live here; the implementation lands in
-the REFLEX repository under its own module layout and is referenced by path, not
-copied.
+Specs, reference implementations and certificates. The reference implementations
+here are what the REFLEX-side port is checked against, not a second copy to be
+maintained in parallel.
 
 | File | Covers |
 |---|---|
 | [`THEORY-MODULE-SPEC.md`](THEORY-MODULE-SPEC.md) | The closed-form module: every function, its signature, its certificate |
 | [`EXPERIMENT-SPECS.md`](EXPERIMENT-SPECS.md) | Six panels, each mapped to exactly one result |
 | [`CERTIFICATES.md`](CERTIFICATES.md) | Numerical certificates added to the base project's verification layer |
+| [`theory/`](theory/) | The closed-form module. Theorems 1 to 3 complete |
+| [`environment/`](environment/) | The heterogeneous-response environment, which panels 2, 4 and 5 need |
+| [`certificates/`](certificates/) | The certificate scripts themselves |
+
+Run everything:
+
+```bash
+for f in econml/ml-contributions/certificates/verify_*.py; do python "$f" || break; done
+```
+
+334 assertions across five assertion-based files, all passing.
+`verify_theorem1_anchors.py` is the original report-style script and still needs
+converting, which is the one outstanding item.
 
 ## Inherited infrastructure
 
