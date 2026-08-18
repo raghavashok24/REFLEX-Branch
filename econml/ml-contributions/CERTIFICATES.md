@@ -11,45 +11,72 @@ is the thing the simulator does.
 
 ## Theorem 1
 
+Proofs in [`../math/derivations/01-alignment-spectrum.md`](../math/derivations/01-alignment-spectrum.md)
+and [`../math/derivations/02-supply-chain-concentration.md`](../math/derivations/02-supply-chain-concentration.md).
+
 | # | Checks | Tolerance | State |
 |---|---|---|---|
 | C1 | `n_eff(1 1', kappa)` equals the base law `1 + kappa(N-1)`, `N` in `2..50` | machine | **run** |
-| C2 | `n_eff_supply_chain` equals `n_eff(supply_chain_R(...))`, two routes to one number | machine | |
+| C2 | `n_eff_supply_chain` equals `n_eff(supply_chain_R(...))`, two routes to one number | machine | **run** |
 | C3 | `n_eff(I, kappa) == 1`, so orthogonal responses are dynamically one firm | machine | **run** |
 | C4 | **Simplex spectrum.** `lambda_max(R_simplex) == N/(N-1)`, and `m_1(1-kappa)` is in the Jacobian's spectrum but is not its radius. Also the ordering failure: simplex has lower mean alignment and higher `lambda_max` than orthogonality | machine | **run** |
 | C5 | **Clustered counterexample.** `N_eff` from `lambda_max` exceeds `N_eff` from the mean-alignment index by 1.757 at `kappa = 0.8` | `1e-12` | **run** |
-| C6 | **Concentration.** `r_ij -> s` as `d` grows, with the residual scaling as `O(1/d)` | fit, `R^2 > 0.95` | |
-| C7 | Heterogeneous-modulus bounds hold: `max_i m_i <= rho(J) <= max_i m_i * N_eff`, on random draws, exact in the three stated limits | machine at limits | |
+| C6 | **Concentration.** `r_ij -> s` as `d` grows, with the residual scaling as `O(1/d)` | fitted exponent within `0.15` of `-1` | **run**, measured `-1.018` |
+| C7 | Heterogeneous-modulus bounds hold: `max_i m_i <= rho(J) <= max_i m_i * N_eff`, on random draws, exact in the three stated limits | machine at limits | **run**, 300 draws |
+| C22 | **Reduction lemma.** The retraining map built from actual response Jacobians, without constructing `R`, has Jacobian `-m_1[(1-kappa)I + kappa R]` | `1e-12` | **run**, `5.6e-17` |
+| C23 | **Spectral range.** `1 <= lambda_max(R) <= N` on random alignment matrices, so `N_eff >= 1` and `rho(J) >= m_1` | `1e-10` | **run** |
+| C24 | **The mean is a lower bound.** `N_eff >= 1 + kappa(N-1)*mean` on random `R`, with equality exactly on constant-row-sum `R` | `1e-10` | **run**, 360 draws, zero violations |
 
-C1, C3, C4 and C5 are implemented in
-[`certificates/verify_theorem1_anchors.py`](certificates/verify_theorem1_anchors.py)
-and have been run. C4 exists because the plan of record stated this anchor
-incorrectly; the plan has since been corrected, so C4 is now a regression guard
-against reverting to the wrong version rather than a live disagreement.
+C22 is the load-bearing one for Theorem 1. Everything else in the theorem follows
+from the Jacobian, and until C22 the Jacobian was asserted rather than derived.
 
-The script checks the simplex two independent ways: analytically from
-`R_simplex`, and constructively from actual unit response vectors summing to
-zero. The constructive path is the load-bearing one, since it rules out the
-result being an artifact of how the matrix was written down, and it reproduces
-the analytic form to `4e-16`.
+C4 exists because the plan of record stated that anchor incorrectly; the plan has
+since been corrected, so C4 is now a regression guard against reverting to the
+wrong version rather than a live disagreement.
 
-**Outstanding on this file:** the script is written as a standalone report, not
-as an assertion-based check that fails loudly, which is what the definition at
-the top of this document requires. Convert it and fold it into the base
-project's verification layer. [TO BUILD]
+C1 to C5 are implemented in
+[`certificates/verify_theorem1_anchors.py`](certificates/verify_theorem1_anchors.py).
+C1 to C7 and C22 to C24 are implemented in
+[`certificates/verify_theorem1_proof.py`](certificates/verify_theorem1_proof.py),
+123 checks, assertion-based, all passing. The simplex is checked two independent
+ways, analytically from `R_simplex` and constructively from actual unit response
+vectors summing to zero; the constructive path is the load-bearing one, since it
+rules out the result being an artifact of how the matrix was written down.
+
+**Outstanding:** `verify_theorem1_anchors.py` still prints a report rather than
+asserting, so it cannot fail loudly. `verify_theorem1_proof.py` is the template
+for converting it. Both then fold into the base project's verification layer.
+[TO BUILD]
 
 ## Theorem 2
 
-| # | Checks | Tolerance |
-|---|---|---|
-| C8 | `is_stable_lazy(m_N, c, K)` agrees with `K < k_max(m_N, c)` on every integer `K` in `1..200` across an `(m_N, c)` grid | exact, boolean |
-| C9 | `k_max` is decreasing in `m_N` | exact, monotone |
-| C10 | No integer `K >= 1` is stable once `m_N > (1+c)/(1-c)` | exact, boolean |
-| C11 | The worked table reproduces: `K_max` of `20.68 / 5.28 / 2.53` at `s = 0.25 / 0.5 / 1` with `m_1 = 0.15`, `kappa = 0.8`, `N = 30`, `c = 0.8` | `1e-2` |
-| C12 | `c` is invariant to `N`, so the inner contraction is genuinely own-objective curvature | `1e-10` |
+Proof in [`../math/derivations/03-cadence-composition.md`](../math/derivations/03-cadence-composition.md).
+
+| # | Checks | Tolerance | State |
+|---|---|---|---|
+| C8 | `is_stable_lazy(m_N, c, K)` agrees with `K < k_max(m_N, c)` on every integer `K` in `1..200` across an `(m_N, c)` grid | exact, boolean | **run**, 51600 cases |
+| C9 | `k_max` is decreasing in `m_N`, and in `s` through `m_N` | exact, monotone | **run** |
+| C10 | No integer `K >= 1` is stable once `m_N > (1+c)/(1-c)`, and `K = 1` is stable just below it | exact, boolean | **run**, sharp at five `c` |
+| C11 | The worked table reproduces: `K_max` of `20.68 / 5.28 / 2.53` at `s = 0.25 / 0.5 / 1` with `m_1 = 0.15`, `kappa = 0.8`, `N = 30`, `c = 0.8` | `1e-2` | **run** |
+| C12 | `c` is invariant to `N`, so the inner contraction is genuinely own-objective curvature | `1e-10` | **run**, spread `4.4e-16` |
+| C25 | **The joint map, measured.** Running actual inner gradient descent on each basis vector reproduces `c^K I + (1-c^K) J`, and `mu_N(K)` is its extreme eigenvalue | `1e-12` | **run** |
+| C26 | **Dynamic frontier.** Iterating the real joint map to convergence or divergence agrees with the predicted side of the frontier | exact, boolean | **run**, 59 decisive trials, zero disagreements |
 
 C12 is the one that catches a broken composition, and it is the certificate the
-open item in the math note asks for.
+open item in the math note asked for. It is measured from gradient descent inside
+the joint market rather than asserted from the formula.
+
+C26 is the one that would catch a frontier that is algebraically right and
+dynamically wrong, which no amount of algebra checking can rule out.
+
+All seven are implemented in
+[`certificates/verify_theorem2_cadence.py`](certificates/verify_theorem2_cadence.py),
+59 checks, assertion-based, all passing.
+
+**Recorded from C8.** At `m_N = 1` exactly the stability margin is `2c^K`, positive
+for every finite `K` but below double precision past `K = 171` at `c = 0.8`. That
+is a floating-point limit, not a statement about the market, and the certificate
+says so where a later reader would otherwise misread it.
 
 ## Theorem 3
 
@@ -80,8 +107,12 @@ than fatal.
 
 ## Running total
 
-21 new certificates against the base project's 66, for 87. Every one of them is
+26 new certificates against the base project's 66, for 92. Every one of them is
 deterministic, CPU-only, and runs from `(config, seed)`.
+
+Of the 26, the 17 covering Theorems 1 and 2 are written and passing, spread across
+182 individual assertions in two files. The 9 covering Theorems 3 and 4 are
+specified and not yet written.
 
 ## Rule
 

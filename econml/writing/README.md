@@ -11,8 +11,8 @@ from these files. Nothing here is LaTeX.
 | [`01-introduction.md`](01-introduction.md) | Introduction | 1.25 | **complete** |
 | [`02-related-work.md`](02-related-work.md) | Related work | 0.75 | planned |
 | [`03-model-and-framing.md`](03-model-and-framing.md) | Setup, private vs systemic stability | 1.25 | planned |
-| [`04-result1-effective-learners.md`](04-result1-effective-learners.md) | Theorem 1, the supply chain | 1.25 | planned |
-| [`05-result2-cadence-frontier.md`](05-result2-cadence-frontier.md) | Theorem 2 | 1.00 | planned |
+| [`04-result1-effective-learners.md`](04-result1-effective-learners.md) | Theorem 1, the supply chain | 1.25 | **drafted** |
+| [`05-result2-cadence-frontier.md`](05-result2-cadence-frontier.md) | Theorem 2 | 1.00 | **drafted** |
 | [`06-result3-herd-immunity.md`](06-result3-herd-immunity.md) | Theorem 3, the substitution frontier | 1.25 | planned |
 | [`07-result4-pigouvian-wedge.md`](07-result4-pigouvian-wedge.md) | Theorem 4 | 0.75 | planned |
 | [`08-supervision.md`](08-supervision.md) | Supervision from public prices | 0.20 | planned, first to cut |

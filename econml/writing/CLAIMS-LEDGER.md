@@ -28,29 +28,44 @@ diff.
 
 ## Section 4, Theorem 1
 
+Proofs in [`../math/derivations/01-alignment-spectrum.md`](../math/derivations/01-alignment-spectrum.md)
+and [`../math/derivations/02-supply-chain-concentration.md`](../math/derivations/02-supply-chain-concentration.md).
+
 | # | Claim | Status | Evidence |
 |---|---|---|---|
-| 4.1 | `m_N = m_1 (1 + kappa(lambda_max(R) - 1))` for equal moduli | `[DERIVED]` | `../math/01`; certificates C1, C2, C3 |
+| 4.0 | **Reduction:** `J = -m_1[(1-kappa)I + kappa R]` follows from the response Jacobians under (H1) to (H4) | `[VERIFIED]` | `derivations/01` Lemma 1; C22, agreement `5.6e-17` |
+| 4.1 | `m_N = m_1 (1 + kappa(lambda_max(R) - 1))` for equal moduli | `[VERIFIED]` | `derivations/01` Thm 1; C1, C2, C3, C23. 384 configurations |
 | 4.2 | Monoculture corner recovers the base law | `[VERIFIED]` | C1 |
 | 4.3 | Orthogonal responses give `m_N = m_1` | `[VERIFIED]` | C3 |
 | 4.4 | Simplex spectrum contains `m_1(1-kappa)`; radius is `m_1(1+kappa/(N-1))` | `[VERIFIED]` | C4, run. **Plan of record corrected to match** |
-| 4.5 | The binding mode is the common one iff `R` has nonnegative entries | `[DERIVED]` | Perron-Frobenius; `../math/01` |
-| 4.6 | Supply chain: `N_eff = 1 + kappa*s*(N-1)` | `[DERIVED]` | C2, C6 |
-| 4.7 | `r_ij -> s` with `O(1/d)` relative fluctuation | `[DERIVED]` in expectation | C6. **Open: needs a bound, not an expectation** |
+| 4.5 | The binding mode is the common one iff `R` has nonnegative entries | `[DERIVED]` | Perron-Frobenius; `derivations/01` Prop 2; C22 |
+| 4.6 | Supply chain: `N_eff = 1 + kappa*s*(N-1)` | `[VERIFIED]` | `derivations/02`; C2, C6 |
+| 4.7 | `r_ij -> s` with `O(1/d)` fluctuation, **as a probability bound** | `[VERIFIED]` | `derivations/02` Lemma 5 and Prop 6; C6, fitted exponent `-1.018`. **Open item closed** |
 | 4.8 | Clustered counterexample: `N_eff` 2.60 against 1.48 by the mean index | `[VERIFIED]` | C5, run. Factor 1.757 |
 | 4.9 | Mean alignment does not order configurations correctly | `[VERIFIED]` | C4, run. Simplex against orthogonal at `N` in {5,10,30} |
-| 4.10 | Heterogeneous moduli: `max_i m_i <= rho(J) <= max_i m_i * N_eff` | `[DERIVED]` | C7, exact in three limits |
+| 4.10 | Heterogeneous moduli: `max_i m_i <= rho(J) <= max_i m_i * N_eff` | `[VERIFIED]` | `derivations/01` Prop 4; C7, 300 draws, exact in three limits |
 | 4.11 | Share-weighted alignment, fully heterogeneous reduction | `[DEFERRED]` | named, not attempted |
+| 4.12 | **`N_eff >= 1`, so `rho(J) >= m_1`:** interaction never stabilizes a market below what its members achieve alone | `[VERIFIED]` | `derivations/01` Cor 1.2; C23. Notation table corrected |
+| 4.13 | **The mean index errs with a sign:** `N_eff >= 1 + kappa(N-1)*mean` for every `R`, so it under-states risk and never over-states it | `[VERIFIED]` | `derivations/01` Prop 3; C24, 360 draws, zero violations |
+| 4.14 | The sharp operator-norm concentration rate `sqrt(N)/d` | `[DEFERRED]` | crude `N/d` bound proved; sharp rate measured, not proved |
 
 ## Section 5, Theorem 2
 
+Proof in [`../math/derivations/03-cadence-composition.md`](../math/derivations/03-cadence-composition.md).
+
 | # | Claim | Status | Evidence |
 |---|---|---|---|
-| 5.1 | `mu_N(K) = -m_N + c^K(1+m_N)` | `[DERIVED]` | `../math/02`; C12 |
-| 5.2 | `K_max = ln((m_N-1)/(m_N+1))/ln c`, decreasing in `m_N` | `[DERIVED]` | C8, C9 |
-| 5.3 | Critical crowding at `m_N = (1+c)/(1-c)`, factor 9 at `c = 0.8` | `[DERIVED]` | C10 |
-| 5.4 | Worked window: `20.7 / 5.3 / 2.5` at `s = 0.25 / 0.5 / 1` | `[VERIFIED]` by recomputation | C11 |
-| 5.5 | `c` is invariant to `N` | `[DERIVED]` | C12. **The one place the composition could fail** |
+| 5.0 | **Inner loop:** `K` gradient steps contract to the frozen best response by `c^K`, `c = 1 - eta*gamma` | `[VERIFIED]` | `derivations/03` Lemma 7; measured from actual GD |
+| 5.1 | `mu_N(K) = -m_N + c^K(1+m_N)`, from `M_K = c^K I + (1-c^K)J` | `[VERIFIED]` | `derivations/03` Thm 2; C12, C25 |
+| 5.2 | `K_max = ln((m_N-1)/(m_N+1))/ln c`, decreasing in `m_N` and in `s` | `[VERIFIED]` | C8 (51600 cases), C9 |
+| 5.3 | Critical crowding at `m_N = (1+c)/(1-c)`, factor 9 at `c = 0.8` | `[VERIFIED]` | `derivations/03` Cor 10.3; C10, sharp at five `c` |
+| 5.4 | Worked window: `20.68 / 5.28 / 2.53` at `s = 0.25 / 0.5 / 1`, at `c = 0.8` | `[VERIFIED]` | C11 |
+| 5.5 | `c` is invariant to `N` | `[VERIFIED]` | C12, spread `4.4e-16`. **The one place the composition could fail** |
+| 5.6 | **The upper side of `\|mu_N\| < 1` never binds, and the lower binds at `lambda_max`,** by monotonicity rather than by sign pattern | `[VERIFIED]` | `derivations/03` Prop 9; C25 |
+| 5.7 | Equivalent form: stable iff `m_N < (1+c^K)/(1-c^K)`, of which critical crowding is the `K = 1` case | `[VERIFIED]` | `derivations/03` Thm 10; C8 |
+| 5.8 | Realized window is `floor(K_max)`, the plotted frontier continuous | `[VERIFIED]` | C8 |
+| 5.9 | The simulated joint loop lands on the predicted side of the frontier | `[VERIFIED]` | C26, 59 decisive trials, zero disagreements |
+| 5.10 | Heterogeneous `K_i` across firms | `[DEFERRED]` | breaks the eigenvector sharing the proof uses |
 
 ## Section 6, Theorem 3
 
@@ -99,14 +114,26 @@ diff.
 
 ## Open items blocking a status upgrade
 
-1. **4.7** is stated in expectation and needs a concentration bound before it
-   can be called `[DERIVED]` without qualification.
+1. ~~**4.7** is stated in expectation and needs a concentration bound.~~
+   **Closed.** `../math/derivations/02` proves the entrywise bound and its
+   spectral consequence with an explicit failure probability. The sharp
+   operator-norm rate is now tracked separately as 4.14, `[DEFERRED]`.
 2. **6.7** and **6.8** are the two outstanding pieces of Theorem 3. 6.8 is the
    more important one, because a failure changes what the paper claims rather
    than only what it proves.
 3. **7.1** and the welfare page are the whole of Theorem 4's remaining work.
 4. Every `[TO BUILD]` experiment. Until a panel runs, the claim it tests holds
    at `[DERIVED]` and the paper must not imply measurement.
+
+## Note on the Section 4 and 5 upgrades
+
+Sections 4 and 5 moved from `[DERIVED]` to `[VERIFIED]` on 18 Aug 2026, when the
+proofs in `../math/derivations/` landed with assertion-based certificates rather
+than report-printing scripts. The standing rule is satisfied: each upgraded claim
+names a certificate that fails loudly, and every one of them has been run. Claims
+still resting on argument rather than computation (4.5's Perron-Frobenius
+condition) stay at `[DERIVED]`, and the two genuinely open pieces (4.14, 5.10) are
+tracked as `[DEFERRED]` rather than quietly dropped.
 
 ## Standing rule
 

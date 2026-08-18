@@ -59,13 +59,22 @@ model alignment rather than by headcount. Results 2 through 4 are all stated in
 | Literature review | **complete** (`literature/LITERATURE-REVIEW-P2.md`) |
 | Introduction | **complete** (`writing/01-introduction.md`) |
 | Abstract | drafted, re-write after Result 3's experiment lands |
-| Theorem 1 algebra | derived; one anchor in the plan corrected (see `math/01`) |
-| Theorem 2 algebra | derived; the plan's three `K_max` figures recomputed and confirmed |
+| Theorem 1 | **proved and certified** (`math/derivations/01`, `02`); 123 checks passing |
+| Theorem 2 | **proved and certified** (`math/derivations/03`); 59 checks passing |
 | Theorem 3 algebra | limit case derived; exact two-block root outstanding |
 | Theorem 4 algebra | sketched; welfare page outstanding |
+| Section 4, Result 1 | **drafted** (`writing/04`) |
+| Section 5, Result 2 | **drafted** (`writing/05`) |
 | Theory module | specified, not written |
 | Experiments 1-6 | specified, not run |
 | Remaining sections | planned, not written |
+
+Results 1 and 2 have moved from `[DERIVED]` to `[VERIFIED]` in the claims ledger,
+each against an assertion-based certificate that fails loudly. Two open items are
+closed: the supply-chain concentration statement now carries a probability bound
+rather than holding in expectation, and the invariance of the inner contraction
+`c` to firm count is measured rather than argued. The next block of work is
+Theorem 3, on the same pattern.
 
 ## Conventions
 
