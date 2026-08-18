@@ -1,16 +1,22 @@
-# The EconML Paper, Explained (main-track-grade version)
+# The EconML Paper, Explained (finalized plan)
 
-## "Algorithmic Monoculture as Dynamical Instability: the Spectral Theory of Learning Ecosystems"
+## "Algorithmic Monoculture as Systemic Risk: the Effective Number of Independent Models"
 
 **Workshop:** EconML @ NeurIPS 2026 (Atlanta, Dec 12/13). Submit **Aug 29,
 2026**. Long format: 9 pages main content + unlimited appendix.
 **Double-blind.** In-person presentation required.
 
-**Scope statement.** This document specifies the full paper at
-NeurIPS-main-track depth and marks the workshop cut. Status flags:
-**[VERIFIED]** = checked numerically / follows from certified base results;
-**[PROVABLE]** = standard machinery, low risk; **[HARD]** = the
-main-track-grade technical work.
+**Scope statement.** This document specifies the paper that ships on Aug 29
+and separates it from the longer program the appendix carries toward a
+journal or main-track version. Status flags: **[VERIFIED]** = checked
+numerically / follows from certified base results; **[PROVABLE]** = standard
+machinery, low risk; **[HARD]** = genuine technical work, stated with proof
+sketch at the workshop and completed later.
+
+**Design principle.** This is an economics workshop. The economic mechanism
+leads, the spectral machinery serves it. Results are ordered by how much an
+EconML reviewer will care, not by technical difficulty. Anything whose
+interest is computational rather than economic lives in the appendix.
 
 ---
 
@@ -21,60 +27,64 @@ static harm. This paper asks what monoculture does to ecosystems of models
 that **retrain** on data their own deployments generate, and the answer is a
 different kind of harm with different mathematics: shared models align the
 *directions* of the learners' performative feedback, and aligned feedback
-resonates. We build the spectral theory of such ecosystems in full
-heterogeneity - each firm its own objective curvature, its own response
-Jacobian - and show the system's stability is governed by an
-**alignment-weighted spectrum** whose leading eigenvalue is the *effective
-number of independent models*. From it: an exact computable stability
-criterion for arbitrary heterogeneous ecosystems (a `d x d` secular-equation
-reduction, not just bounds), a global convergence/uniqueness theorem beyond
-linearization, a supply-chain boundary in (firms x shared-foundation-model
-fraction) with finite-size random-matrix corrections, an adoption game in
-which monoculture is the Nash destination of unregulated model choice with a
-price of anarchy in stability growing linearly in market size, and a
-supervision theory: a consistent, asymptotically normal estimator of the
-ecosystem's distance to instability computable from public prices alone -
-with the striking property that estimation gets *easier* as the ecosystem
-approaches criticality.
+resonates. The systemic variable is not the number of firms but the
+**effective number of independent models**, the leading eigenvalue of the
+correlation matrix of the firms' performative responses. Fifty dealers
+fine-tuning one vendor's foundation model are, dynamically, close to one very
+large learner, and the market they share inherits that learner's instability.
+Three consequences follow, and they are the paper. First, a **certification
+gap**: every firm can pass an individual stability test while the ecosystem
+fails a market-level one, so per-model evaluation is structurally
+insufficient in a shared endogenous environment. Second, a **supply-chain
+stability boundary** in (number of firms) x (shared-model fraction) that
+turns foundation-model concentration from a talking point into a term in a
+condition. Third, an **adoption game** in which monoculture is the Nash
+destination of unregulated model choice, with a price of anarchy in stability
+growing linearly in market size and two closed-form interventions. A
+supervision result closes the loop: because `R` is unobservable to any
+outsider, we give a statistic a regulator can compute from public prices
+alone, and show it sharpens exactly as the ecosystem approaches the boundary.
 
-## 2. Why this is a new framework, and why it clears the main-track bar
+## 2. Why this is a new framework, and why this venue wants it
 
-**The framework.** Call it the *spectral theory of learning ecosystems*: `N`
-heterogeneous learners, each reshaping a shared environment, coupled through
-spillover; stability, welfare, adoption incentives, and observability all
-expressed through one object - the alignment structure of the learners'
-response Jacobians. The three adjacent literatures each lack a piece:
-monoculture (Kleinberg-Raghavan; Bommasani et al.) is static and has no
-dynamics; multiplayer performative prediction (Brown et al.; Narang et al.;
-Piliouras-Yu) has dynamics but homogeneous-coupling conditions and no
-model-provenance structure, no adoption game, no observability theory; the
-systemic-risk literature has spectra and early warning but no learning
-micro-foundation. The related-work section proves the deltas rather than
-asserting them - in particular against Narang et al.'s heterogeneous
-decision-dependent games, whose conditions bound couplings by magnitudes and
-are blind to direction: alignment is precisely the directional information
-their sufficient conditions discard, and the paper exhibits an ecosystem
-that their magnitude conditions call borderline that alignment shows is
-stable, and vice versa. [PROVABLE - construct the two examples explicitly]
+**The framework.** `N` heterogeneous learners, each reshaping a shared
+environment, coupled through spillover; stability, welfare, adoption
+incentives, and observability all expressed through one object, the alignment
+structure of the learners' response Jacobians. The three adjacent literatures
+each lack a piece: monoculture (Kleinberg-Raghavan; Bommasani et al.) is
+static and has no dynamics; multiplayer performative prediction (Brown et
+al.; Narang et al.; Piliouras-Yu) has dynamics but homogeneous-coupling
+conditions and no model-provenance structure, no adoption game, no
+observability theory; the systemic-risk literature has spectra and early
+warning but no learning micro-foundation. The related-work section proves the
+deltas rather than asserting them - in particular against Narang et al.'s
+heterogeneous decision-dependent games, whose conditions bound couplings by
+magnitudes and are blind to direction: alignment is precisely the directional
+information their sufficient conditions discard, and the paper exhibits an
+ecosystem that their magnitude conditions call borderline that alignment
+shows is stable, and vice versa. [PROVABLE - construct the two examples
+explicitly]
 
-**Why main-track depth now.** The earlier version's core was an equal-moduli
-identity plus an unquantified bound. The upgraded core adds what a main-track
-reviewer requires: an **exact general characterization** (Theorem 1's secular
-reduction, with real structure and an `O(N d^3)` algorithm), a **global
-nonlinear result** (Theorem 2 - existence, uniqueness, convergence, and a
-converse), **finite-size probabilistic theory** (Theorem 3's RMT
-correction), a **complete game-theoretic analysis** (Theorem 4), and an
-**estimation theory with rates** (Theorem 5). The alignment-spectrum identity
-survives as the interpretable special case the general theory explains.
+**What the venue asked for.** EconML's Theme 2 ("Ecosystems with many
+interacting models") lists, verbatim: *"Algorithmic monoculture and model
+multiplicity"*, *"Feedback loops and performative prediction effects"*,
+*"Market concentration among AI service providers"*, *"AI supply chains and
+their dynamics"*, *"Multi-agent learning dynamics in economic environments"*,
+and *"Ecosystem-level incentive design"*. One model hits all six. The paper
+also carries the three things an economics-literate audience checks for and
+ML submissions usually lack: an explicit equilibrium analysis, a welfare
+statement (the instability externality and its price of anarchy), and an
+identification argument (what an outside observer can and cannot infer, with
+a placebo design on real data).
 
 **Why still REFLEX-based.** The base project supplies the only setting we
 know of where all of this is *falsifiable end-to-end*: a genuine `N`-dealer
 simulator (bit-for-bit single-dealer reduction at `N = 1`), the homogeneous
 special case already verified against theory (measured amplification
 `1.74x / 3.16x` vs predicted `N_eff = 2 / 3` - the new theory must reproduce
-these as its `R = 11'` column, an external validation checkpoint), the
-Woodbury machinery of theory 1.5 that makes the secular reduction cheap, and
-a 36-year real-data panel for the supervision leg.
+these as its `R = 11'` column, an external validation checkpoint), closed-form
+constants computed from microstructure primitives rather than fitted, and a
+36-year real-data panel for the supervision leg.
 
 ## 3. Model
 
