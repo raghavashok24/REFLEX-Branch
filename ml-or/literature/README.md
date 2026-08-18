@@ -1,4 +1,4 @@
-# NeurIPS 2026 Workshop Program — REFLEX Branch-Off Papers
+# ML x OR
 
 Two papers branching off **REFLEX** (*Reflexive Equilibrium Fixed-point Learning
 for endogenous financial markets*), targeted at NeurIPS 2026 workshops in
