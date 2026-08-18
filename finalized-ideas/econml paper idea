@@ -188,8 +188,8 @@ column inch.
 
 ## 5. The results
 
-Ordered by economic interest. Results 1-4 are the 9-page body. The general
-spectral theory that used to open this section is now Section 5.5, stated in
+Ordered by economic interest. Results 1-5 are the 9-page body. The general
+spectral theory that used to open this section is now Section 5.6, stated in
 the body and proved in the appendix, because its interest is computational
 and this is not a computational venue.
 
@@ -295,7 +295,7 @@ equilibrium is full monoculture whenever `q` exceeds a threshold
 the social optimum keeps interior diversity `s* < 1`, characterized by
 marginal quality equal to marginal instability; (c) the **price of anarchy in
 stability** is `(1 + kappa(N-1)) / (1 + kappa s* (N-1))`, growing linearly in
-`N`; (d) the minimal restoring interventions in closed form (Section 5.4).
+`N`; (d) the minimal restoring interventions in closed form (Result 4).
 
 This discharges the CFP's "ecosystem-level incentive design" bullet with an
 actual mechanism, and it supplies the paper's most important qualitative
@@ -351,7 +351,7 @@ and the full near-unit-root treatment are appendix-and-journal. Stated
 plainly: the asymptotics are classical, the object they are applied to is
 new, and the paper claims only the second.
 
-### 5.5 The general spectral theory [HARD - stated in the body, proved in the appendix]
+### 5.6 The general spectral theory [HARD - stated in the body, proved in the appendix]
 
 Both of these were the previous draft's headline theorems. They are correct
 and worth doing, but their interest is machinery, so they are stated in half
@@ -383,30 +383,49 @@ low-risk, and it is the half that ships. The converse (linearized
 center-stable-manifold argument) is stated and deferred. Half a column here
 answers "your whole theory is a linearization" before a referee has to ask.
 
-## 5. The experiments
+## 6. The experiments
 
 All in the base project's genuine `N`-dealer simulator; CPU, deterministic,
-certified.
+certified. Each maps to exactly one result, and the mapping is stated in the
+paper so a referee can check coverage at a glance.
 
-1. **The `(N, s)` phase diagram** with the finite-`d` band (Theorem 3) and
-   the `s = 1` column validated against the published `1.74x / 3.16x`
-   numbers. Companion: the clustered-vendor topology defeating the
-   mean-alignment index (Theorem 1c).
-2. **Diversity buys stability** - same market, same feedback gain, same
-   `N`: divergent at high alignment, convergent after decorrelating the
-   responses. The single most persuasive dynamic figure.
-3. **The secular reduction certified** - heterogeneous ecosystems with
-   random `(Gamma_i, E_i)`: secular-equation roots vs dense eigensolves
-   (machine precision), and the Theorem 1c bounds' tightness vs modulus
-   dispersion.
-4. **The adoption game** - Nash vs optimal `s`, price of anarchy vs `N`,
-   the intervention curve.
-5. **Real-data supervision** - PC1 variance share and lag-1 autocorrelation
-   of cross-sectional spread co-movement on the 212-CUSIP panel, 1990-2026,
-   overlaid on the model-implied fragility index; **placebo** on
-   Treasury/macro series. Framed as consistency evidence, never
-   identification: co-movement is macro-contaminated and the data is not
-   trade-level TRACE (provenance caveat verbatim from the base project).
+1. **The `(N, s)` phase diagram** (Result 1) - measured joint modulus over
+   firms x shared-model fraction with the boundary overlaid. The `s = 1`
+   column must reproduce the published `1.74x / 3.16x` numbers: an external
+   validation checkpoint against a prior curated run, not a self-consistency
+   check.
+2. **Diversity buys stability** (Result 1) - fix `N` and the feedback gain
+   beyond the monoculture boundary, then decorrelate the responses. Same
+   market, same feedback strength, same number of firms: divergent at high
+   alignment, convergent at low. The single most persuasive dynamic figure in
+   the paper and the one that should be on the poster.
+3. **The two ways diversity indices fail** (Result 2) - the clustered-vendor
+   topology (three aligned firms among ten) going unstable at mean-alignment
+   values a naive index calls safe, and the share-weighted companion where
+   the same alignment pattern is safe among small firms and unstable among
+   large ones. Reports `lambda_max(R_w)` against mean alignment and against
+   headcount on the same axes.
+4. **The adoption game** (Result 3) - Nash versus socially optimal `s` across
+   quality gaps; price of anarchy against `N`.
+5. **The two levers at matched cost** (Result 4) - the diversity floor and
+   the retraining-cadence adjustment applied to the same unstable ecosystem,
+   plotted as stability restored per unit of accuracy or quality given up.
+   Directly reuses the base project's existing cadence machinery, which is
+   what makes it affordable this late in the build. This is the panel that
+   makes the policy section concrete rather than rhetorical.
+6. **Real-data supervision** (Result 5) - PC1 variance share and lag-1
+   autocorrelation of cross-sectional spread co-movement on the 212-CUSIP
+   panel, 1990-2026, overlaid on the model-implied fragility index (which
+   contracts roughly `4.3-4.4x` from calm to crisis in the base project's
+   calibration); **placebo** on Treasury/macro series where no dealer-model
+   channel exists. Framed as consistency evidence, never identification:
+   co-movement is macro-contaminated and the data is not trade-level TRACE
+   (provenance caveat carried verbatim from the base project).
+
+**Cut from the previous plan:** the secular-reduction certification panel
+(random heterogeneous `(Gamma_i, E_i)` versus dense eigensolves). It is a
+correctness check on appendix machinery, it persuades nobody at this venue,
+and it moves to the appendix as a table rather than a figure.
 
 ## 6. The workshop cut vs the full paper
 
