@@ -101,8 +101,7 @@ RRM, or stability-constrained exploration** - the cleanest available
 evidence that the gap is real, from the field's founders.
 
 **A9. REFLEX (*Reflexive Equilibrium Fixed-point Learning for Endogenous
-eXchanges*), arXiv:2608.16155, <https://doi.org/10.48550/arXiv.2608.16155>.**
-[V1]
+eXchanges*), arXiv:2608.16155, 2026.** [V1]
 **The direct base, and the largest overlap surface in this review.** It
 instantiates A1's framework in a structural OTC market-making model where every
 constant in every theorem here is computable from primitives rather than
@@ -332,13 +331,16 @@ estimators, which the vanilla Cramer-Rao bound does not.
 ## Cluster F - Economics of learning by experimentation
 
 **F1. Rothschild 1974** - see C1 (it belongs to both clusters).
+
 **F2. McLennan. "Price Dispersion and Incomplete Learning in the Long
 Run." J. Economic Dynamics & Control 7(3):331-347, 1984.** [V3]
+
 **F3. Easley, Kiefer. "Controlling a Stochastic Process with Unknown
 Parameters." Econometrica 56(5):1045-1064, 1988.** [V3]
 Optimal Bayesian agents may converge to incorrect beliefs with positive
 probability - rational incomplete learning, the decision-theoretic
 foundation under M2's ROI corollary.
+
 **F4. Aghion, Bolton, Harris, Jullien. "Optimal Learning by
 Experimentation." Review of Economic Studies 58(4):621-654, 1991.** [V2]
 When does optimal experimentation learn the payoff function completely -
@@ -346,6 +348,7 @@ conditions (smoothness, discounting) under which learning is adequate or
 fails. M2's break-even discount rate is a closed-form instance of their
 patience mechanism, computable because the market model pins every
 constant.
+
 **F5. Keller, Rady. "Optimal Experimentation in a Changing Environment."
 Review of Economic Studies 66(3):475-507, 1999.** [V3]
 Experimentation when the demand curve *drifts exogenously*. The nearest
@@ -353,13 +356,15 @@ economics gets to a reactive environment - and the environment still does
 not react *to the agent*; it drifts on its own. The performative case,
 where the environment's change is caused by the learner and feeds back
 through retraining, is absent from this line.
+
 **F6. Grossman, Stiglitz. "On the Impossibility of Informationally
 Efficient Markets." American Economic Review 70(3):393-408, 1980.** [V3]
 Cited for the framing sentence only: information must be paid for in
 equilibrium, or no one gathers it. M2 is a micro-founded instance where
 the price of information is stated as an identity.
+
 **F7. PEBSA (*Predicting Economic Behavior via Sentiment Analysis*), IJECS
-13(12), 2024, <https://doi.org/10.18535/ijecs/v13i12.4950>.** [V1]
+13(12), 2024.** [V1]
 One line in related work, as the contrasting **cost structure**, and placed
 here because F6 is the cluster's other citation about what information costs.
 PEBSA infers economic behavior through a channel whose sampling design is

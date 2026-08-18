@@ -217,8 +217,7 @@ response here is aggregate and non-strategic, so the externality is a
 coordination failure rather than a game against the classifier.
 
 **B13. REFLEX (*Reflexive Equilibrium Fixed-point Learning for Endogenous
-eXchanges*), arXiv:2608.16155, <https://doi.org/10.48550/arXiv.2608.16155>.**
-[V1]
+eXchanges*), arXiv:2608.16155, 2026.** [V1]
 **The direct base, and the largest overlap surface in this review.** It
 instantiates B1's framework in a structural OTC market-making model where every
 constant is computed from microstructure primitives rather than fitted, and
@@ -388,7 +387,7 @@ destination, different mechanism, and conflating them would be a real error. One
 sentence, drawing the distinction.
 
 **D9. PEBSA (*Predicting Economic Behavior via Sentiment Analysis*), IJECS
-13(12), 2024, <https://doi.org/10.18535/ijecs/v13i12.4950>.** [V1]
+13(12), 2024.** [V1]
 Cited once, in Section 8, and for the contrast rather than for a shared method.
 It belongs to the same broad question that section asks, which is what can be
 inferred about the state of an economy from aggregate public signals no single
