@@ -225,3 +225,187 @@ version needs a majorization condition on the share vector, since the naive
 block-secular reduction for fully heterogeneous ecosystems. Both are journal
 material, and saying so is what keeps this plan inside twelve days.
 [DEFERRED]
+
+## 6. Result 2 - The crowding-cadence frontier
+
+The base theory contains, separately, the `N_eff` amplification law and a
+single-dealer lazy-deployment result: a dealer taking only `K` gradient steps
+per deployment instead of retraining to convergence realizes outer-map slope
+`mu(K) = -m + c^K (1+m)`, where `c = 1 - eta*gamma` is the inner per-step
+contraction. Nobody has composed them.
+
+**Theorem 2 (systemic cadence window).** In the `N`-dealer market with
+synchronous `K`-step retraining, the common mode of the joint deployment map
+has slope
+
+```
+   mu_N(K) = -m_N + c^K (1 + m_N) ,
+```
+
+so a market that is unstable under full retraining (`m_N > 1`) remains stable
+under lazy retraining iff
+
+```
+   K  <  K_max  =  ln( (m_N - 1)/(m_N + 1) ) / ln(c) ,
+```
+
+and `K_max` is *decreasing* in `m_N`. There is also a critical crowding level
+past which no cadence helps: even the laziest retrainer (`K = 1`) is unstable
+once `m_N > (1+c)/(1-c)`, so minimum-cadence operation multiplies the
+sustainable effective crowding by exactly `(1+c)/(1-c)`, a factor 9 at
+`c = 0.8`, and past that the market is unstable at every retraining
+frequency. [DERIVED]
+
+*Derivation sketch.* The lazy-deployment lemma linearizes the inner `K`-step
+iteration at the frozen best response (contraction `c` per step, unchanged by
+`N` because it is own-objective curvature) and composes with the outer
+best-response slope. In the joint market the composition applies mode by
+mode, and the common mode's outer slope is `-m_N`. The common mode always
+binds: differential modes have `|slope| = m_1(1-kappa) < 1` whenever
+`m_1 < 1`. One afternoon of algebra from published pieces; the content is the
+frontier and the critical crowding level, neither of which exists anywhere.
+
+*What the merge adds.* Substituting Result 1, `K_max` is a function of `s`,
+not just of `N`. Holding the number of firms fixed and raising the
+shared-model fraction shrinks every incumbent's retraining budget: at
+`m_1 = 0.15`, `kappa = 0.8`, `N = 30`, the window runs `K_max ~ 20.7` at
+`s = 0.25`, `~ 5.3` at `s = 0.5`, and `~ 2.5` at `s = 1`. The externality in
+its sharpest operational form is therefore not merely that **your
+competitor's entry consumes your retraining budget** but that **your
+competitor's choice of vendor does too**, without their entering at all and
+without either firm doing anything wrong. That sentence is the paper's best
+one-line statement of the market failure, and it exists only because the two
+drafts were merged. [DERIVED]
+
+*The figure.* The `(N_eff, K)` plane: measured joint-loop stability, converge
+or diverge per cell on CRN seeds, against the predicted frontier, with `s`
+contours overlaid. One panel, fully falsifiable.
+
+## 7. Result 3 - Herd immunity, and diversity as its substitute
+
+The base project's corrected update (performative-gradient, structurally
+anchored) stabilizes a *single* dealer beyond its boundary, because the
+corrected dynamics are governed by the objective curvature `gamma_PO` rather
+than by the cobweb. It has never been asked what correction does in the
+*game*, and the answer has an unreasonably clean form.
+
+Model a mixed market: `N_b` blind dealers with response slope `m_1`, and
+`N - N_b` corrected dealers whose response to competitors' deployments is
+damped by `gamma/gamma_PO < 1`.
+
+**Theorem 3 (mixed-market stability; the herd-immunity limit).** The joint
+Jacobian of the mixed market has block structure whose spectrum solves an
+explicit scalar secular equation (two blocks, so a quadratic in closed form).
+In the strong-correction limit the unstable feedback cycle runs through blind
+dealers only, and the market is stable iff the blind sub-ecosystem is:
+
+```
+   m_1 ( 1 + kappa * s * (N_b - 1) )  <  1 ,
+```
+
+that is, iff `N_b < N_c(s) = 1 + (1/m_1 - 1)/(kappa*s)`. Writing the
+corrected fraction `rho = 1 - N_b/N`, the market is stable iff
+
+```
+   rho  >  rho*(s)  =  max( 0 ,  1 - N_c(s)/N ) .
+```
+
+At `kappa = s = 1` this collapses to `N_c = 1/m_1` and
+
+```
+   rho*  =  1 - 1/m_N ,
+```
+
+**exactly the epidemiological herd-immunity threshold `1 - 1/R_0`, with the
+systemic modulus as the reproduction number.** A market of 10 dealers at
+`m_N = 2.5` needs 60% of them un-blinded; the un-blinded protect the blind,
+because what they stop transmitting is destabilizing feedback. [DERIVED]
+
+*Derivation status.* The limit case reduces directly - the blind block is
+itself a symmetric shared-pool market of size `N_b` with effective spillover
+`kappa*s`, so the base theorem applies to it verbatim - and the closed form
+was checked against dense eigensolves on 4000 random `(m_1, kappa, s, N_b)`
+draws with zero mismatches before this plan was written. The exact
+finite-`gamma_PO` version replaces the clean formula with the quadratic's
+root, and the paper reports both. [VERIFIED numerically / DERIVED]
+
+**The synthesis result: diversity and correction are substitutes.** Because
+`rho*(s)` is *increasing* in `s`, a market can reach stability along either
+axis. Un-blind more agents, or share fewer models. At `N = 20`, `m_1 = 0.15`,
+`kappa = 0.8`: a monoculture (`s = 1`) needs about 60% of agents corrected,
+while at `s = 0.2` the threshold is negative, meaning the market is stable
+with no corrected agents at all. The `(rho, s)` iso-stability frontier is the
+paper's headline figure and its most policy-legible object: it says a
+regulator facing an unstable market of adaptive models has two interchangeable
+instruments and can price them against each other. Neither predecessor draft
+contained this, because each had only one of the two axes. [DERIVED]
+
+*Economic reading.* Correction is a **public good**: an un-blinded dealer
+captures a private benefit (it quotes closer to its optimum) while the
+stability it contributes accrues to everyone. Herd immunity below the
+threshold, free-riding above it, which is exactly why the market will not
+reach `rho*` on its own and why Section 8 exists. Model diversity has the
+same structure, which is why the substitution is between two *goods that are
+both under-supplied* rather than between a good and a bad.
+
+*The experiment, new in kind.* The corrected loop has only ever been run
+single-dealer. We run it inside the `N`-dealer shared-pool market at
+corrected fractions `rho = 0, 1/N, ..., 1` in an `m_N > 1` regime, and then
+sweep `s` to trace the substitution frontier. Either outcome is a result;
+matching the predicted curve is the headline. [TO BUILD - existing loop modes
+plus existing multi-dealer env, new configuration]
+
+## 8. Result 4 - The Pigouvian wedge
+
+The externality formalized rather than narrated. In the stable regime the
+market's common mode fluctuates with stationary variance proportional to
+`1/(1 - m_N^2)`, a smooth welfare cost diverging as the market approaches its
+boundary. Let each dealer choose an adaptation aggressiveness `a_i` (cadence,
+learning rate, or responsiveness, anything scaling its contribution to
+`m_1`). Aggressiveness buys tracking benefit `B(a_i)`; the variance cost is
+shared, since dealer `i` bears only its own exposure while its marginal
+contribution to `m_N` raises everyone's.
+
+**Theorem 4 (the wedge).** At a symmetric equilibrium the private
+first-order condition ignores the fraction `(N-1)/N` of the marginal variance
+cost plus the entire client-side exposure, and the corrective fee equals the
+externalized marginal cost
+
+```
+   t*  =  ( dm_N / da_i ) * ( d/dm_N ) [ variance cost borne by others ] ,
+```
+
+in closed form given the variance expression, increasing in `N`, in `kappa`,
+and steeply in proximity to the boundary. Corollary: the decentralized
+equilibrium **over-adapts** relative to the social optimum for every
+`N >= 2`, with the distortion growing as the market crowds. [DERIVED]
+
+*What the merge adds.* `dm_N/da_i` now decomposes into an aggressiveness
+channel and a *provenance* channel, because `m_N` depends on `s`. The same
+wedge therefore prices shared-model adoption directly, which turns the
+monoculture externality into a fee rather than a warning, and connects this
+result to the adoption-incentive question the CFP asks about. [DERIVED]
+
+*Why this section exists.* An EconML reviewer reads Section 4's narrative and
+asks "where is the model of the externality?" This is the one-page answer:
+welfare function, wedge, over-adaptation result. It also unifies the levers
+into the standard policy triple, stated as such: Section 6 is quantity
+regulation (cadence caps), Section 7 is a technology mandate (correction) or
+a structural remedy (diversity), Section 8 is the price instrument.
+
+## 9. Supervision from public prices [DEFERRED - one paragraph plus appendix]
+
+Everything above involves `R` and `s`, which no outsider observes. Near the
+boundary the system tells on itself: as `m_N -> 1` the aligned combination of
+firms' decisions exhibits critical slowing down, so the leading principal
+component of public quotes has lag-1 autocorrelation tending to one and
+variance share growing like `1/(1 - m_N)`. A supervisor can therefore
+estimate distance-to-instability from public prices alone, with no access to
+any firm's model, data, or code, and the estimator sharpens exactly as the
+market approaches the boundary.
+
+Workshop scope is deliberately thin: one paragraph in the body giving the
+estimator and the consistency claim, with the real-data panel and placebo in
+the appendix. The consistency proof, the CLT and the detection sample
+complexity are journal material. This is the first thing to cut if the build
+slips, and it is placed here rather than earlier for exactly that reason.
