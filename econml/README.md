@@ -47,9 +47,10 @@ model alignment rather than by headcount. Results 2 through 4 are all stated in
 
 | Path | Holds |
 |---|---|
+| [`STATUS.md`](STATUS.md) | **Where the build is: done, not done, risks, suggested order. Read this first** |
 | [`literature/`](literature/) | The literature review, cluster by cluster, with gaps, novelty verdict and verification debt |
-| [`math/`](math/) | Notation, standing assumptions, and one note per theorem: statement, derivation, anchors, open issues |
-| [`ml-contributions/`](ml-contributions/) | Theory-module spec, experiment specs, numerical certificate list |
+| [`math/`](math/) | Notation, standing assumptions, one note per theorem, and the complete proofs under `derivations/` |
+| [`ml-contributions/`](ml-contributions/) | The theory module, the response environment, the panel harness, specs and certificates |
 | [`writing/`](writing/) | Section-by-section paper content, page budget, claims ledger |
 
 ## Status board
@@ -68,7 +69,9 @@ model alignment rather than by headcount. Results 2 through 4 are all stated in
 | Section 6, Result 3 | replanned around the exact root (`writing/06`), not yet drafted |
 | Theory module | **written and certified** (`ml-contributions/theory/`); 50 checks |
 | Heterogeneous-response environment | **built and certified** (`ml-contributions/environment/`); 32 checks |
-| Experiments 1-6 | specified, not run. The environment they need is ready |
+| Panel harness | **built** (`ml-contributions/experiments/`); panels 1-5 run |
+| Panels 1-5 | **dry runs pass**, all agreeing with their closed forms. Not measurements: no simulator run yet |
+| Panel 6 | blocked on Theorem 4 |
 | Remaining sections | planned, not written |
 
 Theorems 1 through 3 have moved from `[DERIVED]` to `[VERIFIED]` in the claims

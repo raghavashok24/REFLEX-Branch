@@ -15,6 +15,11 @@ diff.
 - `[DERIVED]` worked out for this paper, derivation recorded, low proof risk
 - `[TO BUILD]` new experiment or configuration, not yet run
 - `[DEFERRED]` stated in the body, completed for the journal version
+- `[DRY RUN]` run in the linearized reference environment, which has no
+  microstructure. Establishes that the closed forms govern the realized
+  dynamics. **Does not license the paper to imply measurement**
+- `[MEASURED]` run in the order-flow simulator. This is the only status that
+  lets the paper say a thing was measured in a market
 
 ---
 
@@ -111,14 +116,26 @@ which supersedes `../math/03` where they disagree.
 
 ## Experiments
 
+**A dry run is not a measurement.** Panels 1 to 5 have run in the linearized
+reference environment, which has no informed flow, no spread and no inventory.
+That establishes the closed forms govern the realized dynamics; it does not
+establish anything about a market. `[DRY RUN]` is therefore its own status and
+does **not** license the paper to imply measurement. Only `[MEASURED]`, which
+requires the order-flow simulator, does that.
+
 | # | Panel | Status |
 |---|---|---|
-| E1 | Amplification replication | `[TO BUILD]`, external validation |
-| E2 | `(N, s)` phase diagram | `[TO BUILD]`, needs the heterogeneous-response environment |
-| E3 | Crowding-cadence frontier | `[TO BUILD]` |
-| E4 | Herd immunity | `[TO BUILD]`, new in kind |
-| E5 | Substitution frontier | `[TO BUILD]`, **never cut** |
-| E6 | Over-adaptation | `[TO BUILD]`, second in de-scope order |
+| E1 | Amplification replication | `[DRY RUN]` reduction exact. **External anchor `[TO BUILD]`**, needs the simulator |
+| E2 | `(N, s)` phase diagram | `[DRY RUN]`, 48 cells, max error `7.1e-15` |
+| E2b | Clustered companion | `[DRY RUN]`, measured `m_N` `1.30` against the mean index's `0.74` |
+| E3 | Crowding-cadence frontier | `[DRY RUN]`, 175 cells, zero disagreements |
+| E4 | Herd immunity | `[DRY RUN]`, thresholds `12 / 14 / 16 / 20` firms across efficacy |
+| E5 | Substitution frontier | `[DRY RUN]`, 18 of 18 exact. **never cut** |
+| E6 | Over-adaptation | `[TO BUILD]`, blocked on Theorem 4; second in de-scope order |
+
+| # | Claim | Status | Evidence |
+|---|---|---|---|
+| E4.1 | The imperfect-correction law predicts the threshold at `kappa = 0.8`, where it is not proved exact | `[DRY RUN]` | panel 4, 4 of 4 thresholds. **Evidence, not a proof** |
 
 ---
 
@@ -131,8 +148,13 @@ which supersedes `../math/03` where they disagree.
 2. ~~**6.7** and **6.8** are the two outstanding pieces of Theorem 3.~~
    **Closed, and 6.8 failed.** See the note below.
 3. **7.1** and the welfare page are the whole of Theorem 4's remaining work.
-4. Every `[TO BUILD]` experiment. Until a panel runs, the claim it tests holds
-   at `[DERIVED]` and the paper must not imply measurement.
+4. Every panel still short of `[MEASURED]`. Panels 1 to 5 sit at `[DRY RUN]`.
+
+On that last one: a passing dry run is progress on the derivations and no
+progress at all on the empirics. Until a panel runs in the order-flow simulator
+the claim it tests holds at its derivation status and the paper must not imply
+measurement. The temptation to treat a passing dry run as a result is exactly why
+`[DRY RUN]` was given its own flag rather than folded into `[VERIFIED]`.
 
 ## Note on 6.8, the one claim that failed
 

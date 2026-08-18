@@ -1,0 +1,174 @@
+# Status: EconML @ NeurIPS 2026
+
+**As of 18 Aug 2026. Submission 29 Aug 2026, 11 days out.**
+
+Paper: "Herd Immunity and Learning Externalities in Markets of Adaptive Models".
+9 pages main body, unlimited appendix, double-blind, in-person.
+
+---
+
+## One-paragraph summary
+
+The theory is done and certified: all four results have complete proofs except
+Theorem 4, whose welfare page is still a sketch. The infrastructure is done: the
+closed-form module and the heterogeneous-response environment both exist and pass
+acceptance tests. Five of six panels have run as dry runs against the reference
+environment and agree with the closed forms. **The gap is empirical and
+editorial**: nothing has run in the order-flow simulator, and seven of eleven
+paper sections are unwritten. The single largest risk is that the paper's
+measured claims all depend on a simulator port that has not started.
+
+## Where the time went, and what it bought
+
+The build found one result that changed the paper. Theorem 3's strong-correction
+limit is **optimistic, not conservative**: it under-states the spectral radius and
+calls roughly one configuration in eight stable when it is not. That was caught
+because the claims ledger flagged it in advance as the claim whose failure would
+matter most, and it was checked before the section was written rather than after.
+
+The repair is larger than the damage. The exact threshold is the epidemiological
+**imperfect-vaccine coverage law**, and it carries a **critical efficacy** below
+which correction stops working at any coverage. So the `R_0` correspondence now
+transfers a refinement of the law rather than just the law, which is much stronger
+evidence it is structural. The exact two-block root left the de-scope order as a
+consequence.
+
+---
+
+## Done
+
+### Theory, all proved and certified
+
+| Theorem | Proof | Certificate |
+|---|---|---|
+| 1, effective number of independent learners | `math/derivations/01`, `02` | 123 checks |
+| 2, crowding-cadence frontier | `math/derivations/03` | 59 checks |
+| 3, mixed market and herd immunity | `math/derivations/04` | 70 checks |
+| 4, Pigouvian wedge | **sketch only** | not written |
+
+334 assertions across five assertion-based files, all passing:
+
+```bash
+for f in econml/ml-contributions/certificates/verify_*.py; do python "$f" || break; done
+```
+
+### Results the build added beyond the plan of record
+
+The reduction lemma, deriving the joint Jacobian from response Jacobians instead
+of asserting the substitution. `N_eff >= 1`, so interaction never stabilizes a
+market below what its members achieve alone. The mean-alignment index proved to
+be a lower bound with a signed error, so it under-states risk and never
+over-states it, which replaces two counterexamples with one theorem. The exact
+two-block root. The imperfect-correction law and its critical efficacy. A
+supply-chain concentration bound that holds with probability rather than in
+expectation.
+
+### Infrastructure
+
+| Piece | State |
+|---|---|
+| Theory module, `ml-contributions/theory/` | Theorems 1 to 3 complete, 50 acceptance checks |
+| Heterogeneous-response environment, `ml-contributions/environment/` | 32 acceptance checks, reduction verified |
+| Panel harness, `ml-contributions/experiments/` | panels 1 to 5, exits nonzero on disagreement |
+
+### Panels, as dry runs only
+
+| Panel | Outcome |
+|---|---|
+| 1, amplification | reduction exact to `5.6e-16`; **external anchor outstanding** |
+| 2, `(N, s)` phase diagram | 48 cells, max error `7.1e-15` |
+| 2b, clustered companion | measured `m_N` `1.30`, mean index reports `0.74` |
+| 3, cadence frontier | 175 cells, zero disagreements |
+| 4, herd immunity | `12 / 14 / 16 / 20` firms at efficacy `1.00 / 0.90 / 0.75 / 0.60` |
+| 5, substitution frontier | 18 of 18 points exact |
+
+**These are not measurements.** They run in the linearized reference environment,
+which has no informed flow, no spread and no inventory. They establish that the
+closed forms govern realized dynamics and they fix every figure's shape. They
+establish nothing about a market. The ledger tracks them at `[DRY RUN]`, a status
+that deliberately does not license the paper to imply measurement.
+
+### Writing
+
+| Section | State |
+|---|---|
+| 1, introduction | complete |
+| 4, Result 1 | drafted, about 920 words |
+| 5, Result 2 | drafted, about 580 words |
+| 0, abstract | drafted, rewrite after Result 3's panel lands |
+| 6, Result 3 | replanned around the exact root, not drafted |
+
+---
+
+## Not done
+
+### Blocking, in priority order
+
+**1. The simulator port.** Every `[MEASURED]` claim in the paper depends on it and
+it has not started. The theory module and environment are written to be ported
+rather than reimplemented, and the environment's reduction test is the acceptance
+criterion. This is the critical path and nothing else on this list competes with
+it.
+
+**2. Theorem 4's welfare page.** The only theorem still on a sketch. Blocks
+Section 7 and panel 6. `pigouvian_wedge` is deliberately absent from the theory
+module, with a test asserting its absence, so it cannot arrive ahead of its
+derivation.
+
+**3. Seven unwritten sections.** 2 related work, 3 model and framing, 6 Result 3,
+7 Result 4, 8 supervision, 9 experiments, 10 limitations and conclusion. Section 6
+is the paper and is replanned but undrafted.
+
+### Known open items, none blocking
+
+The sharp operator-norm concentration rate, deferred to the journal version with
+the crude bound proved and the sharp rate measured. Share-weighted alignment and
+the fully heterogeneous block-secular reduction, both named and not attempted.
+Heterogeneous cadences across firms, which breaks the eigenvector sharing
+Theorem 2 uses. Three or more correction levels, which breaks Theorem 3's
+two-block collapse. `verify_theorem1_anchors.py` still prints a report instead of
+asserting and needs converting.
+
+---
+
+## Risk register
+
+| Risk | Severity | State |
+|---|---|---|
+| Simulator port does not land in time | **high** | Not started. Would cost every measured claim and leave a theory-only paper |
+| Theorem 4 stays a sketch | medium | Section 7 shortens, panel 6 is cut. Second in de-scope order, so survivable |
+| Section 6 drafting slips | medium | It is the paper. Replanned, so the drafting is transcription rather than design |
+| A referee asks for fully heterogeneous agents | low | Answered as future work with the machinery stated to extend |
+| A referee probes finite `gamma_PO` | **now low** | Was the paper's weakest point. The imperfect-correction law answers it directly |
+
+## De-scope order, current
+
+Supervision from public prices, then panel 6, then the free-riding diagnostic,
+then the clustered companion in panel 2.
+
+**Never cut:** panel 1's anchor, panel 4, panel 5, the exact two-block root, and
+the private-versus-systemic framing.
+
+The exact two-block root was third in this order until the limit was shown to err
+unsafe. It is what makes Section 6's criterion honest rather than a refinement of
+it.
+
+## Suggested order for the remaining days
+
+Start the simulator port immediately and in parallel with writing, because it is
+the only item that cannot be compressed. Draft Section 6 next, since it is
+replanned and is the paper. Derive Theorem 4's welfare page after that, and accept
+losing panel 6 if it slips. Write Sections 3, 2, 9 and 10 in that order. Section 8
+is already scoped to one paragraph and is first to cut.
+
+---
+
+## Conventions that are load-bearing
+
+Status flags mean what `writing/CLAIMS-LEDGER.md` says they mean, and the flag in
+the paper must match the ledger, which must match `ml-contributions/CERTIFICATES.md`.
+A closed form reaching the paper without a passing certificate ships at
+`[DERIVED]`, never `[VERIFIED]`. A dry run is not a measurement. All stability
+claims use the spectral form, never a mean. Prose carries no em dashes and is
+checked with `prose-guard`. Nothing in the double-blind build positions REFLEX or
+PEBSA as the authors' own work.
