@@ -427,25 +427,61 @@ paper so a referee can check coverage at a glance.
 correctness check on appendix machinery, it persuades nobody at this venue,
 and it moves to the appendix as a table rather than a figure.
 
-## 6. The workshop cut vs the full paper
+## 7. What is genuinely new
 
-**The 9-page body (Aug 29)** carries the full arc - it is a long-format
-venue: framework + model; Theorem 1 (a stated with the reduction displayed, b
-in full, c with the counterexample); Theorem 2 stated with proof sketch;
-Theorems 3-4 in full; Theorem 5 estimator + consistency (CLT to appendix);
-experiments 1, 2, 4, 5; policy and limitations. **Appendix:** all proofs;
-experiment 3; the Narang-delta examples; the placebo; certificates. **The
-main-track / journal version** (NeurIPS 2027 or an economics/finance
-journal): completes Theorem 2's converse in full generality, Theorem 3's RMT
-refinement, Theorem 5's detection theory, and adds the E3 program's
-endogenous-participation extension. Nothing is claimed at the workshop
-beyond what is proved or verified at submission; [HARD] items ship with
-partial results labeled as such.
+Stated compactly, because a referee will look for exactly this list.
 
-**Anonymization checklist (double-blind).** No author block; no repo URL
-anywhere; the base project cited in third person ("a concurrent submission
-derives the homogeneous boundary..."); scrubbed PDF metadata and figure
-paths; simulator described generically with an anonymized-artifact promise.
+- **The reframing.** Monoculture's harm relocated from static allocation
+  welfare to dynamical stability. A market can be statically fine and
+  dynamically fragile at the same shared-model fraction, and experiment 2
+  exhibits precisely that.
+- **The certification gap.** Individually certified learners composing into
+  an uncertified ecosystem, with `N_c = 1/m_1` in the clean corner and the
+  `(N, s, kappa)` surface in general. The claim that per-model evaluation is
+  *structurally* insufficient, not merely incomplete, in a shared endogenous
+  environment.
+- **The effective number of independent models as the systemic variable** -
+  a familiar spectral statistic computed on response Jacobians rather than
+  returns, entering a stability condition, with the exact equal-moduli
+  identity, the modulus-weighted general bound, and two counterexamples
+  (clustered alignment, share concentration) invalidating the diversity
+  indices a policymaker would otherwise reach for.
+- **The supply-chain boundary** in `(N, s)`, turning foundation-model
+  concentration into a term in a condition.
+- **A price of anarchy in a dynamical-stability metric** for model adoption,
+  with two closed-form interventions that act on interaction structure rather
+  than on any learner's predictive quality.
+- **The supervisor-side observable**: distance-to-instability estimable from
+  public prices alone, with a consistency proof, a real-data panel and a
+  placebo, and the inversion that measurement sharpens as fragility rises.
+
+## 8. The workshop cut vs the full paper
+
+**The 9-page body (Aug 29)**, a long-format venue, carries the full arc:
+framework and model (including `R_w`); Result 1 in full with both anchors;
+Result 2 in full with both counterexamples; Result 3 in full; Result 4 with
+the matched-cost panel; Result 5's estimator and consistency statement;
+Section 5.6's two theorems stated in half a column each with proof sketches;
+experiments 1, 2, 3, 5, 6; policy and limitations. **Appendix:** all proofs;
+experiment 4 in full; the secular-reduction certification table; the
+Narang-delta examples; the placebo; the numerical certificates. **The journal
+or main-track version** (NeurIPS 2027 or an economics/finance journal)
+completes the global converse, the finite-size random-matrix refinement,
+Result 5's CLT and detection theory, and the endogenous-participation
+extension. Nothing is claimed at the workshop beyond what is proved or
+verified at submission time; `[HARD]` items ship with partial results
+labeled as such.
+
+**Anonymization checklist (double-blind).** No author block; no repository
+URL anywhere; scrubbed PDF metadata and figure paths; the simulator described
+generically with an anonymized-artifact promise. On citations: REFLEX and
+PEBSA are both public at submission time (arXiv and IJECS respectively), so
+they are cited as ordinary third-party references with full bibliographic
+detail, which is *cleaner* than the third-person-concurrent-submission
+phrasing the earlier plan required. The rule to enforce during the
+anonymization pass is only that no sentence positions either as the authors'
+own work: no "our earlier framework", no "we previously showed", no "building
+on our REFLEX". Write them as any other cited paper and the blind holds.
 
 ## 7. Honest limitations
 
