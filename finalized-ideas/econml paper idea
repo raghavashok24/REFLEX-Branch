@@ -168,15 +168,22 @@ deployment actually moves. The object that governs stability is then the
    R_w = W^{1/2} R W^{1/2} ,        W = diag(N w_i) ,
 ```
 
-normalized so `w_i = 1/N` for all `i` recovers `R` exactly. Two consequences
-worth a paragraph each in the paper, and both are cheap to prove and to
-simulate. (i) `lambda_max(R_w) >= lambda_max(R)` under concentration in
-shares: **share concentration and model concentration compound**, so a market
-where the large firms are also the ones sharing a vendor is strictly more
-fragile than either measure alone suggests. (ii) The relevant policy quantity
-is a *share-weighted* diversity index; a headcount-based one (regulate by
-number of firms on each model) is defeated by the same clustered topology
-that defeats mean alignment. This is the economically meaningful direction of
+normalized so `w_i = 1/N` for all `i` recovers `R` exactly, and note
+`tr(R_w) = tr(R) = N`, so reweighting redistributes spectral mass rather than
+adding it. Two consequences worth a paragraph each in the paper. (i) **Share
+concentration and model concentration compound**: a market where the large
+firms are also the ones sharing a vendor is more fragile than either measure
+alone suggests. The clean statement to prove is monotonicity of
+`lambda_max(R_w)` under majorization of the share vector when the aligned
+block and the large block coincide - *not* the false general claim that any
+reweighting raises `lambda_max`, which orthogonal responses immediately
+refute. Get the condition right before the claim goes in the paper.
+[PROVABLE - state the majorization condition explicitly, verify numerically
+on the clustered topology first] (ii) The relevant policy quantity is a
+*share-weighted* diversity index; a headcount-based one (regulate by number
+of firms on each model) is defeated by the same clustered topology that
+defeats mean alignment. [PROVABLE by counterexample, same construction as the
+clustered panel] This is the economically meaningful direction of
 heterogeneity for this audience, and it is the direction the earlier draft
 did not have.
 
@@ -464,7 +471,11 @@ the matched-cost panel; Result 5's estimator and consistency statement;
 Section 5.6's two theorems stated in half a column each with proof sketches;
 experiments 1, 2, 3, 5, 6; policy and limitations. **Appendix:** all proofs;
 experiment 4 in full; the secular-reduction certification table; the
-Narang-delta examples; the placebo; the numerical certificates. **The journal
+Narang-delta examples; the placebo; the numerical certificates. Result 3 is
+the one body result carrying no figure of its own, deliberately: the adoption
+game's content is its closed forms (the threshold decreasing in `N`, the
+price of anarchy), which read better as displayed equations than as a plot,
+and five panels is already the ceiling for nine pages. **The journal
 or main-track version** (NeurIPS 2027 or an economics/finance journal)
 completes the global converse, the finite-size random-matrix refinement,
 Result 5's CLT and detection theory, and the endogenous-participation
