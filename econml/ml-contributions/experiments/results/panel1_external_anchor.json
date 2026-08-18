@@ -1,0 +1,54 @@
+{
+  "panel": "1. amplification replication, external anchor",
+  "status": "MEASURED, in the base project's genuine shared-pool market",
+  "base_project": "C:\\Users\\nrvig\\GitHub Projects\\REFLEX",
+  "protocol": {
+    "kappa": 1.0,
+    "probe_feedback": 0.5,
+    "h_ref": 1.0,
+    "seed": 0,
+    "episodes": 8
+  },
+  "rows": [
+    {
+      "N": 1,
+      "measured_common_modulus": 0.785600462590498,
+      "measured_amplification": 1.0,
+      "branch_predicted_n_eff": 1.0,
+      "base_predicted_n_eff": 1.0,
+      "predicted_common_modulus": 0.785600462590498,
+      "measured_differential": NaN,
+      "br_clipped": false,
+      "published_common_measured": 0.785600462590498,
+      "published_amplification": 1.0
+    },
+    {
+      "N": 2,
+      "measured_common_modulus": 1.3691618268039063,
+      "measured_amplification": 1.7428220730536859,
+      "branch_predicted_n_eff": 2.0,
+      "base_predicted_n_eff": 2.0,
+      "predicted_common_modulus": 1.571200925180996,
+      "measured_differential": 0.003439768414600586,
+      "br_clipped": false,
+      "published_common_measured": 1.3691618268039063,
+      "published_amplification": 1.74
+    },
+    {
+      "N": 3,
+      "measured_common_modulus": 2.479927444224721,
+      "measured_amplification": 3.1567285946436714,
+      "branch_predicted_n_eff": 2.9999999999999996,
+      "base_predicted_n_eff": 3.0,
+      "predicted_common_modulus": 2.3568013877714935,
+      "measured_differential": 0.003192896017243818,
+      "br_clipped": false,
+      "published_common_measured": 2.479927444224721,
+      "published_amplification": 3.16
+    }
+  ],
+  "published_reproduced_exactly": true,
+  "branch_and_base_n_eff_agree": true,
+  "max_relative_gap_to_linear_prediction": 0.12858896347315707,
+  "note": "The gap to the linear prediction is nonlinearity and flow saturation, which the linearized reference environment does not model. Panels 2 to 5 remain DRY RUN."
+}

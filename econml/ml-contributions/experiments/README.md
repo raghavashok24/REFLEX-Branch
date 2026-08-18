@@ -31,7 +31,7 @@ microstructure, since the geometry is already known to agree.
 
 | Panel | Tests | Outcome |
 |---|---|---|
-| 1, amplification | Section 3 | Reduction exact to `5.6e-16`. **External anchor outstanding** |
+| 1, amplification | Section 3 | Reduction exact to `5.6e-16`. **External anchor closed**, see below |
 | 2, `(N, s)` phase diagram | Theorem 1 | 48 cells, max error `7.1e-15` |
 | 2b, clustered companion | Theorem 1 | Measured `m_N` `1.30`, mean index reports `0.74` |
 | 3, cadence frontier | Theorem 2 | 175 cells, zero disagreements |
@@ -39,15 +39,46 @@ microstructure, since the geometry is already known to agree.
 | 5, substitution frontier | Theorem 3 | 18 of 18 points exact |
 | 6, over-adaptation | Theorem 4 | **Not written.** Theorem 4 is not derived |
 
-## Two results worth reading the JSON for
+## The external anchor, which is the one measured result here
 
-**Panel 1's anchor is not yet earned.** The environment reproduces the predicted
-amplification exactly, because it is linear and the prediction is a linear
-statement. The published `1.74x` and `3.16x` are *simulator* measurements, and
-the gap from the predicted `2` and `3` is nonlinearity and flow saturation, which
-this environment does not model. Panel 1 therefore checks the reduction, not the
-external validation, and its JSON says so in a field named for the purpose.
-Anyone quoting it as replication is quoting it wrong.
+```bash
+"<base>/.venv/Scripts/python" econml/ml-contributions/experiments/reflex_anchor.py
+```
+
+[`reflex_anchor.py`](reflex_anchor.py) runs against the base project's **genuine
+shared-pool market**: real order flow, real spreads, real inventory, CRN probes
+through the full deploy-collect-fit-optimize pipeline. It is the only thing in
+this folder that is `[MEASURED]` rather than `[DRY RUN]`, and it is the one panel
+whose claim is the monoculture corner `R = 1 1'`, which the base project already
+implements, so it could be closed without any of the heterogeneous-response work.
+
+It reproduces the published run bit for bit, relative error `0.00e+00`:
+
+| `N` | measured `m_N` | amplification | linear prediction | gap |
+|---|---|---|---|---|
+| 1 | `0.785600` | `1.0000` | `1` | |
+| 2 | `1.369162` | `1.7428` | `2` | `12.9%` |
+| 3 | `2.479927` | `3.1567` | `3` | `5.2%` |
+
+The differential mode measures `3.4e-03` against a theoretical `0` at
+`kappa = 1`, so the instability is purely common-mode, which is the mechanism
+this paper's Theorem 1 generalizes.
+
+**The gap is the paper's content, not its error.** The prediction is a
+linearization and the market is nonlinear with saturating flow. The reference
+environment reproduces the prediction exactly *because* it omits both, which is
+precisely why the reference environment cannot substitute for this run.
+
+**The probe episode count is part of the protocol, not a tuning knob.** The
+paper-grade profile uses 8 episodes; the experiment's own default is 4. At 4 the
+anchor lands at `1.80x` for `N = 2` rather than `1.74x`, which looks close enough
+to pass unnoticed and would make the amplification law appear to fit worse than
+it does. This is pinned in the script with a comment saying why.
+
+The base project is read-only here: nothing under it is modified, and the script
+skips cleanly when it is absent, so this repository stays self-contained for
+anyone without a local checkout. Point at a non-default checkout with
+`REFLEX_ROOT`.
 
 **Panel 4 is where the C18 finding becomes visible.** At perfect correction the
 market needs 12 of 20 firms un-blinded. At efficacy `0.90` it needs 14, at `0.75`
