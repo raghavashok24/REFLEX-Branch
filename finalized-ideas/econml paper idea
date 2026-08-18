@@ -141,10 +141,34 @@ independent models** `lambda_max(R) in [1, N]`. Supply chain:
 `E_i = sqrt(s) E_shared + sqrt(1-s) Xi_i` with independent idiosyncratic
 parts; `s` = shared-foundation-model fraction.
 
-Four equilibrium concepts, kept typographically distinct throughout (this
-audience checks): the single-firm performatively stable point; the PSNE of
-the quoting game; the Nash equilibrium of the *adoption* game; the social
-optimum.
+**Market shares.** Firms are not equal-sized, and in an AI supply chain they
+are conspicuously unequal - a vendor's customer list runs from one bulge
+bracket desk to fifty small ones. Firm `i` intermediates share `w_i` of flow,
+`sum_i w_i = 1`, which scales how much of the shared environment its
+deployment actually moves. The object that governs stability is then the
+**share-weighted alignment matrix**
+
+```
+   R_w = W^{1/2} R W^{1/2} ,        W = diag(N w_i) ,
+```
+
+normalized so `w_i = 1/N` for all `i` recovers `R` exactly. Two consequences
+worth a paragraph each in the paper, and both are cheap to prove and to
+simulate. (i) `lambda_max(R_w) >= lambda_max(R)` under concentration in
+shares: **share concentration and model concentration compound**, so a market
+where the large firms are also the ones sharing a vendor is strictly more
+fragile than either measure alone suggests. (ii) The relevant policy quantity
+is a *share-weighted* diversity index; a headcount-based one (regulate by
+number of firms on each model) is defeated by the same clustered topology
+that defeats mean alignment. This is the economically meaningful direction of
+heterogeneity for this audience, and it is the direction the earlier draft
+did not have.
+
+Three equilibrium concepts, kept typographically distinct throughout (this
+audience checks): the PSNE of the quoting game; the Nash equilibrium of the
+*adoption* game; the social optimum. The single-firm performatively stable
+point is notation, not a fourth concept, and is introduced as such to save a
+column inch.
 
 ## 4. The results
 
