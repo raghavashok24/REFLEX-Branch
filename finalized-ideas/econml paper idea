@@ -141,6 +141,22 @@ independent models** `lambda_max(R) in [1, N]`. Supply chain:
 `E_i = sqrt(s) E_shared + sqrt(1-s) Xi_i` with independent idiosyncratic
 parts; `s` = shared-foundation-model fraction.
 
+**Naming, and the defensive footnote.** `lambda_max(R)` is called the
+effective number of independent models, but the paper does not present the
+*quantity* as new - only its role. Spectral summaries of a correlation matrix
+have a long history as effective counts: the participation ratio and inverse
+participation ratio in physics, effective rank in signal processing
+(Roy-Vetterli), and the leading-eigenvalue market mode in the
+random-matrix-theory finance literature (Laloux et al.; Plerou et al.), where
+`lambda_max` of a return correlation matrix is *already* read as the strength
+of the common factor. Saying so costs one footnote and buys two things: it
+disarms the cheapest available referee objection ("you renamed effective
+rank"), and it lets the paper claim the thing that actually is new, which is
+that this familiar statistic, computed on **response Jacobians rather than
+returns**, is the argument of a stability condition. The novelty is the
+object it is computed from and the theorem it enters, and the paper says
+exactly that.
+
 **Market shares.** Firms are not equal-sized, and in an AI supply chain they
 are conspicuously unequal - a vendor's customer list runs from one bulge
 bracket desk to fifty small ones. Firm `i` intermediates share `w_i` of flow,
