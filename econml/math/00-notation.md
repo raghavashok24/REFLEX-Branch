@@ -19,8 +19,8 @@ and nothing else.
 | `E_i` | firm `i`'s response Jacobian: how its own deployment reshapes the flow it faces | `d x d` | **new here** |
 | `r_ij` | pairwise alignment of feedback directions | `[-1, 1]` | **new here** |
 | `R` | alignment matrix `(r_ij)`, a correlation matrix of feedback directions | `N x N`, PSD, unit diagonal | **new here** |
-| `lambda_max(R)` | the effective number of independent learners | `[0, N]` | **new here** |
-| `N_eff` | effective crowding, `= 1 + kappa(lambda_max(R) - 1)` | `[1 - kappa, 1 + kappa(N-1)]` | **new here** |
+| `lambda_max(R)` | the effective number of independent learners | `[1, N]` | **new here** |
+| `N_eff` | effective crowding, `= 1 + kappa(lambda_max(R) - 1)` | `[1, 1 + kappa(N-1)]` | **new here** |
 | `m_N` | systemic modulus, `= N_eff * m_1`. The feedback reproduction number | `> 0`, stable iff `< 1` | **new here** |
 | `s` | shared-model fraction: fraction of each firm's response attributable to a shared foundation model, vendor, or pretraining corpus | `[0, 1]` | **new here** |
 | `Xi_i` | firm `i`'s idiosyncratic response component | `d x d` | **new here** |
@@ -61,7 +61,21 @@ scalar spillover `kappa`. Heterogeneous pairwise spillover `kappa_ij` folds into
 **A5. The common mode binds.** Differential modes have `|slope| = m_1(1-kappa)`,
 which is below one whenever `m_1 < 1`. So every stability statement in the paper
 is a statement about the common mode. This is checked, not assumed, in each
-note.
+note. It is **not universal**: it holds when `R` has nonnegative entries, where
+Perron-Frobenius puts the leading eigenvector in the nonnegative orthant, and
+fails under anti-alignment. Shared vendors and shared corpora produce positive
+alignment, so the realistic regime satisfies it. Proof and the simplex
+counterexample in [`derivations/01`](derivations/01-alignment-spectrum.md),
+Section 4. Under lazy retraining (Theorem 2) the assumption is not needed at all,
+because the binding mode is placed at `lambda_max` by monotonicity rather than by
+sign pattern; see [`derivations/03`](derivations/03-cadence-composition.md),
+Proposition 9.
+
+**Two bounds worth stating once.** `lambda_max(R) >= 1` for any alignment matrix,
+so `N_eff >= 1` and `rho(J) >= m_1`: interaction never stabilizes a market below
+what its members achieve alone. And `lambda_max(R) >= 1 + (N-1) * mean`, so a
+mean-similarity diversity index always under-states systemic risk, never
+over-states it. Both proved in [`derivations/01`](derivations/01-alignment-spectrum.md).
 
 ## The one substitution
 

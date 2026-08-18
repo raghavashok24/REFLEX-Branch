@@ -3,6 +3,14 @@
 The base result counts firms. Counting firms is wrong, and the correction is
 where the monoculture and supply-chain content enters the paper.
 
+**Complete proofs:** [`derivations/01-alignment-spectrum.md`](derivations/01-alignment-spectrum.md)
+for the spectrum and the anchors,
+[`derivations/02-supply-chain-concentration.md`](derivations/02-supply-chain-concentration.md)
+for the supply-chain limit. Certified by
+[`verify_theorem1_proof.py`](../ml-contributions/certificates/verify_theorem1_proof.py),
+123 checks. This note stays the summary; anything it states without proof is
+proved there.
+
 ## The alignment object
 
 Let firm `i` have response Jacobian `E_i`, the `d x d` matrix describing how its
@@ -216,15 +224,40 @@ objection, which is "you renamed effective rank". What is new is the object it
 is computed from, response Jacobians rather than returns, and the condition it
 enters. See literature cluster F.
 
+## What the proofs added
+
+Recorded here because the note predates them.
+
+**The reduction lemma.** This note *asserts* `J = -m_1[(1-kappa)I + kappa R]` by
+substituting `R` for `1 1'`. The substitution is now derived from the response
+Jacobians under four stated hypotheses, the substantive one being that each firm's
+deviation is one-dimensional along its own response direction. See
+`derivations/01`, Section 1. The derivation also identifies `eps` as the Frobenius
+norm of the response Jacobian, which the note leaves implicit.
+
+**`N_eff >= 1` always**, so `rho(J) >= m_1`. Interaction never stabilizes a market
+below what its members achieve alone. The notation table's lower range ends were
+wrong and are corrected.
+
+**The two counterexamples are instances of a theorem.** `lambda_max(R)` is bounded
+below by the uniform value `1 + (N-1)*mean` for every `R`, so a mean-similarity
+index never over-states systemic risk, only under-states it. The error has a sign,
+which is the policy-legible form and better than either counterexample alone.
+
 ## Open items
 
-1. Prove the `O(1/d)` concentration statement at the level of a bound, not an
-   expectation. Currently stated in expectation. [TO BUILD]
+1. ~~Prove the `O(1/d)` concentration statement as a bound, not an expectation.~~
+   **Done** in `derivations/02`, with an explicit failure probability. Fitted
+   exponent `-1.018` against a target of `-1`. The sharp operator-norm rate stays
+   deferred.
 2. ~~Certificate for the simplex spectrum.~~ **Done**, and the plan of record
    was corrected to match. See
    `../ml-contributions/certificates/verify_theorem1_anchors.py`.
-3. Decide whether the Perron-Frobenius condition on A5 goes in the body or a
-   footnote. Leaning body, one sentence, because it is cheap and a spectral
-   referee will look for it.
-4. Fold the script into the base project's verification layer. It prints a
-   report rather than asserting, so it cannot fail loudly yet. [TO BUILD]
+3. ~~Decide whether the Perron-Frobenius condition on A5 goes in the body or a
+   footnote.~~ **Body**, one sentence. A spectral referee will look for it, and
+   `derivations/03` shows Theorem 2 does not need it.
+4. Fold the scripts into the base project's verification layer.
+   `verify_theorem1_proof.py` and `verify_theorem2_cadence.py` are
+   assertion-based and fail loudly, so they are ready; the older
+   `verify_theorem1_anchors.py` still prints a report and needs converting.
+   [TO BUILD]
