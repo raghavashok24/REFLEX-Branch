@@ -1,191 +1,105 @@
-# ML x OR
+# Literature Review — "The Price of Self-Knowledge" (ML×OR @ NeurIPS 2026)
 
-Two papers branching off **REFLEX** (*Reflexive Equilibrium Fixed-point Learning
-for endogenous financial markets*), targeted at NeurIPS 2026 workshops in
-Atlanta (Dec 12/13). REFLEX derives the performative-prediction stability
-constants (`m = εβ/γ`) in closed form from market-microstructure primitives,
-verifies them against a learned simulator loop (152 tests, 66 numerical proof
-certificates), and calibrates on 36 years of public market data. Its core
-results are committed to a concurrent ICAIF 2026 submission; each workshop
-paper below contributes **only new formal objects** that appear in neither
-REFLEX nor that submission.
+In-depth literature review for the ML×OR submission: **identification cost,
+exploration, and stability in performative systems**. The paper claims that
+estimating a system's own performative response is a priced, designed,
+stability-constrained activity — this review maps the six literatures that
+claim touches, verifies every source, justifies each gap, and renders an
+honest novelty verdict.
 
-| Paper | Venue | Deadline | Format | Review |
-|---|---|---|---|---|
-| P1 — The Price of Self-Knowledge | ML×OR | **Aug 31, 2026** | 4 pp + unlimited appendix | Non-anonymous; journal pipeline |
-| P2 — Learning Externalities | EconML | **Aug 29, 2026** | 9 pp + unlimited appendix | Double-blind; in-person required |
+## Contents
 
----
-
-## Paper 1 (ML×OR): "The Price of Self-Knowledge: Minimax Information–Cost
-## Tradeoffs and Optimal Exploration in Performative Systems"
-
-**Journal designation:** Mathematics of Operations Research (the workshop
-invites full versions of selected papers to Stochastic Systems / MOR /
-Operations Research; the unlimited appendix is written first and doubles as
-the MOR draft).
-
-**Thesis.** In a system whose data distribution reacts to the deployed model,
-information about that reaction is *purchased with the objective itself*.
-Estimating the response Jacobian that performative-gradient methods consume is
-not a statistics problem with a sample budget — it is a control problem with a
-P&L budget, and the exchange rate is exact.
-
-**Results** (status: ✅ verified numerically · 🟦 provable, standard machinery
-· 🟧 hard, the main-track-grade work):
-
-- **T1 — Information saturation** ✅ (scalar, to 1e-16) / 🟦 (d-dim).
-  A converging retraining loop's design energy is bounded:
-  `Σ(h_t−h*)² → (h₀−h*)²/(1−m²)`. Fisher information for the response slope
-  saturates — running longer buys nothing. Corollaries: *safety implies
-  blindness* (the cap grows with the modulus m — self-knowledge is precise
-  only near instability); curvature parameters are unidentified from any
-  trajectory (period-2 design degeneracy at the boundary).
-- **T2 — The exchange-rate identity** ✅ (rel. err 0.0 across (m, σₑ) grid).
-  With exploration, in the stationary regime:
-  `Var(ε̂) × C_T = ½·γ_PO·σ²` — invariant to exploration intensity, horizon,
-  and modulus. Anchoring matters: C_T is the *incremental* cost at h*, not
-  distance from h_PO (the wrong anchor provably breaks the invariance by the
-  factor (1+g²/v) — implemented as a permanent falsification check).
-- **T3 — Minimax lower bound** 🟧. Over all adaptive policies and all
-  estimators (van Trees + Le Cam symmetrization): no scheme beats the
-  exchange rate by more than its own estimation error — exploiting the
-  profitable direction requires knowing the quantity being estimated. The
-  deviation-budget version is exact and provable by the deadline; the
-  value-budget (1−o(1)) version is the journal deliverable.
-- **T4 — Matrix uncertainty principle** 🟦 (equality case verified by hand).
-  `R_A × C_T ≥ (σ²/2)(tr Γ_PO^{1/2})²`, equality iff the exploration
-  covariance ∝ `Γ_PO^{−1/2}` — **explore where the objective is flat**.
-  Corollary: isotropic jitter overpays by exactly the curvature dispersion of
-  the objective (computable on the calibrated 128-bond Γ_PO).
-- **T5 — Safe D-optimal exploration** 🟧. Frank–Wolfe design under a value
-  budget, a closed-loop spectral stability margin, and a trust region;
-  pessimistic-on-stability / optimistic-on-information re-solving. Targets:
-  O(√T) identification regret, high-probability stability throughout.
-- **T6 — Anchoring crossover** 🟦. Anchor to a p-dim structural family iff
-  `δ_mis² < ½·γ_PO·σ²/B` — turns REFLEX's documented "anchoring, not
-  capacity" negative result into a budget-priced decision rule.
-- **Corollary — ROI of self-knowledge** ✅. The echo-chamber gap is a
-  recoverable perpetuity; identification is a one-off cost priced by T2.
-  Break-even discount rate in closed form: explore iff patient enough.
-
-**Experiments (5):** saturation curves vs closed-form caps; the exchange-rate
-flat line + measured nonlinear drift (a result, not a nuisance); shaped
-(`Γ_PO^{−1/2}`) vs isotropic exploration at matched budget; safe design
-identifying the curvature parameter jitter cannot; anchoring-crossover table
-retrodicting the v3 negative result. All CPU, deterministic, certified.
-
-**Literature review: complete** (see `litreview/LITERATURE-REVIEW-M2.md`).
-Six clusters, ~35 verified sources, per-gap justifications, honest novelty
-verdict. Four load-bearing citations with named deltas: Jagadeesan et al.
-(ICML '22 — prices the *search*, not the *knowledge*; no loop, no stability
-constraint), Keskin–Zeevi (OR '14 — incomplete learning, but static demand,
-no modulus, no invariance), Bombois et al. (Automatica '06 — least-costly ID,
-but exogenous plant), Lin–Zrnic (ICML '24 — plug-in models, no cost side;
-closest to T6). Consistency checks: Lai–Robbins log-n schemes lie *on* the T2
-frontier; Simchowitz–Foster's "naive exploration is optimal" flips
-performatively by the curvature-dispersion factor. Remaining pre-submission
-work: full-text reads of the 4 closest papers (downloads blocked in the build
-env — script provided), add the safe-exploration sub-cluster (SafeOpt,
-Berkenkamp), triage arXiv:2408.08499.
-
----
-
-## Paper 2 (EconML): "Learning Externalities: Systemic Instability and
-## Herd Immunity in Markets of Adaptive Agents"
-
-**Thesis.** Individually stable learning agents (`m₁ < 1`) can destabilize
-the market they share: each agent's retraining reshapes the environment every
-other agent learns from next — a **learning externality** no agent
-internalizes. Agent count enters the stability condition itself
-(`m_N = N_eff·m₁`, critical population `N_c = 1/m₁`), so "is this model
-stable?" is the wrong certification question; "is the ecosystem of
-interacting models stable?" is the right one.
-
-**Framing kept from the original outline:** private vs. systemic stability;
-the six-step externality loop; the verified 1.74×/3.16× common-mode
-amplification (N = 2, 3) as the empirical anchor; `m_N` read as the
-market's **feedback reproduction number**.
-
-**Three new results (in neither REFLEX nor the ICAIF submission):**
-
-- **T1 — The crowding–cadence frontier.** Composing the multi-dealer law
-  with lazy deployment: `μ_N(K) = −m_N + c^K(1+m_N)`, giving a retraining
-  budget `K_max(N)` that **shrinks with every additional competitor** —
-  "your competitor's entry consumes your retraining budget." Critical
-  crowding: beyond `N_eff > (1+c)/((1−c)·m₁)` no cadence keeps the market
-  stable; equivalently, minimum-cadence operation multiplies the sustainable
-  number of competitors by exactly `(1+c)/(1−c)` (×9 at c = 0.8).
-- **T2 — Herd immunity.** Mixed market of blind and corrected
-  (performative-gradient) dealers: in the strong-correction limit the market
-  is stable iff the corrected fraction exceeds
-  `ρ* = 1 − N_c/N = 1 − 1/m_N` — **exactly the epidemiological 1 − 1/R₀
-  threshold**, with the systemic modulus as the reproduction number.
-  Correction is a public good (free-riding keeps markets below threshold);
-  exact finite-γ_PO version via a two-block secular equation. The experiment
-  is new in kind: the structural corrected loop has never been run inside
-  the N-dealer game.
-- **T3 — The Pigouvian wedge.** Instability priced through the common mode's
-  stationary variance ∝ `1/(1−m_N²)`; the private FOC ignores (N−1)/N of the
-  marginal cost; closed-form corrective fee; over-adaptation corollary. The
-  three levers unify as the standard policy triple: quantity (cadence caps),
-  technology (correction mandates), price (the wedge).
-
-**Experiments (4):** the 1.74×/3.16× replication anchor; the (N, K) stability
-grid vs the predicted frontier; the herd-immunity sweep over corrected
-fractions vs ρ* (+ free-riding P&L diagnostic); decentralized vs socially
-optimal adaptation. De-scope order defined; the herd-immunity experiment is
-never cut — it *is* the paper.
-
-**Build: ~7–8 focused days** against 12 remaining. Anonymization checklist
-for double-blind (no repo URL, third-person citation of the concurrent
-submission, scrubbed metadata).
-
----
-
-## Assumptions audit (both papers)
-
-Every load-bearing claim was re-derived and stress-tested (2026-08-16/17).
-Two real defects found and **fixed before writing**: P1's cost anchor (the
-h_PO-anchored identity is false — verified numerically, corrected to the
-incremental anchor, and the fix produced the ROI corollary) and the
-heterogeneous-moduli eigenvalue overclaim in the earlier EconML variant
-(orthogonal responses give ρ = max mᵢ, not the mean — scoped to the exact
-equal-moduli identity plus weighted-Gram bounds). Thirteen further checks
-passed and are recorded with evidence. Standing rule: nothing is claimed at
-submission beyond what is proved or verified; 🟧 items ship as labeled
-partial results.
-
-## Shared infrastructure (from REFLEX, used as cited scaffolding)
-
-Closed-form theory modules (1.1–1.6) · genuine N-dealer simulator
-(bit-for-bit single-dealer reduction at N = 1) · four-mode retraining loops
-incl. `perfgd_structural` · tuned three-way ε estimators · 66-certificate
-verification layer (each new closed form adds certificates) · real-data
-calibration with honest provenance (public proxies, not trade-level TRACE) ·
-deterministic CPU-only experiments from `(config, seed)`.
-
-## Timeline
-
-| Date | Milestone |
+| File | What it is |
 |---|---|
-| Aug 17–22 | P2 build (theory module → (N,K) grid → herd-immunity sweep → wedge) |
-| Aug 17–25 | P1 build in parallel (theory transcription → design module → experiments) |
-| Aug 23–27 | P2 writing, anonymization pass, freeze | 
-| Aug 26–30 | P1 writing (appendix first), claim-list review, MOR designation |
-| **Aug 29** | **P2 → EconML (OpenReview)** |
-| **Aug 31** | **P1 → ML×OR (OpenReview)** |
+| `LITERATURE-REVIEW-M2.md` | The full review: 6 clusters, ~35 sources, per-paper deltas, gap justifications (G1–G6), novelty verdict, source manifest |
+| `pdfs/` | 10 core PDFs in hand (arXiv versions, from the REFLEX literature collection) |
+| `download_litreview_pdfs.sh` | One-command fetch of the remaining open-access PDFs (arXiv IDs) + DOI links for the paywalled classics — run on an unrestricted machine; the build environment blocks arXiv/PMLR/publisher sites |
 
-Go/no-go checkpoint **Aug 21**: if P2's frontier and herd-immunity
-experiments aren't clean, drop to one paper (P1 is the safer single bet —
-verified core, two extra days).
+## Verification method
 
-## Non-overlap statement
+Every source is tagged with how it was verified:
 
-The ICAIF submission owns REFLEX's core (computable constants, the
-homogeneous N_eff law, certificates, fragility index). P1's identification
-economics and P2's frontier/herd-immunity/wedge results appear in neither.
-P1 and P2 do not overlap each other (single-learner identification vs.
-many-learner interaction; the one shared object, γ_PO, is cited
-infrastructure). Both venues are non-archival, so neither blocks the ICAIF
-paper or later journal/main-track versions.
+- **V1** — PDF in hand and read (10 papers; the closest ML neighbor,
+  Jagadeesan et al. ICML 2022, was read in full for this review)
+- **V2** — bibliographic record (venue, volume, pages, year) confirmed
+  against the publisher/aggregator via web search this week
+- **V3** — canonical classical result, cross-checked against an independent
+  index; flagged for a click-check at camera-ready
+
+Credibility bar: every load-bearing source is a top peer-reviewed venue
+(ICML, NeurIPS, AISTATS, COLT, Operations Research, Management Science,
+Automatica, Annals of Statistics, JET, REStud, Econometrica, FoCM) or a
+survey of record. arXiv-only items map the 2024–26 frontier and are never
+load-bearing for a gap claim.
+
+## The six clusters
+
+| # | Cluster | Anchor sources | What it supplies / lacks |
+|---|---|---|---|
+| A | Performative prediction core | Perdomo et al. '20; Mendler-Dünner et al. '20; Izzo et al. '21; Miller et al. '21; Drusvyatskiy–Xiao (MOR '22); Hardt–MD survey '23 | The framework and the modulus; **no identification pricing anywhere** — confirmed by the field's own survey |
+| B | Exploration inside performativity | **Jagadeesan et al. ICML '22**; **Lin–Zrnic ICML '24**; zeroth-order/noise-injection family | The nearest ML neighbors: regret of *search* and plug-in models — neither has a cost side, a loop, or a stability constraint |
+| C | OR: pricing with demand learning | **Keskin–Zeevi (OR '14)**; Harrison–Keskin–Zeevi (MS '12); Broder–Rusmevichientong (OR '12); den Boer survey '15; **Lai–Robbins '79/'82** | Incomplete learning under converging policies — the static-environment ancestor of the saturation theorem; order-level bounds, no invariance identity, no performativity |
+| D | Adaptive control & system ID | Feldbaum '60–61 (dual control); persistent excitation (Åström–Wittenmark, Ljung); **Bombois et al. (Automatica '06)**; Dean et al. (FoCM '20); Simchowitz–Foster (ICML '20); Wagenmaker et al. (ICML '21) | Least-costly ID and task-optimal design — for an *exogenous* plant; no retraining loop to starve or destabilize |
+| E | Optimal experimental design | Kiefer–Wolfowitz '60; Fedorov '72; Pukelsheim; van Trees / Gill–Levit '95 | The D-/A-optimality toolbox and the Bayesian Cramér–Rao machinery; cost is always exogenous |
+| F | Economics of experimentation | Rothschild (JET '74); McLennan '84; Easley–Kiefer (E'metrica '88); Aghion et al. (REStud '91); Keller–Rady (REStud '99); Grossman–Stiglitz (AER '80) | Rational incomplete learning and the patience mechanism — qualitative; the environment never reacts *to the agent* |
+
+## The gaps (each justified against its nearest prior art)
+
+- **G1** — Identification is never *priced* in performative prediction
+  (exploration exists only as an algorithmic device; Jagadeesan prices the
+  search, not the knowledge)
+- **G2** — No saturation theorem for *retraining loops* (pricing/control have
+  incomplete learning, but from optimizer convergence against a static
+  environment — no modulus, no "safety implies blindness")
+- **G3** — No exact exchange rate anywhere (every neighbor states rates or
+  bounds, never an invariance identity; Lai–Robbins log-n schemes lie *on*
+  the frontier — consistency check performed)
+- **G4** — No stability-constrained experiment design (Bombois's constraint
+  is plant limits, not the spectral contraction of a learning loop)
+- **G5** — Anchoring vs. misspecification never budget-priced (Lin–Zrnic is
+  closest of all ~35 sources; it has no cost side — must be cited as the
+  launch point of Theorem 6)
+- **G6** — The explore-or-stay-blind decision has no closed form (economics
+  has the qualitative patience mechanism; the market model makes it
+  computable)
+
+## Novelty verdict (the honest one)
+
+**New:** the framework — identification of one's own performative response as
+a priced, designed, stability-constrained activity — and four objects within
+it: the modulus-tied saturation cap, the exact invariance identity (+ minimax
+and matrix versions), the spectral-safety design class, and the budget-priced
+anchoring crossover.
+
+**Not new, and the paper must say so:** the learning-vs-earning tension
+(Feldbaum, Rothschild), incomplete learning under converging policies
+(Lai–Robbins, Keskin–Zeevi), cost-constrained ID for a downstream task
+(Bombois, Wagenmaker), the design toolbox. Correct self-description: *the
+performative instance of dual control, where the plant is the learner's own
+retraining loop — and there, order-level tradeoffs become exact identities
+with computable constants.*
+
+**Four citations without which the paper is rejected:** Jagadeesan et al.
+(B1), Keskin–Zeevi (C3), Bombois et al. (D3), Lin–Zrnic (B2) — each gets a
+named-delta sentence in related work. **Two quotable consistency checks:**
+Lai–Robbins sits on the frontier; Simchowitz–Foster's "naive exploration is
+optimal" flips performatively by the curvature-dispersion factor.
+
+## Frontier de-risking
+
+The 2024–26 arXiv sweep found no identification-cost work. The
+scariest-sounding title, Hardt's "Retraining Seeks Stable Signals" (July
+2026), was checked directly: it concerns *why RRM fixed points exist*
+(stable-signal principle) — orthogonal to identification cost, and a useful
+citation rather than a threat.
+
+## Remaining work before submission (~1 day)
+
+1. **Full-text reads of the 4 closest papers** (Lin–Zrnic, Keskin–Zeevi,
+   Bombois, arXiv:2408.08499 "The Limitations of Model Retraining…") — run
+   the download script locally; the build environment cannot fetch them
+2. **Add the safe-exploration sub-cluster** (SafeOpt/Sui et al., Berkenkamp
+   et al., Turchetta et al.) as the neighbor of Theorem 5's constraint class
+3. Abstract-read the remaining 2025–26 frontier items
+4. Compress into the paper's related-work section (the named-delta sentences
+   are already formulated in the review)
