@@ -13,10 +13,11 @@ The theory is done and certified: all four results have complete proofs except
 Theorem 4, whose welfare page is still a sketch. The infrastructure is done: the
 closed-form module and the heterogeneous-response environment both exist and pass
 acceptance tests. Five of six panels have run as dry runs against the reference
-environment and agree with the closed forms. **The gap is empirical and
-editorial**: nothing has run in the order-flow simulator, and seven of eleven
-paper sections are unwritten. The single largest risk is that the paper's
-measured claims all depend on a simulator port that has not started.
+environment and agree with the closed forms, and **panel 1's anchor is now
+measured in the real order-flow market, reproducing the published run bit for
+bit**. **The gap is empirical and editorial**: panels 2 to 5 still need a
+heterogeneous-response port that is design work rather than a port, and seven of
+eleven paper sections are unwritten.
 
 ## Where the time went, and what it bought
 
@@ -75,18 +76,44 @@ expectation.
 
 | Panel | Outcome |
 |---|---|
-| 1, amplification | reduction exact to `5.6e-16`; **external anchor outstanding** |
+| 1, amplification | reduction exact to `5.6e-16`; **external anchor closed, `[MEASURED]`** |
 | 2, `(N, s)` phase diagram | 48 cells, max error `7.1e-15` |
 | 2b, clustered companion | measured `m_N` `1.30`, mean index reports `0.74` |
 | 3, cadence frontier | 175 cells, zero disagreements |
 | 4, herd immunity | `12 / 14 / 16 / 20` firms at efficacy `1.00 / 0.90 / 0.75 / 0.60` |
 | 5, substitution frontier | 18 of 18 points exact |
 
-**These are not measurements.** They run in the linearized reference environment,
-which has no informed flow, no spread and no inventory. They establish that the
-closed forms govern realized dynamics and they fix every figure's shape. They
-establish nothing about a market. The ledger tracks them at `[DRY RUN]`, a status
-that deliberately does not license the paper to imply measurement.
+**Panels 2 to 5 are not measurements.** They run in the linearized reference
+environment, which has no informed flow, no spread and no inventory. They
+establish that the closed forms govern realized dynamics and they fix every
+figure's shape. They establish nothing about a market. The ledger tracks them at
+`[DRY RUN]`, a status that deliberately does not license the paper to imply
+measurement.
+
+### Panel 1's external anchor, the one measured result
+
+`ml-contributions/experiments/reflex_anchor.py` runs the base project's genuine
+shared-pool market and **reproduces the published run bit for bit**, relative
+error `0.00e+00`:
+
+| `N` | measured `m_N` | amplification | linear prediction | gap |
+|---|---|---|---|---|
+| 1 | `0.785600` | `1.0000` | `1` | |
+| 2 | `1.369162` | `1.7428` | `2` | `12.9%` |
+| 3 | `2.479927` | `3.1567` | `3` | `5.2%` |
+
+Differential mode `3.4e-03` against a theoretical `0`, so instability is purely
+common-mode, which is the mechanism Theorem 1 generalizes.
+
+This one panel could be closed today because its claim is the monoculture corner
+`R = 1 1'`, which the base project already implements. The base project is
+read-only throughout and the script skips cleanly when it is absent.
+
+**The gap to the linear prediction is content, not error**, and the body should
+say so: the prediction is a linearization and the market is nonlinear with
+saturating flow. The reference environment reproduces the prediction exactly
+because it omits both, which is the clearest available argument for why the
+remaining panels need the simulator.
 
 ### Writing
 
@@ -104,11 +131,24 @@ that deliberately does not license the paper to imply measurement.
 
 ### Blocking, in priority order
 
-**1. The simulator port.** Every `[MEASURED]` claim in the paper depends on it and
-it has not started. The theory module and environment are written to be ported
-rather than reimplemented, and the environment's reduction test is the acceptance
-criterion. This is the critical path and nothing else on this list competes with
-it.
+**1. The simulator port, and it is a design problem rather than a port.** Panel 1
+is done because its claim is the monoculture corner the base project already
+implements. Panels 2 to 5 are not, and the reason is structural: the base
+project's `env/multi_dealer.py` has **no concept of a per-dealer response
+direction**. Every dealer shares one scalar toxic channel `exp(-c_t*h_i)` coupled
+by a single scalar `kappa`, which *is* `R = 1 1'` and nothing else.
+
+So porting is not wiring an existing knob to a new parameter. It requires
+deciding what a heterogeneous response direction *means* in a real order-flow
+market, whether that is different bond-factor exposures, different signal
+channels, or different informed-flow segments, and then building the flow
+generation that realizes a target alignment matrix. That is multi-session design
+work, and the branch repository's environment is the specification it must
+reduce to at `R = 1 1'`.
+
+Every remaining `[MEASURED]` claim depends on it. Start it early precisely
+because it cannot be compressed, and because the first hour is a modeling
+decision rather than typing.
 
 **2. Theorem 4's welfare page.** The only theorem still on a sketch. Blocks
 Section 7 and panel 6. `pigouvian_wedge` is deliberately absent from the theory
@@ -135,7 +175,7 @@ asserting and needs converting.
 
 | Risk | Severity | State |
 |---|---|---|
-| Simulator port does not land in time | **high** | Not started. Would cost every measured claim and leave a theory-only paper |
+| Heterogeneous-response port does not land in time | **high** | Not started, and it is design work rather than a port. Would cost panels 2 to 5 and leave a theory paper with one measured anchor |
 | Theorem 4 stays a sketch | medium | Section 7 shortens, panel 6 is cut. Second in de-scope order, so survivable |
 | Section 6 drafting slips | medium | It is the paper. Replanned, so the drafting is transcription rather than design |
 | A referee asks for fully heterogeneous agents | low | Answered as future work with the machinery stated to extend |
@@ -155,11 +195,19 @@ it.
 
 ## Suggested order for the remaining days
 
-Start the simulator port immediately and in parallel with writing, because it is
-the only item that cannot be compressed. Draft Section 6 next, since it is
-replanned and is the paper. Derive Theorem 4's welfare page after that, and accept
-losing panel 6 if it slips. Write Sections 3, 2, 9 and 10 in that order. Section 8
-is already scoped to one paragraph and is first to cut.
+Settle the heterogeneous-response modeling decision first, before writing any
+code for it, because that decision is the actual bottleneck and it is cheap to
+get wrong. Then build the port in parallel with drafting. Draft Section 6 next,
+since it is replanned and is the paper. Derive Theorem 4's welfare page after
+that, and accept losing panel 6 if it slips. Write Sections 3, 2, 9 and 10 in
+that order. Section 8 is already scoped to one paragraph and is first to cut.
+
+If the port does not land, the paper is still submittable: the theory is complete
+and certified, panel 1 is measured in a real market, and panels 2 to 5 can be
+presented honestly as closed-form predictions with the reference-environment
+agreement stated as such. That is a weaker paper and it is not the plan, but it
+is not a failed submission, and knowing that should keep the port from being
+rushed into something unfalsifiable.
 
 ---
 

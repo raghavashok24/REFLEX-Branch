@@ -70,7 +70,8 @@ model alignment rather than by headcount. Results 2 through 4 are all stated in
 | Theory module | **written and certified** (`ml-contributions/theory/`); 50 checks |
 | Heterogeneous-response environment | **built and certified** (`ml-contributions/environment/`); 32 checks |
 | Panel harness | **built** (`ml-contributions/experiments/`); panels 1-5 run |
-| Panels 1-5 | **dry runs pass**, all agreeing with their closed forms. Not measurements: no simulator run yet |
+| Panel 1 anchor | **`[MEASURED]`** in the real order-flow market, reproducing `1.74x / 3.16x` bit for bit |
+| Panels 2-5 | **dry runs pass**, all agreeing with their closed forms. Not measurements |
 | Panel 6 | blocked on Theorem 4 |
 | Remaining sections | planned, not written |
 

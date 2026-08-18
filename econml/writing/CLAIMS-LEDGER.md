@@ -125,7 +125,7 @@ requires the order-flow simulator, does that.
 
 | # | Panel | Status |
 |---|---|---|
-| E1 | Amplification replication | `[DRY RUN]` reduction exact. **External anchor `[TO BUILD]`**, needs the simulator |
+| E1 | Amplification replication | **`[MEASURED]`**. Reproduced bit for bit in the order-flow simulator: `1.7428x` and `3.1567x`, relative error `0.00e+00` |
 | E2 | `(N, s)` phase diagram | `[DRY RUN]`, 48 cells, max error `7.1e-15` |
 | E2b | Clustered companion | `[DRY RUN]`, measured `m_N` `1.30` against the mean index's `0.74` |
 | E3 | Crowding-cadence frontier | `[DRY RUN]`, 175 cells, zero disagreements |
@@ -135,6 +135,9 @@ requires the order-flow simulator, does that.
 
 | # | Claim | Status | Evidence |
 |---|---|---|---|
+| E1.1 | Measured amplification `1.74x` at `N=2` and `3.16x` at `N=3` | `[MEASURED]` | `reflex_anchor.py`, reproduced bit for bit from the base project's paper-grade run |
+| E1.2 | The measured market falls `12.9%` and `5.2%` short of the linear prediction | `[MEASURED]` | Nonlinearity and flow saturation. **State this in the body; it is content, not error** |
+| E1.3 | The differential mode is dead at `kappa = 1`, measuring `3.4e-03` against a theoretical `0` | `[MEASURED]` | Instability is purely common-mode, which is what Theorem 1 generalizes |
 | E4.1 | The imperfect-correction law predicts the threshold at `kappa = 0.8`, where it is not proved exact | `[DRY RUN]` | panel 4, 4 of 4 thresholds. **Evidence, not a proof** |
 
 ---
