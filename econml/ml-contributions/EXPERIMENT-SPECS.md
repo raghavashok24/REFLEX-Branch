@@ -39,6 +39,12 @@ target `R`, including clustered topologies. Its acceptance test is that it
 reduces to the existing homogeneous environment at `R = 1 1'`, and that
 reduction is checked before any measurement is taken from it.
 
+**Status: built.** [`environment/hetero_response_env.py`](environment/hetero_response_env.py),
+32 acceptance tests passing, the reduction among them. Firms are placed at any
+valid target alignment exactly rather than in distribution, so an `s` sweep moves
+along the exact curve. Sweep with `exact=True`; the drawn decomposition exists to
+demonstrate the `O(1/d)` concentration, not to run panels on.
+
 **Companion panel:** the clustered topology, three aligned firms among ten,
 showing instability at mean-alignment values a naive diversity index calls safe.
 The numbers are worked in `../math/01-theorem1-alignment.md`: `N_eff = 2.60`
@@ -77,6 +83,18 @@ regime, against the predicted `rho*`. Figure 3.
 **New in kind:** the corrected loop (`perfgd_structural`) has only ever been run
 single-dealer. This is the first time it runs inside the `N`-dealer game. Either
 outcome is a result.
+
+**Sweep at the realized `gamma_ratio`, never at the strong-correction limit.**
+The limit under-states the spectral radius, so a panel run at the limit inherits
+its optimism and will report stability the market does not have. Plot the exact
+threshold at the simulated `gamma_PO` alongside the limit; the gap between them is
+a result, not an error bar. See
+[`../math/derivations/04-mixed-market-secular.md`](../math/derivations/04-mixed-market-secular.md),
+Section 6.
+
+**The threshold in whole firms is `N - ceil(N_c(s)) + 1`,** not `ceil(rho* N)`.
+The two differ when `N_c` is an integer, and one firm is several percentage
+points at the `N` this panel runs at.
 
 **Companion diagnostic:** private P&L of corrected against blind firms,
 exhibiting the public-good structure directly. Fourth in the de-scope order.
