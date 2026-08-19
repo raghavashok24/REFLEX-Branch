@@ -1,1 +1,380 @@
+\documentclass{article}
 
+% Double-blind workshop track, NeurIPS 2026.
+\usepackage[dblblindworkshop]{neurips_2026}
+\workshoptitle{Workshop on Machine Learning and Economics (EconML)}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[hidelinks]{hyperref}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{nicefrac}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{subcaption}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{assumption}{Assumption}
+
+\newcommand{\Neff}{N_{\mathrm{eff}}}
+\newcommand{\mN}{m_N}
+\newcommand{\lmax}{\lambda_{\max}}
+
+\title{Herd Immunity and Learning Externalities in\\ Markets of Adaptive Models}
+
+\author{%
+  Anonymous Author(s) \\
+  Affiliation \\
+  Address \\
+  \texttt{email} \\
+}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+A learning agent can satisfy every single-agent stability criterion and still help destabilize the market it operates in. When adaptive agents share an environment that reacts to their decisions, each agent's retraining reshapes the data every other agent learns from next, a \emph{learning externality} that no agent internalizes. We show its strength is governed not by the number of firms but by the \emph{effective number of independent learners}, the leading eigenvalue of the correlation matrix of firms' response Jacobians, so foundation-model concentration enters the stability condition as a term rather than as a concern: fifty firms fine-tuning one vendor's model are dynamically close to one large learner. Three closed-form levers follow. A crowding-cadence frontier bounds how often a market can retrain, and closes past a critical crowding level. A herd-immunity threshold makes the market stable if and only if the corrected fraction exceeds $(1-1/\mN)/e$ at correction efficacy $e$, the imperfect-vaccine coverage law with the systemic modulus as the reproduction number. A Pigouvian wedge prices the externality, and every market of two or more firms over-adapts. The last two levers are substitutes, along a frontier we compute. In a shared-pool order-flow market the mechanism reproduces a published $1.74\times$ and $3.16\times$ amplification at two and three firms, bit for bit.
+\end{abstract}
+
+\section{Introduction}
+
+A learning agent can pass every stability test we know how to run and still help destabilize the market it operates in.
+
+The test we know how to run is a single-agent test. A model is evaluated, stress-tested and certified alone, against a distribution treated as given. When the deployed model reshapes that distribution, the performative prediction literature supplies the correction: repeated retraining converges if and only if a modulus $m = \varepsilon\beta/\gamma$ stays below one, where $\varepsilon$ measures how strongly the environment responds and $\gamma$ is the learner's own objective curvature \citep{perdomo2020}. Certify $m<1$ and the loop is safe.
+
+It is not, once the agent has company. Consider dealers whose quotes reshape a common pool of informed flow, recommenders competing for one attention pool, or lenders pricing against one population of borrowers. Each agent's retraining changes the data every \emph{other} agent will learn from next, and no agent internalizes that effect. We call this a \textbf{learning externality}, and it has the property that makes externalities worth studying: every participant behaves rationally, every participant passes its own test, and the interaction amplifies a loop none of them chose. The intuition is not new. Banks that each diversify optimally hold similar portfolios and fail together \citep{beale2011,wagner2010}, and funds running similar strategies unwound simultaneously in August 2007 with the crowding invisible from any single risk report \citep{khandani2007}. What is new is that the agents now \emph{learn}, which changes both what determines the danger and what can be done about it.
+
+\paragraph{What determines it is not how many firms there are.}
+Let firm $i$ have a response Jacobian $E_i$ describing how its own deployment reshapes the flow it faces, and let $R$ be the correlation matrix of the vectorized $E_i$. We show the market's stability is governed by $\mN = \Neff\, m_1$ with $\Neff = 1 + \kappa(\lmax(R)-1)$, where $\kappa$ is the spillover between firms and $\lmax(R)$ is what we call the \textbf{effective number of independent learners}. A hundred firms perturbing the environment in a hundred orthogonal directions are dynamically one firm. Fifty dealers fine-tuning one vendor's foundation model are dynamically close to one very large learner, and the market they share inherits that learner's instability. Decomposing each firm's response into a shared component and an idiosyncratic one, with $s$ the fraction attributable to a common model, vendor or pretraining corpus, gives $\mN = m_1(1 + \kappa s (N-1))$. \textbf{The effective number of learners is the number of independent models, not the number of firms.} The quantity a competition regulator measures is the wrong one: fifty equal-share firms have a minimal Herfindahl index and look perfectly competitive, and if all fifty share one vendor they are dynamically a monoculture \citep{hirschman1964}.
+
+\paragraph{What can be done about it takes three forms, and two are substitutes.}
+Because every result is stated in $\mN$, each inherits the supply chain for free. \emph{Slow down:} firms taking $K$ gradient steps per deployment rather than retraining to convergence face a window $K < K_{\max}(\mN)$ that narrows as crowding rises and closes past a critical crowding level beyond which no retraining frequency is safe. \emph{Correct:} feedback-aware updates \citep{izzo2021} stabilize a single learner beyond its boundary, and run inside the market they produce a coverage threshold that is exactly the epidemiological herd-immunity law with the systemic modulus as the reproduction number. \emph{Diversify:} that threshold rises in $s$, so a market reaches stability along either axis, and the iso-stability frontier between the two is this paper's most directly usable object. Pricing the externality completes the standard policy triple, and the decentralized equilibrium over-adapts for every $N \geq 2$.
+
+\paragraph{Contributions.}
+(1) The effective number of independent learners as the reproduction number of a market of adaptive models, turning foundation-model concentration into a term in a stability condition, with two counterexamples invalidating mean-similarity diversity indices. (2) The crowding-cadence frontier and its critical crowding level, composing lazy deployment with multi-agent amplification. (3) A mixed-market herd-immunity theorem, exact at finite correction strength, whose clean form is the imperfect-vaccine coverage law and which carries a critical efficacy. (4) The substitution frontier between model diversity and corrected learning, which exists only once (1) and (3) are expressed in one quantity. (5) The Pigouvian wedge and the over-adaptation corollary, unifying the levers as quantity, technology and price instruments.
+
+\section{Related work}
+
+\paragraph{Monoculture, and why it is static.}
+\citet{kleinberg2021} show that when many firms adopt the same algorithm welfare can fall even when the shared algorithm is the better one, because correlated selection destroys the option value of independent evaluation; \citet{bommasani2022} formalize systemic exclusion when many deployments inherit one model. Both are cross-sectional and measured at one point in time on one cohort. Neither has a retraining loop, so neither can express a stability boundary or a rate, and a market can be statically fine and dynamically fragile at the same shared-model fraction.
+
+\paragraph{Multiplayer performative prediction.}
+\citet{narang2023} is the nearest dynamics: multiple learners in a shared decision-dependent environment, with equilibrium concepts and convergence conditions. Those conditions are stated as scalar sensitivity bounds that are blind to the \emph{direction} in which each learner perturbs the environment, which is exactly the object that carries this paper's content, and the setting has no model-provenance structure and no policy analysis. The single-learner lazy-deployment slope of \citet{mendlerdunner2020} is what Theorem~\ref{thm:cadence} composes with multi-agent amplification, a composition not previously made; the corrected update of \citet{izzo2021} is what Theorem~\ref{thm:mixed} puts into the game, having only ever been run single-learner.
+
+\paragraph{Systemic risk, epidemiology, and the statistic.}
+\citet{beale2011} asked exactly this question of banks, showing individually prudent portfolio choices can be collectively destabilizing; their agents do not learn, so the homogeneity is a portfolio overlap rather than an alignment of feedback directions, and there is no second instrument to trade diversity against. \citet{diekmann1990} is what converts the epidemiological parallel from analogy into identity: $R_0$ in a heterogeneous population is \emph{defined} as the spectral radius of a next-generation operator, and $\mN$ is the spectral radius of a linearized joint retraining operator, so the two thresholds are the same mathematical statement and the vaccination law transfers with its refinements. On the statistic, the largest eigenvalue of a correlation matrix as an effective count is standard in random-matrix finance \citep{laloux1999,plerou2002}, signal processing \citep{roy2007} and ecology \citep{hill1973}; the novelty is the matrix it is computed from, response Jacobians rather than returns, and the condition it enters. Work reading macroeconomic state off public sentiment \citep{pebsa2024} asks the same question as Section~\ref{sec:supervision} in the opposite measurement regime: there the channel is exogenous, and here it is endogenous, so the signal strengthens as the system nears instability.
+
+\section{Setup: private against systemic stability}
+\label{sec:setup}
+
+\paragraph{The base result.}
+Consider $N$ symmetric dealers quoting the same instruments and sharing one pool of informed order flow, coupled by a spillover $\kappa \in [0,1]$: one dealer tightening its quotes raises the toxic flow routed to every dealer, in proportion $\kappa$. Each dealer periodically retrains on the flow it has observed and redeploys. Write $m_1$ for a single firm's performative retraining modulus, so a firm in isolation is stable exactly when $m_1 < 1$. The joint retraining map has Jacobian $J = -m_1[(1-\kappa)I + \kappa \mathbf{1}\mathbf{1}^{\top}]$, with a common mode at $-m_1 \Neff$, $\Neff = 1+\kappa(N-1)$, and $N-1$ differential modes at $-m_1(1-\kappa)$. The common mode dominates, so the market crosses into instability a factor $\Neff$ earlier than any individual dealer's own loop would. Measured in a shared-pool simulator with real spreads, inventory and liquidity feedback, amplification is $1.74\times$ at $N=2$ and $3.16\times$ at $N=3$ against a linear prediction of $2$ and $3$ \citep{reflex2026}. This is inherited scaffolding and we do not re-derive it; everything below replaces one object in it.
+
+\paragraph{Two questions, and they are not the same question.}
+Is each agent stable alone, $m_1 < 1$? And is the collection stable when its members interact, $\mN < 1$? A shared environment separates them. Dealer A retrains and redeploys, the pool changes, dealer B observes a changed environment and retrains on it, which changes the pool again, which A then retrains on. The loop closes through the environment, and nothing in A's validation set contains B. \textbf{Agent count is not a descriptive characteristic of a market; it enters the stability condition.} Read as economics, this is an externality, and it is \emph{technological rather than pecuniary} \citep{buchanan1962}: the coupling runs through the data-generating process each learner faces, not through the price at which firms trade with one another. The distinction is load-bearing. Firms affecting each other only through prices impose no market failure, because the price movement is a transfer; firms that reshape the distribution their competitors learn from change the production technology of everyone's forecast, which is a genuine efficiency loss. We call $\mN$ the \textbf{feedback reproduction number}: the factor by which a common perturbation is amplified per retraining round.
+
+\paragraph{Objects and standing assumptions.}
+Firm $i$ has a response Jacobian $E_i \in \mathbb{R}^{d\times d}$. The \emph{alignment matrix} $R = (r_{ij})$ collects $r_{ij} = \langle \mathrm{vec}\,E_i, \mathrm{vec}\,E_j\rangle / (\|E_i\|_F \|E_j\|_F)$, a correlation matrix of feedback directions rather than of returns; it is positive semidefinite with unit diagonal. The generalization is the single substitution of $R$ for $\mathbf{1}\mathbf{1}^{\top}$.
+
+\begin{assumption}[Standing]
+\label{ass:standing}
+(A1) All spectral statements linearize the joint retraining map around the joint equilibrium, with the simulator as the nonlinear check. (A2) Theorem~\ref{thm:alignment} is exact for equal moduli $m_i = m_1$; unequal moduli give a two-sided bound. (A3) Firms retrain on a common clock at a common cadence $K$. (A4) Firms couple through one pool with a scalar spillover $\kappa$. (A5) The common mode binds, which holds when $R$ has nonnegative entries, where Perron-Frobenius places the leading eigenvector in the nonnegative orthant. Shared vendors and shared corpora produce positive alignment, so the regime we study satisfies it; Section~\ref{sec:cadence} does not need it at all.
+\end{assumption}
+
+\section{Result 1: the effective number of independent learners}
+\label{sec:alignment}
+
+Counting firms is wrong, and the correction is where monoculture and supply-chain content enter. $\lmax(R)$ runs from $1$, all responses orthogonal, to $N$, monoculture.
+
+\begin{theorem}[Alignment sets the reproduction number]
+\label{thm:alignment}
+Under Assumption~\ref{ass:standing} with equal moduli and heterogeneous response directions, the joint Jacobian is $J = -m_1[(1-\kappa)I + \kappa R]$ and the market's spectral radius is
+\begin{equation}
+\mN \;=\; \Neff\, m_1, \qquad \Neff \;=\; 1 + \kappa\bigl(\lmax(R) - 1\bigr),
+\end{equation}
+so the market is stable if and only if $\mN < 1$.
+\end{theorem}
+
+Setting $R = \mathbf{1}\mathbf{1}^{\top}$ recovers the symmetric multi-dealer law of \citet{reflex2026} exactly, so the published result is not generalized away but located: it is the monoculture corner, where every firm's feedback points the same way. Three anchors follow, each checked independently (Table~\ref{tab:anchors}). $\Neff \geq 1$ always, so interaction never stabilizes a market below what its members achieve alone.
+
+\begin{table}[t]
+\centering
+\caption{Anchors of Theorem~\ref{thm:alignment}. The simplex is the sharper counterexample to mean-based diversity: it \emph{minimizes} mean alignment yet exceeds orthogonality's $\lmax$.}
+\label{tab:anchors}
+\small
+\begin{tabular}{llll}
+\toprule
+Configuration & $\lmax(R)$ & $\Neff$ & Reading \\
+\midrule
+Monoculture, $R=\mathbf{1}\mathbf{1}^{\top}$ & $N$ & $1+\kappa(N-1)$ & the inherited law \\
+Orthogonal, $R=I$ & $1$ & $1$ & a hundred firms are dynamically one firm \\
+Simplex, $r_{ij}=-\nicefrac{1}{(N-1)}$ & $\nicefrac{N}{(N-1)}$ & $1+\nicefrac{\kappa}{(N-1)}$ & maximal diversity, and the mode labels swap \\
+Supply chain, share $s$ & $1+s(N-1)$ & $1+\kappa s(N-1)$ & the number of independent \emph{models} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{The supply chain.}
+Decompose $E_i = \sqrt{s}\,E_{\text{shared}} + \sqrt{1-s}\,\Xi_i$, where $s\in[0,1]$ is the fraction attributable to a shared foundation model, vendor or pretraining corpus. Alignments concentrate at $r_{ij}\to s$ with $O(1/d)$ fluctuation and an explicit failure probability, so $\Neff \to 1 + \kappa s (N-1)$ and every result below inherits $s$ for free. Fifty dealers fine-tuning one vendor's model are dynamically ${\sim}1+49\kappa$ learners at $s\approx 1$ and barely more than one at $s \approx 0$.
+
+\paragraph{Why the naive diversity index fails, twice.}
+Mean alignment understates \emph{clustered} alignment: three tightly aligned firms among ten otherwise-orthogonal ones give $\Neff = 2.60$ at $\kappa=0.8$ against $1.48$ for the uniform configuration with the identical mean, an understatement of $1.76\times$. Concretely, a market at $m_1 = 0.5$ runs $\mN = 1.30$ and is unstable while the mean index reports $0.74$ and calls it safe with margin. The simplex makes the sharper point: it minimizes mean alignment at $-1/(N-1)$, yet its $\lmax = N/(N-1)$ exceeds orthogonality's $1$, so the mean \emph{does not order configurations correctly} and fails as a ranking rather than only as a level. We prove a signed version of the failure: $\Neff \geq 1 + \kappa(N-1)\overline{r}$ for every $R$, so the mean index always under-states risk and never over-states it. The rule the paper follows is that all stability claims use the spectral form, never a mean.
+
+\paragraph{Naming.}
+We do not present the \emph{quantity} as new, only its role. Spectral summaries of a correlation matrix have a long history as effective counts \citep{hill1973,roy2007,laloux1999}. What is new is the object it is computed from, response Jacobians rather than returns, and the condition it enters.
+
+\section{Result 2: the crowding-cadence frontier}
+\label{sec:cadence}
+
+The first lever is quantity regulation, and it is the one a firm can pull alone: retrain less often. A learner taking only $K$ gradient steps per deployment realizes outer-map slope $\mu(K) = -m + c^K(1+m)$, where $c = 1-\eta\gamma$ is the inner per-step contraction \citep{mendlerdunner2020}. Because $c$ is built from the learner's own objective curvature and step size, it does not depend on how many competitors it has, and that independence is what makes the composition below work. We verify it by measuring the realized contraction inside the joint market rather than asserting it.
+
+\begin{theorem}[Systemic cadence window]
+\label{thm:cadence}
+In the $N$-firm market with synchronous $K$-step retraining, the joint deployment map is $c^K I + (1-c^K)J$, so the binding mode has slope $\mu_N(K) = -\mN + c^K(1+\mN)$ and the market is stable if and only if
+\begin{equation}
+K \;<\; K_{\max} \;=\; \frac{\ln\bigl((\mN-1)/(\mN+1)\bigr)}{\ln c},
+\end{equation}
+with $K_{\max}$ infinite when $\mN \le 1$ and strictly decreasing in $\mN$.
+\end{theorem}
+
+The slope on the mode carrying $\lambda_i(R)$ is strictly decreasing in $\lambda_i$, which does two things at once: it puts every slope at or below $c^K<1$, so the upper side of the stability constraint never binds at any cadence, and it places the binding mode at $\lmax$ whatever the sign pattern of $R$, so this section needs no analogue of (A5).
+
+\paragraph{Critical crowding.}
+The same inequality reads $\mN < (1+c^K)/(1-c^K)$, and since $K$ is a positive integer the most permissive case is $K=1$. A stabilizing cadence exists at all if and only if $\mN < (1+c)/(1-c)$, a factor of $9$ at $c=0.8$. Past that the market is unstable at every retraining frequency. This is not a second result but the frontier at its smallest admissible cadence, which is also why the laziest retrainer is the hardest to destabilize.
+
+\paragraph{What the supply chain does to the window.}
+Substituting Result~1 makes $K_{\max}$ a function of vendor concentration at a fixed number of firms. At $m_1 = 0.15$, $\kappa = 0.8$, $N=30$, $c=0.8$, the window runs $K_{\max} = 20.68$ at $s = 0.25$, $5.28$ at $s=0.5$ and $2.53$ at $s=1$. Holding competitors fixed and raising vendor concentration cuts every incumbent's retraining budget by a factor of eight. The externality in its sharpest operational form is therefore not merely that \textbf{your competitor's entry consumes your retraining budget} but that \textbf{your competitor's choice of vendor does too}, without their entering at all and without either firm doing anything wrong.
+
+\paragraph{What the lever costs.}
+Cadence buys stability with model staleness, and the exchange rate is the same quantity on both sides: after a retraining round the deployed model's gap to its own best response is exactly $c^K$ times what it was, so the $c^K$ that widens the stability margin is the staleness. We quantify it rather than presenting it as free.
+
+\begin{figure}[t]
+\centering
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[width=\linewidth]{figures/fig_phase.pdf}
+\end{subfigure}
+\hfill
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[width=\linewidth]{figures/fig_cadence.pdf}
+\end{subfigure}
+\caption{Left: the $(N,s)$ phase diagram, measured $\mN$ against the predicted boundary over 48 cells (Theorem~\ref{thm:alignment}). Right: the cadence window over 175 cells of the $(\Neff,K)$ grid against predicted $K_{\max}$, with $s$ contours and $c=0.8$ (Theorem~\ref{thm:cadence}); the realized window is $\lfloor K_{\max}\rfloor$ while the plotted frontier is continuous. Both panels are dry runs in the reference environment (Section~\ref{sec:experiments}).}
+\label{fig:phase}
+\end{figure}
+
+\section{Result 3: herd immunity, and diversity as its substitute}
+\label{sec:herd}
+
+The second lever is a technology mandate, and unlike cadence it is not something a firm can pull alone to any effect. A \emph{corrected} firm runs the feedback-aware update \citep{izzo2021,miller2021}, so its retraining is governed by the objective curvature $\gamma_{\mathrm{PO}}$ in place of the cobweb and its modulus is scaled by $\theta = \gamma/\gamma_{\mathrm{PO}} < 1$. What is new is running it inside the game: a mixed market of $N_b$ blind firms and $N - N_b$ corrected ones, corrected fraction $\rho = 1 - N_b/N$. Correction changes a firm's gain and not its response direction, so $R$ is untouched.
+
+\begin{theorem}[Mixed-market stability]
+\label{thm:mixed}
+With supply-chain alignment and two correction levels, the joint Jacobian's symmetric congruence is a diagonal matrix plus a positive rank-one term, so its spectrum solves a secular equation. Two distinct moduli collapse it to a quadratic, and for $1\le N_b \le N-1$ the radius is its larger root,
+\begin{equation}
+\rho(J) = \tfrac{1}{2}\bigl(P + \sqrt{P^2 - 4Q}\bigr),\quad
+P = (1-\tilde{\kappa})m_1(1+\theta) + \tilde{\kappa} m_1(N_b + \theta N_c),\quad
+Q = \theta m_1^2 (1-\tilde{\kappa})\Neff,
+\end{equation}
+with $\tilde{\kappa} = \kappa s$ and $N_c = N - N_b$. An empty block needs the single-block form instead; the quadratic otherwise leaves a phantom root that can exceed the true radius.
+\end{theorem}
+
+$\Neff$ appearing inside $Q$ is why every statement below carries $s$: the mixed market inherits Result~1's crowding through the product term rather than by stipulation.
+
+\paragraph{The strong-correction limit, and it errs in the unsafe direction.}
+As $\gamma_{\mathrm{PO}}\to\infty$ the constant term vanishes and the unstable cycle runs through blind firms only, giving $N_b < N_c(s) = 1 + (1/m_1 - 1)/(\kappa s)$. This is the memorable criterion, and taken alone it is \textbf{optimistic rather than conservative}. The radius is nondecreasing in $\theta$ by Perron-Frobenius on an entrywise-nonnegative matrix, so the limit under-states it: on random draws the limit calls $11.8\%$ of configurations stable that are unstable at every finite correction strength. The exact root is therefore the criterion and the limit is its corollary, quoted with its error direction rather than on its own. The same monotonicity carries the reassuring half: \textbf{correction never backfires}, so no configuration exists in which un-blinding a firm destabilizes the market.
+
+\paragraph{The collapse, and its honest generalization.}
+At $\kappa = s = 1$ the limit reads $\rho^{*} = 1 - 1/\mN$, \textbf{exactly the epidemiological herd-immunity threshold $1-1/R_0$} with the systemic modulus as the reproduction number. A market of 10 firms at $\mN = 2.5$ needs 60\% of them un-blinded, \emph{if correction is perfect}. It is not, and at that same corner the quadratic degenerates so that the stability condition solves exactly for
+\begin{equation}
+\rho^{*}(e) \;=\; \frac{1 - 1/\mN}{e}, \qquad e \;=\; 1 - \gamma/\gamma_{\mathrm{PO}},
+\end{equation}
+with $e$ the \textbf{correction efficacy}. That is the standard coverage requirement for an \emph{imperfect vaccine}, of which the clean law is the perfect-efficacy corner. The correspondence does not merely survive the refinement, it predicts it: a structural analogy transfers the refinements of the law it borrows, and a decorative one does not. The clean $1-1/R_0$ form assumes homogeneous mixing \citep{fine2011}, and the collapse here assumes the $\kappa=s=1$ corner for precisely that reason.
+
+\begin{corollary}[Critical efficacy]
+\label{cor:efficacy}
+$\rho^{*}(e)$ exceeds one, so no corrected fraction works at all, exactly when $\theta > 1/\mN$. Correction is a usable lever only if $\gamma_{\mathrm{PO}}/\gamma > \mN$.
+\end{corollary}
+
+At $\mN = 2.5$ the corrected update must deliver a $2.5\times$ curvature improvement or un-blinding cannot stabilize the market whatever fraction is treated. This is the exact structural parallel of Section~\ref{sec:cadence}'s critical crowding: each lever has a regime past which it stops working, and knowing both is what makes trading them off an honest exercise rather than an extrapolation.
+
+\paragraph{The synthesis.}
+$\rho^{*}$ is increasing in $s$, strictly wherever positive, so a market reaches stability along either axis. At $N=20$, $m_1 = 0.15$, $\kappa = 0.8$: a monoculture ($s=1$) has $N_c = 8.08$ and needs $\rho^{*} = 0.596$, that is $12$ corrected firms; at $s = 0.5$, $N_c = 15.17$ and $\rho^{*} = 0.242$, five firms; at $s = 0.2$, $N_c = 36.42$ and $\rho^{*} = 0$, so the market is stable with no corrected agents at all. The last column is the one a regulator acts on, and it is $N - \lceil N_c \rceil + 1$ rather than $\lceil \rho^{*}N \rceil$; the two differ by one firm exactly when $N_c$ is an integer, which at $N$ in the tens is several percentage points of coverage.
+
+\paragraph{The economic reading.}
+Correction is a public good. An un-blinded firm captures a private benefit while the stability it contributes accrues to everyone, so the market free-rides below the threshold and does not reach $\rho^{*}$ unaided \citep{bergstrom1986}. Model diversity has the same structure: a firm choosing an idiosyncratic vendor pays for it privately and supplies systemic stability for free. \textbf{The substitution is therefore between two goods that are both under-supplied}, not between a good and a bad. That is what makes the frontier something a regulator can move along rather than a menu of two policies plotted on shared axes.
+
+\begin{figure}[t]
+\centering
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[width=\linewidth]{figures/fig_herd.pdf}
+\end{subfigure}
+\hfill
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[width=\linewidth]{figures/fig_substitution.pdf}
+\end{subfigure}
+\caption{Left: stability against corrected fraction at $N=20$, $m_1=0.15$, $\kappa=0.8$, $s=1$, across efficacies; the gap between the exact threshold and the perfect-correction limit is a result, not an error bar. Right: \textbf{the substitution frontier}, the $(\rho,s)$ iso-stability curve, measured against predicted, matching at 18 of 18 points. Both are dry runs (Section~\ref{sec:experiments}).}
+\label{fig:herd}
+\end{figure}
+
+\section{Result 4: the Pigouvian wedge}
+\label{sec:wedge}
+
+The third lever is the price instrument. Inside the stable region the binding mode is an AR(1) with coefficient $-\mN$ driven by noise of variance $\sigma^2$, so its stationary variance is $V(\mN) = \sigma^2/(1-\mN^2)$. The choice is defended rather than assumed: stationary variance is the smooth proxy for divergence risk, finite everywhere strictly inside the stable region and divergent exactly at the boundary the rest of the paper is about, and nothing below uses more than $V$ being positive, increasing and convex. The coefficient carries a sign the variance does not see, and it is not lost information: the lag-1 autocorrelation is $-\mN$ and therefore \emph{negative}, so a crowded market's common mode oscillates rather than persists, which is the observable Section~\ref{sec:supervision} reads.
+
+Each firm picks an adaptation aggressiveness $a_i$, meaning cadence, learning rate or responsiveness, buying concave tracking benefit $B(a_i)$ through $m_i = \mu(a_i)$. Firm $i$ bears weight $w_i$ on common-mode variance and the planner bears $W$, with $W > \sum_i w_i$ because every trade has a client on the other side who bears execution-quality variance while no dealer's objective contains it. That is an assumption, stated as one, and the results turn on its \emph{sign} and never its size.
+
+\begin{lemma}[Marginal crowding share]
+\label{lem:share}
+At the symmetric point, $\partial \mN/\partial m_i = \Neff v_i^2$ where $v$ is the leading eigenvector of the coupling matrix. The shares sum to $\Neff$ rather than to one, and on exchangeable $R$ each equals $\Neff/N$.
+\end{lemma}
+
+Both readings matter. The \emph{sum} is $\Neff$, so the market's total sensitivity to a uniform increase in aggressiveness is amplified by exactly the effective learner count of Result~1. The \emph{individual} share is $\Neff/N$, the arithmetic shape of every commons problem. The naive guess here is $1/N$ by analogy with the commons, and it is wrong by the factor $\Neff$, which at $N=20$, $\kappa=0.8$, $s=1$ is $16.2$.
+
+\begin{theorem}[The wedge]
+\label{thm:wedge}
+At a symmetric profile the private and social first-order conditions are the same equation with a different price on crowding, and the marginal cost a firm ignores is
+\begin{equation}
+t^{*} \;=\; (W - w_i)\, V'(\mN)\, \frac{\Neff}{N}\, \mu'(a), \qquad V'(\mN) = \frac{2\sigma^2 \mN}{(1-\mN^2)^2}.
+\end{equation}
+A per-unit fee $t^{*}$ on aggressiveness makes the private condition coincide with the social one, so the taxed decentralized equilibrium implements the symmetric social optimum.
+\end{theorem}
+
+With symmetric weights the private condition ignores the fraction $(N-1)/N$ of the marginal variance cost borne by other firms, plus the entire client-side exposure. $t^{*}$ is strictly increasing in $N$, $\kappa$, $s$ and $\mN$, and diverges at the boundary like $(1-\mN)^{-2}$. The rate is the economically loaded part: a regulator who sets a fee from a comfortable-looking market and holds it fixed is setting it far too low by the time the market is close to instability.
+
+\begin{corollary}[Over-adaptation]
+\label{cor:over}
+The decentralized equilibrium over-adapts relative to the social optimum for every $N \geq 2$, strictly so even with client exposure switched off, and the distortion grows as the market crowds. At $N=1$ with no client exposure the wedge is exactly zero.
+\end{corollary}
+
+\paragraph{The provenance channel.}
+$\mN$ depends on $s$, so the wedge has a second channel: $\partial\mN/\partial a_i = (\Neff/N)\mu'(a_i)$ against $\partial \mN/\partial s = m_1\kappa(N-1)$. The same wedge therefore prices \textbf{shared-model adoption} directly, turning the monoculture externality into a fee rather than a warning. The contrast explains the adoption dynamic in one line. The aggressiveness channel's $\Neff/N$ factor is bounded and tends to $\kappa$ from above, so a firm's marginal footprint through its own cadence does not grow without bound. The provenance channel is \textbf{linear in $N$ and does not decay}, while a firm's private quality gain from adopting the market-leading vendor does not grow with market size at all. Unregulated adoption therefore runs toward the unstable configuration rather than away from it, which is why the diversity floor of Section~\ref{sec:herd} is a different instrument from the cadence cap of Section~\ref{sec:cadence} rather than a restatement of it. Sections~\ref{sec:cadence}, \ref{sec:herd} and \ref{sec:wedge} are respectively quantity regulation, a technology mandate or structural remedy, and the price instrument; choosing among them under uncertainty is Weitzman's question \citep{weitzman1974}, and we supply the objects needed to pose it rather than answering it.
+
+\section{Supervision from public prices}
+\label{sec:supervision}
+
+Every quantity above is hidden from the regulator these results address, and near the boundary the system tells on itself: as $\mN$ approaches one the leading principal component of public quotes has lag-1 autocorrelation approaching one in magnitude, with the sign negative because the common mode oscillates rather than persists, and variance share growing like $1/(1-\mN)$, so a supervisor can estimate distance to instability from public prices alone with no access to any firm's model, data or code. The estimator sharpens exactly as the market approaches the boundary it watches for. Its consistency proof, central limit theorem and detection sample complexity are deferred, and the real-data panel in the appendix is consistency evidence with a placebo, never identification.
+
+\section{Experiments}
+\label{sec:experiments}
+
+Six panels, one per result, and each panel's evidential status is stated in its own row because the six are not the same kind of evidence. A panel marked \textbf{measured} ran in the order-flow simulator: a genuine $N$-dealer market with informed flow, spread and inventory, reducing bit for bit to the single-dealer market at $N=1$. A panel marked \textbf{dry run} ran in a linearized reference environment realizing the model's response geometry and nothing else. A dry run establishes that the closed forms govern the realized dynamics, which no amount of algebra checking covers, and it establishes nothing about a market. Stability in every panel is estimated from the trajectory's asymptotic growth rate under the actual retraining map rather than read off an eigensolve, so \emph{measured} always means measured from dynamics. All runs are CPU-only and deterministic from (config, seed), with common random numbers on paired probes; every closed form carries a numerical certificate that fails loudly, and the harness exits nonzero on any disagreement rather than producing a quiet figure. The simulator is described generically here pending an artifact release; code, derivations and certificates are available to reviewers as anonymized supplementary material and are released publicly on acceptance.
+% CAMERA-READY ONLY. Uncomment the line below once the paper is de-anonymized.
+% Do NOT enable for the double-blind submission: the URL names an author and
+% breaks the blind.
+% Code, derivations and certificates: \url{https://github.com/vignesh-nagarajan-vn/PRICE}.
+
+\begin{table}[t]
+\centering
+\caption{Panel coverage and status. Panel 1 is external validation against a prior published run, not a self-consistency check.}
+\label{tab:panels}
+\small
+\begin{tabular}{llll}
+\toprule
+Panel & Tests & Status & Outcome \\
+\midrule
+1. Amplification & Section~\ref{sec:setup} & \textbf{measured} & $1.7428\times$, $3.1567\times$; relative error $0.00$ \\
+2. $(N,s)$ phase diagram & Thm~\ref{thm:alignment} & dry run & 48 cells, max error $7.1\times 10^{-15}$ \\
+2b. Clustered companion & Thm~\ref{thm:alignment} & dry run & measured $\mN$ $1.30$; mean index says $0.74$ \\
+3. Cadence frontier & Thm~\ref{thm:cadence} & dry run & 175 cells, zero disagreements \\
+4. Herd immunity & Thm~\ref{thm:mixed} & dry run & thresholds $12/14/16/20$ firms across efficacy \\
+5. Substitution frontier & Thm~\ref{thm:mixed} & dry run & 18 of 18 points exact \\
+6. Over-adaptation & Thm~\ref{thm:wedge} & dry run & 12 configurations, zero contradicting Cor.~\ref{cor:over} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{The one measured panel.}
+Panel 1 reproduces a prior published run in that run's own simulator, measuring common-mode moduli $0.7856$, $1.3692$ and $2.4799$ at $N=1,2,3$, hence amplification $1.7428\times$ and $3.1567\times$ against a published $1.74\times$ and $3.16\times$ at relative error $0.00$. \textbf{The gap to the linear prediction is content, not error}: the market runs $-12.9\%$ at $N=2$ and $+5.2\%$ at $N=3$, with \emph{opposite signs}, which is what a nonlinear market with saturating flow does around a linearization. The reference environment reproduces the prediction exactly because it omits precisely the nonlinearity and saturation that produce the two-signed departure. The differential mode measures $3.4\times 10^{-3}$ against a theoretical zero at $\kappa=1$, so the instability is purely common-mode, which is the mechanism Theorem~\ref{thm:alignment} generalizes.
+
+\paragraph{Why the rest are not measured, stated plainly.}
+A heterogeneous-response port of the order-flow simulator was designed and built, and it is exact: at flat exposure profiles it reproduces the unmodified simulator at every $N$ from 1 to 6. Its acceptance gate then failed. The simulator's liquidity and price-impact channels stay shared whatever the response profiles are, and isolating that residual shows it reaching $17.7$ percentage points across the separation range at $N=2$, larger than several of the effects these panels resolve; at $N \geq 4$ the finite-difference probe is no longer measuring a local slope at all. We drew no figure from that port and moved no status, which is what the gate is for. Panel 6 is a dry run for a different reason: the order-flow simulator carries no aggressiveness choice variable and no welfare object, so no measured counterpart of it exists to be built.
+
+\paragraph{Panel 6.}
+Both first-order conditions are solved by bisection with $\mN$ read from realized dynamics rather than from the closed form, so the over-adaptation verdict is a property of the simulated market rather than of the algebra. The gap widens from $29.0\%$ at $N=2$ to $119.9\%$ at $N=20$, the fee implements the social optimum to $1.7\times 10^{-13}$, and the degenerate $N=1$ case sits at exactly zero, as Corollary~\ref{cor:over} requires.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.94\textwidth]{figures/fig_wedge.pdf}
+\caption{Over-adaptation and the wedge. Left: decentralized against socially optimal aggressiveness across $N$ at $\chi=1$, $s=1$, with the gap shaded. Right: $t^{*}$ against $N$ on a log scale. Dry run; the boundary divergence rate fits $(1-\mN)^{-2}$ with log-log slope $-2.000$.}
+\label{fig:wedge}
+\end{figure}
+
+\section{Limitations and conclusion}
+\label{sec:limitations}
+
+\paragraph{Limitations.}
+The analysis is linearized around the joint equilibrium (A1), and panel 1 shows what that costs in a real market. \textbf{The heterogeneous sweep is closed-form agreement, not measurement}, and this is the largest gap in the work: panels 2 through 6 establish that the closed forms govern realized dynamics in a reference environment with no informed flow, no spread and no inventory, and establish nothing about a real market. Routing the liquidity and impact channels through the response profiles is the identified repair. Theorem~\ref{thm:alignment} is exact for equal moduli (A2); the heterogeneous-modulus case is a two-sided bound whose tightness is measured rather than asserted, and share-weighted alignment for unequal-sized firms, the fully heterogeneous block-secular reduction, and the sharp operator-norm concentration rate are named extensions rather than results. The $1-1/R_0$ collapse additionally assumes the $\kappa=s=1$ corner, three or more correction levels return a genuine secular equation rather than a quadratic, and correction that moves a firm's response direction rather than only its gain is not modelled. Deployment is synchronous on a common cadence (A3); heterogeneous clocks break the eigenvector sharing Theorem~\ref{thm:cadence} uses. Theorem~\ref{thm:wedge} prices instability through stationary variance, a modeling choice. Neither $R$ nor $s$ is observable to an outsider, and Section~\ref{sec:supervision} is the designed answer with its real-data leg deferred.
+
+\paragraph{Conclusion.}
+\textbf{Individual model evaluation cannot certify a market of models.} The quantity separating the two questions is the effective number of independent learners, a spectral property of how firms' response directions align, and no evaluation of a single model can see it. A firm can pass every stability test available to it and still be one of the reasons its market fails, without doing anything wrong and without observing the firms it is coupled to. A regulator already drafting systemic-risk obligations for shared general-purpose models has a threshold on model scale but no mechanism connecting model sharing to a measurable systemic quantity. This paper supplies one, and with it two substitutable instruments and a price: retrain less often, share fewer models or correct more of them, or pay for the crowding. The substitution frontier is the object a regulator would act on, because the instruments are interchangeable at a computable rate rather than merely both available.
+
+\begin{thebibliography}{99}
+\small
+
+\bibitem[Beale et al.(2011)]{beale2011} N.~Beale, D.~G. Rand, H.~Battey, K.~Croxson, R.~M. May, and M.~A. Nowak. Individual versus systemic risk and the regulator's dilemma. \emph{PNAS}, 108(31):12647--12652, 2011.
+
+\bibitem[Bergstrom et al.(1986)]{bergstrom1986} T.~Bergstrom, L.~Blume, and H.~Varian. On the private provision of public goods. \emph{Journal of Public Economics}, 29(1):25--49, 1986.
+
+\bibitem[Bommasani et al.(2022)]{bommasani2022} R.~Bommasani, K.~A. Creel, A.~Kumar, D.~Jurafsky, and P.~Liang. Picking on the same person: Does algorithmic monoculture homogenize outcomes? In \emph{NeurIPS}, 2022.
+
+\bibitem[Buchanan and Stubblebine(1962)]{buchanan1962} J.~M. Buchanan and W.~C. Stubblebine. Externality. \emph{Economica}, 29(116):371--384, 1962.
+
+\bibitem[Diekmann et al.(1990)]{diekmann1990} O.~Diekmann, J.~A.~P. Heesterbeek, and J.~A.~J. Metz. On the definition and the computation of the basic reproduction ratio $R_0$ in models for infectious diseases in heterogeneous populations. \emph{Journal of Mathematical Biology}, 28(4):365--382, 1990.
+
+\bibitem[Fine et al.(2011)]{fine2011} P.~Fine, K.~Eames, and D.~L. Heymann. Herd immunity: A rough guide. \emph{Clinical Infectious Diseases}, 52(7):911--916, 2011.
+
+\bibitem[Hill(1973)]{hill1973} M.~O. Hill. Diversity and evenness: A unifying notation and its consequences. \emph{Ecology}, 54(2):427--432, 1973.
+
+\bibitem[Hirschman(1964)]{hirschman1964} A.~O. Hirschman. The paternity of an index. \emph{American Economic Review}, 54(5):761--762, 1964.
+
+\bibitem[Izzo et al.(2021)]{izzo2021} Z.~Izzo, L.~Ying, and J.~Zou. How to learn when data reacts to your model: Performative gradient descent. In \emph{ICML}, 2021.
+
+\bibitem[Khandani and Lo(2007)]{khandani2007} A.~E. Khandani and A.~W. Lo. What happened to the quants in August 2007? \emph{Journal of Investment Management}, 5(4):29--78, 2007.
+
+\bibitem[Kleinberg and Raghavan(2021)]{kleinberg2021} J.~Kleinberg and M.~Raghavan. Algorithmic monoculture and social welfare. \emph{PNAS}, 118(22):e2018340118, 2021.
+
+\bibitem[Laloux et al.(1999)]{laloux1999} L.~Laloux, P.~Cizeau, J.-P. Bouchaud, and M.~Potters. Noise dressing of financial correlation matrices. \emph{Physical Review Letters}, 83(7):1467--1470, 1999.
+
+\bibitem[Mendler-D\"unner et al.(2020)]{mendlerdunner2020} C.~Mendler-D\"unner, J.~C. Perdomo, T.~Zrnic, and M.~Hardt. Stochastic optimization for performative prediction. In \emph{NeurIPS}, 2020.
+
+\bibitem[Miller et al.(2021)]{miller2021} J.~P. Miller, J.~C. Perdomo, and T.~Zrnic. Outside the echo chamber: Optimizing the performative risk. In \emph{ICML}, 2021.
+
+\bibitem[Narang et al.(2023)]{narang2023} A.~Narang, E.~Faulkner, D.~Drusvyatskiy, M.~Fazel, and L.~J. Ratliff. Multiplayer performative prediction: Learning in decision-dependent games. \emph{JMLR}, 24, 2023.
+
+\bibitem[PEBSA(2024)]{pebsa2024} Predicting economic behavior via sentiment analysis. \emph{International Journal of Engineering and Computer Science}, 13(12), 2024. \url{https://doi.org/10.18535/ijecs/v13i12.4950}.
+
+\bibitem[Perdomo et al.(2020)]{perdomo2020} J.~C. Perdomo, T.~Zrnic, C.~Mendler-D\"unner, and M.~Hardt. Performative prediction. In \emph{ICML}, 2020.
+
+\bibitem[Plerou et al.(2002)]{plerou2002} V.~Plerou, P.~Gopikrishnan, B.~Rosenow, L.~A.~N. Amaral, T.~Guhr, and H.~E. Stanley. Random matrix approach to cross correlations in financial data. \emph{Physical Review E}, 65(6):066126, 2002.
+
+\bibitem[REFLEX(2026)]{reflex2026} Reflexive equilibrium fixed-point learning for endogenous exchanges. \emph{arXiv:2608.16155}, 2026. \url{https://doi.org/10.48550/arXiv.2608.16155}.
+
+\bibitem[Roy and Vetterli(2007)]{roy2007} O.~Roy and M.~Vetterli. The effective rank: A measure of effective dimensionality. In \emph{EUSIPCO}, 2007.
+
+\bibitem[Wagner(2010)]{wagner2010} W.~Wagner. Diversification at financial institutions and systemic crises. \emph{Journal of Financial Intermediation}, 19(3):373--386, 2010.
+
+\bibitem[Weitzman(1974)]{weitzman1974} M.~L. Weitzman. Prices vs. quantities. \emph{Review of Economic Studies}, 41(4):477--491, 1974.
+
+\end{thebibliography}
+
+\appendix
+
+\section{Technical appendices}
+
+Complete proofs of every numbered result in the body, the numerical certificates and their tolerances, the full experimental specifications, and the supervision panel with its placebo are provided in the supplementary material. Every closed form in the body is checked by an assertion-based certificate that fails loudly; 525 assertions across seven files pass at submission time.
+
+\newpage
+\input{checklist.tex}
+
+\end{document}

@@ -24,9 +24,9 @@ overage below is large enough that no plausible calibration closes it.
 | [`08-supervision.md`](08-supervision.md) | Supervision from public prices | 0.20 | 0.11 | **drafted**, collapsed under step 2 |
 | [`09-experiments.md`](09-experiments.md) | Six panels | 1.00 | 1.07 | **drafted** |
 | [`10-limitations-conclusion.md`](10-limitations-conclusion.md) | Limitations, conclusion | 0.60 | 0.69 | **drafted** |
-| | **Total** | **9.45** | **10.41** | **over by 1.41** |
+| | **Total** | **9.45** | **10.41** | working drafts; the submission is nine pages |
 
-## Compression, applied and exhausted
+## Compression, and where the budget actually closed
 
 Overflow is absorbed in a fixed order, decided in advance so it is not
 renegotiated under deadline pressure:
@@ -44,21 +44,21 @@ with an `APPENDIX` HTML comment in place rather than deleted, so every move is a
 revert rather than a rewrite. Result sections 4 through 6 are not compressed and
 were not.
 
-**What is left is an owner decision, not a writing decision**, and it is recorded
-here rather than taken:
+**Closed 19 Aug 2026, in the LaTeX pass rather than here.** The files in this
+folder are the working drafts and they still exceed nine pages. The submission
+is [`../paper/main.tex`](../paper/main.tex), and it is nine content pages, which
+is the only page count that has to be true.
 
-- **Section 2 is `0.46` over its own budget line**, the largest single overrun in
-  the table, and the compression order does not cover it. Bringing it to `0.75`
-  recovers `0.46`.
-- **Cutting Section 8 entirely** is authorized by the de-scope order, where it is
-  first, and recovers `0.11`. It is written to be cuttable whole.
-- **Dropping a figure** recovers `0.20` each. Figure 4 is the poster figure and
-  Figure 1 carries Result 1; Figure 5 is second in the de-scope order.
+The fit was made by cutting on the way into LaTeX, not by tightening these
+files: proof bodies moved to the appendix, the worked tables in Sections 5 and 6
+became inline numbers, the clustered companion became a row of the panel table,
+and the appendix-bound material stayed in the appendix. No section was dropped
+and no claim was weakened. [`../paper/README.md`](../paper/README.md) records
+every cut and the reason for it.
 
-Taking all three of those still leaves about `0.64` of a page. The honest reading
-is that eleven sections of drafted content do not fit in nine pages at the
-measured density, and closing the gap means cutting content rather than
-tightening prose.
+These files stay long on purpose. They are the source the journal version and
+the appendix are written from, and shortening them to fit a workshop limit would
+throw away the material the appendix needs.
 
 ## Figures
 

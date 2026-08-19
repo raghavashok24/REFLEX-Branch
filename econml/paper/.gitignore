@@ -1,0 +1,10 @@
+# LaTeX build artifacts. main.pdf is committed on purpose: it is the deliverable.
+*.aux
+*.log
+*.out
+*.toc
+*.bbl
+*.blg
+*.synctex.gz
+*.fls
+*.fdb_latexmk
