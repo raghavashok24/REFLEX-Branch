@@ -4,6 +4,8 @@
 
 ## Potential Tracks
 
+Decision notifications for both venues are on Sept 29.
+
 **ML x OR** https://mlxor-2026.github.io/
 - Workshop to journal pipeline for 3 journals: Stochastic Systems, Mathematics of Operations Research, Operations Research (all 3 via invitation only)
 - Aug 31 submission date, Sept 29 decision date, Dec 12/13 workshop date in Atlanta
