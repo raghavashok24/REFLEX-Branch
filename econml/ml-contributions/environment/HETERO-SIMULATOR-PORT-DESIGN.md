@@ -210,6 +210,34 @@ Open, and left open.
    already measures that gap at `12.9%` and `5.2%` in the monoculture. The
    heterogeneous version of that gap is unmeasured.
 
+## What is left on the port, in order
+
+The next session's brief. Each item depends on the ones above it.
+
+1. **Decide the universe.** Either accept `n_bonds = 8`, `n_sectors = 2` and
+   sweep with free profiles rather than sector tilt, or enlarge the universe and
+   re-measure the monoculture anchor at the new config, since panel 1's numbers
+   do not transfer across a changed `BondUniverse`. This is a decision, not a
+   build, and everything else waits on it.
+2. **Build the free-profile constructor**, the analogue of
+   `response_jacobians_for_R`: given a target alignment `R`, return profiles
+   whose *measured* alignment is `R` to tolerance, subject to nonnegativity.
+   Nonnegativity is the new constraint the linearized environment does not have,
+   since a coverage weight cannot be negative, and it is what bounds the
+   reachable set.
+3. **Measure the residual from the shared channels.** Run the port at a sequence
+   of separations from the monoculture and compare the measured joint modulus
+   against `m_1 * N_eff` at the measured `R`. The liquidity and impact channels
+   stay aligned at `1 1'` regardless of the profiles, so the measured modulus
+   should exceed the prediction by a gap that grows with separation. Report the
+   gap. If it is large the panels are not interpretable as stated and the design
+   needs revisiting before any figure is drawn.
+4. **Then, and only then, the panels.** Panel 5's substitution frontier first,
+   since it is never cut, then panels 2, 2b and 4. Wire into `panels.py` only
+   after step 3 has a number.
+5. **Ledger.** No status moves before step 4 produces a run. A passing reduction
+   test is not a measurement.
+
 ## Status
 
 Nothing here upgrades any claim. Panels 2, 2b, 4 and 5 remain `[DRY RUN]` in

@@ -122,6 +122,8 @@ remaining panels need the simulator.
 | Section | State |
 |---|---|
 | 1, introduction | complete |
+| 2, related work | drafted, four paragraphs, six named deltas |
+| 3, model and framing | drafted, about 1200 words |
 | 4, Result 1 | drafted, about 920 words |
 | 5, Result 2 | drafted, about 580 words |
 | 0, abstract | drafted, rewrite after Result 3's panel lands |
@@ -169,9 +171,9 @@ Section 7 and panel 6. `pigouvian_wedge` is deliberately absent from the theory
 module, with a test asserting its absence, so it cannot arrive ahead of its
 derivation.
 
-**3. Seven unwritten sections.** 2 related work, 3 model and framing, 6 Result 3,
-7 Result 4, 8 supervision, 9 experiments, 10 limitations and conclusion. Section 6
-is the paper and is replanned but undrafted.
+**3. Five unwritten sections.** 6 Result 3, 7 Result 4, 8 supervision, 9
+experiments, 10 limitations and conclusion. Sections 2 and 3 are drafted. Section
+6 is the paper and is replanned but undrafted.
 
 ### Known open items, none blocking
 
@@ -212,8 +214,8 @@ Settle the heterogeneous-response modeling decision first, before writing any
 code for it, because that decision is the actual bottleneck and it is cheap to
 get wrong. Then build the port in parallel with drafting. Draft Section 6 next,
 since it is replanned and is the paper. Derive Theorem 4's welfare page after
-that, and accept losing panel 6 if it slips. Write Sections 3, 2, 9 and 10 in
-that order. Section 8 is already scoped to one paragraph and is first to cut.
+that, and accept losing panel 6 if it slips. Write Sections 9 and 10 in
+that order; 3 and 2 are drafted. Section 8 is already scoped to one paragraph and is first to cut.
 
 If the port does not land, the paper is still submittable: the theory is complete
 and certified, panel 1 is measured in a real market, and panels 2 to 5 can be
