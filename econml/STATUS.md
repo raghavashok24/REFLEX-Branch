@@ -125,15 +125,27 @@ remaining panels need the simulator.
 
 ### Writing
 
-| Section | State |
-|---|---|
-| 1, introduction | complete |
-| 2, related work | drafted, four paragraphs, six named deltas |
-| 3, model and framing | drafted, about 1200 words |
-| 4, Result 1 | drafted, about 920 words |
-| 5, Result 2 | drafted, about 580 words |
-| 0, abstract | drafted, rewrite after Result 3's panel lands |
-| 6, Result 3 | **drafted** around the exact root, about 1150 words |
+**All eleven sections are drafted as of 19 Aug 2026.** Word counts are body
+prose, excluding display math, tables and the per-file notes.
+
+| Section | State | Body words | Measured pages |
+|---|---|---|---|
+| 0, abstract | **rewritten** around the imperfect-correction law, closing on panel 1 | 223 | 0.21 |
+| 1, introduction | complete | 1195 | 1.17 |
+| 2, related work | drafted, plus PEBSA's contrast sentence moved in from Section 8 | 1271 | 1.21 |
+| 3, model and framing | drafted | 1242 | 1.21 |
+| 4, Result 1 | drafted, proof moved to the appendix | 849 | 1.19 |
+| 5, Result 2 | drafted, proof moved to the appendix | 488 | 0.82 |
+| 6, Result 3 | drafted around the exact root | 1037 | 1.60 |
+| 7, Result 4 | **drafted**, compression steps 1 and 3 applied | 888 | 1.14 |
+| 8, supervision | **drafted**, collapsed to two sentences under step 2 | 113 | 0.11 |
+| 9, experiments | **drafted**, with a per-panel status column | 951 | 1.07 |
+| 10, limitations and conclusion | **drafted** | 725 | 0.69 |
+| | | | **10.41** |
+
+**The page budget does not close.** The compression order ran in full and
+recovered `0.27` of a page, which leaves the body `1.41` pages over. See the risk
+register below; this is the one item left open at the end of this session.
 
 ---
 
@@ -191,9 +203,11 @@ simulator carries no aggressiveness choice variable and no welfare object, so a
 joined the theory module with the panel, and the test that asserted its absence
 is replaced by acceptance tests on the function.
 
-**3. Four unwritten sections.** 7 Result 4, 8 supervision, 9 experiments, 10
-limitations and conclusion, plus the abstract's rewrite. Sections 1 to 6 are
-drafted, Section 6 included.
+**3. ~~Four unwritten sections.~~ Closed 19 Aug 2026.** All eleven sections are
+drafted and the abstract is rewritten. What replaced this item is the page
+budget: at `10.41` measured pages the body is `1.41` over, the compression order
+is exhausted, and the remaining cut is a scope decision rather than an editing
+one. It is the only item this session leaves open.
 
 ### Known open items, none blocking
 
@@ -214,7 +228,7 @@ two-block collapse.
 | ~~Theorem 4 stays a sketch~~ | **closed** | Welfare page landed 18 Aug 2026 with 125 passing assertions. Theorem 4 ships as theory even if panel 6 is cut |
 | ~~Section 6 drafting slips~~ | **closed** | Drafted 18 Aug 2026 around the exact two-block root |
 | Panel 6 does not land | medium | Second in the de-scope order. If it is cut, Theorem 4 ships as theory with no figure |
-| Page budget stays over 9 | medium | Compression order fixed in advance in `writing/README.md` and applied without renegotiation |
+| Page budget stays over 9 | **realized, and open** | Measured at `10.41` pages on 19 Aug 2026 with all eleven sections drafted. The compression order ran in full and recovered only `0.27`. Closing the remaining `1.41` needs content cut, not tighter prose, and the three candidates are recorded in `writing/README.md` rather than chosen: Section 2 is `0.46` over its own line, cutting Section 8 whole recovers `0.11`, and each figure is `0.20`. **This is the decision left for the owner** |
 | A referee asks for fully heterogeneous agents | low | Answered as future work with the machinery stated to extend |
 | A referee probes finite `gamma_PO` | **now low** | Was the paper's weakest point. The imperfect-correction law answers it directly |
 | A referee reads a dry run as a measurement | low | `[DRY RUN]` is its own flag, Section 9 states each panel's status in its own row, and the gate outcome is a stated limitation in Section 10 |

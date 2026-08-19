@@ -59,7 +59,7 @@ model alignment rather than by headcount. Results 2 through 4 are all stated in
 |---|---|
 | Literature review | **complete** (`literature/LITERATURE-REVIEW-P2.md`) |
 | Introduction | **complete** (`writing/01-introduction.md`) |
-| Abstract | drafted, re-write after Result 3's experiment lands |
+| Abstract | **rewritten** around the imperfect-correction law, closing on panel 1 |
 | Theorem 1 | **proved and certified** (`math/derivations/01`, `02`); 123 checks |
 | Theorem 2 | **proved and certified** (`math/derivations/03`); 59 checks |
 | Theorem 3 | **proved and certified** (`math/derivations/04`); 70 checks. **C18 failed and changed the claim** |
@@ -74,7 +74,8 @@ model alignment rather than by headcount. Results 2 through 4 are all stated in
 | Panels 2-5 | **dry runs pass**, all agreeing with their closed forms. Not measurements |
 | Heterogeneous-response port | **exact at the reduction, step-3 gate failed, workstream closed.** Panels 2-5 stay `[DRY RUN]` |
 | Panel 6 | **dry run passes**, 12 configurations, zero contradictions of the over-adaptation corollary |
-| Remaining sections | planned, not written |
+| Sections 7 to 10 | **drafted** |
+| Page budget | **over.** `10.41` measured pages against 9, compression order exhausted |
 
 Theorems 1 through 4 have moved from `[DERIVED]` to `[VERIFIED]` in the claims
 ledger, each against assertion-based certificates that fail loudly. 525 assertions
