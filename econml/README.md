@@ -67,17 +67,17 @@ model alignment rather than by headcount. Results 2 through 4 are all stated in
 | Section 4, Result 1 | **drafted** (`writing/04`) |
 | Section 5, Result 2 | **drafted** (`writing/05`) |
 | Section 6, Result 3 | **drafted** around the exact root (`writing/06`) |
-| Theory module | **written and certified** (`ml-contributions/theory/`); 50 checks |
+| Theory module | **written and certified** (`ml-contributions/theory/`); 56 checks |
 | Heterogeneous-response environment | **built and certified** (`ml-contributions/environment/`); 32 checks |
-| Panel harness | **built** (`ml-contributions/experiments/`); panels 1-5 run |
+| Panel harness | **built** (`ml-contributions/experiments/`); panels 1-6 run |
 | Panel 1 anchor | **`[MEASURED]`** in the real order-flow market, reproducing `1.74x / 3.16x` bit for bit |
 | Panels 2-5 | **dry runs pass**, all agreeing with their closed forms. Not measurements |
 | Heterogeneous-response port | **exact at the reduction, step-3 gate failed, workstream closed.** Panels 2-5 stay `[DRY RUN]` |
-| Panel 6 | `[TO BUILD]`. Theorem 4 is certified, so the panel is the only piece outstanding |
+| Panel 6 | **dry run passes**, 12 configurations, zero contradictions of the over-adaptation corollary |
 | Remaining sections | planned, not written |
 
 Theorems 1 through 4 have moved from `[DERIVED]` to `[VERIFIED]` in the claims
-ledger, each against assertion-based certificates that fail loudly. 519 assertions
+ledger, each against assertion-based certificates that fail loudly. 525 assertions
 across seven files, all passing.
 
 **One claim failed, and it was the one the ledger flagged in advance.** The

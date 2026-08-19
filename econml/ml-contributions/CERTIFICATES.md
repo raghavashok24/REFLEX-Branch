@@ -152,10 +152,22 @@ All four are implemented in
 [`certificates/verify_theorem4_wedge.py`](certificates/verify_theorem4_wedge.py),
 125 checks, assertion-based, all passing.
 
-**Not certified, and deliberately so.** `pigouvian_wedge` is still absent from
-the theory module, with `verify_theory_module.py` asserting its absence. The
-welfare page is derived, but experiment 6 is not built, and the module is the
-surface a panel imports from. It arrives when the panel does.
+**`pigouvian_wedge` joined the module on 19 Aug 2026**, when panel 6 was built.
+It was held out while the panel did not exist, since the module is the surface a
+panel imports from and the standing rule is that nothing reaches the paper ahead
+of its derivation. `verify_theory_module.py` no longer asserts its absence; the
+assertion is replaced by section A9, which re-derives the wedge longhand on 72
+configurations, checks the `(N-1)/N` reading and its vanishing at `N = 1`,
+checks Lemma 11's shares sum to `N_eff` rather than to one, and checks the
+provenance channel outgrows the aggressiveness channel. That file now carries 56
+checks rather than 50.
+
+**Panel 6 carries no separate certificate, by decision.** Its closed forms are
+already certified by C19 to C21 and C34, and its own agreement gate lives in
+`run_panels.py`, which exits nonzero if any row contradicts Corollary 4.2, if
+the fee fails to implement the social optimum, or if the measured `m_N` departs
+from the closed form. A certificate here would restate C21 against the same
+algebra.
 
 ## Infrastructure certificates
 
@@ -164,7 +176,7 @@ certified before a panel runs.
 
 | # | Checks | State |
 |---|---|---|
-| C32 | **Theory module acceptance.** The six tests the spec names, plus guards, each re-deriving its expectation against a dense eigensolve or brute force rather than importing the module's own answer | **run**, 50 checks |
+| C32 | **Theory module acceptance.** The six tests the spec names, plus guards and the A9 wedge tests, each re-deriving its expectation against a dense eigensolve or brute force rather than importing the module's own answer | **run**, 56 checks |
 | C33 | **Environment reduction.** At `R = 1 1'` the heterogeneous-response environment reproduces the base project's homogeneous market in alignment, `N_eff` and Jacobian, and the built Jacobian equals the closed form on arbitrary topologies | **run**, 32 checks |
 
 C33 is the acceptance test the experiment specs name, and it runs before any
@@ -183,7 +195,7 @@ certificate here would guard code that nothing in the paper depends on.
 34 new certificates against the base project's 66, for 100. Every one of them is
 deterministic, CPU-only, numpy-only, and runs from `(config, seed)`.
 
-All 34 are written and passing, spread across **519 individual assertions in
+All 34 are written and passing, spread across **525 individual assertions in
 seven files**. Theorem 4's four (C19 to C21 and C34) joined on 18 Aug 2026 when
 the welfare page landed.
 
@@ -196,14 +208,15 @@ for f in econml/ml-contributions/certificates/verify_*.py; do python "$f" || bre
 | `verify_theorem1_proof.py` | 123 |
 | `verify_theorem2_cadence.py` | 59 |
 | `verify_theorem3_herd_immunity.py` | 70 |
-| `verify_theory_module.py` | 50 |
+| `verify_theory_module.py` | 56 |
 | `verify_hetero_env.py` | 32 |
 | `verify_theorem1_anchors.py` | 60 |
 | `verify_theorem4_wedge.py` | 125 |
 
-519 assertions across seven files, all passing. The anchors file joined the count
+525 assertions across seven files, all passing. The anchors file joined the count
 on 18 Aug 2026 when it was converted to assert rather than print, and the
-Theorem 4 file the same day when the welfare page landed.
+Theorem 4 file the same day when the welfare page landed. The theory module
+gained six on 19 Aug 2026 when the wedge replaced the absence assertion.
 
 ## Rule
 

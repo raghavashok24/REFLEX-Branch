@@ -136,7 +136,7 @@ requires the order-flow simulator, does that.
 | E3 | Crowding-cadence frontier | `[DRY RUN]`, 175 cells, zero disagreements |
 | E4 | Herd immunity | `[DRY RUN]`, thresholds `12 / 14 / 16 / 20` firms across efficacy |
 | E5 | Substitution frontier | `[DRY RUN]`, 18 of 18 exact. **never cut** |
-| E6 | Over-adaptation | `[TO BUILD]`. Theorem 4 is no longer the blocker; the panel itself is unbuilt. Second in de-scope order, and if cut Theorem 4 ships as theory |
+| E6 | Over-adaptation | `[DRY RUN]`, built 19 Aug 2026. 12 configurations, zero rows contradicting Corollary 4.2, smallest relative gap `0.290` at `N = 2` and exactly zero at `N = 1` with no client exposure |
 
 | # | Claim | Status | Evidence |
 |---|---|---|---|
@@ -144,6 +144,9 @@ requires the order-flow simulator, does that.
 | E1.2 | The measured market departs from the linear prediction **with both signs**: `-12.9%` at `N=2` and `+5.2%` at `N=3` | `[MEASURED]` | `panel1_external_anchor.json`. **Corrected 18 Aug 2026:** the previous wording called both a shortfall, and the `N=3` figure is an overshoot. State this in the body; it is content, not error, and the two-signed departure is the point |
 | E1.3 | The differential mode is dead at `kappa = 1`, measuring `3.4e-03` against a theoretical `0` | `[MEASURED]` | Instability is purely common-mode, which is what Theorem 1 generalizes |
 | E4.1 | The imperfect-correction law predicts the threshold at `kappa = 0.8`, where it is not proved exact | `[DRY RUN]` | panel 4, 4 of 4 thresholds. **Evidence, not a proof** |
+| E6.1 | The decentralized equilibrium over-adapts on every configuration with `N >= 2`, with the gap widening in `N`: `29.0%` at `N = 2` rising to `119.9%` at `N = 20` | `[DRY RUN]` | `panel6_over_adaptation.json`. `m_N` measured from the reference environment's dynamics, the welfare layer above it closed form |
+| E6.2 | The fee `t*` implements the social optimum: a firm facing it chooses `a_s`, to relative error `1.7e-13` | `[DRY RUN]` | `panel6_over_adaptation.json` |
+| E6.3 | `t*` is strictly increasing in `N`, `kappa` and `s`, and diverges at the boundary with fitted log-log slope `-2.0000` | `[DERIVED]` | `panel6b_comparative_statics.json`. Closed form throughout, no dynamics, so this evaluates Corollary 4.1 rather than measuring it |
 
 ---
 
@@ -156,7 +159,7 @@ requires the order-flow simulator, does that.
 2. ~~**6.7** and **6.8** are the two outstanding pieces of Theorem 3.~~
    **Closed, and 6.8 failed.** See the note below.
 3. ~~**7.1** and the welfare page are the whole of Theorem 4's remaining work.~~
-   **Closed, 18 Aug 2026.** The welfare page is written, `verify_theorem4_wedge.py`
+   **Closed, 18 Aug 2026**, and panel 6 followed on 19 Aug 2026 at `[DRY RUN]`. The welfare page is written, `verify_theorem4_wedge.py`
    passes with 125 assertions, and 7.0 through 7.5 are `[VERIFIED]`. What remains
    on Theorem 4 is panel 6 (E6) and the `pigouvian_wedge` entry in the theory
    module, which stays absent until the panel exists.
@@ -216,9 +219,12 @@ Section 7 moved from `[DERIVED]` to `[VERIFIED]` on 18 Aug 2026 when the welfare
 page landed with `verify_theorem4_wedge.py`. The upgrade satisfies the standing
 rule: each claim names a certificate that fails loudly and every one has been run.
 Two things are deliberately not upgraded. 7.6 is an **assumption**, not a claim,
-and is flagged as one. E6 stays `[TO BUILD]`: the theory being certified does not
-make the panel exist, and the wedge's own comparative statics are certified in
-closed form only, never measured in a market.
+and is flagged as one. E6 is `[DRY RUN]` as of 19 Aug 2026 and goes no higher:
+it runs in the reference environment, where `m_N` is measured from dynamics but
+the welfare object above it is closed form. The order-flow simulator has no
+aggressiveness choice variable and no welfare object, so there is no route to
+`[MEASURED]` for this panel at any effort, and the theory being certified does
+not make the panel a measurement.
 
 The load-bearing step was Lemma 11. Before it, `d m_N/d a_i` was going to be
 written down as `1/N` by analogy with the commons, which C34 shows is wrong by

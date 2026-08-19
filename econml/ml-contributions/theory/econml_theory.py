@@ -3,10 +3,9 @@
 One module holding every closed form the paper states, so that each experiment
 checks itself against a single source rather than against a reimplementation.
 
-Scope. Theorems 1, 2 and 3 are complete and proved in ../../math/derivations/.
-Theorem 4's welfare page is not derived yet, so only the two of its closed forms
-that the spec states explicitly appear here; `pigouvian_wedge` is deliberately
-absent rather than guessed.
+Scope. Theorems 1, 2 and 3 are complete and proved in ../../math/derivations/,
+and Theorem 4's welfare page in ../../math/04-theorem4-wedge.md. All four are
+certified, so every closed form the paper states appears here.
 
 Conventions.
   - numpy only, CPU only, deterministic. Every function is pure.
@@ -30,7 +29,8 @@ __all__ = [
     "n_c", "rho_star", "mixed_market_jacobian", "mixed_market_radius",
     "is_stable_mixed", "min_corrected", "rho_star_imperfect",
     "critical_efficacy", "substitution_frontier",
-    "stationary_variance", "dV_dm",
+    "stationary_variance", "dV_dm", "marginal_crowding_share",
+    "pigouvian_wedge", "provenance_wedge",
 ]
 
 _PSD_TOL = 1e-9
@@ -335,11 +335,12 @@ def substitution_frontier(N, m_1, kappa, s_grid):
 
 
 # ===========================================================================
-# Theorem 4: the two closed forms the spec states explicitly
+# Theorem 4: the welfare object, the marginal crowding share, and the wedge
 # ===========================================================================
-# `pigouvian_wedge` is intentionally absent. Theorem 4's welfare page is not
-# derived, and the standing rule is that nothing reaches the paper ahead of its
-# derivation. Add it here when ../../math/04-theorem4-wedge.md is complete.
+# The welfare page in ../../math/04-theorem4-wedge.md landed on 18 Aug 2026 and
+# panel 6 landed on 19 Aug 2026, so `pigouvian_wedge` joins the module here. It
+# was held out until both existed, under the standing rule that nothing reaches
+# the paper ahead of its derivation.
 
 def stationary_variance(m_N, sigma):
     """sigma^2 / (1 - m_N^2), the common mode's stationary variance."""
@@ -353,6 +354,55 @@ def dV_dm(m_N, sigma):
     if m_N >= 1:
         return np.inf
     return float(2 * sigma ** 2 * m_N / (1 - m_N ** 2) ** 2)
+
+
+def marginal_crowding_share(R, kappa):
+    """Lemma 11: d m_N/d m_i = N_eff * v_i^2 at the symmetric point.
+
+    Returns the vector of shares, which sums to `N_eff` rather than to 1. That
+    is the whole content of the lemma: the market's total sensitivity to a
+    uniform increase in aggressiveness is amplified by the effective learner
+    count, and the naive `1/N` guess is wrong by exactly that factor.
+    """
+    R = np.asarray(R, dtype=float)
+    N = R.shape[0]
+    B = (1 - kappa) * np.eye(N) + kappa * R
+    w, V = np.linalg.eigh(B)
+    v = V[:, int(np.argmax(w))]
+    return float(np.max(w)) * (v ** 2)
+
+
+def pigouvian_wedge(m_N, N_eff, N, mu_prime, w, chi, sigma=1.0):
+    """Theorem 4: t* = (W - w) V'(m_N) (N_eff/N) mu'(a), with W = chi*N*w.
+
+    The per-unit fee on aggressiveness that makes the private first-order
+    condition coincide with the social one. `chi > 1` is the client-exposure
+    multiplier of (W4); `chi = 1` switches client exposure off and leaves the
+    firm-to-firm channel alone, where the ignored fraction is (N-1)/N.
+
+    Infinite at or beyond the stability boundary, since V' is.
+    """
+    if not (chi >= 1.0):
+        raise ValueError(f"chi must be at least 1 under (W4), got {chi}")
+    if m_N >= 1:
+        return np.inf
+    W_planner = chi * N * w
+    return float((W_planner - w) * dV_dm(m_N, sigma) * (N_eff / N) * mu_prime)
+
+
+def provenance_wedge(m_N, m_1, N, kappa, w, chi, sigma=1.0):
+    """Proposition 12: the same wedge with s as the choice variable.
+
+    t*_s = (W - w) V'(m_N) * m_1 * kappa * (N - 1). The provenance channel is
+    linear in N and does not decay, unlike the aggressiveness channel whose
+    N_eff/N factor tends to kappa from above.
+    """
+    if not (chi >= 1.0):
+        raise ValueError(f"chi must be at least 1 under (W4), got {chi}")
+    if m_N >= 1:
+        return np.inf
+    W_planner = chi * N * w
+    return float((W_planner - w) * dV_dm(m_N, sigma) * m_1 * kappa * (N - 1))
 
 
 # ===========================================================================

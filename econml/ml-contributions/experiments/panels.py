@@ -290,3 +290,200 @@ def panel5_substitution(d=10, kappa=0.8, m_1=0.15, N=20,
         "exact_matches": exact_match,
         "points": len(curve),
     }
+
+
+# ===========================================================================
+# Panel 6: over-adaptation and the Pigouvian wedge
+# ===========================================================================
+# Built 19 Aug 2026, after Theorem 4's welfare page landed. Like every panel
+# above it, this is a DRY RUN: the market's crowding is measured from the
+# reference environment's actual dynamics, and the welfare layer on top of it is
+# closed form. The order-flow simulator has no aggressiveness choice variable
+# and no welfare object, so nothing here is a measurement in a market.
+
+MU0 = 0.02          # mu(a) = MU0 * a, the (W1) parameterisation
+B0 = 0.30           # B(a) = B0 * ln(a), strictly increasing and concave (W2)
+
+
+def _mu(a):
+    return MU0 * a
+
+
+def _dmu(a):
+    return MU0
+
+
+def _dB(a):
+    return B0 / a
+
+
+def _measured_m_N(a, N, d, kappa, s, rng_seed):
+    """m_N at aggressiveness a, measured from the joint map's own dynamics."""
+    mkt = env.supply_chain_market(N, d, kappa, _mu(a), s,
+                                  np.random.default_rng(rng_seed), exact=True)
+    return measured_radius(mkt, steps=260, burn=110,
+                           rng=np.random.default_rng(rng_seed))
+
+
+def _foc(a, N, d, kappa, s, weight, n_eff_pred, rng_seed, sigma=1.0, fee=0.0):
+    """B'(a) - fee - weight * V'(m_N) * (N_eff/N) * mu'(a), with m_N measured."""
+    m_N = _measured_m_N(a, N, d, kappa, s, rng_seed)
+    if m_N >= 1.0:
+        return -np.inf
+    return (_dB(a) - fee
+            - weight * T.dV_dm(m_N, sigma) * (n_eff_pred / N) * _dmu(a))
+
+
+def _solve_foc(N, d, kappa, s, weight, n_eff_pred, rng_seed, iters=44, **kw):
+    """Bisection on a strictly decreasing first-order condition."""
+    hi = (1.0 / (MU0 * n_eff_pred)) * 0.999
+    lo = hi * 1e-6
+    if not (_foc(lo, N, d, kappa, s, weight, n_eff_pred, rng_seed, **kw) > 0
+            > _foc(hi, N, d, kappa, s, weight, n_eff_pred, rng_seed, **kw)):
+        return None
+    for _ in range(iters):
+        mid = 0.5 * (lo + hi)
+        if _foc(mid, N, d, kappa, s, weight, n_eff_pred, rng_seed, **kw) > 0:
+            lo = mid
+        else:
+            hi = mid
+    return 0.5 * (lo + hi)
+
+
+def panel6_over_adaptation(d=8, w=1.0,
+                           grid=((2, 0.8, 1.0, 1.0), (3, 0.8, 1.0, 1.0),
+                                 (5, 0.8, 1.0, 1.0), (8, 0.8, 1.0, 1.0),
+                                 (12, 0.8, 1.0, 1.0), (20, 0.8, 1.0, 1.0),
+                                 (5, 0.4, 1.0, 1.5), (5, 1.0, 1.0, 1.5),
+                                 (5, 0.8, 0.3, 1.5), (5, 0.8, 0.6, 1.5),
+                                 (8, 0.8, 1.0, 1.5), (1, 0.8, 1.0, 1.0))):
+    """Decentralized against socially optimal aggressiveness, plus the wedge.
+
+    Each row solves both first-order conditions with `m_N` read from the
+    realized dynamics rather than from the closed form, so the over-adaptation
+    verdict is a property of the simulated market and not of the algebra. The
+    last row is the degenerate case: one firm bearing its own variance in full,
+    where the wedge is zero and the two problems must coincide.
+    """
+    rows, violations = [], 0
+    for (N, kappa, s, chi) in grid:
+        n_eff_pred = float(T.n_eff_supply_chain(N, s, kappa))
+        seed = SEED + 1000 * N + int(100 * kappa) + int(10 * s)
+        W_planner = chi * N * w
+        a_d = _solve_foc(N, d, kappa, s, w, n_eff_pred, seed)
+        a_s = _solve_foc(N, d, kappa, s, W_planner, n_eff_pred, seed)
+        if a_d is None or a_s is None:
+            continue
+        m_d = _measured_m_N(a_d, N, d, kappa, s, seed)
+        m_s = _measured_m_N(a_s, N, d, kappa, s, seed)
+        fee = T.pigouvian_wedge(m_s, n_eff_pred, N, _dmu(a_s), w, chi)
+        # a firm facing the fee should choose the social optimum
+        a_taxed = _solve_foc(N, d, kappa, s, w, n_eff_pred, seed, fee=fee)
+        expect_gap = (N > 1) or (chi > 1.0)
+        over = a_d > a_s * (1 + 1e-6)
+        if expect_gap != over:
+            violations += 1
+        rows.append({
+            "N": N, "kappa": kappa, "s": s, "chi": chi,
+            "n_eff": n_eff_pred,
+            "a_decentralized": float(a_d),
+            "a_social": float(a_s),
+            "a_taxed": None if a_taxed is None else float(a_taxed),
+            "relative_over_adaptation": float(a_d / a_s - 1.0),
+            "measured_m_N_decentralized": float(m_d),
+            "measured_m_N_social": float(m_s),
+            "predicted_m_N_decentralized": float(_mu(a_d) * n_eff_pred),
+            "wedge_at_social_optimum": float(fee),
+            "over_adapts": bool(over),
+            "expected_to_over_adapt": bool(expect_gap),
+        })
+    interior = [r for r in rows if r["N"] >= 2]
+    fee_errors = [abs(r["a_taxed"] - r["a_social"]) / r["a_social"]
+                  for r in rows if r["a_taxed"] is not None]
+    return {
+        "panel": "6. over-adaptation and the Pigouvian wedge",
+        "tests": "Theorem 4",
+        "status": "DRY RUN. m_N is measured from the reference environment's "
+                  "dynamics; the welfare layer above it is closed form. The "
+                  "order-flow simulator carries no aggressiveness choice "
+                  "variable and no welfare object, so this is not a "
+                  "measurement in a market.",
+        "params": {"d": d, "w": w, "mu_slope": MU0, "benefit_scale": B0},
+        "rows": rows,
+        "over_adaptation_violations": violations,
+        "smallest_relative_gap": (min(r["relative_over_adaptation"]
+                                      for r in interior) if interior else None),
+        "max_fee_implementation_error": (max(fee_errors) if fee_errors else None),
+        "max_m_N_measurement_error": max(
+            abs(r["measured_m_N_decentralized"]
+                - r["predicted_m_N_decentralized"])
+            for r in rows),
+    }
+
+
+def panel6_comparative_statics(d=8, w=1.0, chi=1.5, a=6.0,
+                               N_values=tuple(range(2, 41)),
+                               kappa_values=tuple(np.round(
+                                   np.linspace(0.05, 1.0, 20), 4)),
+                               s_values=tuple(np.round(
+                                   np.linspace(0.05, 1.0, 20), 4))):
+    """The wedge's comparative statics in N, kappa and s, at fixed a.
+
+    Each series holds the other two parameters at a base point and checks the
+    monotonicity Corollary 4.1 states, plus the divergence rate at the boundary.
+    """
+    def wedge(N, kappa, s):
+        ne = float(T.n_eff_supply_chain(N, s, kappa))
+        m_N = _mu(a) * ne
+        return T.pigouvian_wedge(m_N, ne, N, _dmu(a), w, chi), m_N
+
+    series = {}
+    for name, values, build in (
+            ("N", N_values, lambda v: (v, 0.3, 0.5)),
+            ("kappa", kappa_values, lambda v: (8, v, 0.5)),
+            ("s", s_values, lambda v: (8, 0.3, v))):
+        pts = []
+        for v in values:
+            N, kappa, s = build(float(v) if name != "N" else int(v))
+            t, m_N = wedge(N, kappa, s)
+            pts.append({name: float(v), "m_N": float(m_N),
+                        "t_star": float(t) if np.isfinite(t) else None})
+        finite = [p["t_star"] for p in pts if p["t_star"] is not None]
+        series[name] = {
+            "points": pts,
+            "strictly_increasing": all(b > a_ for a_, b in
+                                       zip(finite, finite[1:])),
+        }
+
+    # the divergence rate: t* ~ (1 - m_N)^-2 as the market approaches the edge
+    gaps = np.array([1e-2, 5e-3, 2e-3, 1e-3, 5e-4])
+    ts = []
+    for g in gaps:
+        m_N = 1.0 - g
+        ne = 8.0
+        ts.append(T.pigouvian_wedge(m_N, ne, 8, MU0, w, chi))
+    slope = float(np.polyfit(np.log(gaps), np.log(ts), 1)[0])
+
+    # the provenance channel against the aggressiveness channel
+    provenance = []
+    for N in (2, 5, 10, 20, 40):
+        ne = float(T.n_eff_supply_chain(N, 1.0, 0.8))
+        m_N = _mu(a) * ne
+        if m_N >= 1:
+            continue
+        provenance.append({
+            "N": N,
+            "t_star_aggressiveness": float(
+                T.pigouvian_wedge(m_N, ne, N, _dmu(a), w, chi)),
+            "t_star_provenance": float(
+                T.provenance_wedge(m_N, _mu(a), N, 0.8, w, chi)),
+        })
+    return {
+        "panel": "6b. the wedge's comparative statics",
+        "tests": "Theorem 4, Corollary 4.1 and Proposition 12",
+        "status": "DERIVED, evaluated. Closed form throughout, no dynamics.",
+        "params": {"d": d, "w": w, "chi": chi, "a": a},
+        "series": series,
+        "boundary_log_log_slope": slope,
+        "provenance": provenance,
+    }

@@ -127,6 +127,20 @@ Protected time in the build plan. Nothing else is scheduled against it.
 Decentralized against socially optimal aggressiveness on a small grid, plus the
 wedge's comparative statics in `N`, `kappa` and `s`. Figure 5.
 
+**Built 19 Aug 2026, at `[DRY RUN]`.** `panel6_over_adaptation` solves both
+first-order conditions by bisection with `m_N` read from the reference
+environment's realized dynamics rather than from the closed form, so the
+over-adaptation verdict is a property of the simulated market. 12 configurations,
+zero rows contradicting Corollary 4.2, the fee implementing the social optimum to
+`1.7e-13`, and the degenerate `N = 1` row showing exactly zero gap.
+`panel6b_comparative_statics` evaluates Corollary 4.1 and Proposition 12 in
+closed form.
+
+**It cannot reach `[MEASURED]`.** The order-flow simulator has no aggressiveness
+choice variable and no welfare object, so the panel's welfare layer has no
+counterpart there. This is a different situation from panels 2 to 5, whose
+`[MEASURED]` route existed and was closed by the port gate.
+
 **Cut status:** second in the de-scope order. If cut, Theorem 4 ships as theory
 with no panel, which is acceptable because the theorem is the contribution and
 the panel is the illustration.

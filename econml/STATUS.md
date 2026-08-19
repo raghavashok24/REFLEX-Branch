@@ -49,7 +49,7 @@ consequence.
 | 3, mixed market and herd immunity | `math/derivations/04` | 70 checks |
 | 4, Pigouvian wedge | `math/04-theorem4-wedge.md` | 125 checks |
 
-519 assertions across seven assertion-based files, all passing:
+525 assertions across seven assertion-based files, all passing:
 
 ```bash
 for f in econml/ml-contributions/certificates/verify_*.py; do python "$f" || break; done
@@ -70,9 +70,9 @@ expectation.
 
 | Piece | State |
 |---|---|
-| Theory module, `ml-contributions/theory/` | Theorems 1 to 3 complete, 50 acceptance checks. `pigouvian_wedge` still absent by design, until panel 6 exists |
+| Theory module, `ml-contributions/theory/` | All four theorems complete, 56 acceptance checks. `pigouvian_wedge` joined on 19 Aug 2026 with panel 6 |
 | Heterogeneous-response environment, `ml-contributions/environment/` | 32 acceptance checks, reduction verified |
-| Panel harness, `ml-contributions/experiments/` | panels 1 to 5, exits nonzero on disagreement |
+| Panel harness, `ml-contributions/experiments/` | panels 1 to 6, exits nonzero on disagreement |
 | Simulator port, `experiments/hetero_simulator_port.py` | **exact at the reduction; step-3 gate failed and the workstream is closed.** No panel imports it |
 
 ### Panels, as dry runs only
@@ -85,8 +85,9 @@ expectation.
 | 3, cadence frontier | 175 cells, zero disagreements |
 | 4, herd immunity | `12 / 14 / 16 / 20` firms at efficacy `1.00 / 0.90 / 0.75 / 0.60` |
 | 5, substitution frontier | 18 of 18 points exact |
+| 6, over-adaptation | 12 configurations, zero contradictions of Corollary 4.2, smallest gap `0.290` |
 
-**Panels 2 to 5 are not measurements.** They run in the linearized reference
+**Panels 2 to 6 are not measurements.** They run in the linearized reference
 environment, which has no informed flow, no spread and no inventory. They
 establish that the closed forms govern realized dynamics and they fix every
 figure's shape. They establish nothing about a market. The ledger tracks them at
@@ -174,20 +175,25 @@ the gate outcome as a limitation. The port code is left as it stands, exact at
 the reduction and unused by any panel, so a journal version can resume from the
 design document rather than from scratch.
 
-**2. ~~Theorem 4's welfare page.~~ Done, 18 Aug 2026.** The welfare page is
+**2. ~~Theorem 4's welfare page, then panel 6.~~ Both done, 18 and 19 Aug 2026.** The welfare page is
 written in `math/04-theorem4-wedge.md`: the AR(1) welfare object with its sign
 convention certified, Lemma 11 giving the marginal crowding share
 `d m_N/d m_i = N_eff v_i^2`, both first-order conditions, the wedge, its
 comparative statics, and over-adaptation for every `N >= 2`. Ledger claims 7.0 to
 7.5 are `[VERIFIED]`; `verify_theorem4_wedge.py` passes with 125 assertions.
 
-What remains on Theorem 4 is **panel 6 only**, which is second in the de-scope
-order. `pigouvian_wedge` stays deliberately absent from the theory module, with a
-test asserting its absence, so nothing can be measured ahead of its experiment.
+Panel 6 followed on 19 Aug 2026 and ships at `[DRY RUN]`: 12 configurations,
+zero rows contradicting Corollary 4.2, the fee implementing the social optimum
+to `1.7e-13`, and the boundary divergence rate fitted at `-2.0000`. It goes no
+higher than `[DRY RUN]` and there is no route by which it could: the order-flow
+simulator carries no aggressiveness choice variable and no welfare object, so a
+`[MEASURED]` version of this panel does not exist to be built. `pigouvian_wedge`
+joined the theory module with the panel, and the test that asserted its absence
+is replaced by acceptance tests on the function.
 
-**3. Five unwritten sections.** 6 Result 3, 7 Result 4, 8 supervision, 9
-experiments, 10 limitations and conclusion. Sections 2 and 3 are drafted. Section
-6 is the paper and is replanned but undrafted.
+**3. Four unwritten sections.** 7 Result 4, 8 supervision, 9 experiments, 10
+limitations and conclusion, plus the abstract's rewrite. Sections 1 to 6 are
+drafted, Section 6 included.
 
 ### Known open items, none blocking
 

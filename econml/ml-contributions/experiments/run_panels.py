@@ -193,6 +193,70 @@ ax.legend(fontsize=7); ax.set_ylim(-0.02, 1.0); fig.tight_layout()
 fig.savefig(FIGURES / "panel5_substitution.png", dpi=150); plt.close(fig)
 
 
+
+# ------------------------------------------------------------------ panel 6
+
+print("\npanel 6: over-adaptation and the Pigouvian wedge")
+p6 = panels.panel6_over_adaptation()
+save("panel6_over_adaptation", p6)
+for r in p6["rows"]:
+    print(f"  N={r['N']:>2} kappa={r['kappa']} s={r['s']} chi={r['chi']}  "
+          f"a_d {r['a_decentralized']:.4f}  a_s {r['a_social']:.4f}  "
+          f"over-adaptation {100 * r['relative_over_adaptation']:.1f}%")
+if p6["over_adaptation_violations"]:
+    note(f"panel 6 has {p6['over_adaptation_violations']} rows whose "
+         f"over-adaptation verdict contradicts Corollary 4.2")
+if p6["max_fee_implementation_error"] > 1e-6:
+    note(f"panel 6 fee does not implement the optimum, error "
+         f"{p6['max_fee_implementation_error']:.2e}")
+if p6["max_m_N_measurement_error"] > TOL:
+    note(f"panel 6 measured m_N departs from the closed form by "
+         f"{p6['max_m_N_measurement_error']:.2e}")
+print(f"  smallest relative gap {p6['smallest_relative_gap']:.4f} at N = 2; "
+      f"zero at N = 1 with no client exposure, as Corollary 4.2 requires")
+print(f"  the fee implements the social optimum to "
+      f"{p6['max_fee_implementation_error']:.1e}")
+
+p6b = panels.panel6_comparative_statics()
+save("panel6b_comparative_statics", p6b)
+for name, ser in p6b["series"].items():
+    print(f"  t* strictly increasing in {name}: {ser['strictly_increasing']}")
+    if not ser["strictly_increasing"]:
+        note(f"panel 6b: t* is not strictly increasing in {name}")
+print(f"  boundary divergence rate, log-log slope "
+      f"{p6b['boundary_log_log_slope']:.4f} against a predicted -2")
+if abs(p6b["boundary_log_log_slope"] + 2.0) > 1e-3:
+    note(f"panel 6b divergence rate {p6b['boundary_log_log_slope']:.4f}, "
+         f"predicted -2")
+
+fig, axes = plt.subplots(1, 2, figsize=(8.4, 3.6))
+ax = axes[0]
+sym = [r for r in p6["rows"] if r["chi"] == 1.0 and r["s"] == 1.0
+       and r["kappa"] == 0.8]
+Ns6 = [r["N"] for r in sym]
+ax.plot(Ns6, [r["a_decentralized"] for r in sym], "o-", ms=5,
+        label="decentralized $a_d$")
+ax.plot(Ns6, [r["a_social"] for r in sym], "s-", ms=5,
+        label="socially optimal $a_s$")
+ax.fill_between(Ns6, [r["a_social"] for r in sym],
+                [r["a_decentralized"] for r in sym], alpha=0.15,
+                color="tab:red", label="over-adaptation")
+ax.set_xlabel("firms $N$"); ax.set_ylabel("aggressiveness $a$")
+ax.set_title("Panel 6: over-adaptation ($\\chi$ = 1, $s$ = 1)", fontsize=10)
+ax.legend(fontsize=8)
+
+ax = axes[1]
+ser = p6b["series"]["N"]
+xs6 = [p["N"] for p in ser["points"] if p["t_star"] is not None]
+ys6 = [p["t_star"] for p in ser["points"] if p["t_star"] is not None]
+ax.semilogy(xs6, ys6, "-", lw=2, label="$t^*$ in $N$")
+ax.set_xlabel("firms $N$"); ax.set_ylabel("$t^*$ (log scale)")
+ax.set_title("The wedge's comparative statics", fontsize=10)
+ax.legend(fontsize=8)
+fig.tight_layout(); fig.savefig(FIGURES / "panel6_over_adaptation.png", dpi=150)
+plt.close(fig)
+
+
 # ---------------------------------------------------------------- summary
 
 print("\n" + "=" * 68)
