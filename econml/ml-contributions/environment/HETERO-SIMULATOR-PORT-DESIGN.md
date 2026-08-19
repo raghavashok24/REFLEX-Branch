@@ -238,6 +238,83 @@ The next session's brief. Each item depends on the ones above it.
 5. **Ledger.** No status moves before step 4 produces a run. A passing reduction
    test is not a measurement.
 
+## Step 3, measured: the gate, and it does not open
+
+**Run 18 Aug 2026**, `../experiments/hetero_channel_residual.py`, results in
+`../experiments/results/hetero_channel_residual.json`. Step 1 was decided in
+favour of keeping `n_bonds = 8` and `n_sectors = 2` and sweeping with free
+profiles, since panel 1's anchor does not transfer across a changed
+`BondUniverse` and panel 1 is never cut. Step 2 built two exact constructors:
+`supply_chain_profiles`, which realizes `(1-s)I + s 1 1'` to machine precision
+with nonnegative weights and reaches both the monoculture and the orthogonal
+corner exactly, and `profiles_for_R`, the general projected-gradient version.
+
+**The port itself is exact.** At flat profiles it reproduces the *unmodified*
+base simulator's measured modulus at every `N` from 1 to 6, not only at the
+published 1, 2 and 3. Nothing below is a port artifact.
+
+The sweep, at `kappa = 1`, against the closed form `m_1 * N_eff` at the measured
+alignment:
+
+| `N` | `s` | predicted | measured | gap |
+|---|---|---|---|---|
+| 2 | `1.00` | `1.5712` | `1.3692` | `-12.86%` |
+| 2 | `0.75` | `1.3748` | `1.2257` | `-10.85%` |
+| 2 | `0.50` | `1.1784` | `1.0860` | `-7.84%` |
+| 2 | `0.25` | `0.9820` | `0.9521` | `-3.05%` |
+| 2 | `0.00` | `0.7856` | `0.8237` | `+4.85%` |
+| 4 | `1.00` | `3.1424` | `6.1309` | `+95.10%` |
+| 4 | `0.50` | `1.9640` | `2.8886` | `+47.08%` |
+| 4 | `0.00` | `0.7856` | `1.0254` | `+30.52%` |
+
+**Read the `s = 1` row first.** At `s = 1` the profiles are flat and the port is
+the base market, so that row is not a channel residual at all: it is the base
+market's own departure from the linearization. The residual the design predicted
+is therefore the *change* in the gap along a row, not the gap itself.
+
+**At `N = 2` the prediction holds and the residual is about 18 points.** The gap
+moves monotonically from `-12.86%` at the monoculture to `+4.85%` at
+orthogonality, a swing of `17.7` percentage points, and it crosses zero. The
+sign is what the design argued: as the profiles separate, the closed form stops
+seeing coupling that the liquidity and price-impact channels still carry, so the
+measured modulus rises relative to the prediction until it sits above it. At
+full orthogonality the closed form predicts no amplification whatsoever and the
+market still delivers `+4.85%`. That is the shared-channel residual, isolated,
+and it is not small.
+
+**At `N = 4` the reference is broken before heterogeneity enters.** The
+monoculture gap is `+95.10%`, measured against the base market itself. Beyond
+`N = 4` the probe reports its best response pinned at a spread bound, so the
+measured modulus is not a local slope at all. The market at `N = 4` has
+`m_N = 6.13`, far outside the regime where a finite-difference probe at
+`delta = 0.25 h_ref` measures a linearization of anything.
+
+### What this means for the panels, stated plainly
+
+**The panels are not interpretable in this simulator as planned, and no figure
+should be drawn from it.** Panel 2 sweeps `(N, s)` over 48 cells, panel 4 runs at
+`N = 20`, and panel 5's frontier is stated at `N = 20`. Every one of those sits
+at an `N` where this configuration's probe is not measuring a slope. Even at
+`N = 2`, where it is, the shared-channel residual reaches `17.7` points across
+the separation range, which is larger than several of the effects the panels are
+supposed to resolve.
+
+Two possible repairs, neither attempted here and neither cheap:
+
+1. **Route the liquidity and impact channels through the profiles too**, so the
+   second coupling channel carries `R` rather than `1 1'`. This is a larger edit
+   than the one the port makes and it changes the market at `u = 1` as well,
+   which would cost the bit-for-bit anchor unless done with the same care.
+2. **Find a configuration whose probe stays local at the `N` the panels need.**
+   The `f_probe = 0.5` interior-probe gain keeps the best response interior at
+   `N <= 4` but not the modulus small, and `N = 20` at any gain that keeps
+   `m_N` near 1 is a different market from the one panel 1 anchors.
+
+The gate exists so that this is a recorded negative result instead of a figure.
+Panels 2, 2b, 4 and 5 stay `[DRY RUN]`, which is exactly the status they had
+before the port ran, and the paper presents them as closed-form predictions with
+reference-environment agreement stated as such.
+
 ## Status
 
 Nothing here upgrades any claim. Panels 2, 2b, 4 and 5 remain `[DRY RUN]` in

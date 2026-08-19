@@ -131,7 +131,7 @@ requires the order-flow simulator, does that.
 | # | Panel | Status |
 |---|---|---|
 | E1 | Amplification replication | **`[MEASURED]`**. Reproduced bit for bit in the order-flow simulator: `1.7428x` and `3.1567x`, relative error `0.00e+00` |
-| E2 | `(N, s)` phase diagram | `[DRY RUN]`, 48 cells, max error `7.1e-15` |
+| E2 | `(N, s)` phase diagram | `[DRY RUN]`, 48 cells, max error `7.1e-15`. **Port gate failed, see below: stays `[DRY RUN]`** |
 | E2b | Clustered companion | `[DRY RUN]`, measured `m_N` `1.30` against the mean index's `0.74` |
 | E3 | Crowding-cadence frontier | `[DRY RUN]`, 175 cells, zero disagreements |
 | E4 | Herd immunity | `[DRY RUN]`, thresholds `12 / 14 / 16 / 20` firms across efficacy |
@@ -141,7 +141,7 @@ requires the order-flow simulator, does that.
 | # | Claim | Status | Evidence |
 |---|---|---|---|
 | E1.1 | Measured amplification `1.74x` at `N=2` and `3.16x` at `N=3` | `[MEASURED]` | `reflex_anchor.py`, reproduced bit for bit from the base project's paper-grade run |
-| E1.2 | The measured market falls `12.9%` and `5.2%` short of the linear prediction | `[MEASURED]` | Nonlinearity and flow saturation. **State this in the body; it is content, not error** |
+| E1.2 | The measured market departs from the linear prediction **with both signs**: `-12.9%` at `N=2` and `+5.2%` at `N=3` | `[MEASURED]` | `panel1_external_anchor.json`. **Corrected 18 Aug 2026:** the previous wording called both a shortfall, and the `N=3` figure is an overshoot. State this in the body; it is content, not error, and the two-signed departure is the point |
 | E1.3 | The differential mode is dead at `kappa = 1`, measuring `3.4e-03` against a theoretical `0` | `[MEASURED]` | Instability is purely common-mode, which is what Theorem 1 generalizes |
 | E4.1 | The imperfect-correction law predicts the threshold at `kappa = 0.8`, where it is not proved exact | `[DRY RUN]` | panel 4, 4 of 4 thresholds. **Evidence, not a proof** |
 
@@ -160,7 +160,17 @@ requires the order-flow simulator, does that.
    passes with 125 assertions, and 7.0 through 7.5 are `[VERIFIED]`. What remains
    on Theorem 4 is panel 6 (E6) and the `pigouvian_wedge` entry in the theory
    module, which stays absent until the panel exists.
-4. Every panel still short of `[MEASURED]`. Panels 1 to 5 sit at `[DRY RUN]`.
+4. Every panel still short of `[MEASURED]`. Panels 2 to 5 sit at `[DRY RUN]`, and
+   **after the port's step-3 gate ran on 18 Aug 2026 they are expected to stay
+   there for this submission.** The gate measured the residual from the still-
+   shared liquidity and price-impact channels and it is not small: `17.7`
+   percentage points across the separation range at `N = 2`, and at `N >= 4` the
+   simulator's finite-difference probe is no longer measuring a local slope at
+   all (`+95%` against the closed form at `N = 4`, best response pinned at a
+   bound from `N = 5`). Details in
+   `../ml-contributions/environment/HETERO-SIMULATOR-PORT-DESIGN.md`, "Step 3,
+   measured". No figure was drawn and no status moved, which is what the gate is
+   for.
 
 On that last one: a passing dry run is progress on the derivations and no
 progress at all on the empirics. Until a panel runs in the order-flow simulator

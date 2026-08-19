@@ -121,6 +121,108 @@ def flat_profiles(n_dealers, n_bonds):
     return np.ones((int(n_dealers), int(n_bonds)), dtype=float)
 
 
+def supply_chain_profiles(n_bonds, n_dealers, s):
+    """Nonnegative profiles whose measured alignment is exactly (1-s)I + s 11'.
+
+    This is the free-profile constructor the design document asks for, in the
+    one case the paper actually sweeps. Partition the universe into `n_dealers`
+    groups and write each dealer's unit direction as
+
+        x_i  =  a * g  +  b * e_i ,
+
+    with `g` the uniform direction over the whole universe and `e_i` the unit
+    indicator of dealer `i`'s own group. Because the groups are disjoint,
+    <e_i, e_j> = 0, so <x_i, x_j> = a^2 + 2 a b c with c = <g, e_i>, and
+    ||x_i||^2 = a^2 + b^2 + 2 a b c. Solving both for a target off-diagonal `s`
+    gives, with equal groups so that c = 1/sqrt(n_dealers),
+
+        b = sqrt(1 - s) ,   a = -p + sqrt(p^2 + s) ,   p = sqrt((1-s)/n_dealers) .
+
+    Both are nonnegative, and `g` and `e_i` are entrywise nonnegative, so the
+    profile is a legal coverage weight. Nonnegativity is the constraint the
+    linearized environment does not have and it is what bounds the reachable
+    set; here it costs nothing, because the construction lands inside it for
+    every `s` in [0, 1].
+
+    The corners are exact rather than approximate. At `s = 1`, `b = 0` and
+    `a = 1`, so every dealer is the uniform profile and R = 1 1', which is the
+    monoculture the anchor is measured at. At `s = 0`, `a = 0` and `b = 1`, so
+    the dealers are disjoint indicators and R = I, the orthogonal corner of
+    claim 4.3, which the sector-tilt constructor cannot reach at all because the
+    global factor floors the overlap.
+
+    Requires `n_dealers` to divide `n_bonds`, which is what makes the groups
+    equal and the realized alignment exactly exchangeable. That matters for more
+    than tidiness: the base project's in-phase probe measures the Rayleigh
+    quotient along the uniform direction, which equals the spectral radius only
+    when the uniform direction is the leading eigenvector, and exchangeability
+    is what guarantees it is. Use `profiles_for_R` for anything else, and read
+    the measured alignment back before quoting a prediction.
+    """
+    n_bonds, n_dealers = int(n_bonds), int(n_dealers)
+    s = float(s)
+    if not 0.0 <= s <= 1.0:
+        raise ValueError(f"s must lie in [0, 1], got {s}")
+    if n_dealers < 1 or n_bonds % n_dealers:
+        raise ValueError(
+            f"n_dealers = {n_dealers} must divide n_bonds = {n_bonds} so the "
+            "groups are equal and the realized alignment is exchangeable; use "
+            "profiles_for_R otherwise")
+
+    size = n_bonds // n_dealers
+    g = np.ones(n_bonds) / np.sqrt(n_bonds)
+    p = np.sqrt((1.0 - s) / n_dealers)
+    a = -p + np.sqrt(p * p + s)
+    b = np.sqrt(1.0 - s)
+
+    X = np.empty((n_dealers, n_bonds), dtype=float)
+    for i in range(n_dealers):
+        e = np.zeros(n_bonds)
+        e[i * size:(i + 1) * size] = 1.0 / np.sqrt(size)
+        X[i] = a * g + b * e
+    if np.any(X < -1e-15):
+        raise ValueError("construction produced a negative coverage weight")
+    return normalize_profiles(np.clip(X, 0.0, None))
+
+
+def profiles_for_R(R, n_bonds, seed=0, iters=4000, step=0.25):
+    """Nonnegative profiles whose measured alignment approximates `R`.
+
+    The general constructor, by projected gradient on the unit directions
+    `x_i = v_i / ||v_i||` with `v_i >= 0`. Returns the profiles; the caller is
+    expected to read the alignment back with `profile_alignment` and check the
+    achieved error rather than trusting the target, which is the same discipline
+    `hetero_response_env.py` enforces.
+
+    Nonnegativity means not every `R` is reachable. A target with negative
+    off-diagonal entries is not attainable at all, since a Gram matrix of
+    nonnegative vectors has nonnegative entries, and the residual this function
+    reports is the honest statement of how far the projection landed.
+    """
+    R = np.asarray(R, dtype=float)
+    N = R.shape[0]
+    rng = np.random.default_rng(seed)
+    Vm = rng.random((N, int(n_bonds))) + 0.1
+
+    for _ in range(int(iters)):
+        norms = np.linalg.norm(Vm, axis=1, keepdims=True)
+        X = Vm / norms
+        G = X @ X.T
+        E = G - R
+        np.fill_diagonal(E, 0.0)
+        # d<x_i,x_j>/dv_i = (x_j - <x_i,x_j> x_i) / ||v_i||
+        grad = np.zeros_like(Vm)
+        for i in range(N):
+            for j in range(N):
+                if i == j:
+                    continue
+                grad[i] += 4.0 * E[i, j] * (X[j] - G[i, j] * X[i]) / norms[i, 0]
+        Vm = np.clip(Vm - step * grad, 0.0, None)
+        if not np.all(np.linalg.norm(Vm, axis=1) > 1e-9):
+            raise RuntimeError("a profile collapsed to zero during projection")
+    return normalize_profiles(Vm)
+
+
 def sector_profiles(sector, n_dealers, tilt, assignment=None):
     """Dealers specialized by sector exposure, from the universe's own sectors.
 

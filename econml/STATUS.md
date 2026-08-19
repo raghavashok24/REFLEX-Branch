@@ -101,8 +101,8 @@ error `0.00e+00`:
 | `N` | measured `m_N` | amplification | linear prediction | gap |
 |---|---|---|---|---|
 | 1 | `0.785600` | `1.0000` | `1` | |
-| 2 | `1.369162` | `1.7428` | `2` | `12.9%` |
-| 3 | `2.479927` | `3.1567` | `3` | `5.2%` |
+| 2 | `1.369162` | `1.7428` | `2` | `-12.9%` |
+| 3 | `2.479927` | `3.1567` | `3` | `+5.2%` |
 
 Differential mode `3.4e-03` against a theoretical `0`, so instability is purely
 common-mode, which is the mechanism Theorem 1 generalizes.
@@ -113,7 +113,11 @@ read-only throughout and the script skips cleanly when it is absent.
 
 **The gap to the linear prediction is content, not error**, and the body should
 say so: the prediction is a linearization and the market is nonlinear with
-saturating flow. The reference environment reproduces the prediction exactly
+saturating flow. Note the two gaps have **opposite signs**, `-12.9%` at `N = 2`
+and `+5.2%` at `N = 3`. An earlier version of the ledger called both a
+shortfall; corrected 18 Aug 2026. A two-signed departure is what a nonlinear
+market does around a linearization, and it is a better argument for the
+reference environment than a one-signed one would be. The reference environment reproduces the prediction exactly
 because it omits both, which is the clearest available argument for why the
 remaining panels need the simulator.
 
@@ -159,8 +163,9 @@ skeleton in `experiments/hetero_simulator_port.py` implements it and passes its
 one acceptance test: at flat profiles it reproduces panel 1's published anchors
 bit for bit, relative error `0.00e+00` at `N = 1, 2, 3`.
 
-**No heterogeneous sweep has been run**, nothing is wired into `panels.py`, and
-no claim changed status. What remains is the sweep itself, the second coupling
+**Superseded 18 Aug 2026, see the gate result below.** The heterogeneous sweep
+has now been run, nothing is wired into `panels.py`, and no claim changed
+status. What remains is the sweep itself, the second coupling
 channel the design document flags (liquidity and price impact stay shared no
 matter what the profiles are), and the universe-size question, since the default
 config has only 8 bonds and 2 sectors and a larger universe would invalidate the
@@ -196,7 +201,7 @@ two-block collapse.
 
 | Risk | Severity | State |
 |---|---|---|
-| Heterogeneous-response port does not land in time | **high** | Design fixed and the skeleton reduces exactly to the base market. The sweep itself is not built, so the risk stands. Would cost panels 2 to 5 and leave a theory paper with one measured anchor |
+| Heterogeneous-response port does not land in time | **realized** | Steps 1 to 3 ran on 18 Aug 2026. The port is exact, reproducing the unmodified base at every `N` from 1 to 6, and both profile constructors hit their targets to machine precision. **The gate then failed:** the still-shared liquidity and impact channels leave a `17.7` point residual at `N = 2`, and at `N >= 4` the probe is not measuring a local slope. Panels 2 to 5 stay `[DRY RUN]`. This is the fallback the plan named, not a surprise |
 | ~~Theorem 4 stays a sketch~~ | **closed** | Welfare page landed 18 Aug 2026 with 125 passing assertions. Only panel 6 is at risk now, and Theorem 4 ships as theory if it is cut |
 | Section 6 drafting slips | medium | It is the paper. Replanned, so the drafting is transcription rather than design |
 | A referee asks for fully heterogeneous agents | low | Answered as future work with the machinery stated to extend |

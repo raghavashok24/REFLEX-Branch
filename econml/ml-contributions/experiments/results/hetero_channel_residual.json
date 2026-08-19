@@ -1,0 +1,223 @@
+{
+  "panel": "port step 3: residual from the still-shared liquidity and price-impact channels",
+  "status": "NOT A PANEL AND NOT A CLAIM. This is the gate the port design puts in front of every heterogeneous panel. No ledger entry changes status on the strength of it.",
+  "base_project": "C:\\Users\\nrvig\\GitHub Projects\\REFLEX",
+  "protocol": {
+    "kappa": 1.0,
+    "probe_feedback": 0.5,
+    "h_ref": 1.0,
+    "seed": 0,
+    "episodes": 8
+  },
+  "universe": {
+    "n_bonds": 8,
+    "decision": "kept at 8 rather than enlarged, so panel 1's anchor still transfers"
+  },
+  "m_1_reference": 0.785600462590498,
+  "rows": [
+    {
+      "N": 2,
+      "s": 1.0,
+      "alignment_construction_error": 0.0,
+      "lambda_max": 2.0,
+      "n_eff": 2.0,
+      "m_1_reference": 0.785600462590498,
+      "predicted_m_N": 1.571200925180996,
+      "measured_m_N": 1.3691618268039063,
+      "relative_gap": -0.12858896347315707,
+      "measured_differential": 0.003439768414600586,
+      "br_clipped": false
+    },
+    {
+      "N": 2,
+      "s": 0.9,
+      "alignment_construction_error": 1.1102230246251565e-16,
+      "lambda_max": 1.9000000000000001,
+      "n_eff": 1.9000000000000001,
+      "m_1_reference": 0.785600462590498,
+      "predicted_m_N": 1.4926408789219463,
+      "measured_m_N": 1.3126739569702828,
+      "relative_gap": -0.12056947152729992,
+      "measured_differential": 0.03262106870122494,
+      "br_clipped": false
+    },
+    {
+      "N": 2,
+      "s": 0.75,
+      "alignment_construction_error": 1.1102230246251565e-16,
+      "lambda_max": 1.75,
+      "n_eff": 1.75,
+      "m_1_reference": 0.785600462590498,
+      "predicted_m_N": 1.3748008095333715,
+      "measured_m_N": 1.2256569945623257,
+      "relative_gap": -0.1084839446826246,
+      "measured_differential": 0.07441151719787698,
+      "br_clipped": false
+    },
+    {
+      "N": 2,
+      "s": 0.5,
+      "alignment_construction_error": 2.220446049250313e-16,
+      "lambda_max": 1.5000000000000002,
+      "n_eff": 1.5000000000000002,
+      "m_1_reference": 0.785600462590498,
+      "predicted_m_N": 1.1784006938857472,
+      "measured_m_N": 1.0859965474334041,
+      "relative_gap": -0.07841487783552017,
+      "measured_differential": 0.14288373078022865,
+      "br_clipped": false
+    },
+    {
+      "N": 2,
+      "s": 0.25,
+      "alignment_construction_error": 2.220446049250313e-16,
+      "lambda_max": 1.2500000000000004,
+      "n_eff": 1.2500000000000004,
+      "m_1_reference": 0.785600462590498,
+      "predicted_m_N": 0.9820005782381228,
+      "measured_m_N": 0.9520901089021896,
+      "relative_gap": -0.030458708476116914,
+      "measured_differential": 0.20882663537938262,
+      "br_clipped": false
+    },
+    {
+      "N": 2,
+      "s": 0.0,
+      "alignment_construction_error": 2.220446049250313e-16,
+      "lambda_max": 1.0000000000000002,
+      "n_eff": 1.0000000000000002,
+      "m_1_reference": 0.785600462590498,
+      "predicted_m_N": 0.7856004625904982,
+      "measured_m_N": 0.8237310432402891,
+      "relative_gap": 0.048536861248854486,
+      "measured_differential": 0.27207719908080863,
+      "br_clipped": false
+    },
+    {
+      "N": 4,
+      "s": 1.0,
+      "alignment_construction_error": 0.0,
+      "lambda_max": 3.999999999999999,
+      "n_eff": 3.999999999999999,
+      "m_1_reference": 0.785600462590498,
+      "predicted_m_N": 3.142401850361991,
+      "measured_m_N": 6.130918970815743,
+      "relative_gap": 0.9510295827089993,
+      "measured_differential": 0.0034314115701983283,
+      "br_clipped": false
+    },
+    {
+      "N": 4,
+      "s": 0.9,
+      "alignment_construction_error": 3.3306690738754696e-16,
+      "lambda_max": 3.7000000000000015,
+      "n_eff": 3.7000000000000015,
+      "m_1_reference": 0.785600462590498,
+      "predicted_m_N": 2.9067217115848436,
+      "measured_m_N": 5.484994119040374,
+      "relative_gap": 0.887003526061588,
+      "measured_differential": 0.060737305146280285,
+      "br_clipped": false
+    },
+    {
+      "N": 4,
+      "s": 0.75,
+      "alignment_construction_error": 2.220446049250313e-16,
+      "lambda_max": 3.25,
+      "n_eff": 3.25,
+      "m_1_reference": 0.785600462590498,
+      "predicted_m_N": 2.5532015034191184,
+      "measured_m_N": 4.422117400106158,
+      "relative_gap": 0.7319891885479003,
+      "measured_differential": 0.09416635650879446,
+      "br_clipped": false
+    },
+    {
+      "N": 4,
+      "s": 0.5,
+      "alignment_construction_error": 5.551115123125783e-17,
+      "lambda_max": 2.5,
+      "n_eff": 2.5,
+      "m_1_reference": 0.785600462590498,
+      "predicted_m_N": 1.964001156476245,
+      "measured_m_N": 2.8885666544607895,
+      "relative_gap": 0.4707560863372269,
+      "measured_differential": 0.15821464694376264,
+      "br_clipped": false
+    },
+    {
+      "N": 4,
+      "s": 0.25,
+      "alignment_construction_error": 2.220446049250313e-16,
+      "lambda_max": 1.7500000000000013,
+      "n_eff": 1.7500000000000013,
+      "m_1_reference": 0.785600462590498,
+      "predicted_m_N": 1.3748008095333726,
+      "measured_m_N": 1.742591001568659,
+      "relative_gap": 0.2675225308894892,
+      "measured_differential": 0.22724783455968556,
+      "br_clipped": false
+    },
+    {
+      "N": 4,
+      "s": 0.0,
+      "alignment_construction_error": 0.0,
+      "lambda_max": 1.0,
+      "n_eff": 1.0,
+      "m_1_reference": 0.785600462590498,
+      "predicted_m_N": 0.785600462590498,
+      "measured_m_N": 1.0253587131593624,
+      "relative_gap": 0.3051910761079081,
+      "measured_differential": 0.2739985328435801,
+      "br_clipped": false
+    }
+  ],
+  "summary": {
+    "2": {
+      "gap_at_monoculture": -0.12858896347315707,
+      "gap_at_orthogonal": 0.048536861248854486,
+      "max_abs_gap": 0.12858896347315707,
+      "monotone_in_separation": true,
+      "s_grid": [
+        1.0,
+        0.9,
+        0.75,
+        0.5,
+        0.25,
+        0.0
+      ],
+      "gaps": [
+        -0.12858896347315707,
+        -0.12056947152729992,
+        -0.1084839446826246,
+        -0.07841487783552017,
+        -0.030458708476116914,
+        0.048536861248854486
+      ]
+    },
+    "4": {
+      "gap_at_monoculture": 0.9510295827089993,
+      "gap_at_orthogonal": 0.3051910761079081,
+      "max_abs_gap": 0.9510295827089993,
+      "monotone_in_separation": false,
+      "s_grid": [
+        1.0,
+        0.9,
+        0.75,
+        0.5,
+        0.25,
+        0.0
+      ],
+      "gaps": [
+        0.9510295827089993,
+        0.887003526061588,
+        0.7319891885479003,
+        0.4707560863372269,
+        0.2675225308894892,
+        0.3051910761079081
+      ]
+    }
+  },
+  "monoculture_control_reproduces_anchor": true,
+  "largest_residual": 0.9510295827089993
+}
