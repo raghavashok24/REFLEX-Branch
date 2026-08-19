@@ -102,8 +102,10 @@ source.
 **Identity in the prose:**
 
 - [ ] Simulator described generically with an anonymized-artifact promise
-- [ ] REFLEX and PEBSA cited as ordinary third-party references, with full
-      bibliographic detail
+- [x] REFLEX and PEBSA cited as ordinary third-party references, authors
+      included. Verified against Crossref and the arXiv API, 19 Aug 2026. The
+      shared author name is deliberate: an author-less entry is the more
+      revealing artifact
 - [ ] **No sentence positions either as the authors' own work.** No "our earlier
       framework", no "we previously showed", no "building on our REFLEX".
       Grep the source for "our" and check each hit

@@ -216,8 +216,8 @@ strategically manipulate. Cited in one sentence to place P2's setting: the
 response here is aggregate and non-strategic, so the externality is a
 coordination failure rather than a game against the classifier.
 
-**B13. REFLEX (*Reflexive Equilibrium Fixed-point Learning for Endogenous
-eXchanges*), arXiv:2608.16155, 2026.** [V1]
+**B13. Nagarajan, Ashok. "REFLEX: Reflexive Equilibrium Fixed-point Learning
+for Endogenous eXchanges." arXiv:2608.16155, 2026.** [V1]
 **The direct base, and the largest overlap surface in this review.** It
 instantiates B1's framework in a structural OTC market-making model where every
 constant is computed from microstructure primitives rather than fitted, and
@@ -386,8 +386,9 @@ weights, and it obtains even when firms never observe each other. Same
 destination, different mechanism, and conflating them would be a real error. One
 sentence, drawing the distinction.
 
-**D9. PEBSA (*Predicting Economic Behavior via Sentiment Analysis*), IJECS
-13(12), 2024.** [V1]
+**D9. Nagarajan, Mittal. "PEBSA: Predicting Economic Behavior via Sentiment
+Analysis." International Journal of Engineering and Computer Science
+13(12):26656-26676, 2024.** [V1]
 Cited once, in Section 8, and for the contrast rather than for a shared method.
 It belongs to the same broad question that section asks, which is what can be
 inferred about the state of an economy from aggregate public signals no single
@@ -723,7 +724,7 @@ prerequisite for the novelty section, not as a nice-to-have.
 | `2508.20225__barzykin-adverse-selection-price-reading.pdf` | market model | instantiation |
 
 **The two base papers, tagged [V1] but not in `pdfs/`:** REFLEX (B13,
-arXiv:2608.16155) and PEBSA (D9, IJECS 13(12), 2024). Both are held directly
+arXiv:2608.16155) and PEBSA (D9, IJECS 13(12):26656-26676, 2024). Both are held directly
 rather than fetched, both are public at submission time, and both are cited as
 ordinary third-party references under double-blind.
 

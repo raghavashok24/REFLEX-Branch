@@ -12,6 +12,7 @@ import pathlib
 
 import matplotlib
 matplotlib.use("Agg")
+import matplotlib.patches
 import matplotlib.pyplot as plt                               # noqa: E402
 import numpy as np                                            # noqa: E402
 
@@ -70,7 +71,14 @@ if ok:
             label=r"predicted $K_{\max}$")
 ax.set_xlabel(r"cadence $K$")
 ax.set_ylabel(r"shared-model fraction $s$")
-ax.legend(loc="upper right", framealpha=0.9)
+# name the two colours, which otherwise carry the panel's whole verdict unlabelled
+cmap = matplotlib.colormaps["RdYlBu"]
+handles = [matplotlib.patches.Patch(facecolor=cmap(1.0), edgecolor="0.4",
+                                    label="measured stable"),
+           matplotlib.patches.Patch(facecolor=cmap(0.0), edgecolor="0.4",
+                                    label="measured unstable")]
+ax.legend(handles=handles + ax.get_legend_handles_labels()[0],
+          loc="upper right", framealpha=0.92)
 fig.savefig(OUT / "fig_cadence.pdf")
 plt.close(fig)
 

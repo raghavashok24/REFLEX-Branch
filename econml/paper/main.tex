@@ -142,7 +142,7 @@ The first lever is quantity regulation, and it is the one a firm can pull alone:
 
 \begin{theorem}[Systemic cadence window]
 \label{thm:cadence}
-In the $N$-firm market with synchronous $K$-step retraining, the joint deployment map is $c^K I + (1-c^K)J$, so the binding mode has slope $\mu_N(K) = -\mN + c^K(1+\mN)$ and the market is stable if and only if
+Under Assumption~\ref{ass:standing}, in the $N$-firm market with synchronous $K$-step retraining the joint deployment map is $c^K I + (1-c^K)J$, so the binding mode has slope $\mu_N(K) = -\mN + c^K(1+\mN)$ and the market is stable if and only if
 \begin{equation}
 K \;<\; K_{\max} \;=\; \frac{\ln\bigl((\mN-1)/(\mN+1)\bigr)}{\ln c},
 \end{equation}
@@ -180,7 +180,7 @@ The second lever is a technology mandate, and unlike cadence it is not something
 
 \begin{theorem}[Mixed-market stability]
 \label{thm:mixed}
-With supply-chain alignment and two correction levels, the joint Jacobian's symmetric congruence is a diagonal matrix plus a positive rank-one term, so its spectrum solves a secular equation. Two distinct moduli collapse it to a quadratic, and for $1\le N_b \le N-1$ the radius is its larger root,
+Under Assumption~\ref{ass:standing}, with supply-chain alignment and two correction levels, the joint Jacobian's symmetric congruence is a diagonal matrix plus a positive rank-one term, so its spectrum solves a secular equation. Two distinct moduli collapse it to a quadratic, and for $1\le N_b \le N-1$ the radius is its larger root,
 \begin{equation}
 \rho(J) = \tfrac{1}{2}\bigl(P + \sqrt{P^2 - 4Q}\bigr),\quad
 P = (1-\tilde{\kappa})m_1(1+\theta) + \tilde{\kappa} m_1(N_b + \theta N_c),\quad
@@ -243,7 +243,7 @@ Both readings matter. The \emph{sum} is $\Neff$, so the market's total sensitivi
 
 \begin{theorem}[The wedge]
 \label{thm:wedge}
-At a symmetric profile the private and social first-order conditions are the same equation with a different price on crowding, and the marginal cost a firm ignores is
+Under Assumption~\ref{ass:standing} and the welfare assumptions above, at a symmetric profile the private and social first-order conditions are the same equation with a different price on crowding, and the marginal cost a firm ignores is
 \begin{equation}
 t^{*} \;=\; (W - w_i)\, V'(\mN)\, \frac{\Neff}{N}\, \mu'(a), \qquad V'(\mN) = \frac{2\sigma^2 \mN}{(1-\mN^2)^2}.
 \end{equation}
@@ -268,7 +268,7 @@ Every quantity above is hidden from the regulator these results address, and nea
 \section{Experiments}
 \label{sec:experiments}
 
-Six panels, one per result, and each panel's evidential status is stated in its own row because the six are not the same kind of evidence. A panel marked \textbf{measured} ran in the order-flow simulator: a genuine $N$-dealer market with informed flow, spread and inventory, reducing bit for bit to the single-dealer market at $N=1$. A panel marked \textbf{dry run} ran in a linearized reference environment realizing the model's response geometry and nothing else. A dry run establishes that the closed forms govern the realized dynamics, which no amount of algebra checking covers, and it establishes nothing about a market. Stability in every panel is estimated from the trajectory's asymptotic growth rate under the actual retraining map rather than read off an eigensolve, so \emph{measured} always means measured from dynamics. All runs are CPU-only and deterministic from (config, seed), with common random numbers on paired probes; every closed form carries a numerical certificate that fails loudly, and the harness exits nonzero on any disagreement rather than producing a quiet figure. The simulator is described generically here pending an artifact release; code, derivations and certificates are available to reviewers as anonymized supplementary material and are released publicly on acceptance.
+Six panels, one per result, and each panel's evidential status is stated in its own row because the six are not the same kind of evidence. A panel marked \textbf{measured} ran in the order-flow simulator: a genuine $N$-dealer market with informed flow, spread and inventory, reducing bit for bit to the single-dealer market at $N=1$. A panel marked \textbf{dry run} ran in a linearized reference environment realizing the model's response geometry and nothing else: it establishes that the closed forms govern the realized dynamics, which no algebra check covers, and nothing about a market. Stability everywhere is estimated from the trajectory's asymptotic growth rate under the actual retraining map rather than read off an eigensolve, so \emph{measured} always means measured from dynamics. All runs are CPU-only and deterministic from (config, seed), with common random numbers on paired probes; every closed form carries a numerical certificate that fails loudly, and the harness exits nonzero on any disagreement rather than producing a quiet figure. The simulator is described generically here pending an artifact release; code, derivations and certificates are available to reviewers as anonymized supplementary material and are released publicly on acceptance.
 % CAMERA-READY ONLY. Uncomment the line below once the paper is de-anonymized.
 % Do NOT enable for the double-blind submission: the URL names an author and
 % breaks the blind.
@@ -298,14 +298,14 @@ Panel & Tests & Status & Outcome \\
 Panel 1 reproduces a prior published run in that run's own simulator, measuring common-mode moduli $0.7856$, $1.3692$ and $2.4799$ at $N=1,2,3$, hence amplification $1.7428\times$ and $3.1567\times$ against a published $1.74\times$ and $3.16\times$ at relative error $0.00$. \textbf{The gap to the linear prediction is content, not error}: the market runs $-12.9\%$ at $N=2$ and $+5.2\%$ at $N=3$, with \emph{opposite signs}, which is what a nonlinear market with saturating flow does around a linearization. The reference environment reproduces the prediction exactly because it omits precisely the nonlinearity and saturation that produce the two-signed departure. The differential mode measures $3.4\times 10^{-3}$ against a theoretical zero at $\kappa=1$, so the instability is purely common-mode, which is the mechanism Theorem~\ref{thm:alignment} generalizes.
 
 \paragraph{Why the rest are not measured, stated plainly.}
-A heterogeneous-response port of the order-flow simulator was designed and built, and it is exact: at flat exposure profiles it reproduces the unmodified simulator at every $N$ from 1 to 6. Its acceptance gate then failed. The simulator's liquidity and price-impact channels stay shared whatever the response profiles are, and isolating that residual shows it reaching $17.7$ percentage points across the separation range at $N=2$, larger than several of the effects these panels resolve; at $N \geq 4$ the finite-difference probe is no longer measuring a local slope at all. We drew no figure from that port and moved no status, which is what the gate is for. Panel 6 is a dry run for a different reason: the order-flow simulator carries no aggressiveness choice variable and no welfare object, so no measured counterpart of it exists to be built.
+A heterogeneous-response port of the order-flow simulator was designed and built, and it is exact: at flat exposure profiles it reproduces the unmodified simulator at every $N$ from 1 to 6. Its acceptance gate then failed. The simulator's liquidity and price-impact channels stay shared whatever the response profiles are, and that residual reaches $17.7$ percentage points across the separation range at $N=2$, larger than several effects these panels resolve; at $N \geq 4$ the finite-difference probe no longer measures a local slope at all. We drew no figure from that port and moved no status, which is what the gate is for. Panel 6 is a dry run for a different reason: the order-flow simulator carries no aggressiveness choice variable and no welfare object, so no measured counterpart of it exists to be built.
 
 \paragraph{Panel 6.}
 Both first-order conditions are solved by bisection with $\mN$ read from realized dynamics rather than from the closed form, so the over-adaptation verdict is a property of the simulated market rather than of the algebra. The gap widens from $29.0\%$ at $N=2$ to $119.9\%$ at $N=20$, the fee implements the social optimum to $1.7\times 10^{-13}$, and the degenerate $N=1$ case sits at exactly zero, as Corollary~\ref{cor:over} requires.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.94\textwidth]{figures/fig_wedge.pdf}
+\includegraphics[width=0.88\textwidth]{figures/fig_wedge.pdf}
 \caption{Over-adaptation and the wedge. Left: decentralized against socially optimal aggressiveness across $N$ at $\chi=1$, $s=1$, with the gap shaded. Right: $t^{*}$ against $N$ on a log scale. Dry run; the boundary divergence rate fits $(1-\mN)^{-2}$ with log-log slope $-2.000$.}
 \label{fig:wedge}
 \end{figure}
@@ -317,7 +317,7 @@ Both first-order conditions are solved by bisection with $\mN$ read from realize
 The analysis is linearized around the joint equilibrium (A1), and panel 1 shows what that costs in a real market. \textbf{The heterogeneous sweep is closed-form agreement, not measurement}, and this is the largest gap in the work: panels 2 through 6 establish that the closed forms govern realized dynamics in a reference environment with no informed flow, no spread and no inventory, and establish nothing about a real market. Routing the liquidity and impact channels through the response profiles is the identified repair. Theorem~\ref{thm:alignment} is exact for equal moduli (A2); the heterogeneous-modulus case is a two-sided bound whose tightness is measured rather than asserted, and share-weighted alignment for unequal-sized firms, the fully heterogeneous block-secular reduction, and the sharp operator-norm concentration rate are named extensions rather than results. The $1-1/R_0$ collapse additionally assumes the $\kappa=s=1$ corner, three or more correction levels return a genuine secular equation rather than a quadratic, and correction that moves a firm's response direction rather than only its gain is not modelled. Deployment is synchronous on a common cadence (A3); heterogeneous clocks break the eigenvector sharing Theorem~\ref{thm:cadence} uses. Theorem~\ref{thm:wedge} prices instability through stationary variance, a modeling choice. Neither $R$ nor $s$ is observable to an outsider, and Section~\ref{sec:supervision} is the designed answer with its real-data leg deferred.
 
 \paragraph{Conclusion.}
-\textbf{Individual model evaluation cannot certify a market of models.} The quantity separating the two questions is the effective number of independent learners, a spectral property of how firms' response directions align, and no evaluation of a single model can see it. A firm can pass every stability test available to it and still be one of the reasons its market fails, without doing anything wrong and without observing the firms it is coupled to. A regulator already drafting systemic-risk obligations for shared general-purpose models has a threshold on model scale but no mechanism connecting model sharing to a measurable systemic quantity. This paper supplies one, and with it two substitutable instruments and a price: retrain less often, share fewer models or correct more of them, or pay for the crowding. The substitution frontier is the object a regulator would act on, because the instruments are interchangeable at a computable rate rather than merely both available.
+\textbf{Individual model evaluation cannot certify a market of models.} The quantity separating the two questions is the effective number of independent learners, a spectral property of how firms' response directions align, and no evaluation of a single model can see it. A firm can pass every stability test available to it and still be one of the reasons its market fails, without doing anything wrong and without observing the firms it is coupled to. A regulator already drafting systemic-risk obligations for shared general-purpose models has a threshold on model scale but no mechanism connecting model sharing to a measurable systemic quantity. This paper supplies one, and with it two substitutable instruments and a price: retrain less often, share fewer models or correct more of them, or pay for the crowding. The substitution frontier is what a regulator would act on, because it prices the first two against each other at a computable rate.
 
 \begin{thebibliography}{99}
 \small
@@ -350,15 +350,15 @@ The analysis is linearized around the joint equilibrium (A1), and panel 1 shows 
 
 \bibitem[Miller et al.(2021)]{miller2021} J.~P. Miller, J.~C. Perdomo, and T.~Zrnic. Outside the echo chamber: Optimizing the performative risk. In \emph{ICML}, 2021.
 
-\bibitem[Narang et al.(2023)]{narang2023} A.~Narang, E.~Faulkner, D.~Drusvyatskiy, M.~Fazel, and L.~J. Ratliff. Multiplayer performative prediction: Learning in decision-dependent games. \emph{JMLR}, 24, 2023.
+\bibitem[Nagarajan and Ashok(2026)]{reflex2026} V.~Nagarajan and S.~Ashok. REFLEX: Reflexive equilibrium fixed-point learning for endogenous exchanges. \emph{arXiv preprint arXiv:2608.16155}, 2026. \url{https://doi.org/10.48550/arXiv.2608.16155}.
 
-\bibitem[PEBSA(2024)]{pebsa2024} Predicting economic behavior via sentiment analysis. \emph{International Journal of Engineering and Computer Science}, 13(12), 2024. \url{https://doi.org/10.18535/ijecs/v13i12.4950}.
+\bibitem[Nagarajan and Mittal(2024)]{pebsa2024} V.~Nagarajan and A.~Mittal. PEBSA: Predicting economic behavior via sentiment analysis. \emph{International Journal of Engineering and Computer Science}, 13(12):26656--26676, 2024. \url{https://doi.org/10.18535/ijecs/v13i12.4950}.
+
+\bibitem[Narang et al.(2023)]{narang2023} A.~Narang, E.~Faulkner, D.~Drusvyatskiy, M.~Fazel, and L.~J. Ratliff. Multiplayer performative prediction: Learning in decision-dependent games. \emph{JMLR}, 24, 2023.
 
 \bibitem[Perdomo et al.(2020)]{perdomo2020} J.~C. Perdomo, T.~Zrnic, C.~Mendler-D\"unner, and M.~Hardt. Performative prediction. In \emph{ICML}, 2020.
 
 \bibitem[Plerou et al.(2002)]{plerou2002} V.~Plerou, P.~Gopikrishnan, B.~Rosenow, L.~A.~N. Amaral, T.~Guhr, and H.~E. Stanley. Random matrix approach to cross correlations in financial data. \emph{Physical Review E}, 65(6):066126, 2002.
-
-\bibitem[REFLEX(2026)]{reflex2026} Reflexive equilibrium fixed-point learning for endogenous exchanges. \emph{arXiv:2608.16155}, 2026. \url{https://doi.org/10.48550/arXiv.2608.16155}.
 
 \bibitem[Roy and Vetterli(2007)]{roy2007} O.~Roy and M.~Vetterli. The effective rank: A measure of effective dimensionality. In \emph{EUSIPCO}, 2007.
 

@@ -55,9 +55,17 @@ stronger statement.
 
 **Double-blind.** No author block, no repository URL, no acknowledgments. PDF
 metadata carries no title, author, subject or keywords. Figure files are
-generated from result JSONs and carry no local paths. REFLEX and PEBSA are
-cited as ordinary third-party references and no sentence positions either as
-the authors' own work.
+generated from result JSONs and carry no local paths. No sentence positions
+REFLEX or PEBSA as the authors' own work.
+
+**On the two base papers carrying author names.** Both are cited in full, with
+authors, which puts a name shared with this submission's author list into the
+bibliography. That is the plan of record's instruction and it is the right call:
+the rule under double-blind is that self-citation happens in the third person,
+not that it is scrubbed. A reference stripped of its authors is the more
+revealing artifact, because it is visibly anomalous next to twenty ordinary
+entries and reads as a paper hiding its own lineage. The submission cites them
+the way any third party would and lets the third-person prose carry the blind.
 
 ## The artifact URL
 
