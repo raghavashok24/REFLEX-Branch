@@ -73,3 +73,27 @@ The environment reproduces the C18 finding end to end. At `N = 10`, `N_b = 6`,
 `m_1 = 0.15`, `kappa = s = 1`, the strong-correction limit is stable and the same
 market at `gamma_ratio = 0.6` is not. Sweep at the realized `gamma_ratio`, never
 at the limit, or the panel will inherit the limit's optimism.
+
+## The simulator port
+
+[`HETERO-SIMULATOR-PORT-DESIGN.md`](HETERO-SIMULATOR-PORT-DESIGN.md) records the
+modeling decision that lets the base project's order-flow simulator carry a
+per-dealer response direction, which it has no concept of today. The mechanism
+is a bond-space exposure profile per dealer, routed through both the
+contribution to the informed pool and the sensing of it, so the coupling matrix
+becomes `(1-kappa)I + kappa R` with `R` the Gram matrix of the profiles.
+
+The skeleton is
+[`../experiments/hetero_simulator_port.py`](../experiments/hetero_simulator_port.py).
+Its one acceptance test is the reduction: at flat profiles it reproduces panel
+1's published anchors bit for bit, relative error `0.00e+00` at `N = 1, 2, 3`.
+
+```bash
+"<base>/.venv/Scripts/python" econml/ml-contributions/experiments/hetero_simulator_port.py
+```
+
+**No heterogeneous sweep has been run.** Panels 2, 2b, 4 and 5 remain
+`[DRY RUN]`. The design document's closing section lists what the mechanism does
+not yet handle, and the second entry there, that the liquidity and impact
+channels stay fully shared regardless of the profiles, is the one the first
+heterogeneous run has to measure.
