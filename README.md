@@ -1,8 +1,14 @@
-[REFLEX](https://github.com/vignesh-nagarajan-vn/REFLEX) Branch-off Project: Submit to NeurIPS 2026 Workshops
+# PRICE: Performative Risk in Coupled Environments
+PRICE is an extension of REFLEX ([GitHub](https://github.com/vignesh-nagarajan-vn/REFLEX), [arXiv cs.LG](https://arxiv.org/abs/2608.16155)) designed to take the research further by placing it in dynamic environments, with the goal being to publish both papers in NeurIPS 2026 workshops.
+
+This repository builds **PRICE** (Performative Risk in Coupled Environments). PRICE is a two-fold module comprising 2 research papers, both of which put a price on a feedback loop, with the difference being in how it's priced (privately vs socially): 
+- _The Price of Self-Knowledge_ (ML x OR Workshop)
+- _Herd Immunity and Learning Externalities in Markets of Adaptive Models_ (Econ ML Workshop)
+
+Built by Shriraghav Ashok and Vignesh Nagarajan.
 
 
-
-## Potential Tracks
+## Proposed Tracks
 
 Decision notifications for both venues are on Sept 29.
 
