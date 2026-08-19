@@ -1,0 +1,59 @@
+{
+  "panel": "simulator port, monoculture reduction test only",
+  "status": "NOT A MEASUREMENT. Reproduces panel 1's already-published anchors as an acceptance test of the port. No heterogeneous sweep was run and no claim changes status.",
+  "base_project": "C:\\Users\\nrvig\\GitHub Projects\\REFLEX",
+  "protocol": {
+    "kappa": 1.0,
+    "probe_feedback": 0.5,
+    "h_ref": 1.0,
+    "seed": 0,
+    "episodes": 8
+  },
+  "reproduction_tolerance": 1e-06,
+  "rows": [
+    {
+      "N": 1,
+      "measured_common_modulus": 0.785600462590498,
+      "measured_amplification": 1.0,
+      "port_n_eff": 1.0,
+      "branch_predicted_n_eff": 1.0,
+      "measured_differential": NaN,
+      "br_clipped": false,
+      "published_common_measured": 0.785600462590498,
+      "published_amplification": 1.0,
+      "max_abs_alignment_error": 0.0,
+      "relative_error": 0.0
+    },
+    {
+      "N": 2,
+      "measured_common_modulus": 1.3691618268039063,
+      "measured_amplification": 1.7428220730536859,
+      "port_n_eff": 2.0,
+      "branch_predicted_n_eff": 2.0,
+      "measured_differential": 0.003439768414600586,
+      "br_clipped": false,
+      "published_common_measured": 1.3691618268039063,
+      "published_amplification": 1.74,
+      "max_abs_alignment_error": 0.0,
+      "relative_error": 0.0
+    },
+    {
+      "N": 3,
+      "measured_common_modulus": 2.479927444224721,
+      "measured_amplification": 3.1567285946436714,
+      "port_n_eff": 2.9999999999999996,
+      "branch_predicted_n_eff": 2.9999999999999996,
+      "measured_differential": 0.003192896017243818,
+      "br_clipped": false,
+      "published_common_measured": 2.479927444224721,
+      "published_amplification": 3.16,
+      "max_abs_alignment_error": 0.0,
+      "relative_error": 0.0
+    }
+  ],
+  "published_reproduced": true,
+  "port_n_eff_matches_theory_module": true,
+  "sector_constructor_reduces_at_tilt_zero": true,
+  "sector_constructor_separates_at_tilt_08": true,
+  "note": "Panels 2, 2b, 4 and 5 remain DRY RUN. See ../environment/HETERO-SIMULATOR-PORT-DESIGN.md for what the mechanism does not yet handle."
+}
