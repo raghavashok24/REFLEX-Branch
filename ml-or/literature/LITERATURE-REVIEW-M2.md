@@ -363,8 +363,8 @@ Cited for the framing sentence only: information must be paid for in
 equilibrium, or no one gathers it. M2 is a micro-founded instance where
 the price of information is stated as an identity.
 
-**F7. PEBSA (*Predicting Economic Behavior via Sentiment Analysis*), IJECS
-13(12), 2024.** [V1]
+**F7. Nagarajan, Mittal. "PEBSA: Predicting Economic Behavior via Sentiment Analysis." 
+International Journal of Engineering and Computer Science 13(12), 2024.** [V1]
 One line in related work, as the contrasting **cost structure**, and placed
 here because F6 is the cluster's other citation about what information costs.
 PEBSA infers economic behavior through a channel whose sampling design is
