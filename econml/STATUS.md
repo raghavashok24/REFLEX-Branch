@@ -9,8 +9,8 @@ Paper: "Herd Immunity and Learning Externalities in Markets of Adaptive Models".
 
 ## One-paragraph summary
 
-The theory is done and certified: all four results have complete proofs except
-Theorem 4, whose welfare page is still a sketch. The infrastructure is done: the
+The theory is done and certified: all four results now have complete proofs,
+Theorem 4's welfare page having landed on 18 Aug 2026. The infrastructure is done: the
 closed-form module and the heterogeneous-response environment both exist and pass
 acceptance tests. Five of six panels have run as dry runs against the reference
 environment and agree with the closed forms, and **panel 1's anchor is now
@@ -46,9 +46,9 @@ consequence.
 | 1, effective number of independent learners | `math/derivations/01`, `02` | 123 checks |
 | 2, crowding-cadence frontier | `math/derivations/03` | 59 checks |
 | 3, mixed market and herd immunity | `math/derivations/04` | 70 checks |
-| 4, Pigouvian wedge | **sketch only** | not written |
+| 4, Pigouvian wedge | `math/04-theorem4-wedge.md` | 125 checks |
 
-394 assertions across six assertion-based files, all passing:
+519 assertions across seven assertion-based files, all passing:
 
 ```bash
 for f in econml/ml-contributions/certificates/verify_*.py; do python "$f" || break; done
@@ -69,7 +69,7 @@ expectation.
 
 | Piece | State |
 |---|---|
-| Theory module, `ml-contributions/theory/` | Theorems 1 to 3 complete, 50 acceptance checks |
+| Theory module, `ml-contributions/theory/` | Theorems 1 to 3 complete, 50 acceptance checks. `pigouvian_wedge` still absent by design, until panel 6 exists |
 | Heterogeneous-response environment, `ml-contributions/environment/` | 32 acceptance checks, reduction verified |
 | Panel harness, `ml-contributions/experiments/` | panels 1 to 5, exits nonzero on disagreement |
 | Simulator port, `experiments/hetero_simulator_port.py` | **design fixed, skeleton reduces exactly**; no sweep run |
@@ -166,10 +166,16 @@ matter what the profiles are), and the universe-size question, since the default
 config has only 8 bonds and 2 sectors and a larger universe would invalidate the
 anchor. Every remaining `[MEASURED]` claim still depends on that work.
 
-**2. Theorem 4's welfare page.** The only theorem still on a sketch. Blocks
-Section 7 and panel 6. `pigouvian_wedge` is deliberately absent from the theory
-module, with a test asserting its absence, so it cannot arrive ahead of its
-derivation.
+**2. ~~Theorem 4's welfare page.~~ Done, 18 Aug 2026.** The welfare page is
+written in `math/04-theorem4-wedge.md`: the AR(1) welfare object with its sign
+convention certified, Lemma 11 giving the marginal crowding share
+`d m_N/d m_i = N_eff v_i^2`, both first-order conditions, the wedge, its
+comparative statics, and over-adaptation for every `N >= 2`. Ledger claims 7.0 to
+7.5 are `[VERIFIED]`; `verify_theorem4_wedge.py` passes with 125 assertions.
+
+What remains on Theorem 4 is **panel 6 only**, which is second in the de-scope
+order. `pigouvian_wedge` stays deliberately absent from the theory module, with a
+test asserting its absence, so nothing can be measured ahead of its experiment.
 
 **3. Five unwritten sections.** 6 Result 3, 7 Result 4, 8 supervision, 9
 experiments, 10 limitations and conclusion. Sections 2 and 3 are drafted. Section
@@ -191,7 +197,7 @@ two-block collapse.
 | Risk | Severity | State |
 |---|---|---|
 | Heterogeneous-response port does not land in time | **high** | Design fixed and the skeleton reduces exactly to the base market. The sweep itself is not built, so the risk stands. Would cost panels 2 to 5 and leave a theory paper with one measured anchor |
-| Theorem 4 stays a sketch | medium | Section 7 shortens, panel 6 is cut. Second in de-scope order, so survivable |
+| ~~Theorem 4 stays a sketch~~ | **closed** | Welfare page landed 18 Aug 2026 with 125 passing assertions. Only panel 6 is at risk now, and Theorem 4 ships as theory if it is cut |
 | Section 6 drafting slips | medium | It is the paper. Replanned, so the drafting is transcription rather than design |
 | A referee asks for fully heterogeneous agents | low | Answered as future work with the machinery stated to extend |
 | A referee probes finite `gamma_PO` | **now low** | Was the paper's weakest point. The imperfect-correction law answers it directly |

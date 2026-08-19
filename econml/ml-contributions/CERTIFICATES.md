@@ -127,11 +127,35 @@ All eleven are implemented in
 
 ## Theorem 4
 
-| # | Checks | Tolerance |
-|---|---|---|
-| C19 | The common mode's stationary variance equals `sigma^2/(1 - m_N^2)`, including the sign convention on `-m_N` | `1e-6` |
-| C20 | `pigouvian_wedge` is increasing in `N`, in `kappa`, and in `m_N` | exact, monotone |
-| C21 | Over-adaptation: the decentralized equilibrium exceeds the social optimum for every `N >= 2` on a grid | exact, sign |
+Welfare page in [`../math/04-theorem4-wedge.md`](../math/04-theorem4-wedge.md).
+
+| # | Checks | Tolerance | State |
+|---|---|---|---|
+| C19 | **The AR(1) reduction, simulated.** `z_{t+1} = -m_N z_t + xi_t` run to stationarity has variance `sigma^2/(1 - m_N^2)`, and lag-1 autocorrelation `-m_N`, so the sign convention is measured rather than asserted | `2e-2` on 400k-step paths, `1e-9` on the algebra | **run** |
+| C20 | `t*` is strictly increasing in `N`, in `kappa`, in `s` and in `m_N`, and the divergence rate at the boundary is `(1 - m_N)^-2` | exact monotone; fitted exponent within `1e-3` of `-2` | **run**, measured `-2.000000` |
+| C21 | **Over-adaptation.** The decentralized symmetric equilibrium exceeds the social optimum on every configuration of a grid in `N`, `kappa`, `s` and client exposure, the gap widens with `N`, and the wedge is exactly zero at `N = 1` with no client exposure | exact, sign | **run**, 108 configurations, smallest relative gap `0.290` |
+| C34 | **Lemma 11, the marginal crowding share.** `d m_N/d m_i = N_eff * v_i^2` by finite differences on random alignment matrices, summing to `N_eff`; equal to `N_eff/N` on exchangeable `R` | `1e-5` | **run** |
+
+C34 is the load-bearing one, and it is the reason Theorem 4 is a derivation
+rather than an assertion. Everything else in the theorem is arithmetic on top of
+the marginal crowding share, and a plausible-looking `1/N` there would have been
+wrong by the factor `N_eff`, which at `N = 20`, `kappa = 0.8`, `s = 1` is
+`16.2`. The certificate checks the naive guess is wrong by exactly that factor.
+
+C19 is simulated rather than algebraic on purpose. The algebra
+`V = m_N^2 V + sigma^2` is one line and could not fail; what could fail is the
+sign convention, and the lag-1 autocorrelation is where a sign error would show.
+It is negative, so a crowded market's common mode oscillates rather than
+persists, which is what Section 8's estimator has to look for.
+
+All four are implemented in
+[`certificates/verify_theorem4_wedge.py`](certificates/verify_theorem4_wedge.py),
+125 checks, assertion-based, all passing.
+
+**Not certified, and deliberately so.** `pigouvian_wedge` is still absent from
+the theory module, with `verify_theory_module.py` asserting its absence. The
+welfare page is derived, but experiment 6 is not built, and the module is the
+surface a panel imports from. It arrives when the panel does.
 
 ## Infrastructure certificates
 
@@ -148,13 +172,12 @@ measurement is taken from the environment.
 
 ## Running total
 
-33 new certificates against the base project's 66, for 99. Every one of them is
-deterministic, CPU-only, and runs from `(config, seed)`.
+34 new certificates against the base project's 66, for 100. Every one of them is
+deterministic, CPU-only, numpy-only, and runs from `(config, seed)`.
 
-Of the 33, the 31 covering Theorems 1 through 3 and the infrastructure are written
-and passing, spread across **334 individual assertions in five files**. The
-remaining 2 belong to Theorem 4 (C19 through C21, less the two now covered), whose
-welfare page is not derived.
+All 34 are written and passing, spread across **519 individual assertions in
+seven files**. Theorem 4's four (C19 to C21 and C34) joined on 18 Aug 2026 when
+the welfare page landed.
 
 ```bash
 for f in econml/ml-contributions/certificates/verify_*.py; do python "$f" || break; done
@@ -168,9 +191,11 @@ for f in econml/ml-contributions/certificates/verify_*.py; do python "$f" || bre
 | `verify_theory_module.py` | 50 |
 | `verify_hetero_env.py` | 32 |
 | `verify_theorem1_anchors.py` | 60 |
+| `verify_theorem4_wedge.py` | 125 |
 
-394 assertions across six files, all passing. The anchors file joined the count
-on 18 Aug 2026 when it was converted to assert rather than print.
+519 assertions across seven files, all passing. The anchors file joined the count
+on 18 Aug 2026 when it was converted to assert rather than print, and the
+Theorem 4 file the same day when the welfare page landed.
 
 ## Rule
 

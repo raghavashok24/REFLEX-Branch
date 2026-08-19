@@ -98,13 +98,18 @@ which supersedes `../math/03` where they disagree.
 
 ## Section 7, Theorem 4
 
+Welfare page in [`../math/04-theorem4-wedge.md`](../math/04-theorem4-wedge.md),
+complete as of 18 Aug 2026.
+
 | # | Claim | Status | Evidence |
 |---|---|---|---|
-| 7.1 | Stationary variance proportional to `1/(1-m_N^2)` | `[TO BUILD]` | C19 |
-| 7.2 | Private FOC ignores `(N-1)/N` of marginal cost, plus client exposure | `[DERIVED]` | `../math/04`. **Welfare page outstanding** |
-| 7.3 | Wedge increasing in `N`, `kappa`, and proximity to boundary | `[DERIVED]` | C20 |
-| 7.4 | Over-adaptation for every `N >= 2` | `[DERIVED]` | C21 |
-| 7.5 | Provenance channel `dm_N/ds = m_1 kappa (N-1)` | `[DERIVED]` | `../math/04` |
+| 7.0 | **Marginal crowding share:** `d m_N/d m_i = N_eff * v_i^2`, hence `N_eff/N` on exchangeable `R`, and the shares sum to `N_eff` rather than to `1` | `[VERIFIED]` | `../math/04` Lemma 11; C34, finite differences to `1e-5` |
+| 7.1 | Stationary variance is `sigma^2/(1-m_N^2)`, and the lag-1 autocorrelation is `-m_N`, so it is **negative** | `[VERIFIED]` | `../math/04` Section 1; C19, simulated to `2e-2` on 400k-step paths |
+| 7.2 | Private FOC ignores `(N-1)/N` of marginal cost, plus client exposure | `[VERIFIED]` | `../math/04` Thm 4; C34 for the share, C19 and the fee identity for the rest |
+| 7.3 | Wedge increasing in `N`, `kappa`, `s`, and proximity to boundary, diverging like `(1-m_N)^-2` | `[VERIFIED]` | `../math/04` Cor 4.1; C20, fitted exponent `-2.000000` |
+| 7.4 | Over-adaptation for every `N >= 2`, strict even with no client exposure | `[VERIFIED]` | `../math/04` Cor 4.2; C21, 108 configurations, smallest relative gap `0.290` |
+| 7.5 | Provenance channel `dm_N/ds = m_1 kappa (N-1)`, linear in `N` and non-decaying, unlike the aggressiveness channel which tends to `kappa` | `[VERIFIED]` | `../math/04` Prop 12; C34's companion checks |
+| 7.6 | `W > sum_i w_i` (client exposure) | assumption, (W4) | Stated with one sentence of justification. The results use its **sign** and never its size |
 
 ## Section 8, supervision
 
@@ -131,7 +136,7 @@ requires the order-flow simulator, does that.
 | E3 | Crowding-cadence frontier | `[DRY RUN]`, 175 cells, zero disagreements |
 | E4 | Herd immunity | `[DRY RUN]`, thresholds `12 / 14 / 16 / 20` firms across efficacy |
 | E5 | Substitution frontier | `[DRY RUN]`, 18 of 18 exact. **never cut** |
-| E6 | Over-adaptation | `[TO BUILD]`, blocked on Theorem 4; second in de-scope order |
+| E6 | Over-adaptation | `[TO BUILD]`. Theorem 4 is no longer the blocker; the panel itself is unbuilt. Second in de-scope order, and if cut Theorem 4 ships as theory |
 
 | # | Claim | Status | Evidence |
 |---|---|---|---|
@@ -150,7 +155,11 @@ requires the order-flow simulator, does that.
    operator-norm rate is now tracked separately as 4.14, `[DEFERRED]`.
 2. ~~**6.7** and **6.8** are the two outstanding pieces of Theorem 3.~~
    **Closed, and 6.8 failed.** See the note below.
-3. **7.1** and the welfare page are the whole of Theorem 4's remaining work.
+3. ~~**7.1** and the welfare page are the whole of Theorem 4's remaining work.~~
+   **Closed, 18 Aug 2026.** The welfare page is written, `verify_theorem4_wedge.py`
+   passes with 125 assertions, and 7.0 through 7.5 are `[VERIFIED]`. What remains
+   on Theorem 4 is panel 6 (E6) and the `pigouvian_wedge` entry in the theory
+   module, which stays absent until the panel exists.
 4. Every panel still short of `[MEASURED]`. Panels 1 to 5 sit at `[DRY RUN]`.
 
 On that last one: a passing dry run is progress on the derivations and no
@@ -182,6 +191,20 @@ names a certificate that fails loudly, and every one of them has been run. Claim
 still resting on argument rather than computation (4.5's Perron-Frobenius
 condition) stay at `[DERIVED]`, and the two genuinely open pieces (4.14, 5.10) are
 tracked as `[DEFERRED]` rather than quietly dropped.
+
+## Note on the Section 7 upgrade
+
+Section 7 moved from `[DERIVED]` to `[VERIFIED]` on 18 Aug 2026 when the welfare
+page landed with `verify_theorem4_wedge.py`. The upgrade satisfies the standing
+rule: each claim names a certificate that fails loudly and every one has been run.
+Two things are deliberately not upgraded. 7.6 is an **assumption**, not a claim,
+and is flagged as one. E6 stays `[TO BUILD]`: the theory being certified does not
+make the panel exist, and the wedge's own comparative statics are certified in
+closed form only, never measured in a market.
+
+The load-bearing step was Lemma 11. Before it, `d m_N/d a_i` was going to be
+written down as `1/N` by analogy with the commons, which C34 shows is wrong by
+the factor `N_eff`.
 
 ## Standing rule
 
