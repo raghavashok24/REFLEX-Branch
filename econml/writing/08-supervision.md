@@ -3,11 +3,28 @@
 **Status: drafted, and first in the de-scope order.** Target 0.20 pages, which is
 one paragraph. Source: [`../math/05-supervision.md`](../math/05-supervision.md).
 
-Written at its cut length from the start rather than written long and trimmed,
-because a section that is first to go should not be carrying material that would
-have to be rescued out of it.
+Drafted at one paragraph rather than written long and trimmed, then collapsed
+further to the two-sentence form on 19 Aug 2026 when step one of the compression
+order did not close the page budget. A section that is first to go should not be
+carrying material anyone would have to rescue out of it.
 
 ---
+
+Every quantity in Sections 4 through 7 is hidden from the regulator those
+sections address, and near the boundary the system tells on itself: as `m_N`
+approaches one the leading principal component of public quotes has lag-1
+autocorrelation approaching one in magnitude, with the sign negative because
+Result 4's common mode oscillates rather than persists, and variance share
+growing like `1/(1 - m_N)`, so a supervisor can estimate distance to instability
+from public prices alone with no access to any firm's model, data, or code. The
+estimator sharpens exactly as the market approaches the boundary it watches for,
+and its consistency proof, central limit theorem and detection sample complexity
+are journal deliverables. [DEFERRED]
+
+<!-- APPENDIX or cut, page-budget step 2, 19 Aug 2026. The paragraph above is
+     already the two-sentence form the compression order calls for. What it
+     replaced ran to about 200 words and read as follows, and it is the version
+     to restore if the budget stops binding.
 
 Every quantity in Sections 4 through 7 is hidden from the regulator those
 sections address: no outsider observes a firm's response Jacobian, and `R` and
@@ -18,12 +35,11 @@ autocorrelation approaching one in magnitude and variance share growing like
 `1/(1 - m_N)`, which lets a supervisor estimate distance to instability from
 public prices alone, with no access to any firm's model, data, or code, and with
 an estimator that sharpens exactly as the market approaches the boundary it is
-watching for. [DEFERRED, the estimator is stated and its consistency proof, its
-central limit theorem and its detection sample complexity are journal
-deliverables] The sign is the part a practitioner has to get right: Result 4's
+watching for. The sign is the part a practitioner has to get right: Result 4's
 common mode has autocorrelation `-m_N`, so the diagnostic is oscillatory
 co-movement rather than persistent co-movement, and a monitor watching for
 persistence would look for exactly the wrong thing.
+-->
 
 ---
 
@@ -71,10 +87,11 @@ it genuinely cuttable rather than nominally so.
 
 ## Notes for the writing pass
 
-**Length.** About 200 words in the body paragraph, which is the 0.20-page target.
-If the page budget still binds after the compression order's first step, this
-section collapses to two sentences: the critical-slowing-down observable and the
-deferral. That is step two of the order in `README.md`.
+**Length.** Drafted at about 200 words, then collapsed to two sentences on
+19 Aug 2026 under step two of the compression order, since step one did not close
+the budget. The body paragraph is now about 110 words. The longer version is
+preserved in a comment in this file rather than deleted, so restoring it is a
+revert rather than a rewrite.
 
 **What changed against the plan of record.** The plan puts the PEBSA sentence
 here or in related work and leaves the choice open. It is settled here in favour

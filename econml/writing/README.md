@@ -5,25 +5,60 @@ from these files. Nothing here is LaTeX.
 
 ## Page budget (9 pages main body)
 
-| File | Section | Pages | State |
-|---|---|---|---|
-| [`00-abstract.md`](00-abstract.md) | Abstract | 0.15 | drafted |
-| [`01-introduction.md`](01-introduction.md) | Introduction | 1.25 | **complete** |
-| [`02-related-work.md`](02-related-work.md) | Related work | 0.75 | planned |
-| [`03-model-and-framing.md`](03-model-and-framing.md) | Setup, private vs systemic stability | 1.25 | planned |
-| [`04-result1-effective-learners.md`](04-result1-effective-learners.md) | Theorem 1, the supply chain | 1.25 | **drafted** |
-| [`05-result2-cadence-frontier.md`](05-result2-cadence-frontier.md) | Theorem 2 | 1.00 | **drafted** |
-| [`06-result3-herd-immunity.md`](06-result3-herd-immunity.md) | Theorem 3, the substitution frontier | 1.25 | planned |
-| [`07-result4-pigouvian-wedge.md`](07-result4-pigouvian-wedge.md) | Theorem 4 | 0.75 | planned |
-| [`08-supervision.md`](08-supervision.md) | Supervision from public prices | 0.20 | planned, first to cut |
-| [`09-experiments.md`](09-experiments.md) | Six panels | 1.00 | planned |
-| [`10-limitations-conclusion.md`](10-limitations-conclusion.md) | Limitations, conclusion | 0.60 | planned |
-| | **Total** | **9.45** | over budget by 0.45, see below |
+**Measured 19 Aug 2026 from the drafted files**, not projected. Calibration:
+1050 words of body prose per page, plus `0.03` page per display-math block,
+`0.012` per table row, and `0.20` per figure. That words-per-page figure is
+back-derived from the original projection in this table, so it is soft; the
+overage below is large enough that no plausible calibration closes it.
 
-Overflow is expected at this stage and is absorbed in the following order:
-proofs and derivation sketches move to the appendix first, then Section 8
-collapses to two sentences, then Section 7's comparative statics move to the
-appendix. Result sections 4 through 6 are not compressed.
+| File | Section | Target | Measured | State |
+|---|---|---|---|---|
+| [`00-abstract.md`](00-abstract.md) | Abstract | 0.15 | 0.21 | rewritten |
+| [`01-introduction.md`](01-introduction.md) | Introduction | 1.25 | 1.17 | **complete** |
+| [`02-related-work.md`](02-related-work.md) | Related work | 0.75 | 1.21 | **drafted, 0.46 over its line** |
+| [`03-model-and-framing.md`](03-model-and-framing.md) | Setup, private vs systemic | 1.25 | 1.21 | **drafted** |
+| [`04-result1-effective-learners.md`](04-result1-effective-learners.md) | Theorem 1, the supply chain | 1.25 | 1.19 | **drafted**, proof moved out |
+| [`05-result2-cadence-frontier.md`](05-result2-cadence-frontier.md) | Theorem 2 | 1.00 | 0.82 | **drafted**, proof moved out |
+| [`06-result3-herd-immunity.md`](06-result3-herd-immunity.md) | Theorem 3, the substitution frontier | 1.25 | 1.60 | **drafted**, not compressible |
+| [`07-result4-pigouvian-wedge.md`](07-result4-pigouvian-wedge.md) | Theorem 4 | 0.75 | 1.14 | **drafted**, steps 1 and 3 applied |
+| [`08-supervision.md`](08-supervision.md) | Supervision from public prices | 0.20 | 0.11 | **drafted**, collapsed under step 2 |
+| [`09-experiments.md`](09-experiments.md) | Six panels | 1.00 | 1.07 | **drafted** |
+| [`10-limitations-conclusion.md`](10-limitations-conclusion.md) | Limitations, conclusion | 0.60 | 0.69 | **drafted** |
+| | **Total** | **9.45** | **10.41** | **over by 1.41** |
+
+## Compression, applied and exhausted
+
+Overflow is absorbed in a fixed order, decided in advance so it is not
+renegotiated under deadline pressure:
+
+1. Proofs and derivation sketches move to the appendix.
+2. Section 8 collapses to two sentences.
+3. Section 7's comparative statics move to the appendix.
+
+**All three ran on 19 Aug 2026 and the budget still does not close.** They
+recovered `0.27` of a page, from `10.68` to `10.41`: `0.067` from Section 4,
+`0.088` from Section 5, `0.056` from Section 7 and `0.059` from Section 8. The
+order was designed when the sections were unwritten, and what it reaches turns
+out to be a small share of what they became. Moved text is marked
+with an `APPENDIX` HTML comment in place rather than deleted, so every move is a
+revert rather than a rewrite. Result sections 4 through 6 are not compressed and
+were not.
+
+**What is left is an owner decision, not a writing decision**, and it is recorded
+here rather than taken:
+
+- **Section 2 is `0.46` over its own budget line**, the largest single overrun in
+  the table, and the compression order does not cover it. Bringing it to `0.75`
+  recovers `0.46`.
+- **Cutting Section 8 entirely** is authorized by the de-scope order, where it is
+  first, and recovers `0.11`. It is written to be cuttable whole.
+- **Dropping a figure** recovers `0.20` each. Figure 4 is the poster figure and
+  Figure 1 carries Result 1; Figure 5 is second in the de-scope order.
+
+Taking all three of those still leaves about `0.64` of a page. The honest reading
+is that eleven sections of drafted content do not fit in nine pages at the
+measured density, and closing the gap means cutting content rather than
+tightening prose.
 
 ## Figures
 

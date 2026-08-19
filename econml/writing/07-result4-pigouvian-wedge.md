@@ -40,9 +40,12 @@ objective contains it. That is an assumption, stated as one, and the results
 below turn on its **sign** and never on its size.
 
 **The marginal crowding share, which is the load-bearing step.** Writing either
-first-order condition needs `d m_N/d a_i`, and a single firm's deviation leaves
-the equal-moduli regime where `m_N = m_1 N_eff` is available. The
-modulus-weighted machinery of Result 1 supplies the derivative directly.
+first-order condition needs `d m_N/d a_i`, which the modulus-weighted machinery
+of Result 1 supplies directly.
+
+<!-- APPENDIX, page-budget step 1, 19 Aug 2026: a single firm's deviation leaves
+     the equal-moduli regime where m_N = m_1 N_eff is available, which is why
+     Proposition 4 of the alignment derivation is the route. -->
 
 **Lemma 11.** *At the symmetric point, `d m_N/d m_i = N_eff v_i^2`, where `v` is
 the leading eigenvector of the coupling matrix. The shares therefore sum to
@@ -75,14 +78,22 @@ With symmetric weights the private condition ignores the fraction
 client-side exposure. Setting client exposure to zero leaves exactly `(N-1)/N`,
 which is the clean statement of what one firm does not internalize. [VERIFIED]
 
-**Comparative statics, and the one that matters for policy.** `t*` is strictly
-increasing in `N`, in `kappa`, in `s` and in `m_N`, and it diverges at the
-boundary like `(1 - m_N)^-2`, with the exponent measured at `-2.000000` rather
-than argued. [VERIFIED] The economically loaded part is the rate. The fee that
-would correct a market is not proportional to how crowded the market is; it blows
-up quadratically in the distance to the edge. A regulator who sets a fee from a
+**Comparative statics.** `t*` is strictly increasing in `N`, in `kappa`, in `s`
+and in `m_N`, and it diverges at the boundary like `(1 - m_N)^-2`. [VERIFIED] The
+rate is the economically loaded part: a regulator who sets a fee from a
 comfortable-looking market and holds it fixed is setting it far too low by the
 time the market is close to instability.
+
+<!-- APPENDIX, page-budget step 3, 19 Aug 2026. The comparative statics move to
+     the appendix with their conclusion kept above as one clause, per the
+     compression order in README.md.
+
+The exponent is measured at `-2.000000` rather than argued. The fee that would
+correct a market is not proportional to how crowded the market is; it blows up
+quadratically in the distance to the edge, so the correction a regulator owes a
+market is a steeply nonlinear function of a quantity that regulator cannot
+directly observe.
+-->
 
 **Corollary 4.2.** *The decentralized equilibrium over-adapts relative to the
 social optimum for every `N >= 2`, strictly so even with client exposure switched
@@ -150,19 +161,20 @@ illustration.
 
 ## Notes for the writing pass
 
-**Length.** About 890 words of prose, excluding display math. That is over the
-0.75-page target. The compression order is fixed: Lemma 11's proof is already in
-the appendix, so the first cut here is the comparative-statics paragraph moving
-to the appendix with its conclusion kept as one clause, which is the third step
-of the page-budget order in `README.md`. The provenance channel and Corollary
+**Length.** Drafted at about 950 words of prose. Steps 1 and 3 of the page-budget
+compression order have been applied, moving the derivation lead-in and the
+comparative statics to the appendix, which brings the body to about 870 words.
+That is still over the 0.75-page target. The provenance channel and Corollary
 4.2 do not move, since they are what the section is for.
 
-**What changed against the plan of record.** The plan writes `dm_N/da_i` as
-`1/N` by analogy with the commons. Lemma 11 shows it is `N_eff/N`, so the wedge
-is larger than the plan states by the effective learner count, and the plan is
-corrected rather than followed. The plan also leaves the welfare page as a
-sketch; it is complete and certified, so this section states results rather than
-intentions.
+**What changed against the plan of record.** The plan states the wedge as
+`(dm_N/da_i) * (marginal variance cost borne by others)` and leaves the
+derivative unevaluated. Evaluating it by the obvious commons analogy gives `1/N`,
+which is what the build was about to write down; Lemma 11 shows it is `N_eff/N`,
+so the wedge is larger by the effective learner count. That is a gap the plan
+left open rather than a claim it got wrong, and the section fills it. The plan
+also leaves the welfare page as a sketch; it is complete and certified, so this
+section states results rather than intentions.
 
 **The one thing a referee will probe.** Whether stationary variance is the right
 welfare object. The honest answer is that it is a modeling choice, that the

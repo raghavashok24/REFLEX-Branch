@@ -35,15 +35,21 @@ joint deployment map is `c^K I + (1-c^K) J`, so the binding mode has slope*
 *with `K_max` infinite when `m_N <= 1` and strictly decreasing in `m_N`.*
 [VERIFIED]
 
+The binding mode sits at `lambda_max` whatever the sign pattern of `R`, so this
+section needs no analogue of Section 4's Perron-Frobenius condition.
+
+<!-- APPENDIX, page-budget step 1, 19 Aug 2026. The three-line proof below moves
+     out of the body. The body keeps the no-Perron-Frobenius sentence above,
+     which is what a reader needs to know here.
+
 The proof is three lines. All firms compute their frozen best responses from the
 same state and then take `K` inner steps, so the joint map is an affine function
 of `J` and shares its eigenvectors, with slopes `c^K - (1-c^K) m_1 nu_i` on the
 mode carrying `lambda_i(R)`. That expression is strictly decreasing in `nu_i`,
 which does two things at once: it puts every slope at or below `c^K < 1`, so the
 upper side of the stability constraint never binds at any cadence, and it places
-the binding mode at `lambda_max` whatever the sign pattern of `R`, so this section
-needs no analogue of Section 4's Perron-Frobenius condition. Rearranging
-`mu_N(K) > -1` gives the window.
+the binding mode at `lambda_max`. Rearranging `mu_N(K) > -1` gives the window.
+-->
 
 **Critical crowding.** The same inequality reads `m_N < (1 + c^K)/(1 - c^K)`, and
 since `K` is a positive integer the most permissive case is `K = 1`. So a

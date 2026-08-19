@@ -38,16 +38,23 @@ whose spectral radius is*
 
 *and the market is stable if and only if `m_N < 1`.* [VERIFIED]
 
+Setting `R = 1 1'` recovers the symmetric multi-dealer law of REFLEX
+(arXiv:2608.16155) exactly, so the published result is not generalized away but
+located: it is the monoculture corner, where every firm's feedback points the
+same way.
+
+<!-- APPENDIX, page-budget step 1, 19 Aug 2026. The two-step proof below moves
+     out of the body and into the appendix. The body keeps the located-corner
+     sentence above, which is the reading, not the derivation.
+
 The proof is two steps. Firm `i` senses the shared pool through its own response
 channel, feeling its own contribution in full and each competitor's with weight
 `kappa`, which makes the coupling coefficient between `i` and `j` exactly `r_ij`
 and produces the Jacobian above. Its eigenvalues are
 `-m_1[(1-kappa) + kappa*lambda_i(R)]`, and because `R` is a Gram matrix every
 bracket is nonnegative, so the radius sits at `lambda_max` with no absolute-value
-slack. Setting `R = 1 1'` recovers the symmetric multi-dealer law of REFLEX
-(arXiv:2608.16155) exactly, so the published result is not generalized away but
-located: it is the monoculture corner, where every firm's feedback points the
-same way.
+slack.
+-->
 
 | Configuration | `lambda_max(R)` | `N_eff` | reading |
 |---|---|---|---|
