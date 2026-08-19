@@ -1,4 +1,4 @@
-# PRICE: Performative Risk in Coupled Environments
+# PRICE: Performative Risk In Coupled Environments
 PRICE is an extension of REFLEX ([GitHub](https://github.com/vignesh-nagarajan-vn/REFLEX), [arXiv cs.LG](https://arxiv.org/abs/2608.16155)) designed to take the research further by placing it in dynamic environments, with the goal being to publish both papers in NeurIPS 2026 workshops.
 
 This repository builds **PRICE** (Performative Risk in Coupled Environments). PRICE is a two-fold module comprising 2 research papers, both of which put a price on a feedback loop, with the difference being in how it's priced (privately vs socially): 
