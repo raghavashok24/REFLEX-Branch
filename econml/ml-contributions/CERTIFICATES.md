@@ -170,6 +170,14 @@ certified before a panel runs.
 C33 is the acceptance test the experiment specs name, and it runs before any
 measurement is taken from the environment.
 
+**The simulator port carries no certificate, by decision.** Its one acceptance
+test, bit-for-bit reproduction of the unmodified base at flat profiles, passes at
+relative error `0.00e+00` for `N` in `1..6` and is recorded in
+[`../environment/HETERO-SIMULATOR-PORT-DESIGN.md`](../environment/HETERO-SIMULATOR-PORT-DESIGN.md).
+Its step-3 gate failed and the workstream was closed on 19 Aug 2026 without
+either named repair, so no panel imports the port and no claim rests on it. A
+certificate here would guard code that nothing in the paper depends on.
+
 ## Running total
 
 34 new certificates against the base project's 66, for 100. Every one of them is

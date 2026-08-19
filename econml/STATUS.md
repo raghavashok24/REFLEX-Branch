@@ -1,6 +1,6 @@
 # Status: EconML @ NeurIPS 2026
 
-**As of 18 Aug 2026. Submission 29 Aug 2026, 11 days out.**
+**As of 19 Aug 2026. Submission 29 Aug 2026, 10 days out.**
 
 Paper: "Herd Immunity and Learning Externalities in Markets of Adaptive Models".
 9 pages main body, unlimited appendix, double-blind, in-person.
@@ -9,16 +9,17 @@ Paper: "Herd Immunity and Learning Externalities in Markets of Adaptive Models".
 
 ## One-paragraph summary
 
-The theory is done and certified: all four results now have complete proofs,
-Theorem 4's welfare page having landed on 18 Aug 2026. The infrastructure is done: the
-closed-form module and the heterogeneous-response environment both exist and pass
-acceptance tests. Five of six panels have run as dry runs against the reference
-environment and agree with the closed forms, and **panel 1's anchor is now
-measured in the real order-flow market, reproducing the published run bit for
-bit**. **The gap is empirical and editorial**: the heterogeneous-response port now has a
-fixed design and a skeleton that reduces exactly to the known case, but no
-heterogeneous sweep has been run, and seven of eleven paper sections are
-unwritten.
+The theory is done and certified: all four results have complete proofs,
+Theorem 4's welfare page having landed on 18 Aug 2026. The infrastructure is
+done: the closed-form module and the heterogeneous-response environment both
+exist and pass acceptance tests. Five of six panels have run as dry runs against
+the reference environment and agree with the closed forms, and **panel 1's anchor
+is measured in the real order-flow market, reproducing the published run bit for
+bit**. **The heterogeneous-response port is closed as a realized fallback**: it
+is exact at the reduction, its step-3 gate failed, neither named repair is
+attempted, and panels 2, 2b, 4 and 5 ship at `[DRY RUN]`. What remains is
+editorial plus one panel: four sections to draft, the abstract to rewrite, and
+panel 6 to build.
 
 ## Where the time went, and what it bought
 
@@ -72,7 +73,7 @@ expectation.
 | Theory module, `ml-contributions/theory/` | Theorems 1 to 3 complete, 50 acceptance checks. `pigouvian_wedge` still absent by design, until panel 6 exists |
 | Heterogeneous-response environment, `ml-contributions/environment/` | 32 acceptance checks, reduction verified |
 | Panel harness, `ml-contributions/experiments/` | panels 1 to 5, exits nonzero on disagreement |
-| Simulator port, `experiments/hetero_simulator_port.py` | **design fixed, skeleton reduces exactly**; no sweep run |
+| Simulator port, `experiments/hetero_simulator_port.py` | **exact at the reduction; step-3 gate failed and the workstream is closed.** No panel imports it |
 
 ### Panels, as dry runs only
 
@@ -131,7 +132,7 @@ remaining panels need the simulator.
 | 4, Result 1 | drafted, about 920 words |
 | 5, Result 2 | drafted, about 580 words |
 | 0, abstract | drafted, rewrite after Result 3's panel lands |
-| 6, Result 3 | replanned around the exact root, not drafted |
+| 6, Result 3 | **drafted** around the exact root, about 1150 words |
 
 ---
 
@@ -139,37 +140,39 @@ remaining panels need the simulator.
 
 ### Blocking, in priority order
 
-**1. The simulator port, and it is a design problem rather than a port.** Panel 1
-is done because its claim is the monoculture corner the base project already
-implements. Panels 2 to 5 are not, and the reason is structural: the base
-project's `env/multi_dealer.py` has **no concept of a per-dealer response
-direction**. Every dealer shares one scalar toxic channel `exp(-c_t*h_i)` coupled
-by a single scalar `kappa`, which *is* `R = 1 1'` and nothing else.
+**1. ~~The simulator port.~~ Closed 19 Aug 2026, as a realized fallback.** Panel
+1 is measured because its claim is the monoculture corner the base project
+already implements. Panels 2, 2b, 4 and 5 are not, and the reason is structural:
+the base project's `env/multi_dealer.py` has **no concept of a per-dealer
+response direction**. Every dealer shares one scalar toxic channel
+`exp(-c_t*h_i)` coupled by a single scalar `kappa`, which *is* `R = 1 1'` and
+nothing else.
 
-So porting is not wiring an existing knob to a new parameter. It requires
-deciding what a heterogeneous response direction *means* in a real order-flow
-market, whether that is different bond-factor exposures, different signal
-channels, or different informed-flow segments, and then building the flow
-generation that realizes a target alignment matrix. That is multi-session design
-work, and the branch repository's environment is the specification it must
-reduce to at `R = 1 1'`.
-
-**The modeling decision is now made and recorded** in
+The modeling decision was made and recorded in
 `ml-contributions/environment/HETERO-SIMULATOR-PORT-DESIGN.md`: each dealer
 carries a bond-space exposure profile, and both its contribution to the informed
 pool and its sensing of that pool are routed through it, so the coupling matrix
 becomes `(1-kappa)I + kappa R` with `R` the Gram matrix of the profiles. The
-skeleton in `experiments/hetero_simulator_port.py` implements it and passes its
-one acceptance test: at flat profiles it reproduces panel 1's published anchors
-bit for bit, relative error `0.00e+00` at `N = 1, 2, 3`.
+port implements it and **is exact**: at flat profiles it reproduces the
+unmodified base simulator at every `N` from 1 to 6, relative error `0.00e+00`.
 
-**Superseded 18 Aug 2026, see the gate result below.** The heterogeneous sweep
-has now been run, nothing is wired into `panels.py`, and no claim changed
-status. What remains is the sweep itself, the second coupling
-channel the design document flags (liquidity and price impact stay shared no
-matter what the profiles are), and the universe-size question, since the default
-config has only 8 bonds and 2 sectors and a larger universe would invalidate the
-anchor. Every remaining `[MEASURED]` claim still depends on that work.
+**The step-3 gate then ran, and it did not open.** The still-shared liquidity
+and price-impact channels leave a `17.7` point residual across the separation
+range at `N = 2`, and at `N >= 4` the finite-difference probe is not measuring a
+local slope at all. The design document names two repairs, routing liquidity and
+impact through the profiles as well, or finding a configuration whose probe
+stays local at the `N` the panels need. **Neither is attempted and neither will
+be for this submission.** Both are multi-day edits, the first of them risking
+the bit-for-bit anchor that panel 1 rests on, and the panels they would upgrade
+are allowed to ship at `[DRY RUN]`. The trade is not worth ten days out.
+
+**Consequence, and it is the planned fallback rather than a surprise.** Panels
+2, 2b, 4 and 5 ship at `[DRY RUN]`: closed-form predictions with
+reference-environment agreement, stated as such, with no sentence implying
+measurement. Panel 1 remains the paper's one measured result. Section 10 states
+the gate outcome as a limitation. The port code is left as it stands, exact at
+the reduction and unused by any panel, so a journal version can resume from the
+design document rather than from scratch.
 
 **2. ~~Theorem 4's welfare page.~~ Done, 18 Aug 2026.** The welfare page is
 written in `math/04-theorem4-wedge.md`: the AR(1) welfare object with its sign
@@ -201,11 +204,14 @@ two-block collapse.
 
 | Risk | Severity | State |
 |---|---|---|
-| Heterogeneous-response port does not land in time | **realized** | Steps 1 to 3 ran on 18 Aug 2026. The port is exact, reproducing the unmodified base at every `N` from 1 to 6, and both profile constructors hit their targets to machine precision. **The gate then failed:** the still-shared liquidity and impact channels leave a `17.7` point residual at `N = 2`, and at `N >= 4` the probe is not measuring a local slope. Panels 2 to 5 stay `[DRY RUN]`. This is the fallback the plan named, not a surprise |
-| ~~Theorem 4 stays a sketch~~ | **closed** | Welfare page landed 18 Aug 2026 with 125 passing assertions. Only panel 6 is at risk now, and Theorem 4 ships as theory if it is cut |
-| Section 6 drafting slips | medium | It is the paper. Replanned, so the drafting is transcription rather than design |
+| ~~Heterogeneous-response port does not land in time~~ | **closed, realized, fallback accepted** | Steps 1 to 3 ran 18 Aug 2026. The port is exact, reproducing the unmodified base at every `N` from 1 to 6, and both profile constructors hit their targets to machine precision. **The gate failed:** a `17.7` point residual at `N = 2` from the still-shared liquidity and impact channels, and no local slope at `N >= 4`. Neither named repair is attempted, by decision on 19 Aug 2026. Panels 2, 2b, 4 and 5 ship `[DRY RUN]`, which is the fallback the plan named. Nothing further is owed here |
+| ~~Theorem 4 stays a sketch~~ | **closed** | Welfare page landed 18 Aug 2026 with 125 passing assertions. Theorem 4 ships as theory even if panel 6 is cut |
+| ~~Section 6 drafting slips~~ | **closed** | Drafted 18 Aug 2026 around the exact two-block root |
+| Panel 6 does not land | medium | Second in the de-scope order. If it is cut, Theorem 4 ships as theory with no figure |
+| Page budget stays over 9 | medium | Compression order fixed in advance in `writing/README.md` and applied without renegotiation |
 | A referee asks for fully heterogeneous agents | low | Answered as future work with the machinery stated to extend |
 | A referee probes finite `gamma_PO` | **now low** | Was the paper's weakest point. The imperfect-correction law answers it directly |
+| A referee reads a dry run as a measurement | low | `[DRY RUN]` is its own flag, Section 9 states each panel's status in its own row, and the gate outcome is a stated limitation in Section 10 |
 
 ## De-scope order, current
 
@@ -219,21 +225,26 @@ The exact two-block root was third in this order until the limit was shown to er
 unsafe. It is what makes Section 6's criterion honest rather than a refinement of
 it.
 
+**The port is not in this order and never was.** It was infrastructure that would
+have upgraded panels 2, 2b, 4 and 5 from `[DRY RUN]` to `[MEASURED]`. The gate
+closed that route for this submission, so those panels ship at the status they
+already held. No panel is lost and no claim is weakened below what the ledger
+already recorded; what is lost is an upgrade that was never assumed.
+
 ## Suggested order for the remaining days
 
-Settle the heterogeneous-response modeling decision first, before writing any
-code for it, because that decision is the actual bottleneck and it is cheap to
-get wrong. Then build the port in parallel with drafting. Draft Section 6 next,
-since it is replanned and is the paper. Derive Theorem 4's welfare page after
-that, and accept losing panel 6 if it slips. Write Sections 9 and 10 in
-that order; 3 and 2 are drafted. Section 8 is already scoped to one paragraph and is first to cut.
+The port workstream is closed and the theory is complete, so what remains is
+writing and one panel. Draft Sections 7 and 8, build panel 6 and wire
+`pigouvian_wedge` into the theory module, then write Section 9 with each panel's
+actual status in it, then Section 10, then rewrite the abstract around a measured
+number. Reconcile the four status surfaces last, as its own pass, against the
+built PDF rather than the source.
 
-If the port does not land, the paper is still submittable: the theory is complete
-and certified, panel 1 is measured in a real market, and panels 2 to 5 can be
-presented honestly as closed-form predictions with the reference-environment
-agreement stated as such. That is a weaker paper and it is not the plan, but it
-is not a failed submission, and knowing that should keep the port from being
-rushed into something unfalsifiable.
+The paper is submittable as it stands: the theory is complete and certified,
+panel 1 is measured in a real market, and panels 2 to 5 are presented honestly as
+closed-form predictions with reference-environment agreement stated as such. That
+is a weaker empirical section than the plan wanted, and it is not a failed
+submission.
 
 ---
 

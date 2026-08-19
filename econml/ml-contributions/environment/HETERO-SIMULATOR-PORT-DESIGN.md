@@ -317,6 +317,15 @@ reference-environment agreement stated as such.
 
 ## Status
 
+**Workstream closed 19 Aug 2026.** Neither repair above is attempted for this
+submission. Repair 1 is a larger edit than the port itself and would put panel
+1's bit-for-bit anchor at risk, which is the paper's only measured result.
+Repair 2 changes the market away from the one panel 1 anchors, so a probe that
+stayed local at `N = 20` would be measuring a different object. Both cost days,
+and the panels they would upgrade are allowed to ship at `[DRY RUN]`. The port
+is left exactly as it stands, exact at the reduction and imported by nothing, so
+a journal version resumes from this document rather than from scratch.
+
 Nothing here upgrades any claim. Panels 2, 2b, 4 and 5 remain `[DRY RUN]` in
 [`../../writing/CLAIMS-LEDGER.md`](../../writing/CLAIMS-LEDGER.md). This document
 records a design and a skeleton that reproduces the known case; it records no

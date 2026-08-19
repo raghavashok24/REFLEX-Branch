@@ -37,7 +37,7 @@ frontier along which a market can buy stability with either.
 | 1 | Effective number of independent learners | `N_eff = 1 + kappa(lambda_max(R) - 1)`; supply chain `N_eff = 1 + kappa*s*(N-1)` | anchors verified, identity derived |
 | 2 | Crowding-cadence frontier | `K_max = ln((m_N-1)/(m_N+1)) / ln c`; critical crowding `(1+c)/(1-c)` | derived, arithmetic checked |
 | 3 | Herd immunity and the substitution frontier | `rho*(s) = max(0, 1 - N_c(s)/N)`, collapsing to `1 - 1/m_N` | derived, limit case checked |
-| 4 | Pigouvian wedge | `t*` from stationary variance `1/(1-m_N^2)`; over-adaptation corollary | derived, needs welfare page |
+| 4 | Pigouvian wedge | `t*` from stationary variance `1/(1-m_N^2)`; over-adaptation corollary | proved and certified |
 
 Everything reduces to one substitution: `m_N = N_eff * m_1`, with `N_eff` set by
 model alignment rather than by headcount. Results 2 through 4 are all stated in
@@ -63,21 +63,22 @@ model alignment rather than by headcount. Results 2 through 4 are all stated in
 | Theorem 1 | **proved and certified** (`math/derivations/01`, `02`); 123 checks |
 | Theorem 2 | **proved and certified** (`math/derivations/03`); 59 checks |
 | Theorem 3 | **proved and certified** (`math/derivations/04`); 70 checks. **C18 failed and changed the claim** |
-| Theorem 4 algebra | sketched; welfare page outstanding. The only theorem still on a sketch |
+| Theorem 4 | **proved and certified** (`math/04-theorem4-wedge.md`); 125 checks |
 | Section 4, Result 1 | **drafted** (`writing/04`) |
 | Section 5, Result 2 | **drafted** (`writing/05`) |
-| Section 6, Result 3 | replanned around the exact root (`writing/06`), not yet drafted |
+| Section 6, Result 3 | **drafted** around the exact root (`writing/06`) |
 | Theory module | **written and certified** (`ml-contributions/theory/`); 50 checks |
 | Heterogeneous-response environment | **built and certified** (`ml-contributions/environment/`); 32 checks |
 | Panel harness | **built** (`ml-contributions/experiments/`); panels 1-5 run |
 | Panel 1 anchor | **`[MEASURED]`** in the real order-flow market, reproducing `1.74x / 3.16x` bit for bit |
 | Panels 2-5 | **dry runs pass**, all agreeing with their closed forms. Not measurements |
-| Panel 6 | blocked on Theorem 4 |
+| Heterogeneous-response port | **exact at the reduction, step-3 gate failed, workstream closed.** Panels 2-5 stay `[DRY RUN]` |
+| Panel 6 | `[TO BUILD]`. Theorem 4 is certified, so the panel is the only piece outstanding |
 | Remaining sections | planned, not written |
 
-Theorems 1 through 3 have moved from `[DERIVED]` to `[VERIFIED]` in the claims
-ledger, each against assertion-based certificates that fail loudly. 334 assertions
-across five files, all passing.
+Theorems 1 through 4 have moved from `[DERIVED]` to `[VERIFIED]` in the claims
+ledger, each against assertion-based certificates that fail loudly. 519 assertions
+across seven files, all passing.
 
 **One claim failed, and it was the one the ledger flagged in advance.** The
 strong-correction limit in Theorem 3 is optimistic rather than conservative, so it
@@ -130,3 +131,9 @@ reason to exist at this venue.
 The exact two-block root was third in this order until 18 Aug 2026. It came out
 once the strong-correction limit was shown to err in the unsafe direction: the
 exact root is what makes the stability criterion honest, not a refinement of it.
+
+The heterogeneous-response port is not in this order. It was infrastructure that
+would have upgraded experiments 2, 2b, 4 and 5 to `[MEASURED]`; its step-3 gate
+failed on 18 Aug 2026 and the workstream was closed on 19 Aug 2026 without
+attempting either named repair. Those panels ship at the `[DRY RUN]` status they
+already held, so nothing is cut and no claim is weakened.

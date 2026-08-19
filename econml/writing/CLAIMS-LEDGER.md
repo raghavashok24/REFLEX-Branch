@@ -172,6 +172,14 @@ requires the order-flow simulator, does that.
    measured". No figure was drawn and no status moved, which is what the gate is
    for.
 
+**Closed 19 Aug 2026.** The port workstream is shut, not paused. Neither repair
+the design document names is attempted: routing liquidity and impact through the
+profiles is a multi-day edit that risks panel 1's bit-for-bit anchor, and
+re-tuning the probe to stay local at `N = 20` is a different market from the one
+panel 1 anchors. Panels 2, 2b, 4 and 5 therefore ship at `[DRY RUN]`, which is
+the status they held before the port ran and the fallback the plan named. No row
+above changes. Section 10 states the gate outcome as a limitation.
+
 On that last one: a passing dry run is progress on the derivations and no
 progress at all on the empirics. Until a panel runs in the order-flow simulator
 the claim it tests holds at its derivation status and the paper must not imply
