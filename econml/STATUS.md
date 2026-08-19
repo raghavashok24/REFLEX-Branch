@@ -243,9 +243,11 @@ anonymity. The line sits commented in `main.tex` for the camera-ready, the live
 sentence promises anonymized supplementary material to reviewers, and the
 checklist's question 5 states the same arrangement.
 
-**One field still to verify:** `\workshoptitle` reads "Workshop on Machine
-Learning and Economics (EconML)". Check it against the call for papers. It
-appears in the camera-ready footer only, so it is cosmetic now.
+**Venue checked against the call for papers, 19 Aug 2026.** `\workshoptitle`
+reads "Economics for Machine Learning (EconML)", the workshop's registered name;
+an earlier draft had it backwards. The call also confirms the nine-page content
+limit with figures and tables included, the `dblblindworkshop` option, the
+29 Aug deadline anywhere on earth, and Atlanta on 12 or 13 Dec 2026.
 
 ## Risk register
 

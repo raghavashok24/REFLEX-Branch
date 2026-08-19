@@ -91,10 +91,18 @@ Nothing cut carries a claim the paper still makes. The claims ledger in
 `../writing/CLAIMS-LEDGER.md` remains the authority on status, and every flag
 in the body matches it.
 
-## One thing to verify before submitting
+## Venue, checked against the call for papers
 
-`\workshoptitle` currently reads "Workshop on Machine Learning and Economics
-(EconML)". Check that against the call for papers and correct it if the
-workshop's registered name differs; it appears in the camera-ready footer, not
-in the submission build, so it is cosmetic now and wrong-looking later if left
-unchecked.
+`\workshoptitle` reads "Economics for Machine Learning (EconML)", which is the
+workshop's registered name. An earlier draft had it backwards as "Machine
+Learning and Economics"; corrected 19 Aug 2026 against the call for papers.
+
+The same source confirms the rest of the build. Long papers are capped at nine
+content pages with figures and tables included, which is what this compiles to.
+Review is double-blind and the call names `dblblindworkshop` as the required
+option, which is the one in use. The deadline is 29 Aug 2026 anywhere on earth,
+and the workshop runs 12 or 13 Dec 2026 in Atlanta.
+
+The title reaches the page only in the camera-ready footer, since the submission
+build prints the generic notice instead. Getting it right now means the
+camera-ready needs no edit beyond adding the `final` option.
