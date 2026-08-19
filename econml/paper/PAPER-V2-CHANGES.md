@@ -223,6 +223,8 @@ does not challenge it.
   two-pass build, not an incremental one, since a stale `.aux` hid a
   three-line overflow during the v1 build.
 
+  Note from the user - Do NOT cut any figures. Preserve all remaining figures, and figure out other ways to free space, maybe by cutting nonessential text (text that the paper will still read fine and be great without). Maybe don't add an entire half page to the Narang citation, and instead make it 0.35 pages or something a bit less - just an idea, you make the call.
+
 ## Suggested order
 
 Decide R1 in or out first, because it changes the abstract and Section 9. Then
