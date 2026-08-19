@@ -67,6 +67,13 @@ revealing artifact, because it is visibly anomalous next to twenty ordinary
 entries and reads as a paper hiding its own lineage. The submission cites them
 the way any third party would and lets the third-person prose carry the blind.
 
+**No entry carries a URL**, these two included. They briefly did, and a DOI
+trailing the only two references sharing an author with the submission is a
+worse tell than the names themselves: it makes them the two entries a reader's
+eye lands on. The bibliography is uniform, `Authors. Title. Venue,
+vol(issue):pages, year.`, and anything reintroducing a link to one entry has to
+add it to all twenty-two.
+
 ## The artifact URL
 
 The public repository is `github.com/vignesh-nagarajan-vn/PRICE`. **It is not in
