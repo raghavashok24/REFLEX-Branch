@@ -53,6 +53,7 @@ model alignment rather than by headcount. Results 2 through 4 are all stated in
 | [`ml-contributions/`](ml-contributions/) | The theory module, the response environment, the panel harness, specs and certificates |
 | [`writing/`](writing/) | Section-by-section paper content, page budget, claims ledger |
 | [`paper/`](paper/) | **The submission.** `main.tex`, the NeurIPS checklist, the official style file, and the compiled `main.pdf` |
+| [`paper/PAPER-V2-CHANGES.md`](paper/PAPER-V2-CHANGES.md) | **Read before touching the paper.** An external review of v1 and what to do about it |
 
 ## Status board
 
@@ -79,6 +80,7 @@ model alignment rather than by headcount. Results 2 through 4 are all stated in
 | Page budget | closed **in LaTeX**, at nine content pages. The markdown build folder still holds more than nine pages; `paper/README.md` records what was cut |
 | Submission PDF | **compiles clean**, 9 content pages, references and checklist after |
 | NeurIPS checklist | **all 16 answered**, instruction block stripped, heading kept |
+| Review of v1 | **back, accept as poster.** Three items would move it: derive the reduction in the body, dispatch Narang et al., measure `s` on real models. See `paper/PAPER-V2-CHANGES.md` |
 
 Theorems 1 through 4 have moved from `[DERIVED]` to `[VERIFIED]` in the claims
 ledger, each against assertion-based certificates that fail loudly. 525 assertions

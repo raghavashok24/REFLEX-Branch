@@ -3,6 +3,11 @@
 The submission itself: `main.tex` compiled against the official NeurIPS 2026
 style files, plus the mandatory paper checklist.
 
+**Working on v2?** Read [`PAPER-V2-CHANGES.md`](PAPER-V2-CHANGES.md) first. It
+holds an external review of v1, an assessment of each criticism against the
+code, the space arithmetic for fitting the fixes into nine pages, and one item
+that looks like a bug and is not.
+
 ```bash
 python econml/paper/make_figures.py     # figures, from the committed result JSONs
 cd econml/paper && pdflatex main.tex && pdflatex main.tex

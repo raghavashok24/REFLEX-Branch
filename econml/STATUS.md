@@ -243,6 +243,17 @@ anonymity. The line sits commented in `main.tex` for the camera-ready, the live
 sentence promises anonymized supplementary material to reviewers, and the
 checklist's question 5 states the same arrangement.
 
+**v1 was reviewed externally on 19 Aug 2026 and the notes are written up in
+[`paper/PAPER-V2-CHANGES.md`](paper/PAPER-V2-CHANGES.md).** The verdict is accept
+as poster, around 70% as submitted, high 80s if three things land: derive the
+joint Jacobian in the body rather than the appendix, state the containment
+relation against Narang et al. (2023), and measure the shared-model fraction `s`
+once on real models. Nothing is implemented; v1 is frozen at commit `486d213`.
+Two of the review's criticisms were checked against the code and hold (`N_eff`
+cancels in the wedge's ignored fraction, and (A5) is not needed for Theorem 1's
+radius); one is a misreading and **must not be acted on**, since the submission
+footer is already correct and changing it means editing the style file.
+
 **Venue checked against the call for papers, 19 Aug 2026.** `\workshoptitle`
 reads "Economics for Machine Learning (EconML)", the workshop's registered name;
 an earlier draft had it backwards. The call also confirms the nine-page content
