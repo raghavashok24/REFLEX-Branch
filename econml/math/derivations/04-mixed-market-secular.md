@@ -240,7 +240,13 @@ exact, measured thresholds of `12`, `14`, `16` and `20` firms at efficacies
 four out of four, at the integer granularity that is what a market actually
 faces. This is measured in the linearized reference environment and is recorded
 as evidence, not as a proof. The exact statement away from `kappa = s = 1`
-remains the quadratic's root. [MEASURED, panel 4]
+remains the quadratic's root. [DRY RUN, panel 4]
+
+The flag is `[DRY RUN]` and not `[MEASURED]` on purpose. Panel 4 runs in the
+linearized reference environment, which has no informed flow, no spread and no
+inventory, so it establishes that the closed form governs the realized dynamics
+and nothing about a market. The claims ledger is the enforcement point and
+carries E4 and E4.1 at `[DRY RUN]`; this note now matches it.
 
 ## 8. The threshold, and which form is exact
 
