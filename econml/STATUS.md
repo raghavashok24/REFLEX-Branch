@@ -15,9 +15,10 @@ closed-form module and the heterogeneous-response environment both exist and pas
 acceptance tests. Five of six panels have run as dry runs against the reference
 environment and agree with the closed forms, and **panel 1's anchor is now
 measured in the real order-flow market, reproducing the published run bit for
-bit**. **The gap is empirical and editorial**: panels 2 to 5 still need a
-heterogeneous-response port that is design work rather than a port, and seven of
-eleven paper sections are unwritten.
+bit**. **The gap is empirical and editorial**: the heterogeneous-response port now has a
+fixed design and a skeleton that reduces exactly to the known case, but no
+heterogeneous sweep has been run, and seven of eleven paper sections are
+unwritten.
 
 ## Where the time went, and what it bought
 
@@ -47,7 +48,7 @@ consequence.
 | 3, mixed market and herd immunity | `math/derivations/04` | 70 checks |
 | 4, Pigouvian wedge | **sketch only** | not written |
 
-334 assertions across five assertion-based files, all passing:
+394 assertions across six assertion-based files, all passing:
 
 ```bash
 for f in econml/ml-contributions/certificates/verify_*.py; do python "$f" || break; done
@@ -71,6 +72,7 @@ expectation.
 | Theory module, `ml-contributions/theory/` | Theorems 1 to 3 complete, 50 acceptance checks |
 | Heterogeneous-response environment, `ml-contributions/environment/` | 32 acceptance checks, reduction verified |
 | Panel harness, `ml-contributions/experiments/` | panels 1 to 5, exits nonzero on disagreement |
+| Simulator port, `experiments/hetero_simulator_port.py` | **design fixed, skeleton reduces exactly**; no sweep run |
 
 ### Panels, as dry runs only
 
@@ -146,9 +148,21 @@ generation that realizes a target alignment matrix. That is multi-session design
 work, and the branch repository's environment is the specification it must
 reduce to at `R = 1 1'`.
 
-Every remaining `[MEASURED]` claim depends on it. Start it early precisely
-because it cannot be compressed, and because the first hour is a modeling
-decision rather than typing.
+**The modeling decision is now made and recorded** in
+`ml-contributions/environment/HETERO-SIMULATOR-PORT-DESIGN.md`: each dealer
+carries a bond-space exposure profile, and both its contribution to the informed
+pool and its sensing of that pool are routed through it, so the coupling matrix
+becomes `(1-kappa)I + kappa R` with `R` the Gram matrix of the profiles. The
+skeleton in `experiments/hetero_simulator_port.py` implements it and passes its
+one acceptance test: at flat profiles it reproduces panel 1's published anchors
+bit for bit, relative error `0.00e+00` at `N = 1, 2, 3`.
+
+**No heterogeneous sweep has been run**, nothing is wired into `panels.py`, and
+no claim changed status. What remains is the sweep itself, the second coupling
+channel the design document flags (liquidity and price impact stay shared no
+matter what the profiles are), and the universe-size question, since the default
+config has only 8 bonds and 2 sectors and a larger universe would invalidate the
+anchor. Every remaining `[MEASURED]` claim still depends on that work.
 
 **2. Theorem 4's welfare page.** The only theorem still on a sketch. Blocks
 Section 7 and panel 6. `pigouvian_wedge` is deliberately absent from the theory
@@ -166,8 +180,7 @@ the crude bound proved and the sharp rate measured. Share-weighted alignment and
 the fully heterogeneous block-secular reduction, both named and not attempted.
 Heterogeneous cadences across firms, which breaks the eigenvector sharing
 Theorem 2 uses. Three or more correction levels, which breaks Theorem 3's
-two-block collapse. `verify_theorem1_anchors.py` still prints a report instead of
-asserting and needs converting.
+two-block collapse.
 
 ---
 
@@ -175,7 +188,7 @@ asserting and needs converting.
 
 | Risk | Severity | State |
 |---|---|---|
-| Heterogeneous-response port does not land in time | **high** | Not started, and it is design work rather than a port. Would cost panels 2 to 5 and leave a theory paper with one measured anchor |
+| Heterogeneous-response port does not land in time | **high** | Design fixed and the skeleton reduces exactly to the base market. The sweep itself is not built, so the risk stands. Would cost panels 2 to 5 and leave a theory paper with one measured anchor |
 | Theorem 4 stays a sketch | medium | Section 7 shortens, panel 6 is cut. Second in de-scope order, so survivable |
 | Section 6 drafting slips | medium | It is the paper. Replanned, so the drafting is transcription rather than design |
 | A referee asks for fully heterogeneous agents | low | Answered as future work with the machinery stated to extend |

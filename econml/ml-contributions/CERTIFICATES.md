@@ -43,10 +43,17 @@ ways, analytically from `R_simplex` and constructively from actual unit response
 vectors summing to zero; the constructive path is the load-bearing one, since it
 rules out the result being an artifact of how the matrix was written down.
 
-**Outstanding:** `verify_theorem1_anchors.py` still prints a report rather than
-asserting, so it cannot fail loudly. `verify_theorem1_proof.py` is the template
-for converting it. Both then fold into the base project's verification layer.
-[TO BUILD]
+`verify_theorem1_anchors.py` was converted from a report-printing script to an
+assertion-based certificate on 18 Aug 2026, against `verify_theorem1_proof.py`
+as the template. It keeps its printed tables, since the section (D) and (F)
+numbers are quoted in the math notes and a reader checking a quote wants to see
+them, and it now carries 60 assertions on the checks it was already computing.
+The load-bearing additions are in section (C): `m_1(1-kappa)` is asserted to be
+in the spectrum and asserted **not** to be the radius, so the plan of record's
+original error cannot silently return.
+
+**Outstanding:** folding the certificates into the base project's verification
+layer. [TO BUILD]
 
 ## Theorem 2
 
@@ -160,10 +167,10 @@ for f in econml/ml-contributions/certificates/verify_*.py; do python "$f" || bre
 | `verify_theorem3_herd_immunity.py` | 70 |
 | `verify_theory_module.py` | 50 |
 | `verify_hetero_env.py` | 32 |
+| `verify_theorem1_anchors.py` | 60 |
 
-`verify_theorem1_anchors.py` is the original report-style script and is not
-counted, since it cannot fail loudly. Converting it is the one outstanding item
-on this file.
+394 assertions across six files, all passing. The anchors file joined the count
+on 18 Aug 2026 when it was converted to assert rather than print.
 
 ## Rule
 
