@@ -62,7 +62,7 @@ itself), locked by the V4 check (along-c achieves 1.80195 vs the bound
 | V2.3 | Long-run `Var(sum d) = T v (1-m)/(1+m)` (D2) | 5.72 vs 5.86 |
 | V2.4 | Feedback bias, m=0.5 (sign +) (D2) | +0.00172+-0.00042 vs +0.00231 |
 | V2.5 | Feedback bias, m=0.2 (sign -) (D2) | -0.00254+-0.00047 vs -0.00185 |
-| V3.1-2 | van Trees bound met with equality, two designs (D3a) | risk 0.01525/0.01531 vs bound 0.01533 |
+| V3.1, V3.2 | van Trees bound met with equality, two designs (D3a) | risk 0.01525/0.01531 vs bound 0.01533 |
 | V3.3 | `E|posterior imbalance| <= delta sqrt(S)/sigma`, all t (D3b) | max ratio 0.828 |
 | V3.4 | Minimax-scale exploitation decays ~ T^{-1/2} (D3b) | ratio 0.35 (predict 1/3) |
 | V4.1 | A-opt `(tr G^{1/2})^2/B` achieved, unbeaten in 4000 (D4) | 44.477 vs best random 61.276 |
@@ -74,8 +74,8 @@ itself), locked by the V4 check (along-c achieves 1.80195 vs the bound
 | V6.1 | Perturbed-modulus bound, 9-cell grid (D6) | max excess 2.4e-11 |
 | V6.2 | Open-loop schedules stability-neutral (D6) | difference 0 |
 | V7.1 | Secant bias constant `tau'''/6` (D7) | -0.17591 vs -0.17572 |
-| V7.2-4 | `MSE_np` formula on (B,T) grid (D7) | within 2% at all three |
-| V7.5-6 | Crossover direction both sides of `delta*` (D7) | correct both sides |
+| V7.2, V7.3, V7.4 | `MSE_np` formula on (B,T) grid (D7) | within 2% at all three |
+| V7.5, V7.6 | Crossover direction both sides of `delta*` (D7) | correct both sides |
 | V8.1 | `v* = sqrt(b rho/a)` (D8) | scan matches |
 | V8.2 | `rho* = dh^4/(4 k^2 s^2)`, gamma cancels (D8) | root 0.25800 exact |
 | V8.3 | Lai-Robbins schedule on the frontier (D8) | exact |
