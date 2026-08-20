@@ -3,20 +3,29 @@
 The submission itself: `main.tex` compiled against the official NeurIPS 2026
 style files, plus the mandatory paper checklist.
 
-**Working on v2?** Read [`PAPER-V2-CHANGES.md`](PAPER-V2-CHANGES.md) first. It
-holds an external review of v1, an assessment of each criticism against the
-code, the space arithmetic for fitting the fixes into nine pages, and one item
-that looks like a bug and is not.
+`main.tex` is **v2**. v1 is archived unmodified in [`v1/`](v1/), frozen at
+commit `486d213`. [`PAPER-V2-CHANGES.md`](PAPER-V2-CHANGES.md) holds the
+external review of v1, an assessment of each criticism against the code, the
+space arithmetic, one item that looks like a bug and is not, and a record of
+what v2 implemented and what it deliberately skipped.
 
 ```bash
 python econml/paper/make_figures.py     # figures, from the committed result JSONs
-cd econml/paper && pdflatex main.tex && pdflatex main.tex
+cd econml/paper && pdflatex main.tex && pdflatex main.tex && pdflatex main.tex
 ```
 
-Two passes, because the cross-references to numbered theorems resolve on the
-second. No bibtex run: the bibliography is a `thebibliography` block inside
-`main.tex`, since 22 entries do not justify a `.bib` and a manual list cannot
-go stale against one.
+**Three passes.** v1 needed two; v2 needs a third because Lemma 1 shifts the
+theorem numbering that the cross-references resolve against. No bibtex run: the
+bibliography is a `thebibliography` block inside `main.tex`, since 22 entries do
+not justify a `.bib` and a manual list cannot go stale against one.
+
+**`\hypersetup{draft=true}` is deliberate.** A cross-reference link straddling
+the page 2/3 break aborts pdfTeX with "\pdfendlink ended up in different nesting
+level than \pdfstartlink". Neither `breaklinks` nor a larger `pdf_mem_size`
+avoids it, and the layout that triggers it is the layout that fits nine pages.
+Making hyperref inert leaves the printed page identical and costs only
+clickability, which a double-blind submission does not need. **Remove the line
+for the camera-ready**, where the layout differs anyway.
 
 ## Files
 
@@ -102,8 +111,9 @@ from `../writing/` on the way into LaTeX, and why:
 - **The worked tables in Sections 5 and 6.** Reduced to inline numbers, which
   cost a fifth of the space and carry the same three values.
 - **The clustered-companion figure**, folded into a row of the panel table.
-- **Section 8's longer form**, already collapsed to two sentences before the
-  LaTeX pass and left there.
+- **The supervision material's longer form**, collapsed to two sentences before
+  the LaTeX pass and, in v2, folded out of its own section into the opening
+  paragraph of the closing one.
 - **The free-riding diagnostic and the supervision panel**, both appendix
   material, and both fourth and first in the de-scope order respectively.
 

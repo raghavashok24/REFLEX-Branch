@@ -234,3 +234,60 @@ status surfaces last, as its own pass, exactly as v1 did.
 
 If the days run short, **R3 before R2**: the review calls it the most likely
 fatal criticism, and it is cheaper.
+
+---
+
+# v2, as built
+
+**Implemented 19 Aug 2026.** `main.tex` in this folder is now v2. v1 is archived
+unchanged in [`v1/`](v1/) and frozen at commit `486d213`. Content still ends on
+page 9 and references start on page 10, verified from a clean three-pass build.
+
+## Implemented
+
+| Item | What was done |
+|---|---|
+| **R2** | Lemma 1 (Reduction) now sits at the end of Section 3 with (H1) to (H4) stated compactly, the `J = -m_1[(1-kappa)I + kappa R]` display, and a three-line proof sketch. (H2) is labelled as (A2) restated in the new object rather than duplicated. Theorem 2 now cites the display instead of restating it |
+| **R3** | The Section 2 Narang paragraph carries the containment statement: their scalar condition, our spectral one, and the verdict that ours is **strictly sharper on the class their constants describe and not implied by theirs**, with the reason for each half. Built to ~0.35 pg, not the 0.50 the review estimated |
+| **R5 / W4** | The dry-run defense no longer claims a dry run establishes something no algebra check covers. It now says what is true: the runs check that the closed forms were derived from the map we think they were, a check on the derivation that has caught real errors |
+| **R5 / W7** | Section 7 leads with the provenance channel, which now sits before Corollary 8. The corollary is followed by the statement that `N_eff` cancels from the ignored fraction, so Corollary 8 is the generic commons result and the provenance asymmetry is the paper-specific one |
+| **W8** | (A5) is out of the standing assumption block, which now runs (A1) to (A4). It is restated in Section 7 attached to the reading of Lemma 6 that actually needs it, prefaced by the fact that Theorem 2's radius needs no sign condition at all. Section 5's remark was reworded, since there is no longer an (A5) for it to disclaim an analogue of |
+| **PEBSA** | Still one sentence, still one citation. It now says what follows from the difference: an exogenous-signal estimator's accuracy does not depend on the state of the system it measures, the Section 9 estimator sharpens as the system approaches instability, so the two face opposite sample-complexity problems near the event of interest |
+| **W5** | Section 8 is folded into the closing section as its opening paragraph. The paper is nine sections rather than ten |
+| **W11** | Meta-commentary cut throughout: "which is what the gate is for", "stated plainly", "we do not re-derive it", "The choice is defended rather than assumed", "We quantify it rather than presenting it as free", the "Naming" paragraph (which duplicated a Related-work sentence verbatim), and the commentary sentences closing the herd-immunity and analogy paragraphs |
+
+## Deliberately not done
+
+- **R1**, measuring `s` on real models. Out. The repo has no `transformers`,
+  `peft` or LoRA infrastructure, the experimental stack is CPU-only and
+  deterministic, and the panel would cost 0.30 pg the budget cannot fund. The
+  abstract and the closing section keep their v1 framing.
+- **R4**, the style file and footer. Out, and acting on it would be harmful.
+  `neurips_2026.sty` is untouched. See W10 above.
+- **No figure or table was cut.** All five figures and both tables survive.
+  Every page of space came from prose, plus figure *sizing*: the two-panel rows
+  went from `0.49` to `0.40\textwidth` and the wedge figure from `0.88` to
+  `0.60`. Panels are smaller, none is missing.
+- **No status flag moved.** Reconciled against `../writing/CLAIMS-LEDGER.md` as
+  a separate pass: one `[MEASURED]` panel and six `[DRY RUN]` rows in the body,
+  matching E1 and E2 through E6 in the ledger. Since R1 is out, nothing should
+  have moved, and nothing did.
+- **Sections 4 to 6 were not compressed**, as the v1 rule requires.
+
+Two ledger-backed numbers were dropped from the body for space and remain in the
+ledger: the per-`N` common-mode moduli behind panel 1's amplification (E1.1, the
+amplification figures themselves stay in Table 2) and the fee's `1.7e-13`
+implementation error (E6.2). Neither supports a claim the body still makes.
+
+## One build change
+
+`main.tex` now sets `\hypersetup{draft=true}`. A cross-reference link straddling
+the page 2/3 break aborts pdfTeX with "\pdfendlink ended up in different nesting
+level than \pdfstartlink"; neither `breaklinks` nor a larger `pdf_mem_size`
+avoids it, and the layout that triggers it is the one that fits nine pages.
+Making hyperref inert leaves the printed page identical and costs only
+clickability, which a double-blind submission does not need. **Drop the line for
+the camera-ready**, where the layout differs anyway.
+
+The build now needs **three passes**, not two: the added Lemma 1 shifts the
+theorem numbering that the cross-references resolve against.
