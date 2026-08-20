@@ -7,7 +7,15 @@ stronger than its ledger entry.
 
 Reviewed as a pass of its own before freeze, against the built PDF rather than
 the source, because a status flag that drifted during writing is invisible in a
-diff.
+diff. Last reconciled against `paper/main.pdf` on 20 Aug 2026: one `[MEASURED]`
+row and six `[DRY RUN]` rows in Table 2 of the body, matching E1 and E2 through
+E6 here, and 525 certificate assertions passing.
+
+**Numbering.** This file's section headings are the markdown drafts in this
+folder. The built paper folds supervision into the closing section, so it runs
+nine sections, and the four results are Theorem 2, 3, 4 and 7 there against
+Theorem 1 to 4 here. Where this file says Section 9 or 10, the paper says
+Section 8 or 9. Flags are unaffected.
 
 ## Status flags
 

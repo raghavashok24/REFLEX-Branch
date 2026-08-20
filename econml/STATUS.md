@@ -126,7 +126,10 @@ remaining panels need the simulator.
 ### Writing
 
 **All eleven sections are drafted as of 19 Aug 2026.** Word counts are body
-prose, excluding display math, tables and the per-file notes.
+prose, excluding display math, tables and the per-file notes. These are the
+markdown working drafts; v2 of the paper folds section 8 into section 10, so the
+built PDF carries nine sections and this table's numbering is the drafts', not
+the submission's.
 
 | Section | State | Body words | Measured pages |
 |---|---|---|---|
@@ -248,7 +251,13 @@ checklist's question 5 states the same arrangement.
 as poster, around 70% as submitted, high 80s if three things land: derive the
 joint Jacobian in the body rather than the appendix, state the containment
 relation against Narang et al. (2023), and measure the shared-model fraction `s`
-once on real models. Nothing is implemented; v1 is frozen at commit `486d213`.
+once on real models. **v2 is built**: the reduction lemma and the Narang
+containment are in the body, the smaller items landed, and measuring `s` was
+ruled out for lack of infrastructure and page budget. v1 is frozen at commit
+`486d213` and archived in `paper/v1/`. The paper is now **nine sections**, since
+supervision folded into the closing section, and the body's four results are
+numbered Theorem 2, 3, 4 and 7 there against Theorem 1 to 4 in this file and the
+ledger.
 Two of the review's criticisms were checked against the code and hold (`N_eff`
 cancels in the wedge's ignored fraction, and (A5) is not needed for Theorem 1's
 radius); one is a misreading and **must not be acted on**, since the submission

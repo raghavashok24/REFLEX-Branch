@@ -218,6 +218,9 @@ on 18 Aug 2026 when it was converted to assert rather than print, and the
 Theorem 4 file the same day when the welfare page landed. The theory module
 gained six on 19 Aug 2026 when the wedge replaced the absence assertion.
 
+**Re-run 20 Aug 2026 as the pre-freeze check.** All seven files exit zero, the
+per-file counts above are reproduced exactly, and the total is 525.
+
 ## Rule
 
 A closed form that reaches the paper without a passing certificate is stated at

@@ -81,6 +81,8 @@ model alignment rather than by headcount. Results 2 through 4 are all stated in
 | Submission PDF | **compiles clean**, 9 content pages, references and checklist after |
 | NeurIPS checklist | **all 16 answered**, instruction block stripped, heading kept |
 | Review of v1 | **back, accept as poster.** Three items would move it: derive the reduction in the body, dispatch Narang et al., measure `s` on real models. See `paper/PAPER-V2-CHANGES.md` |
+| Paper v2 | **built.** Reduction lemma and Narang containment are in the body, the smaller items landed, measuring `s` is out. Nine sections, nine content pages, clean three-pass build. v1 archived in `paper/v1/` |
+| Appendix | **a pointer, not the proofs.** The proofs live in `math/` as markdown and have never been typeset. See the note below |
 
 Theorems 1 through 4 have moved from `[DERIVED]` to `[VERIFIED]` in the claims
 ledger, each against assertion-based certificates that fail loudly. 525 assertions
@@ -116,6 +118,12 @@ anonymized-artifact promise. REFLEX and PEBSA are both public at submission time
 and are cited as ordinary third-party references. The only rule to enforce is
 that no sentence positions either as the authors' own work: no "our earlier
 framework", no "we previously showed", no "building on our REFLEX".
+
+**Section and theorem numbering.** This folder, `STATUS.md` and the claims
+ledger number the four results Theorem 1 to 4 and follow the eleven markdown
+drafts in `writing/`. The built paper folds supervision into the closing section,
+so it runs nine sections and numbers the same four results Theorem 2, 3, 4 and 7,
+after Lemma 1. Status flags match across both; only the labels differ.
 
 **Notation.** ASCII math in all markdown here, matching the plan of record.
 LaTeX happens once, at the end, from these files. Nothing in this folder is

@@ -8,7 +8,7 @@
 \item {\bf Claims}
     \item[] Question: Do the main claims made in the abstract and introduction accurately reflect the paper's contributions and scope?
     \item[] Answer: \answerYes{}
-    \item[] Justification: The abstract and Section~1 state exactly the four closed-form results proved in Sections~4--7 and the one externally validated measurement in Section~9, and they separate the two evidential statuses. The abstract quotes only the measured replication and never a dry run.
+    \item[] Justification: The abstract and Section~1 state exactly the four closed-form results proved in Sections~4--7 and the one externally validated measurement in Section~8, and they separate the two evidential statuses. The abstract quotes only the measured replication and never a dry run.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer \answerNA{} means that the abstract and introduction do not include the claims made in the paper.
@@ -20,7 +20,7 @@
 \item {\bf Limitations}
     \item[] Question: Does the paper discuss the limitations of the work performed by the authors?
     \item[] Answer: \answerYes{}
-    \item[] Justification: Section~10 is a dedicated limitations paragraph. It names the linearization (A1) with its measured cost, states that five of six panels are reference-environment dry runs rather than market measurements and why the port that would have changed that failed its gate, and lists the equal-moduli restriction, the homogeneous-mixing corner, the synchronous-cadence assumption and the unobservability of $R$ and $s$.
+    \item[] Justification: Section~9 is a dedicated limitations paragraph. It names the linearization (A1) with its measured cost, states that five of six panels are reference-environment dry runs rather than market measurements and why the port that would have changed that failed its gate, and lists the equal-moduli restriction, the homogeneous-mixing corner, the synchronous-cadence assumption and the unobservability of $R$ and $s$.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer \answerNA{} means that the paper has no limitation while the answer \answerNo{} means that the paper has limitations, but those are not discussed in the paper. 
@@ -36,7 +36,7 @@
 \item {\bf Theory assumptions and proofs}
     \item[] Question: For each theoretical result, does the paper provide the full set of assumptions and a complete (and correct) proof?
     \item[] Answer: \answerYes{}
-    \item[] Justification: Assumption~1 collects the five standing assumptions (A1)--(A5) and each theorem references it. All theorems, lemmas and corollaries are numbered and cross-referenced. Proof sketches appear inline in Sections~4--7 and complete proofs are in the supplementary material, as are the numerical certificates with their tolerances.
+    \item[] Justification: Assumption~1 collects the four standing assumptions (A1)--(A4) and each theorem references it; the one sign condition (A5) is stated in Section~7 at the single place it is needed. All theorems, lemmas and corollaries are numbered and cross-referenced. Proof sketches appear inline in Sections~4--7 and complete proofs are in the supplementary material, as are the numerical certificates with their tolerances.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer \answerNA{} means that the paper does not include theoretical results. 
@@ -50,7 +50,7 @@
     \item {\bf Experimental result reproducibility}
     \item[] Question: Does the paper fully disclose all the information needed to reproduce the main experimental results of the paper to the extent that it affects the main claims and/or conclusions of the paper (regardless of whether the code and data are provided or not)?
     \item[] Answer: \answerYes{}
-    \item[] Justification: Section~9 states that every run is CPU-only and deterministic from a (config, seed) pair with common random numbers on paired probes, and that stability is estimated from the trajectory's asymptotic growth rate under the actual retraining map rather than from an eigensolve. Each theorem's parameters are given where its result is stated and repeated in the figure captions, $c=0.8$ included. The inherited protocol rules and the reference environment's acceptance test, that it reproduces the homogeneous market at $R=\mathbf{1}\mathbf{1}^{\top}$, are in the supplementary material rather than the body, for space.
+    \item[] Justification: Section~8 states that every run is CPU-only and deterministic from a (config, seed) pair with common random numbers on paired probes, and that stability is estimated from the trajectory's asymptotic growth rate under the actual retraining map rather than from an eigensolve. Each theorem's parameters are given where its result is stated and repeated in the figure captions, $c=0.8$ included. The inherited protocol rules and the reference environment's acceptance test, that it reproduces the homogeneous market at $R=\mathbf{1}\mathbf{1}^{\top}$, are in the supplementary material rather than the body, for space.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer \answerNA{} means that the paper does not include experiments.
@@ -70,7 +70,7 @@
 \item {\bf Open access to data and code}
     \item[] Question: Does the paper provide open access to the data and code, with sufficient instructions to faithfully reproduce the main experimental results, as described in supplemental material?
     \item[] Answer: \answerNo{}
-    \item[] Justification: The public repository names an author, so it is withheld at submission to preserve the blind. Code, derivations and all seven certificate files are provided to reviewers as anonymized supplementary material, and the repository is linked in the camera-ready version; Section~9 states this arrangement. No dataset is used: every panel is simulated and deterministic from a (config, seed) pair.
+    \item[] Justification: The public repository names an author, so it is withheld at submission to preserve the blind. Code, derivations and all seven certificate files are provided to reviewers as anonymized supplementary material, and the repository is linked in the camera-ready version; Section~8 states this arrangement. No dataset is used: every panel is simulated and deterministic from a (config, seed) pair.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer \answerNA{} means that paper does not include experiments requiring code.
@@ -87,7 +87,7 @@
 \item {\bf Experimental setting/details}
     \item[] Question: Does the paper specify all the training and test details (e.g., data splits, hyperparameters, how they were chosen, type of optimizer) necessary to understand the results?
     \item[] Answer: \answerYes{}
-    \item[] Justification: The parameters of every worked example and every panel ($m_1$, $\kappa$, $s$, $N$, $c$, correction efficacy) appear with the result they support and again in the figure captions, and Section~9 gives the estimator and the grid sizes. There is no training set, no split and no hyperparameter search: the panels sweep a stated grid of model parameters. Full specifications are in the supplementary material.
+    \item[] Justification: The parameters of every worked example and every panel ($m_1$, $\kappa$, $s$, $N$, $c$, correction efficacy) appear with the result they support and again in the figure captions, and Section~8 gives the estimator and the grid sizes. There is no training set, no split and no hyperparameter search: the panels sweep a stated grid of model parameters. Full specifications are in the supplementary material.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer \answerNA{} means that the paper does not include experiments.
@@ -139,7 +139,7 @@
 \item {\bf Broader impacts}
     \item[] Question: Does the paper discuss both potential positive societal impacts and negative societal impacts of the work performed?
     \item[] Answer: \answerYes{}
-    \item[] Justification: Section~10 states the policy reading directly: the work supplies a regulator with a measurable systemic quantity and three instruments. The intended impact is positive, namely making shared-model concentration legible as a stability risk. The foreseeable negative use is a firm reading the frontier as guidance on how much crowding it can add before a threshold binds, which we note is exactly the free-riding the public-good argument in Section~6 predicts.
+    \item[] Justification: Section~9 states the policy reading directly: the work supplies a regulator with a measurable systemic quantity and three instruments. The intended impact is positive, namely making shared-model concentration legible as a stability risk. The foreseeable negative use is a firm reading the frontier as guidance on how much crowding it can add before a threshold binds, which we note is exactly the free-riding the public-good argument in Section~6 predicts.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer \answerNA{} means that there is no societal impact of the work performed.
