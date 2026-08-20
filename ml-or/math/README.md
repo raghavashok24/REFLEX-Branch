@@ -1,6 +1,6 @@
-# ML x OR - Mathematical Derivationd"
+# ML x OR - Mathematical Derivations”
 
-Complete, from-scratch derivations of the mathematical foundations for the
+This repo contains the derivations of the mathematical foundations for the
 ML x OR @ NeurIPS 2026 paper *"The Price of Self-Knowledge: Minimax
 Information-Cost Tradeoffs and Optimal Exploration in Performative
 Systems"* - the theory that a system whose deployment reshapes its own
