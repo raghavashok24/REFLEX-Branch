@@ -14,6 +14,16 @@ python econml/paper/make_figures.py     # figures, from the committed result JSO
 cd econml/paper && pdflatex main.tex && pdflatex main.tex && pdflatex main.tex
 ```
 
+**The appendix carries the proofs, and it is in this PDF.** The NeurIPS 2026
+main track handbook, which the workshop's call defers to for format, puts paper
+content, references, appendices and the checklist in a single PDF and reserves
+the separate ZIP for data and source code. Appendices do not count against the
+nine content pages. So every numbered result in the body is proved in
+`appendix.tex`, not promised to a supplementary bundle that may have no upload
+slot at this venue. Appendices A to F are the mathematics, G is the deferred
+supervision material, H is the certificate inventory, I is the experimental
+protocol and J is the register of what is not proved.
+
 **Three passes.** v1 needed two; v2 needs a third because Lemma 1 shifts the
 theorem numbering that the cross-references resolve against. No bibtex run: the
 bibliography is a `thebibliography` block inside `main.tex`, since 22 entries do
@@ -32,6 +42,7 @@ for the camera-ready**, where the layout differs anyway.
 | File | What it is |
 |---|---|
 | `main.tex` | The paper |
+| `appendix.tex` | The technical appendices: complete proofs, certificates, experimental specifications |
 | `checklist.tex` | The NeurIPS checklist, all 16 questions answered |
 | `neurips_2026.sty` | Official style file, **unmodified** |
 | `checklist_template.tex` | The blank checklist as shipped, kept for diffing |
@@ -106,8 +117,9 @@ say, and the checklist's question 5 states the same arrangement.
 The build folder holds more than nine pages of drafted content. What was cut
 from `../writing/` on the way into LaTeX, and why:
 
-- **Proof bodies.** Sketches stay inline, complete proofs go to the appendix.
-  A workshop reviewer wants the mechanism and the assumptions, not the algebra.
+- **Proof bodies.** Sketches stay inline and complete proofs sit in the
+  appendix, where they cost no content pages. A workshop reviewer wants the
+  mechanism and the assumptions in the body, not the algebra.
 - **The worked tables in Sections 5 and 6.** Reduced to inline numbers, which
   cost a fifth of the space and carry the same three values.
 - **The clustered-companion figure**, folded into a row of the panel table.

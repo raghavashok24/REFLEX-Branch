@@ -11,6 +11,10 @@ diff. Last reconciled against `paper/main.pdf` on 20 Aug 2026: one `[MEASURED]`
 row and six `[DRY RUN]` rows in Table 2 of the body, matching E1 and E2 through
 E6 here, and 525 certificate assertions passing.
 
+**Proofs.** As of 20 Aug 2026 every numbered result in the body is proved in the
+submission PDF's own appendix rather than promised to supplementary material, and
+Appendix H carries the certificate inventory this file is the authority for.
+
 **Numbering.** This file's section headings are the markdown drafts in this
 folder. The built paper folds supervision into the closing section, so it runs
 nine sections, and the four results are Theorem 2, 3, 4 and 7 there against

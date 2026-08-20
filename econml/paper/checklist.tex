@@ -36,7 +36,7 @@
 \item {\bf Theory assumptions and proofs}
     \item[] Question: For each theoretical result, does the paper provide the full set of assumptions and a complete (and correct) proof?
     \item[] Answer: \answerYes{}
-    \item[] Justification: Assumption~1 collects the four standing assumptions (A1)--(A4) and each theorem references it; the one sign condition (A5) is stated in Section~7 at the single place it is needed. All theorems, lemmas and corollaries are numbered and cross-referenced. Proof sketches appear inline in Sections~4--7 and complete proofs are in the supplementary material, as are the numerical certificates with their tolerances.
+    \item[] Justification: Assumption~1 collects the four standing assumptions (A1)--(A4) and each theorem references it; the one sign condition (A5) is stated in Section~7 at the single place it is needed. All theorems, lemmas and corollaries are numbered and cross-referenced. Proof sketches appear inline in Sections~4--7 and complete proofs are in Appendices~B--F of this PDF, which also record each result's certificate and its agreement tolerance.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer \answerNA{} means that the paper does not include theoretical results. 
@@ -50,7 +50,7 @@
     \item {\bf Experimental result reproducibility}
     \item[] Question: Does the paper fully disclose all the information needed to reproduce the main experimental results of the paper to the extent that it affects the main claims and/or conclusions of the paper (regardless of whether the code and data are provided or not)?
     \item[] Answer: \answerYes{}
-    \item[] Justification: Section~8 states that every run is CPU-only and deterministic from a (config, seed) pair with common random numbers on paired probes, and that stability is estimated from the trajectory's asymptotic growth rate under the actual retraining map rather than from an eigensolve. Each theorem's parameters are given where its result is stated and repeated in the figure captions, $c=0.8$ included. The inherited protocol rules and the reference environment's acceptance test, that it reproduces the homogeneous market at $R=\mathbf{1}\mathbf{1}^{\top}$, are in the supplementary material rather than the body, for space.
+    \item[] Justification: Section~8 states that every run is CPU-only and deterministic from a (config, seed) pair with common random numbers on paired probes, and that stability is estimated from the trajectory's asymptotic growth rate under the actual retraining map rather than from an eigensolve. Each theorem's parameters are given where its result is stated and repeated in the figure captions, $c=0.8$ included. The inherited protocol rules and the reference environment's acceptance test, that it reproduces the homogeneous market at $R=\mathbf{1}\mathbf{1}^{\top}$, are in Appendix~I rather than in the body, for space.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer \answerNA{} means that the paper does not include experiments.
@@ -70,7 +70,7 @@
 \item {\bf Open access to data and code}
     \item[] Question: Does the paper provide open access to the data and code, with sufficient instructions to faithfully reproduce the main experimental results, as described in supplemental material?
     \item[] Answer: \answerNo{}
-    \item[] Justification: The public repository names an author, so it is withheld at submission to preserve the blind. Code, derivations and all seven certificate files are provided to reviewers as anonymized supplementary material, and the repository is linked in the camera-ready version; Section~8 states this arrangement. No dataset is used: every panel is simulated and deterministic from a (config, seed) pair.
+    \item[] Justification: The public repository names an author, so it is withheld at submission to preserve the blind. The derivations are in Appendices~A--F and the certificate inventory in Appendix~H, both in this PDF. The seven certificate files themselves and the panel code go to reviewers as anonymized supplementary material, and the repository is linked in the camera-ready version; Section~8 states this arrangement. No dataset is used: every panel is simulated and deterministic from a (config, seed) pair.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer \answerNA{} means that paper does not include experiments requiring code.

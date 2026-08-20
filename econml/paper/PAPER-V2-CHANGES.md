@@ -291,3 +291,52 @@ the camera-ready**, where the layout differs anyway.
 
 The build now needs **three passes**, not two: the added Lemma 1 shifts the
 theorem numbering that the cross-references resolve against.
+
+---
+
+# The appendix, added 20 Aug 2026
+
+v2 shipped with an appendix that was one paragraph long and pointed at
+supplementary material for every proof. That is backwards for this venue.
+
+**The policy, checked at the source.** The workshop's call caps the main text at
+nine content pages, excludes references, appendices and the checklist from that
+count, and defers to the NeurIPS 2026 main track handbook for format. The
+handbook puts paper content, references, appendices and the checklist in a
+**single PDF**, and reserves the separately uploaded ZIP for **data and source
+code**. Proofs belong in the appendix of the submission itself. Nothing in the
+workshop's call mentions a supplementary upload at all, so the material the
+pointer promised had no guaranteed route to a reviewer.
+
+**What was added.** `appendix.tex`, ten appendices, typeset from the derivation
+files in `../math/`:
+
+| Appendix | Content |
+|---|---|
+| A | Notation and the standing assumptions, with (A5) placed where it is used |
+| B | The reduction, the properties of the alignment matrix, the spectrum, the three anchors, the signed error of mean-based indices, the heterogeneous-modulus bound |
+| C | Concentration of the alignment matrix to the supply-chain limit, entrywise and spectral |
+| D | The cadence composition: inner contraction, lazy deployment, hypothesis (C), the frontier, critical crowding |
+| E | The mixed market: the secular equation, the two-block quadratic, the optimism of the strong-correction limit, the imperfect-correction law, the threshold in whole firms |
+| F | The wedge: the welfare object, the marginal crowding share, both first-order conditions, over-adaptation, the provenance channel |
+| G | Supervision from public prices, deferred and stated as such |
+| H | The certificate inventory: seven files, 525 assertions, and the two certificates that falsified rather than confirmed |
+| I | Experimental specifications: the two environments, the inherited protocol, the six panels, and why five of six are dry runs |
+| J | The deferred register |
+
+Body results keep their numbers and are proved in the appendix by name, so
+Lemma~1 and Theorems 2, 3, 4 and 7 are proved under those headings. Results
+stated only in the appendix carry appendix-local numbers, B.1 through F.2, so
+nothing collides.
+
+**What changed in the body.** Two sentences, both rewritten to the same length so
+the nine-page fit is untouched: Section 8 now points at the appendix for proofs
+and specifications and reserves supplementary material for code, and the
+supervision paragraph no longer implies the real-data panel was run, since it is
+scoped in Appendix G and deferred. Three checklist answers were repointed at the
+appendix: question 3 on proofs, question 4 on the protocol, question 5 on what
+goes to reviewers.
+
+**Verified.** Clean three-pass build, 31 pages, content still ending on page 9
+with references starting on page 10. One overfull hbox remains, 13.6 points in
+the body's anchor table, and it predates this change.

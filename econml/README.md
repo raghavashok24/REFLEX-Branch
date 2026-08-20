@@ -82,7 +82,7 @@ model alignment rather than by headcount. Results 2 through 4 are all stated in
 | NeurIPS checklist | **all 16 answered**, instruction block stripped, heading kept |
 | Review of v1 | **back, accept as poster.** Three items would move it: derive the reduction in the body, dispatch Narang et al., measure `s` on real models. See `paper/PAPER-V2-CHANGES.md` |
 | Paper v2 | **built.** Reduction lemma and Narang containment are in the body, the smaller items landed, measuring `s` is out. Nine sections, nine content pages, clean three-pass build. v1 archived in `paper/v1/` |
-| Appendix | **a pointer, not the proofs.** The proofs live in `math/` as markdown and have never been typeset. See the note below |
+| Appendix | **typeset, in the submission PDF.** Ten appendices: complete proofs of every numbered result, the certificate inventory, the experimental protocol and the deferred register. 31 pages total, content still ending on page 9 |
 
 Theorems 1 through 4 have moved from `[DERIVED]` to `[VERIFIED]` in the claims
 ledger, each against assertion-based certificates that fail loudly. 525 assertions

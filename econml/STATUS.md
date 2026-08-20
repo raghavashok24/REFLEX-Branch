@@ -230,10 +230,21 @@ two-block collapse.
 ## The submission itself
 
 Built 19 Aug 2026 in [`paper/`](paper/), against the official NeurIPS 2026 style
-files and the mandatory paper checklist.
+files and the mandatory paper checklist. The appendix landed 20 Aug 2026.
+
+**Where the proofs live, and why.** In the submission PDF. The workshop call
+defers to the NeurIPS 2026 main track handbook for format, and the handbook puts
+paper content, references, appendices and checklist in one PDF while reserving
+the separate ZIP for data and code. Appendices do not count against the nine
+content pages, and the workshop's own call repeats that. Until 20 Aug 2026 the
+appendix was a single paragraph promising proofs as supplementary material,
+which left checklist question 3 answering yes to a complete proof on the strength
+of material not in the file and depended on an upload slot this venue's call
+never mentions.
 
 | Item | State |
 |---|---|
+| Appendix | **typeset 20 Aug 2026** in `paper/appendix.tex`. Appendices A to F carry complete proofs of Lemma 1 and Theorems 2, 3, 4 and 7 with their corollaries, plus the results stated only there; G is the deferred supervision material, H the certificate inventory, I the experimental protocol, J the deferred register. 31 pages total |
 | Format | `dblblindworkshop` track, style file unmodified, `final` and `preprint` both omitted so the build anonymizes itself and carries line numbers |
 | Page count | **nine content pages.** References, appendix pointer and checklist start on page 10 and do not count |
 | Checklist | **all 16 questions answered** with justifications. Two deliberate `no` answers: code access, withheld to preserve the blind, and error bars, since the panels are deterministic and worst-case grid departure is reported instead |
