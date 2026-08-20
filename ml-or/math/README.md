@@ -1,4 +1,4 @@
-# Mathematical Derivations - "The Price of Self-Knowledge"
+# ML x OR - Mathematical Derivationd"
 
 Complete, from-scratch derivations of the mathematical foundations for the
 ML x OR @ NeurIPS 2026 paper *"The Price of Self-Knowledge: Minimax
