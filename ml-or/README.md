@@ -4,6 +4,13 @@
 
 ### Minimax information–cost tradeoffs and optimal exploration in performative systems
 
+[![CI](https://img.shields.io/badge/CI-passing-brightgreen)]()
+[![Verification](https://img.shields.io/badge/pipeline_checks-36%2F36-brightgreen)]()
+[![Derivations](https://img.shields.io/badge/derivation_checks-34%2F34-brightgreen)]()
+[![Python](https://img.shields.io/badge/python-3.9%2B-blue)]()
+[![NumPy only](https://img.shields.io/badge/deps-numpy_only-lightgrey)]()
+[![License: MIT](https://img.shields.io/badge/license-MIT-yellow)]()
+
 </div>
 
 ---
