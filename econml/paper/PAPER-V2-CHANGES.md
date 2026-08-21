@@ -340,3 +340,116 @@ goes to reviewers.
 **Verified.** Clean three-pass build, 31 pages, content still ending on page 9
 with references starting on page 10. One overfull hbox remains, 13.6 points in
 the body's anchor table, and it predates this change.
+
+---
+
+# v3, as built
+
+Built 20 Aug 2026. A small, targeted pass on top of v2: four changes, one
+deliberate non-change, and one table cut to pay for the space. No status flag
+moved, no figure was cut, and Sections 4 to 6 were not touched.
+
+## What v3 implemented
+
+**1. The abstract no longer states a corner case as a general law.** It read
+that the market is stable "exactly when the corrected fraction exceeds
+`(1-1/m_N)/e`". That closed form is exact only at `kappa = s = 1`; away from
+that corner the exact threshold is the larger root of the two-block quadratic,
+as `math/derivations/04-mixed-market-secular.md` Section 7 and Appendix E both
+say. The sentence now carries the qualifier "exact in the fully shared limit and
+accurate away from it" and keeps the imperfect-vaccine framing. Checklist
+question 1's justification records the qualifier.
+
+**2. Panel 1 is no longer called external validation.** Table 2's caption said
+"external validation against a prior published run". The prior run is
+`reflex2026`, this paper's own base work cited in the third person, so
+"external" is a claim about independence that third-person citation cannot
+support. Two further copies of the same overreach were found and fixed: the
+same phrase in Appendix I's panel description, and "externally validated" in
+checklist question 1.
+
+The caption now says panel 1 is measured in the order-flow simulator rather than
+in the reference environment, and that it reproduces the base result this paper
+generalizes, so it validates the inherited scaffolding rather than any of the
+four new results. Section 8's paragraph gained one sentence naming the claim as
+the monoculture corner `R = 1 1'`. **The flag did not move.** Panel 1 is still
+`[MEASURED]` and still the paper's one measured result; what changed is what the
+paper says that measurement is evidence for.
+
+**3. Two references added, closing a gap in this workshop's own community.**
+Related work covered algorithmic monoculture and multiplayer performative
+prediction but cited nothing from the line of work on competition between model
+providers. Added, both verified against the published proceedings on 20 Aug 2026:
+
+| Reference | Authors | Venue |
+|---|---|---|
+| Monoculture in Matching Markets | K. Peng, N. Garg | NeurIPS 2024 |
+| Supply-Side Equilibria in Recommender Systems | M. Jagadeesan, N. Garg, J. Steinhardt | NeurIPS 2023 |
+
+**Two, not five.** A padded bibliography is its own tell, and three further
+candidates were left out because no sentence needed them. The monoculture
+paragraph was extended rather than replaced, in the same register as the Narang
+containment: Peng and Garg is named as the nearest neighbour and the first of
+these to carry market effects, Jagadeesan et al. as the supply-side move, and
+the delta is that all of them are equilibrium statements read at the market's
+resting point, so none expresses a stability boundary or a rate and none carries
+an object for which direction each firm perturbs the environment. The
+bibliography is 24 entries, still alphabetical, still uniform, still no URLs.
+
+**4. `\workshoptitle` matches the call exactly.** The trailing "(EconML)" is
+gone. The string prints only at camera-ready, so the submission build is
+unchanged; matching the call costs one edit and removes an argument.
+
+## The deliberate non-change
+
+**The page footer is still the generic notice, and that is correct.** An
+external review reads "Submitted to 40th Conference on Neural Information
+Processing Systems (NeurIPS 2026). Do not distribute." as proof the workshop
+option is missing. It is not. `main.tex` line 4 sets `dblblindworkshop` and line
+5 sets `\workshoptitle`; in `neurips_2026.sty` the `\@trackname` string is used
+only inside `\if@neuripsfinal`, so with `final` and `preprint` both unset the
+style file prints the generic notice in every track. The workshop title appears
+at camera-ready. **The style file was not modified**, since modifying it is
+grounds for desk rejection and would cause the exact outcome the "fix" claims to
+prevent.
+
+## What paid for the space
+
+The body was nine content pages with zero slack, and items 1 to 3 add material.
+Three sources, in the order the space was needed:
+
+1. **Table 1, the anchors table, deleted.** Appendix B gives all three corner
+   anchors and Appendix C the supply-chain row, both with more detail than the
+   table carried, so the body now states the four values inline in one sentence
+   and points at the appendices. This was the largest single recovery and it
+   loses nothing a reader needs in the body.
+2. **The related-work addition tightened** after the first build spilled three
+   lines, removing a sentence that restated the paragraph's closing point.
+3. **Section 8's protocol sentences deferred to Appendix I**, which already
+   carried them close to verbatim: determinism from a (config, seed) pair, and
+   stability estimated from realized trajectories rather than from an eigensolve.
+   The "why the rest are not measured" paragraph was compressed against the same
+   appendix.
+
+No figure was cut, Sections 4 to 6 were not compressed, and no `[DRY RUN]` was
+rounded up.
+
+## Verified
+
+Clean three-pass build from a deleted `main.aux`. 31 pages. Content ends on
+page 9 and `pdftotext -f 10 -l 10` prints the References heading. **Zero
+overfull boxes:** the 13.6 point box that predated v3 lived in the anchors
+table and went with it. The only remaining log warning is the deliberate
+`hyperref` draft mode. Style file unmodified, PDF metadata empty, no author
+block, no repository URL, line numbers present.
+
+Status surfaces reconciled against the built PDF: no flag moved anywhere, the
+nine section numbers are unchanged so the checklist's cross-references still
+resolve, and the two checklist justifications touched were reworded for the
+panel 1 framing rather than repointed.
+
+## Archive
+
+v1 and v2 now sit side by side under `archive/`. v1 is unchanged from commit
+`486d213`; v2 is `main.tex`, `appendix.tex` and `main.pdf` as they stood before
+this pass. The former `v1/` directory is gone.

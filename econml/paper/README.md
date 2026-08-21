@@ -3,11 +3,12 @@
 The submission itself: `main.tex` compiled against the official NeurIPS 2026
 style files, plus the mandatory paper checklist.
 
-`main.tex` is **v2**. v1 is archived unmodified in [`v1/`](v1/), frozen at
-commit `486d213`. [`PAPER-V2-CHANGES.md`](PAPER-V2-CHANGES.md) holds the
+`main.tex` is **v3**. v1 and v2 are archived unmodified side by side in
+[`archive/`](archive/), v1 frozen at commit `486d213` and v2 at the state it
+held before the v3 pass. [`PAPER-V2-CHANGES.md`](PAPER-V2-CHANGES.md) holds the
 external review of v1, an assessment of each criticism against the code, the
-space arithmetic, one item that looks like a bug and is not, and a record of
-what v2 implemented and what it deliberately skipped.
+space arithmetic, one item that looks like a bug and is not, a record of
+what v2 implemented and what it deliberately skipped, and the same record for v3.
 
 ```bash
 python econml/paper/make_figures.py     # figures, from the committed result JSONs
@@ -26,7 +27,7 @@ protocol and J is the register of what is not proved.
 
 **Three passes.** v1 needed two; v2 needs a third because Lemma 1 shifts the
 theorem numbering that the cross-references resolve against. No bibtex run: the
-bibliography is a `thebibliography` block inside `main.tex`, since 22 entries do
+bibliography is a `thebibliography` block inside `main.tex`, since 24 entries do
 not justify a `.bib` and a manual list cannot go stale against one.
 
 **`\hypersetup{draft=true}` is deliberate.** A cross-reference link straddling
@@ -49,6 +50,7 @@ for the camera-ready**, where the layout differs anyway.
 | `make_figures.py` | Renders the five figures from `../ml-contributions/experiments/results/` |
 | `figures/*.pdf` | Generated, vector |
 | `main.pdf` | The compiled submission |
+| `archive/v1/`, `archive/v2/` | Frozen earlier versions, kept for diffing. Not part of the build |
 
 ## Compliance
 
@@ -88,7 +90,7 @@ authors, which puts a name shared with this submission's author list into the
 bibliography. That is the plan of record's instruction and it is the right call:
 the rule under double-blind is that self-citation happens in the third person,
 not that it is scrubbed. A reference stripped of its authors is the more
-revealing artifact, because it is visibly anomalous next to twenty ordinary
+revealing artifact, because it is visibly anomalous next to twenty-two ordinary
 entries and reads as a paper hiding its own lineage. The submission cites them
 the way any third party would and lets the third-person prose carry the blind.
 
@@ -97,7 +99,7 @@ trailing the only two references sharing an author with the submission is a
 worse tell than the names themselves: it makes them the two entries a reader's
 eye lands on. The bibliography is uniform, `Authors. Title. Venue,
 vol(issue):pages, year.`, and anything reintroducing a link to one entry has to
-add it to all twenty-two.
+add it to all twenty-four.
 
 ## The artifact URL
 
@@ -128,6 +130,10 @@ from `../writing/` on the way into LaTeX, and why:
   paragraph of the closing one.
 - **The free-riding diagnostic and the supervision panel**, both appendix
   material, and both fourth and first in the de-scope order respectively.
+- **The anchors table**, cut in v3. Appendix B derives all three corner anchors
+  and Appendix C the supply-chain row, both in more detail than the table gave,
+  so the body states the four values inline and points there. This is what paid
+  for v3's related-work additions, and it removed the build's only overfull box.
 
 Nothing cut carries a claim the paper still makes. The claims ledger in
 `../writing/CLAIMS-LEDGER.md` remains the authority on status, and every flag
@@ -135,9 +141,12 @@ in the body matches it.
 
 ## Venue, checked against the call for papers
 
-`\workshoptitle` reads "Economics for Machine Learning (EconML)", which is the
-workshop's registered name. An earlier draft had it backwards as "Machine
-Learning and Economics"; corrected 19 Aug 2026 against the call for papers.
+`\workshoptitle` reads "Economics for Machine Learning", the string the call
+instructs submissions to use. An earlier draft had it backwards as "Machine
+Learning and Economics", corrected 19 Aug 2026, and it carried a trailing
+"(EconML)" until v3 dropped it on 20 Aug 2026 to match the call exactly. The
+string prints only at camera-ready, so the submission build is unchanged either
+way.
 
 The same source confirms the rest of the build. Long papers are capped at nine
 content pages with figures and tables included, which is what this compiles to.

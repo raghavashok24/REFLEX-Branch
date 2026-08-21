@@ -81,7 +81,8 @@ model alignment rather than by headcount. Results 2 through 4 are all stated in
 | Submission PDF | **compiles clean**, 9 content pages, references and checklist after |
 | NeurIPS checklist | **all 16 answered**, instruction block stripped, heading kept |
 | Review of v1 | **back, accept as poster.** Three items would move it: derive the reduction in the body, dispatch Narang et al., measure `s` on real models. See `paper/PAPER-V2-CHANGES.md` |
-| Paper v2 | **built.** Reduction lemma and Narang containment are in the body, the smaller items landed, measuring `s` is out. Nine sections, nine content pages, clean three-pass build. v1 archived in `paper/v1/` |
+| Paper v2 | **built.** Reduction lemma and Narang containment are in the body, the smaller items landed, measuring `s` is out. Nine sections, nine content pages, clean three-pass build |
+| Paper v3 | **built 20 Aug 2026.** Abstract qualifies the herd-immunity law to the fully shared limit; panel 1 is no longer called external validation in the caption, Appendix I or the checklist; Peng and Garg (2024) and Jagadeesan et al. (2023) added; `\workshoptitle` matches the call. The anchors table paid for the space. No status flag moved, zero overfull boxes. v1 and v2 archived in `paper/archive/` |
 | Appendix | **typeset, in the submission PDF.** Ten appendices: complete proofs of every numbered result, the certificate inventory, the experimental protocol and the deferred register. 31 pages total, content still ending on page 9 |
 
 Theorems 1 through 4 have moved from `[DERIVED]` to `[VERIFIED]` in the claims

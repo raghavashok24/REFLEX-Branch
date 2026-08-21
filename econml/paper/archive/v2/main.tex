@@ -2,7 +2,7 @@
 
 % Double-blind workshop track, NeurIPS 2026.
 \usepackage[dblblindworkshop]{neurips_2026}
-\workshoptitle{Economics for Machine Learning}
+\workshoptitle{Economics for Machine Learning (EconML)}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -59,7 +59,7 @@
 \maketitle
 
 \begin{abstract}
-A learning agent can satisfy every single-agent stability criterion and still help destabilize the market it operates in. When adaptive agents share an environment that reacts to their decisions, each agent's retraining reshapes the data every other agent learns from next, a \emph{learning externality} that no agent internalizes. Its strength is governed not by the number of firms but by the \emph{effective number of independent learners}, the leading eigenvalue of the correlation matrix of firms' response Jacobians, so foundation-model concentration enters the stability condition as a term rather than as a concern: fifty firms fine-tuning one vendor's model are dynamically close to one large learner. Three closed-form levers follow from a reduction lemma we derive in the main text. A crowding-cadence frontier bounds how often a market can retrain and closes past a critical crowding level. A herd-immunity threshold makes the market stable once the corrected fraction exceeds $(1-1/\mN)/e$ at correction efficacy $e$, the imperfect-vaccine coverage law with the systemic modulus as the reproduction number, exact in the fully shared limit and accurate away from it. A Pigouvian wedge prices the externality, and every market of two or more firms over-adapts. The last two levers are substitutes along a frontier we compute. In a shared-pool order-flow market the mechanism reproduces a published $1.74\times$ and $3.16\times$ amplification at two and three firms, bit for bit.
+A learning agent can satisfy every single-agent stability criterion and still help destabilize the market it operates in. When adaptive agents share an environment that reacts to their decisions, each agent's retraining reshapes the data every other agent learns from next, a \emph{learning externality} that no agent internalizes. Its strength is governed not by the number of firms but by the \emph{effective number of independent learners}, the leading eigenvalue of the correlation matrix of firms' response Jacobians, so foundation-model concentration enters the stability condition as a term rather than as a concern: fifty firms fine-tuning one vendor's model are dynamically close to one large learner. Three closed-form levers follow from a reduction lemma we derive in the main text. A crowding-cadence frontier bounds how often a market can retrain and closes past a critical crowding level. A herd-immunity threshold makes the market stable exactly when the corrected fraction exceeds $(1-1/\mN)/e$ at correction efficacy $e$, the imperfect-vaccine coverage law with the systemic modulus as the reproduction number. A Pigouvian wedge prices the externality, and every market of two or more firms over-adapts. The last two levers are substitutes along a frontier we compute. In a shared-pool order-flow market the mechanism reproduces a published $1.74\times$ and $3.16\times$ amplification at two and three firms, bit for bit.
 \end{abstract}
 
 \section{Introduction}
@@ -82,7 +82,7 @@ Because every result is stated in $\mN$, each inherits the supply chain for free
 \section{Related work}
 
 \paragraph{Monoculture, and why it is static.}
-\citet{kleinberg2021} show that when many firms adopt the same algorithm welfare can fall even when the shared algorithm is the better one, because correlated selection destroys the option value of independent evaluation; \citet{bommasani2022} formalize systemic exclusion when many deployments inherit one model. \citet{peng2024} is the nearest neighbour and the first to carry market effects, a two-sided matching model in which many decision-makers share one evaluation algorithm, so applicants and decision-makers interact rather than being held fixed; \citet{jagadeesan2023} make the supply-side move, characterizing what producers supply when they compete through a shared recommender. All four are cross-sectional or equilibrium statements, read at the market's resting point, so none expresses a stability boundary or a rate: a market can have a well-behaved equilibrium and still be dynamically unstable around it, and can be statically fine and dynamically fragile at the same shared-model fraction. None carries an object for \emph{which direction} each firm perturbs the environment, which is what $R$ supplies and the same gap Theorem~\ref{thm:alignment} closes against \citet{narang2023} below.
+\citet{kleinberg2021} show that when many firms adopt the same algorithm welfare can fall even when the shared algorithm is the better one, because correlated selection destroys the option value of independent evaluation; \citet{bommasani2022} formalize systemic exclusion when many deployments inherit one model. Both are cross-sectional, measured at one point in time on one cohort, so neither can express a stability boundary or a rate. A market can be statically fine and dynamically fragile at the same shared-model fraction.
 
 \paragraph{Multiplayer performative prediction, and the containment relation.}
 \citet{narang2023} is the nearest dynamics: multiple learners in a shared decision-dependent environment, with equilibrium concepts and convergence conditions for repeated retraining. The containment relation is worth stating, since Theorem~\ref{thm:alignment} should not have to be taken on trust as more than a corollary. \textbf{Theirs bounds scalars}: the sensitivity of the joint distribution map to the players' decisions, measured by Lipschitz constants, against their objective curvature, uniformly over the joint action. \textbf{Ours bounds a spectral radius}, $\mN = m_1[1+\kappa(\lmax(R)-1)]$, in which those scalars appear only inside $m_1$. \textbf{Ours is strictly sharper on the class their constants describe, and is not implied by theirs.} Sharper, because at fixed constants $\Neff$ still ranges over $[1,1+\kappa(N-1)]$, so a uniform bound must hold at the worst alignment structure while ours need not, and every market between the two is one their condition rejects and ours admits. Not implied, because nothing in their framework represents \emph{which direction} each agent perturbs the environment: two markets with identical constants and opposite alignment structure are indistinguishable to them and differ in stability for us. The substitution $\mathbf{1}\mathbf{1}^{\top}\!\to R$ adds an object rather than tightening a constant, and that object, not the dynamics, carries monoculture, provenance, the supply chain and every policy statement below. The single-learner lazy-deployment slope of \citet{mendlerdunner2020} is what Theorem~\ref{thm:cadence} composes with multi-agent amplification, a composition not previously made; the corrected update of \citet{izzo2021} is what Theorem~\ref{thm:mixed} puts into the game, having only ever been run single-learner.
@@ -140,7 +140,24 @@ Under Assumption~\ref{ass:standing} with equal moduli and heterogeneous response
 so the market is stable if and only if $\mN < 1$.
 \end{theorem}
 
-Setting $R = \mathbf{1}\mathbf{1}^{\top}$ recovers the symmetric multi-dealer law of \citet{reflex2026} exactly, so the published result is not generalized away but located: it is the monoculture corner, where every firm's feedback points the same way. Four anchors follow, each checked independently and derived in Appendices~\ref{app:alignment} and \ref{app:concentration}. Monoculture, $R=\mathbf{1}\mathbf{1}^{\top}$, gives $\Neff = 1+\kappa(N-1)$, the inherited law. Orthogonal responses, $R=I$, give $\Neff = 1$: a hundred firms perturbing the environment in a hundred orthogonal directions are dynamically one firm. The simplex, $r_{ij} = -\nicefrac{1}{(N-1)}$, gives $\Neff = 1+\nicefrac{\kappa}{(N-1)}$, which \emph{exceeds} orthogonality's while \emph{minimizing} mean alignment, so a mean-based diversity index does not even order configurations correctly. A supply chain of share $s$ gives $\Neff = 1+\kappa s(N-1)$, the number of independent \emph{models} rather than of firms. $\Neff \geq 1$ always, so interaction never stabilizes a market below what its members achieve alone.
+Setting $R = \mathbf{1}\mathbf{1}^{\top}$ recovers the symmetric multi-dealer law of \citet{reflex2026} exactly, so the published result is not generalized away but located: it is the monoculture corner, where every firm's feedback points the same way. Four anchors follow, each checked independently (Table~\ref{tab:anchors}). $\Neff \geq 1$ always, so interaction never stabilizes a market below what its members achieve alone.
+
+\begin{table}[t]
+\centering
+\caption{Anchors of Theorem~\ref{thm:alignment}. The simplex is the sharper counterexample to mean-based diversity: it \emph{minimizes} mean alignment yet exceeds orthogonality's $\lmax$.}
+\label{tab:anchors}
+\small
+\begin{tabular}{llll}
+\toprule
+Configuration & $\lmax(R)$ & $\Neff$ & Reading \\
+\midrule
+Monoculture, $R=\mathbf{1}\mathbf{1}^{\top}$ & $N$ & $1+\kappa(N-1)$ & the inherited law \\
+Orthogonal, $R=I$ & $1$ & $1$ & a hundred firms are dynamically one firm \\
+Simplex, $r_{ij}=-\nicefrac{1}{(N-1)}$ & $\nicefrac{N}{(N-1)}$ & $1+\nicefrac{\kappa}{(N-1)}$ & maximal diversity, and the mode labels swap \\
+Supply chain, share $s$ & $1+s(N-1)$ & $1+\kappa s(N-1)$ & the number of independent \emph{models} \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \paragraph{The supply chain.}
 Decompose $E_i = \sqrt{s}\,E_{\text{shared}} + \sqrt{1-s}\,\Xi_i$, where $s\in[0,1]$ is the fraction attributable to a shared foundation model, vendor or pretraining corpus. Alignments concentrate at $r_{ij}\to s$ with $O(1/d)$ fluctuation and an explicit failure probability, so $\Neff \to 1 + \kappa s (N-1)$ and every result below inherits $s$ for free: fifty dealers fine-tuning one vendor's model are dynamically ${\sim}1+49\kappa$ learners at $s\approx 1$ and barely more than one at $s \approx 0$.
@@ -283,7 +300,7 @@ The fraction the private condition ignores is free of $\Neff$: with no client ex
 \section{Experiments}
 \label{sec:experiments}
 
-Six panels, one per result, each with its evidential status in its own row of Table~\ref{tab:panels}, because the six are not the same kind of evidence. A panel marked \textbf{measured} ran in the order-flow simulator, a genuine $N$-dealer market with informed flow, spread and inventory that reduces bit for bit to the single-dealer market at $N=1$. A panel marked \textbf{dry run} ran in a linearized reference environment realizing the model's response geometry and nothing else: it checks that the closed forms were derived from the map we believe they were derived from, which is a check on the derivation rather than evidence about dynamics, and it has caught real errors. It establishes nothing about a market. Every closed form carries a numerical certificate and the harness exits nonzero on any disagreement. Appendix~\ref{app:experiments} gives the protocol, which is deterministic from a (config, seed) pair and estimates stability from realized trajectories rather than from an eigensolve. The simulator is described generically pending an artifact release; proofs and specifications are in the appendix, code to reviewers as anonymized supplementary material.
+Six panels, one per result, each with its evidential status in its own row of Table~\ref{tab:panels}, because the six are not the same kind of evidence. A panel marked \textbf{measured} ran in the order-flow simulator, a genuine $N$-dealer market with informed flow, spread and inventory that reduces bit for bit to the single-dealer market at $N=1$. A panel marked \textbf{dry run} ran in a linearized reference environment realizing the model's response geometry and nothing else: it checks that the closed forms were derived from the map we believe they were derived from, which is a check on the derivation rather than evidence about dynamics, and it has caught real errors. It establishes nothing about a market. Stability everywhere is estimated from the trajectory's asymptotic growth rate under the actual retraining map rather than read off an eigensolve. All runs are CPU-only and deterministic from (config, seed), with common random numbers on paired probes; every closed form carries a numerical certificate and the harness exits nonzero on any disagreement. The simulator is described generically pending an artifact release; proofs and specifications are in the appendix, code to reviewers as anonymized supplementary material.
 % CAMERA-READY ONLY. Uncomment the line below once the paper is de-anonymized.
 % Do NOT enable for the double-blind submission: the URL names an author and
 % breaks the blind.
@@ -291,7 +308,7 @@ Six panels, one per result, each with its evidential status in its own row of Ta
 
 \begin{table}[t]
 \centering
-\caption{Panel coverage and status. Panel 1 is measured in the order-flow simulator rather than in the reference environment, and it reproduces the base result this paper generalizes, so it validates the inherited scaffolding rather than any of the four new results.}
+\caption{Panel coverage and status. Panel 1 is external validation against a prior published run, not a self-consistency check.}
 \label{tab:panels}
 \small
 \begin{tabular}{llll}
@@ -310,10 +327,10 @@ Panel & Tests & Status & Outcome \\
 \end{table}
 
 \paragraph{The one measured panel.}
-Panel 1 reproduces a prior published run in that run's own simulator, at the relative error Table~\ref{tab:panels} records. Its claim is the monoculture corner $R = \mathbf{1}\mathbf{1}^{\top}$, the symmetric law Theorem~\ref{thm:alignment} generalizes, so it is evidence for the scaffolding the four results stand on rather than for any of the four. \textbf{The gap to the linear prediction is content, not error}: the market runs $-12.9\%$ at $N=2$ and $+5.2\%$ at $N=3$, with \emph{opposite signs}, which is what a nonlinear market with saturating flow does around a linearization. The reference environment reproduces the prediction exactly because it omits precisely that nonlinearity. The differential mode measures $3.4\times 10^{-3}$ against a theoretical zero at $\kappa=1$, so the instability is purely common-mode, the mechanism Theorem~\ref{thm:alignment} generalizes.
+Panel 1 reproduces a prior published run in that run's own simulator, at the relative error Table~\ref{tab:panels} records. \textbf{The gap to the linear prediction is content, not error}: the market runs $-12.9\%$ at $N=2$ and $+5.2\%$ at $N=3$, with \emph{opposite signs}, which is what a nonlinear market with saturating flow does around a linearization. The reference environment reproduces the prediction exactly because it omits precisely that nonlinearity. The differential mode measures $3.4\times 10^{-3}$ against a theoretical zero at $\kappa=1$, so the instability is purely common-mode, the mechanism Theorem~\ref{thm:alignment} generalizes.
 
 \paragraph{Why the rest are not measured.}
-A heterogeneous-response port of the order-flow simulator was built and is exact at flat exposure profiles, but its acceptance gate failed: the liquidity and price-impact channels stay shared whatever the response profiles are, leaving a residual larger than several effects these panels resolve. We drew no figure from that port and moved no status. Panel 6 is a dry run for a different reason: the simulator carries no aggressiveness choice variable and no welfare object, so no measured counterpart exists to be built.
+A heterogeneous-response port of the order-flow simulator was built and is exact at flat exposure profiles, reproducing the unmodified simulator at every $N$ from 1 to 6, but its acceptance gate failed: the liquidity and price-impact channels stay shared whatever the response profiles are, a residual reaching $17.7$ percentage points at $N=2$, larger than several effects these panels resolve, and at $N \geq 4$ the finite-difference probe no longer measures a local slope. We drew no figure from that port and moved no status. Panel 6 is a dry run for a different reason: the order-flow simulator carries no aggressiveness choice variable and no welfare object, so no measured counterpart exists to be built.
 
 In panel 6 both first-order conditions are solved by bisection with $\mN$ read from realized dynamics rather than the closed form, so the over-adaptation verdict is a property of the simulated market rather than of the algebra: the gap widens from $29.0\%$ at $N=2$ to $119.9\%$ at $N=20$, and the degenerate $N=1$ case sits at exactly zero, as Corollary~\ref{cor:over} requires.
 
@@ -357,8 +374,6 @@ The analysis is linearized around the joint equilibrium (A1), and panel 1 shows 
 
 \bibitem[Izzo et al.(2021)]{izzo2021} Z.~Izzo, L.~Ying, and J.~Zou. How to learn when data reacts to your model: Performative gradient descent. In \emph{ICML}, 2021.
 
-\bibitem[Jagadeesan et al.(2023)]{jagadeesan2023} M.~Jagadeesan, N.~Garg, and J.~Steinhardt. Supply-side equilibria in recommender systems. In \emph{NeurIPS}, 2023.
-
 \bibitem[Khandani and Lo(2007)]{khandani2007} A.~E. Khandani and A.~W. Lo. What happened to the quants in August 2007? \emph{Journal of Investment Management}, 5(4):29--78, 2007.
 
 \bibitem[Kleinberg and Raghavan(2021)]{kleinberg2021} J.~Kleinberg and M.~Raghavan. Algorithmic monoculture and social welfare. \emph{PNAS}, 118(22):e2018340118, 2021.
@@ -374,8 +389,6 @@ The analysis is linearized around the joint equilibrium (A1), and panel 1 shows 
 \bibitem[Nagarajan and Mittal(2024)]{pebsa2024} V.~Nagarajan and A.~Mittal. PEBSA: Predicting economic behavior via sentiment analysis. \emph{International Journal of Engineering and Computer Science}, 13(12):26656--26676, 2024.
 
 \bibitem[Narang et al.(2023)]{narang2023} A.~Narang, E.~Faulkner, D.~Drusvyatskiy, M.~Fazel, and L.~J. Ratliff. Multiplayer performative prediction: Learning in decision-dependent games. \emph{JMLR}, 24, 2023.
-
-\bibitem[Peng and Garg(2024)]{peng2024} K.~Peng and N.~Garg. Monoculture in matching markets. In \emph{NeurIPS}, 2024.
 
 \bibitem[Perdomo et al.(2020)]{perdomo2020} J.~C. Perdomo, T.~Zrnic, C.~Mendler-D\"unner, and M.~Hardt. Performative prediction. In \emph{ICML}, 2020.
 

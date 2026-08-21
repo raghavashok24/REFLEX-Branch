@@ -230,7 +230,8 @@ two-block collapse.
 ## The submission itself
 
 Built 19 Aug 2026 in [`paper/`](paper/), against the official NeurIPS 2026 style
-files and the mandatory paper checklist. The appendix landed 20 Aug 2026.
+files and the mandatory paper checklist. The appendix landed 20 Aug 2026 and v3
+the same day.
 
 **Where the proofs live, and why.** In the submission PDF. The workshop call
 defers to the NeurIPS 2026 main track handbook for format, and the handbook puts
@@ -264,8 +265,13 @@ joint Jacobian in the body rather than the appendix, state the containment
 relation against Narang et al. (2023), and measure the shared-model fraction `s`
 once on real models. **v2 is built**: the reduction lemma and the Narang
 containment are in the body, the smaller items landed, and measuring `s` was
-ruled out for lack of infrastructure and page budget. v1 is frozen at commit
-`486d213` and archived in `paper/v1/`. The paper is now **nine sections**, since
+ruled out for lack of infrastructure and page budget. **v3 followed on 20 Aug
+2026**: the abstract's herd-immunity law now carries its fully-shared-limit
+qualifier, panel 1 is no longer described as external validation anywhere, two
+references from this workshop's own community were added, and `\workshoptitle`
+matches the call exactly. The anchors table paid for the space. No status flag
+moved. v1 and v2 are frozen side by side in `paper/archive/`, v1 at commit
+`486d213`. The paper is **nine sections**, since
 supervision folded into the closing section, and the body's four results are
 numbered Theorem 2, 3, 4 and 7 there against Theorem 1 to 4 in this file and the
 ledger.

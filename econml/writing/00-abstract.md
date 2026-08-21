@@ -18,9 +18,10 @@ concentration enters the stability condition as a term rather than as a concern:
 fifty firms fine-tuning one vendor's model are dynamically close to one large
 learner. Three closed-form levers follow. A crowding-cadence frontier bounds how
 often a market can retrain, and closes past a critical crowding level. A
-herd-immunity threshold makes the market stable if and only if the corrected
+herd-immunity threshold makes the market stable once the corrected
 fraction exceeds `(1 - 1/m_N)/e` at correction efficacy `e`, the imperfect-vaccine
-coverage law with the systemic modulus as the reproduction number, and correction
+coverage law with the systemic modulus as the reproduction number, exact in the
+fully shared limit and accurate away from it, and correction
 stops working entirely below a critical efficacy. A Pigouvian wedge prices the
 externality and shows every market of two or more firms over-adapts. The last two
 levers are substitutes, along a frontier we compute. In a shared-pool order-flow

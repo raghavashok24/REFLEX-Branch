@@ -33,7 +33,13 @@ rate under the actual retraining map rather than read off an eigensolve, so
 | 5 | The substitution frontier | Theorem 3 | `[DRY RUN]` | **Fig 4** |
 | 6 | Over-adaptation | Theorem 4 | `[DRY RUN]` | Fig 5 |
 
-**Panel 1 is external validation, not a self-consistency check.** It reproduces a
+**Panel 1 is measured in the order-flow simulator rather than in the reference
+environment, and it validates the inherited scaffolding rather than any of the
+four results.** Its claim is the monoculture corner `R = 1 1'`, which the base
+project already implements. It is not *external* validation: the prior published
+run is this paper's own base work, cited in the third person because the review
+is double-blind, and third-person citation cannot support a claim of
+independence. It reproduces a
 prior published run in that run's own simulator, measuring common-mode moduli of
 `0.7856`, `1.3692` and `2.4799` at `N = 1, 2, 3`, hence amplification `1.7428x`
 and `3.1567x` against a published `1.74x` and `3.16x`, at relative error
@@ -114,8 +120,8 @@ anonymized-artifact promise and no repository URL.
 **Status honesty, all new since the port gate ran:**
 
 - [x] Coverage table present, with status in the same row as the mapping
-- [x] Panel 1 labeled external validation, with the two-signed departure stated
-      and named as content rather than error
+- [x] Panel 1 labeled measured rather than external, with what it validates named,
+      and the two-signed departure stated as content rather than error
 - [x] Every panel's status stated explicitly; no dry run described in language
       implying measurement
 - [x] The port gate stated in the body, since a reader is owed the reason panels
