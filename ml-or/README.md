@@ -1,6 +1,6 @@
 <div align="center">
 
-# The Price of Self-Knowledge
+# PRICE: Minimax Estimation–Regret Tradeoffs and Certified Exploration in Performative Prediction
 
 ### Minimax information–cost tradeoffs and optimal exploration in performative systems
 
