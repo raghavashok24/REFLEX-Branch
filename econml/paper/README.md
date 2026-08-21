@@ -3,12 +3,11 @@
 The submission itself: `main.tex` compiled against the official NeurIPS 2026
 style files, plus the mandatory paper checklist.
 
-`main.tex` is **v3**. v1 and v2 are archived unmodified side by side in
-[`archive/`](archive/), v1 frozen at commit `486d213` and v2 at the state it
-held before the v3 pass. [`PAPER-V2-CHANGES.md`](PAPER-V2-CHANGES.md) holds the
-external review of v1, an assessment of each criticism against the code, the
-space arithmetic, one item that looks like a bug and is not, a record of
-what v2 implemented and what it deliberately skipped, and the same record for v3.
+`main.tex` is **v4**. v1, v2 and v3 are archived unmodified side by side in
+[`archive/`](archive/), v1 frozen at commit `486d213` and each later one at the
+state it held before the pass that followed it. The version history below records
+what each pass changed and, more importantly, the two review items that keep
+recurring and must not be acted on.
 
 ```bash
 python econml/paper/make_figures.py     # figures, from the committed result JSONs
@@ -27,7 +26,7 @@ protocol and J is the register of what is not proved.
 
 **Three passes.** v1 needed two; v2 needs a third because Lemma 1 shifts the
 theorem numbering that the cross-references resolve against. No bibtex run: the
-bibliography is a `thebibliography` block inside `main.tex`, since 24 entries do
+bibliography is a `thebibliography` block inside `main.tex`, since 23 entries do
 not justify a `.bib` and a manual list cannot go stale against one.
 
 **`\hypersetup{draft=true}` is deliberate.** A cross-reference link straddling
@@ -50,7 +49,7 @@ for the camera-ready**, where the layout differs anyway.
 | `make_figures.py` | Renders the five figures from `../ml-contributions/experiments/results/` |
 | `figures/*.pdf` | Generated, vector |
 | `main.pdf` | The compiled submission |
-| `archive/v1/`, `archive/v2/` | Frozen earlier versions, kept for diffing. Not part of the build |
+| `archive/v1/` to `archive/v3/` | Frozen earlier versions, kept for diffing. Not part of the build |
 
 ## Compliance
 
@@ -83,23 +82,27 @@ stronger statement.
 **Double-blind.** No author block, no repository URL, no acknowledgments. PDF
 metadata carries no title, author, subject or keywords. Figure files are
 generated from result JSONs and carry no local paths. No sentence positions
-REFLEX or PEBSA as the authors' own work.
+REFLEX as the authors' own work. The PEBSA reference was dropped in v4.
 
-**On the two base papers carrying author names.** Both are cited in full, with
+**On the base paper carrying author names.** REFLEX is cited in full, with
 authors, which puts a name shared with this submission's author list into the
 bibliography. That is the plan of record's instruction and it is the right call:
 the rule under double-blind is that self-citation happens in the third person,
 not that it is scrubbed. A reference stripped of its authors is the more
 revealing artifact, because it is visibly anomalous next to twenty-two ordinary
-entries and reads as a paper hiding its own lineage. The submission cites them
-the way any third party would and lets the third-person prose carry the blind.
+entries and reads as a paper hiding its own lineage. The submission cites it the
+way any third party would and lets the third-person prose carry the blind.
 
-**No entry carries a URL**, these two included. They briefly did, and a DOI
-trailing the only two references sharing an author with the submission is a
-worse tell than the names themselves: it makes them the two entries a reader's
-eye lands on. The bibliography is uniform, `Authors. Title. Venue,
+**v4 dropped the second one.** PEBSA supported a single contrast in the
+systemic-risk paragraph that nothing else depended on, so removing it cost one
+sentence and left REFLEX as the only entry sharing an author with the
+submission.
+
+**No entry carries a URL**, REFLEX included. It briefly did, and a DOI trailing
+the one reference sharing an author with the submission is a worse tell than the
+name itself. The bibliography is uniform, `Authors. Title. Venue,
 vol(issue):pages, year.`, and anything reintroducing a link to one entry has to
-add it to all twenty-four.
+add it to all twenty-three.
 
 ## The artifact URL
 
@@ -130,6 +133,8 @@ from `../writing/` on the way into LaTeX, and why:
   paragraph of the closing one.
 - **The free-riding diagnostic and the supervision panel**, both appendix
   material, and both fourth and first in the de-scope order respectively.
+- **The provenance paragraph and panel 6's method**, compressed in v4 against
+  Appendices F and I, which carried both close to verbatim.
 - **The anchors table**, cut in v3. Appendix B derives all three corner anchors
   and Appendix C the supply-chain row, both in more detail than the table gave,
   so the body states the four values inline and points there. This is what paid
@@ -157,3 +162,50 @@ and the workshop runs 12 or 13 Dec 2026 in Atlanta.
 The title reaches the page only in the camera-ready footer, since the submission
 build prints the generic notice instead. Getting it right now means the
 camera-ready needs no edit beyond adding the `final` option.
+
+## Version history
+
+`main.tex` is v4. Earlier versions are frozen in `archive/`.
+
+| Version | What it changed |
+|---|---|
+| v1 | First full build, nine content pages, reviewed externally on 19 Aug 2026. Verdict: accept as poster |
+| v2 | Acted on that review. The reduction lemma moved into the body, the containment against Narang et al. was stated, and measuring the shared-model fraction `s` on real models was ruled out for lack of infrastructure and page budget. Supervision folded into the closing section, leaving nine sections |
+| v3 | Appendix typeset into the same PDF. The abstract's herd-immunity law gained its fully-shared-limit qualifier, panel 1 stopped being called external validation, Peng and Garg (2024) and Jagadeesan et al. (2023) were added, and `\workshoptitle` was matched to the call. The anchors table paid for the space |
+| v4 | Cadence terminology matched to what the theorem proves, the containment turned into Proposition 3 with a witness pair, the wedge's exchangeable-symmetric scope stated in the body, (H3) motivated with a concrete market, and the base paper called a preprint rather than published. Paid for by a prose pass against appendix duplication |
+
+### Two review items that must not be acted on
+
+Both have now been raised by more than one external review. Neither is a bug.
+
+**The page footer.** It reads "Submitted to 40th Conference on Neural
+Information Processing Systems (NeurIPS 2026). Do not distribute.", and reviews
+read that as proof the workshop option is missing. It is not. The call instructs,
+verbatim, `\usepackage[dblblindworkshop]{neurips_2026}` and
+`\workshoptitle{Economics for Machine Learning}`, which is what lines 4 and 5
+carry. In `neurips_2026.sty` the string holding the workshop title is used only
+inside `\if@neuripsfinal`, so with `final` and `preprint` unset the style file
+prints the generic notice in every track. The workshop title appears at
+camera-ready. **Do not modify the style file**; that is grounds for desk
+rejection, which is the outcome the "fix" claims to prevent. The only other
+workshop option, `sglblindworkshop`, sets `\@anonymousfalse` and would break the
+blind.
+
+**Cutting the experiments section because "theory papers owe no experiments".**
+There is no theory track. The call splits submissions by length only, long at
+nine content pages and short at four. It also lists empirical evaluation of
+theoretical models among the directions it encourages, and states that reviewers
+are not required to read beyond the main text, so moving Section 8 into the
+appendix would work against both.
+
+### What v4 rewrote, and why the page count did not move
+
+The body was already full at nine pages, so Proposition 3, the (H3) paragraph
+and the wedge's scope sentence had to be paid for. They were paid for by removing
+material the appendices already carried rather than by cutting claims: the
+provenance paragraph, panel 6's bisection method, the clustered-alignment
+working, and the simplex argument were each stated twice. Two sentences in the
+monoculture paragraph said the same thing. Dropping PEBSA removed a third.
+
+Content now ends at the bottom of page 9 rather than four-fifths down it. No
+figure was touched and no status flag moved.

@@ -7,7 +7,7 @@ Certificates in `../ml-contributions/certificates/verify_theorem2_cadence.py`.
 ---
 
 The first lever is quantity regulation, and it is the one a firm can pull by
-itself: retrain less often. How much less is a closed form, and it depends on the
+itself: move less per round. How much less is a closed form, and it depends on the
 market's effective crowding rather than on the firm's own modulus.
 
 **The inherited piece.** A learner that takes only `K` gradient steps per
@@ -61,7 +61,7 @@ stabilizing cadence exists at all if and only if
 
 a factor of `9` at `c = 0.8`. Minimum-cadence operation multiplies the sustainable
 effective crowding by exactly that factor, and past it the market is unstable at
-every retraining frequency. This is not a second result but the frontier
+every cadence, however small the step budget. This is not a second result but the frontier
 evaluated at its smallest admissible cadence, which is also why the laziest
 retrainer is the hardest to destabilize. [VERIFIED]
 
@@ -77,9 +77,9 @@ at a fixed number of firms. At `m_1 = 0.15`, `kappa = 0.8`, `N = 30` and
 | `1.00` | `24.20` | `3.630` | `2.53` |
 
 Holding the number of competitors fixed and raising vendor concentration cuts
-every incumbent's retraining budget by a factor of eight. The externality in its
+every incumbent's step budget by a factor of eight. The externality in its
 sharpest operational form is therefore not merely that **your competitor's entry
-consumes your retraining budget** but that **your competitor's choice of vendor
+consumes your step budget** but that **your competitor's choice of vendor
 does too**, without their entering at all and without either firm doing anything
 wrong. [VERIFIED]
 

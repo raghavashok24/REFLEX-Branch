@@ -77,7 +77,7 @@ What follows for policy is concrete rather than hortatory. A regulator already
 drafting systemic-risk obligations for shared general-purpose models has a
 threshold on model scale but no mechanism connecting model sharing to a
 measurable systemic quantity. This paper supplies one, and with it two
-substitutable instruments and a price: retrain less often, share fewer models or
+substitutable instruments and a price: move less per round, share fewer models or
 correct more of them, or pay for the crowding. The substitution frontier is the
 object a regulator would act on, because it says the instruments are
 interchangeable at a computable rate rather than merely available.

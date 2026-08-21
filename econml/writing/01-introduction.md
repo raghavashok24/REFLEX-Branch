@@ -82,9 +82,9 @@ Because every result is stated in `m_N`, each inherits the supply chain for free
 *Slow down.* Firms that take `K` gradient steps per deployment rather than
 retraining to convergence face a stability window `K < K_max(m_N)` that narrows
 as effective crowding rises, and closes entirely past a critical crowding level
-beyond which no retraining frequency is safe. The operational statement of the
+beyond which no cadence is safe. The operational statement of the
 externality is sharper than competition usually allows: your competitor's entry
-consumes your retraining budget, and so does your competitor's *choice of
+consumes your step budget, and so does your competitor's *choice of
 vendor*, without their entering at all and without either firm doing anything
 wrong.
 

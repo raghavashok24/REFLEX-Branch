@@ -53,7 +53,7 @@ model alignment rather than by headcount. Results 2 through 4 are all stated in
 | [`ml-contributions/`](ml-contributions/) | The theory module, the response environment, the panel harness, specs and certificates |
 | [`writing/`](writing/) | Section-by-section paper content, page budget, claims ledger |
 | [`paper/`](paper/) | **The submission.** `main.tex`, the NeurIPS checklist, the official style file, and the compiled `main.pdf` |
-| [`paper/PAPER-V2-CHANGES.md`](paper/PAPER-V2-CHANGES.md) | **Read before touching the paper.** An external review of v1 and what to do about it |
+| [`paper/README.md`](paper/README.md) | **Read before touching the paper.** Build commands, compliance rules, the version history, and the two review items that must not be acted on |
 
 ## Status board
 
@@ -80,9 +80,10 @@ model alignment rather than by headcount. Results 2 through 4 are all stated in
 | Page budget | closed **in LaTeX**, at nine content pages. The markdown build folder still holds more than nine pages; `paper/README.md` records what was cut |
 | Submission PDF | **compiles clean**, 9 content pages, references and checklist after |
 | NeurIPS checklist | **all 16 answered**, instruction block stripped, heading kept |
-| Review of v1 | **back, accept as poster.** Three items would move it: derive the reduction in the body, dispatch Narang et al., measure `s` on real models. See `paper/PAPER-V2-CHANGES.md` |
+| Review of v1 | **back, accept as poster.** Three items would move it: derive the reduction in the body, dispatch Narang et al., measure `s` on real models. See `paper/README.md` |
 | Paper v2 | **built.** Reduction lemma and Narang containment are in the body, the smaller items landed, measuring `s` is out. Nine sections, nine content pages, clean three-pass build |
-| Paper v3 | **built 20 Aug 2026.** Abstract qualifies the herd-immunity law to the fully shared limit; panel 1 is no longer called external validation in the caption, Appendix I or the checklist; Peng and Garg (2024) and Jagadeesan et al. (2023) added; `\workshoptitle` matches the call. The anchors table paid for the space. No status flag moved, zero overfull boxes. v1 and v2 archived in `paper/archive/` |
+| Paper v3 | **built 20 Aug 2026.** Abstract qualifies the herd-immunity law to the fully shared limit; panel 1 is no longer called external validation in the caption, Appendix I or the checklist; Peng and Garg (2024) and Jagadeesan et al. (2023) added; `\workshoptitle` matches the call. The anchors table paid for the space. No status flag moved, zero overfull boxes |
+| Paper v4 | **built 20 Aug 2026** against an external review of v3. Cadence terminology matches what the theorem proves; the Narang containment is Proposition 3 with an explicit witness pair; the wedge's exchangeable-symmetric scope is stated in the body; (H3) is motivated with a concrete market; the base paper is a preprint, not published. Two review items rejected on evidence. Nine content pages, page 9 full. v1 to v3 archived in `paper/archive/` |
 | Appendix | **typeset, in the submission PDF.** Ten appendices: complete proofs of every numbered result, the certificate inventory, the experimental protocol and the deferred register. 31 pages total, content still ending on page 9 |
 
 Theorems 1 through 4 have moved from `[DERIVED]` to `[VERIFIED]` in the claims
@@ -123,8 +124,8 @@ framework", no "we previously showed", no "building on our REFLEX".
 **Section and theorem numbering.** This folder, `STATUS.md` and the claims
 ledger number the four results Theorem 1 to 4 and follow the eleven markdown
 drafts in `writing/`. The built paper folds supervision into the closing section,
-so it runs nine sections and numbers the same four results Theorem 2, 3, 4 and 7,
-after Lemma 1. Status flags match across both; only the labels differ.
+so it runs nine sections and numbers the same four results Theorem 2, 4, 5 and 8,
+after Lemma 1 and Proposition 3. Status flags match across both; only the labels differ.
 
 **Notation.** ASCII math in all markdown here, matching the plan of record.
 LaTeX happens once, at the end, from these files. Nothing in this folder is
