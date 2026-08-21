@@ -22,5 +22,21 @@
 | E5 | nonparametric MSE at (B,T) optimum | 0.013205 | 0.012318 | 15% | PASS |
 | E5 | anchored beats nonparametric when well-specified (a=0) | 1 | 1 | 0% | PASS |
 | E5 | anchored loses under gross misspecification (a=0.35) | 1 | 1 | 0% | PASS |
+| E6 | SafeD final error within 1.5x of best baseline | 1 | 1 | 0% | PASS |
+| E6 | no baseline Pareto-dominates SafeD on (error, regret) | 1 | 1 | 0% | PASS |
+| E6 | unsafe baseline (FD-PerfGD) pays >5x SafeD regret | 1 | 1 | 0% | PASS |
+| E7 | full architecture reaches h_PO (err < 0.1) | 1 | 1 | 0% | PASS |
+| E7 | design-off still converges at matched transit energy (T6's cliff is support/amplitude - see E4, E8 - not shape) | 1 | 1 | 0% | PASS |
+| E7 | matched-energy c-identification in the parity band (0.3 <= RMS ratio <= 3.5, no cliff either way) | 1 | 1 | 0% | PASS |
+| E7 | anchor-off degrades final error (T7 prediction) | 1 | 1 | 0% | PASS |
+| E7 | gate discipline: gated cells freeze, ungated never do | 1 | 1 | 0% | PASS |
+| E8 | pricing exchange rate (g=0.4, s_e=0.2) | 0.384 | 0.384 | 12% | PASS |
+| E8 | pricing exchange rate (g=0.4, s_e=0.5) | 0.384 | 0.384 | 12% | PASS |
+| E8 | pricing exchange rate (g=0.7, s_e=0.2) | 0.192 | 0.192 | 12% | PASS |
+| E8 | pricing exchange rate (g=0.7, s_e=0.5) | 0.192 | 0.192 | 12% | PASS |
+| E8 | transplanted SafeD reaches the pricing optimum | 12.583 | 12.5 | 8% | PASS |
+| E10 | dispersed universe: shaped beats isotropic at steady state (ratio > 1.15) | 1 | 1 | 0% | PASS |
+| E10 | flat-control universe: shaping is null (|ratio-1| < 0.25) | 1 | 1 | 0% | PASS |
+| E10 | agents reach the anchored-bond optima (shaped err < 0.2) | 1 | 1 | 0% | PASS |
 
-20 rows, 0 FAIL
+36 rows, 0 FAIL
