@@ -1,6 +1,6 @@
 # Status: EconML @ NeurIPS 2026
 
-**As of 19 Aug 2026. Submission 29 Aug 2026, 10 days out.**
+**As of 20 Aug 2026. Submission 29 Aug 2026, 9 days out.**
 
 Paper: "Herd Immunity and Learning Externalities in Markets of Adaptive Models".
 9 pages main body, unlimited appendix, double-blind, in-person.
