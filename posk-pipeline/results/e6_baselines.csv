@@ -1,0 +1,6 @@
+baseline,final_err,cum_regret
+SafeD-PerfGD,0.0274,799.34
+FD-PerfGD,1.2464,9580.51
+ZO-PerfOpt,0.1336,957.32
+UCB-Grid,0.1290,342.19
+BlindRRM,1.0743,2130.42
