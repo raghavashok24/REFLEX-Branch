@@ -2,7 +2,7 @@
 PRICE is an extension of REFLEX ([GitHub](https://github.com/vignesh-nagarajan-vn/REFLEX), [arXiv cs.LG](https://arxiv.org/abs/2608.16155)) designed to take the research further by placing it in dynamic environments.
 
 This repository builds **PRICE** (Performative Risk in Coupled Environments). PRICE is a two-fold module comprising 2 research papers, both of which put a price on a feedback loop, with the difference being in how it's priced (privately vs socially): 
-- _The Price of Self-Knowledge_ (ML x OR Workshop)
+- _Minimax Estimation–Regret Tradeoffs and Certified Exploration in Performative Prediction_ (ML x OR Workshop)
 - _Herd Immunity and Learning Externalities in Markets of Adaptive Models_ (Econ ML Workshop)
 
 Built by Shriraghav Ashok and Vignesh Nagarajan.
