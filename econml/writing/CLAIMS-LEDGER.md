@@ -17,7 +17,7 @@ Appendix H carries the certificate inventory this file is the authority for.
 
 **Numbering.** This file's section headings are the markdown drafts in this
 folder. The built paper folds supervision into the closing section, so it runs
-nine sections, and the four results are Theorem 2, 3, 4 and 7 there against
+nine sections, and the four results are Theorem 2, 4, 5 and 8 there against
 Theorem 1 to 4 here. Where this file says Section 9 or 10, the paper says
 Section 8 or 9. Flags are unaffected.
 
