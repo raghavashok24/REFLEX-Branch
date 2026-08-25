@@ -1,4 +1,4 @@
-# Frontier upgrade outline, 25 Aug 2026
+# EconML Paper Upgrade Ideas---Potential Improvements
 
 The complete outline of changes that would make the EconML submission a
 frontier paper: clear measured results with genuine statistical
