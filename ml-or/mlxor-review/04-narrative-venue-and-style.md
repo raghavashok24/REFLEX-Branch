@@ -23,15 +23,16 @@ same sentence twice, which is the right kind of repetition at this length.
 Two structural choices are worth naming as good, because they are the ones a
 shorter paper usually gets wrong:
 
-- **The Positioning paragraph is doing the work of a related-work section in
-  one dense block, and it dispatches by naming the delta rather than the
-  topic.** "Lai and Robbins's adaptive designs are *points on* our frontier" is
-  the best sentence in the paper. Keep the structure; `01` adds two dispatches
-  to it.
-- **The Limitations paragraph is in the body, not the appendix, and it names
-  four real limits including the one that undercuts the headline** (the `o(1)`
-  amplitude qualifier is "load-bearing"). At four pages most authors would move
-  this to the appendix. Not moving it is why the rest reads as credible.
+**The Positioning paragraph is doing the work of a related-work section in
+one dense block, and it dispatches by naming the delta rather than the
+topic.** "Lai and Robbins's adaptive designs are *points on* our frontier" is
+the best sentence in the paper. Keep the structure; `01` adds two dispatches
+to it.
+
+**The Limitations paragraph is in the body, not the appendix, and it names
+four real limits including the one that undercuts the headline** (the `o(1)`
+amplitude qualifier is "load-bearing"). At four pages most authors would move
+this to the appendix. Not moving it is why the rest reads as credible.
 
 ## 4.2 Where the spine strains
 
@@ -76,11 +77,12 @@ its own influence. It is hard to construct a better fit.
 
 The OR half of the audience is served well in places and left out in others:
 
-- **Served:** the incomplete-learning line (Rothschild, Harrison-Keskin-Zeevi,
-  Keskin-Zeevi, Broder-Rusmevichientong, den Boer) is cited and dispatched, and
-  Lai-Robbins is positioned as a point on the frontier. The dual-control and
-  least-costly-identification inheritance (Feldbaum, Bombois) is named. The
-  classical design canon (Kiefer-Wolfowitz, Pukelsheim) is there.
+**Served:** the incomplete-learning line (Rothschild, Harrison-Keskin-Zeevi,
+Keskin-Zeevi, Broder-Rusmevichientong, den Boer) is cited and dispatched, and
+Lai-Robbins is positioned as a point on the frontier. The dual-control and
+least-costly-identification inheritance (Feldbaum, Bombois) is named. The
+classical design canon (Kiefer-Wolfowitz, Pukelsheim) is there.
+
 - **Not served:** the model is a market maker and there is no market-making
   citation anywhere. See `01` section 1.3. This is the single largest
   audience-calibration gap and it is cheap to close.

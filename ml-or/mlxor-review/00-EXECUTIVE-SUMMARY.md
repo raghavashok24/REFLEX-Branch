@@ -60,65 +60,73 @@ OR instead.
 
 ## What was checked and found sound: do not spend deadline time here
 
-- **Every proof.** L1, T1, C1.1, C1.2, R1, T2, P2.1, P2.2, T3, L2, T4, T5a-c,
-  C5.1, L3, T6, L4, R2, P7.1, T7, T8, P9.1, P9.2, P9.3, read line by line
-  against the register and the derivations. No proof is wrong. The KKT
-  arguments for the three design shapes, C5.1's Cauchy-Schwarz, L2's three
-  ingredients, T7's constrained optimum and T8's concave NPV were each
-  re-derived by hand and again numerically. The one substantive proof note is
-  T6's parenthetical, where the stated reason does not support a conclusion that
-  is nonetheless true; the two-line argument that does support it is in `02`.
-- **Every closed form I could re-derive.** 136 checks in `tools/indep_check.py`,
-  0 failures, written from the paper's formulas with no import from `posk/`:
-  `gamma`, `gamma_PO`, `eps` against numerical derivatives; the T2 rate at both
-  moduli to four figures with the simulated A1 remainder growing monotonically
-  in amplitude exactly as scope predicts (+0.10, +0.35, +0.87, +3.25 percent);
-  the T1 cap and the excitation floor; the Le Cam arithmetic including the
-  factor 13.5; T5a/b/c and C5.1 at three dimensions with 4000 random feasible
-  designs per cell never beating the optimum; T6's rank counting; T7's bias,
-  variance and threshold at three cells; T8's `v*` and `rho*` with `gamma_PO`
-  cancelling; P9.1 on three schedules; every LQ constant in E8 re-derived from
-  `Phi` alone; L4's Lipschitz collapse.
-- **Both headline counts.** `verify_all.py` gives 34/34 in 31s. `run_all.py`
-  gives 36 rows, 35 PASS, 1 DRIFT, 0 FAIL in 7m49s, with the drift cell at the
-  +16 percent the body quotes. Nine unit tests pass. The counts in the paper are
-  the counts in the tree.
-- **The build.** Compiles clean from source, zero overfull and zero underfull
-  boxes, no undefined citations or references, content ends page 4, References
-  begin page 5. The checklist's page-gate claim is confirmed by my own build,
-  and it survives the style-file swap in item 3.
-- **Single source of truth.** `paper/theorems_body.tex` and
-  `paper/proofs_body.tex` are byte-identical to the derivation folder's
-  `theorems.tex` and `proofs.tex` between their BEGIN/END BODY markers. The one
-  consequence of the marker placement is the missing assumption register in
-  item 6.
-- **The venue facts.** Deadline 31 Aug AoE, 4-page main body in NeurIPS
-  conference format, non-anonymous and single-blind, notification 29 Sept,
-  Atlanta 12 or 13 Dec, and the three journal pathways with at most one
-  indicated. Every checklist venue fact holds. The one new fact is the
-  `sglblindworkshop` requirement in item 3.
-- **The five open checklist items** are all still open and none has drifted;
-  item 5 (compile check) is now done. `05` §5.6 has the state of each.
-- **The honesty discipline.** The DRIFT cell, the ten recorded pivots, the
-  UCB-Grid admission, the real-data provenance sentence, the load-bearing `o(1)`
-  qualifier in the limitations. Nothing in this package proposes softening any
-  of them, and the never-trim list is untouched throughout.
+**Every proof.** L1, T1, C1.1, C1.2, R1, T2, P2.1, P2.2, T3, L2, T4, T5a-c,
+C5.1, L3, T6, L4, R2, P7.1, T7, T8, P9.1, P9.2, P9.3, read line by line against
+the register and the derivations. No proof is wrong. The KKT arguments for the
+three design shapes, C5.1's Cauchy-Schwarz, L2's three ingredients, T7's
+constrained optimum and T8's concave NPV were each re-derived by hand and again
+numerically. The one substantive proof note is T6's parenthetical, where the
+stated reason does not support a conclusion that is nonetheless true; the
+two-line argument that does support it is in `02`.
+
+**Every closed form I could re-derive.** 136 checks in `tools/indep_check.py`,
+0 failures, written from the paper's formulas with no import from `posk/`.
+`gamma`, `gamma_PO` and `eps` against numerical derivatives. The T2 rate at both
+moduli to four figures, with the simulated A1 remainder growing monotonically in
+amplitude exactly as scope predicts (+0.10, +0.35, +0.87, +3.25 percent). The T1
+cap and the excitation floor. The Le Cam arithmetic including the factor 13.5.
+T5a/b/c and C5.1 at three dimensions, with 4000 random feasible designs per cell
+never beating the optimum. T6's rank counting. T7's bias, variance and threshold
+at three cells. T8's `v*` and `rho*` with `gamma_PO` cancelling. P9.1 on three
+schedules. Every LQ constant in E8 re-derived from `Phi` alone. L4's Lipschitz
+collapse.
+
+**Both headline counts.** `verify_all.py` gives 34/34 in 31s. `run_all.py` gives
+36 rows, 35 PASS, 1 DRIFT, 0 FAIL in 7m49s, with the drift cell at the +16
+percent the body quotes. Nine unit tests pass. The counts in the paper are the
+counts in the tree.
+
+**The build.** Compiles clean from source, zero overfull and zero underfull
+boxes, no undefined citations or references, content ends page 4, References
+begin page 5. The checklist's page-gate claim is confirmed by my own build, and
+it survives the style-file swap in item 3.
+
+**Single source of truth.** `paper/theorems_body.tex` and
+`paper/proofs_body.tex` are byte-identical to the derivation folder's
+`theorems.tex` and `proofs.tex` between their BEGIN/END BODY markers. The one
+consequence of the marker placement is the missing assumption register in
+item 6.
+
+**The venue facts.** Deadline 31 Aug AoE, 4-page main body in NeurIPS conference
+format, non-anonymous and single-blind, notification 29 Sept, Atlanta 12 or 13
+Dec, and the three journal pathways with at most one indicated. Every checklist
+venue fact holds. The one new fact is the `sglblindworkshop` requirement in
+item 3. The five open checklist items are all still open and none has drifted;
+item 5, the compile check, is now done. `05` has the state of each.
+
+**The honesty discipline.** The DRIFT cell, the ten recorded pivots, the
+UCB-Grid admission, the real-data provenance sentence, the load-bearing `o(1)`
+qualifier in the limitations. Nothing in this package proposes softening any of
+them, and the never-trim list is untouched throughout.
 
 ## What could not be verified
 
-- **The real-data leg's 10/10 port validation.** `run_realdata.py` skips without
-  the REFLEX tree, which is not in this repository. `REALDATA.md` was read but
-  not reproduced. This is the paper's only external-data claim and the only part
-  of the evidence stack I could not touch. Not disputed, unverified.
-- **The exact behaviour of `sglblindworkshop`** beyond what I built and read: I
-  confirmed the option exists, compiled both variants, and read the resulting
-  footers and author blocks, but the official NeurIPS 2026 author kit was not
-  retrievable here.
-- **Zhang, Hou and Zhang (arXiv:2602.03049)**: I read a structured report of the
-  paper, not the paper. Marked verify-before-citing throughout.
-- **Publication venues of record** for the Gueant-Lehalle and Barzykin papers:
-  titles, authors and arXiv identifiers were read from the PDFs in hand; the
-  journal of record for each was not re-verified.
+**The real-data leg's 10/10 port validation.** `run_realdata.py` skips without
+the REFLEX tree, which is not in this repository. `REALDATA.md` was read but not
+reproduced. This is the paper's only external-data claim and the only part of
+the evidence stack I could not touch. Not disputed, unverified.
+
+**The exact behaviour of `sglblindworkshop`** beyond what I built and read. I
+confirmed the option exists, compiled both variants, and read the resulting
+footers and author blocks. The official NeurIPS 2026 author kit was not
+retrievable from this environment.
+
+**Zhang, Hou and Zhang (arXiv:2602.03049).** I read a structured report of the
+paper, not the paper. Marked verify-before-citing throughout.
+
+**Publication venues of record** for the Gueant-Lehalle and Barzykin papers.
+Titles, authors and arXiv identifiers were read from the PDFs in hand; the
+journal of record for each was not re-verified.
 
 `05-verification-log.md` has the full trail: what was run, what it printed, how
 long it took, and every place where my number and the paper's number differ.

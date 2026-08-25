@@ -213,17 +213,18 @@ performative-prediction reviewer expects to see acknowledged somewhere. One
 The crosswalk predates these. None is load-bearing against the paper's novelty;
 all four are things a 2026 reviewer may know.
 
-- **Zhang, Hou and Zhang, "Unified Inference Framework for Single and
-  Multi-Player Performative Prediction: Method and Asymptotic Optimality",
-  arXiv:2602.03049, Feb 2026.** This is the one that touches T3/T4. They derive
-  a semiparametric efficiency bound for estimating the distributional parameter
-  under performativity and prove their estimators attain it. That is a variance
-  lower bound for learning the performative response, which is the same object
-  the paper's floor is about. **I read a structured report of this paper, not
-  the paper.** Verify before citing. If it says what the report says, the delta
-  is clean and worth one clause: their bound is on asymptotic variance at a
-  given sampling scheme with no cost side, while the floor here is on the
-  variance-times-cost product over designs. Camera-ready, not pre-deadline.
+**Zhang, Hou and Zhang, "Unified Inference Framework for Single and
+Multi-Player Performative Prediction: Method and Asymptotic Optimality",
+arXiv:2602.03049, Feb 2026.** This is the one that touches T3/T4. They derive
+a semiparametric efficiency bound for estimating the distributional parameter
+under performativity and prove their estimators attain it. That is a variance
+lower bound for learning the performative response, which is the same object
+the paper's floor is about. **I read a structured report of this paper, not
+the paper.** Verify before citing. If it says what the report says, the delta
+is clean and worth one clause: their bound is on asymptotic variance at a
+given sampling scheme with no cost side, while the floor here is on the
+variance-times-cost product over designs. Camera-ready, not pre-deadline.
+
 - **"Dissecting Performative Prediction: A Comprehensive Survey"**,
   arXiv:2602.10176 / ACM, Feb 2026. A newer survey of record than the
   `hardt2023performative` entry sitting uncited in the bibliography. Abstract

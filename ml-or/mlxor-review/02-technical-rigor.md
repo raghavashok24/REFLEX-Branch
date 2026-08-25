@@ -368,32 +368,35 @@ sentence.
 
 ## 2.8 Small precision items
 
-- **The modulus is defined twice, differently.** Section 1 writes
-  `$m = \eps\beta/\gamma < 1$`; Section 2 writes "a contraction iff the modulus
-  $m = \eps/\gamma < 1$". Both are right, because `beta = 1` at the stable point
-  in this model (the code says so in a docstring), but the paper never says so.
-  Fix in Section 2, three words: "the modulus $m = \eps\beta/\gamma = \eps/\gamma$
-  ($\beta = 1$ here)".
+**The modulus is defined twice, differently.** Section 1 writes
+`$m = \eps\beta/\gamma < 1$`; Section 2 writes "a contraction iff the modulus
+$m = \eps/\gamma < 1$". Both are right, because `beta = 1` at the stable point
+in this model (the code says so in a docstring), but the paper never says so.
+Fix in Section 2, three words: "the modulus $m = \eps\beta/\gamma = \eps/\gamma$
+($\beta = 1$ here)".
+
 - **"converges iff"** in Section 1 attributes an iff to
   `\citet{perdomo2020performative}`. Their theorem gives contraction under
   `eps beta/gamma < 1`; the converse is a counterexample, not a theorem. Replace
   "converges iff" with "converges when".
-- **Cross-referencing friction between body and appendix.** As compiled, T2 is
-  Theorem 1 in the body and Theorem 4 in Appendix A; T3/T4 are body Theorem 2
-  and appendix Theorems 5 and 6. Appendix B refers only to register IDs
-  ("Proof of Theorem T3"). The register tag in each statement title is the only
-  bridge, and it works, but one sentence at the end of Section 2 removes all
-  doubt at a cost of eleven words: "Results carry their register identifiers
-  (T1, T2, ...) in both appendices."
-- **`\hstar` is a third object in the paper and the same as `h_SP` in the
-  register.** The register's notation table says `h*` is the performatively
-  stable point and `h_SP = h*`. The paper uses `\hstar` for the
-  certainty-equivalent anchor while also using `\hsp` and `\hpo`. Since Appendix
-  B's dynamics are written in `\hstar`, a reader who takes the register's
-  meaning gets a different theorem. The new Appendix B preamble in 2.5 fixes
-  this by defining `\hstar` as the operating point in the paper's own terms; the
-  register should be updated to match rather than the other way round, since the
-  paper's usage is the more general one.
+
+**Cross-referencing friction between body and appendix.** As compiled, T2 is
+Theorem 1 in the body and Theorem 4 in Appendix A; T3/T4 are body Theorem 2
+and appendix Theorems 5 and 6. Appendix B refers only to register IDs
+("Proof of Theorem T3"). The register tag in each statement title is the only
+bridge, and it works, but one sentence at the end of Section 2 removes all
+doubt at a cost of eleven words: "Results carry their register identifiers
+(T1, T2, ...) in both appendices."
+
+**`\hstar` is a third object in the paper and the same as `h_SP` in the
+register.** The register's notation table says `h*` is the performatively
+stable point and `h_SP = h*`. The paper uses `\hstar` for the
+certainty-equivalent anchor while also using `\hsp` and `\hpo`. Since Appendix
+B's dynamics are written in `\hstar`, a reader who takes the register's
+meaning gets a different theorem. The new Appendix B preamble in 2.5 fixes
+this by defining `\hstar` as the operating point in the paper's own terms; the
+register should be updated to match rather than the other way round, since the
+paper's usage is the more general one.
 
 ## 2.9 Journal-strength upgrades, correctly deferred
 

@@ -160,29 +160,30 @@ Covered:
 
 Two numbers came out differently from the paper, both reported in `01` and `03`:
 
-- **The OPEN-1 minimum is 1.00007, not 1.005.** My search drives the
-  family-knowing design closer to the floor than `run_open1.py` does, and the
-  optimizer's support collapses to a cluster of spread 0.007 around the anchor.
-  The paper's conclusion is unaffected and in fact strengthened: the infimum
-  looks to be exactly 1, attained at the symmetric local design.
-- **The tight-probe scan reproduces in direction but not in magnitude.** I get
-  4.83 at t = 1.00 rising to 17.99 at t = 0.05; `run_open1.py` reports 5.72
-  rising to 40.94. Both are monotone increasing, which is the claim the paper
-  makes. The magnitudes differ because my cost model is the local quadratic
-  throughout and `run_open1.py` mixes the local-quadratic and true incremental
-  costs across its sections. The paper's numbers trace to `OPEN1.md`, so they
-  are sourced; they are not independently confirmed here.
+**The OPEN-1 minimum is 1.00007, not 1.005.** My search drives the
+family-knowing design closer to the floor than `run_open1.py` does, and the
+optimizer's support collapses to a cluster of spread 0.007 around the anchor.
+The paper's conclusion is unaffected and in fact strengthened: the infimum
+looks to be exactly 1, attained at the symmetric local design.
+
+**The tight-probe scan reproduces in direction but not in magnitude.** I get
+4.83 at t = 1.00 rising to 17.99 at t = 0.05; `run_open1.py` reports 5.72
+rising to 40.94. Both are monotone increasing, which is the claim the paper
+makes. The magnitudes differ because my cost model is the local quadratic
+throughout and `run_open1.py` mixes the local-quadratic and true incremental
+costs across its sections. The paper's numbers trace to `OPEN1.md`, so they
+are sourced; they are not independently confirmed here.
 
 One number is untraceable:
 
-- **"with c known a priori the floor breaks (ratio -> 0.05)"** (main.tex
-  Sec. 3). No shipped artifact computes a known-`c` ratio. `run_open1.py` has no
-  known-`c` branch and `grep` finds no such number in `OPEN1.md`,
-  `OPEN-PROBLEMS.md`, or `RESULTS.md`. The nearest 0.05 in the vicinity is the
-  tight-probe *location* `t = 0.05` in `OPEN1.md`'s table, whose ratio is 40.94.
-  I re-derived the known-`c` computation from scratch (drop the `c` coordinate,
-  so `theta = (C0, C1)` and `s(h) = (1, e^{-ch})`). The direction of the paper's
-  claim is right and the boundary is real, but the number is not a limit:
+**"with c known a priori the floor breaks (ratio -> 0.05)"** (main.tex
+Sec. 3). No shipped artifact computes a known-`c` ratio. `run_open1.py` has no
+known-`c` branch and `grep` finds no such number in `OPEN1.md`,
+`OPEN-PROBLEMS.md`, or `RESULTS.md`. The nearest 0.05 in the vicinity is the
+tight-probe *location* `t = 0.05` in `OPEN1.md`'s table, whose ratio is 40.94.
+I re-derived the known-`c` computation from scratch (drop the `c` coordinate,
+so `theta = (C0, C1)` and `s(h) = (1, e^{-ch})`). The direction of the paper's
+claim is right and the boundary is real, but the number is not a limit:
 
   ```
   same probe grid as the paper's scan, c known:
@@ -233,29 +234,33 @@ touched): `pdflatex` then `bibtex` then `pdflatex` x3.
 
 ## 5.5 Web verification (25 Aug 2026)
 
-- **Venue.** `mlxor-2026.github.io` loaded directly. Confirmed verbatim:
-  deadline 31 Aug 2026 AoE; "Maximum 4 pages for the main body, using the
-  NeurIPS conference format"; "Submissions are non-anonymous", single-blind;
-  notification 29 Sept 2026 AoE; 12 or 13 Dec 2026, Atlanta. The three journal
-  pathways (Stochastic Systems, Mathematics of OR, Operations Research) and
-  "Authors may indicate at most one journal" are confirmed. Every checklist
-  venue fact holds.
-- **One new venue fact the checklist does not have.** The CFP asks for the
-  `sglblindworkshop` option of the NeurIPS 2026 template. Confirmed that
-  `neurips_2026.sty` declares `sglblindworkshop` and `dblblindworkshop`, and
-  confirmed by reading the shipped `neurips_2025.sty` that it declares only
-  `final`, `nonatbib` and `preprint`. See `04`.
-- **Stochastic Systems scope** re-read from the INFORMS editorial statement:
-  flagship of the Applied Probability Society, OR content only, explicitly
-  welcomes "ties between applied probability and optimization, or with machine
-  learning" and work "at the interface of stochastics, modeling, statistics, and
-  data science". The checklist's recommendation still looks right; `04` says why
-  and names the one condition that would change it.
-- **Bracale, Maity, Sun and Banerjee**, "Learning the Distribution Map in
-  Reverse Causal Performative Prediction", AISTATS 2025, PMLR v258,
-  arXiv:2405.15172. Read the extracted paper text: abstract, Section 4 "Optimal
-  design for deploying models under binary actions", Section 5 "Regret analysis
-  on performative risk", Algorithm 3 and Theorem 5.1. Not read in full.
+**Venue.** `mlxor-2026.github.io` loaded directly. Confirmed verbatim:
+deadline 31 Aug 2026 AoE; "Maximum 4 pages for the main body, using the
+NeurIPS conference format"; "Submissions are non-anonymous", single-blind;
+notification 29 Sept 2026 AoE; 12 or 13 Dec 2026, Atlanta. The three journal
+pathways (Stochastic Systems, Mathematics of OR, Operations Research) and
+"Authors may indicate at most one journal" are confirmed. Every checklist
+venue fact holds.
+
+**One new venue fact the checklist does not have.** The CFP asks for the
+`sglblindworkshop` option of the NeurIPS 2026 template. Confirmed that
+`neurips_2026.sty` declares `sglblindworkshop` and `dblblindworkshop`, and
+confirmed by reading the shipped `neurips_2025.sty` that it declares only
+`final`, `nonatbib` and `preprint`. See `04`.
+
+**Stochastic Systems scope** re-read from the INFORMS editorial statement:
+flagship of the Applied Probability Society, OR content only, explicitly
+welcomes "ties between applied probability and optimization, or with machine
+learning" and work "at the interface of stochastics, modeling, statistics, and
+data science". The checklist's recommendation still looks right; `04` says why
+and names the one condition that would change it.
+
+**Bracale, Maity, Sun and Banerjee**, "Learning the Distribution Map in
+Reverse Causal Performative Prediction", AISTATS 2025, PMLR v258,
+arXiv:2405.15172. Read the extracted paper text: abstract, Section 4 "Optimal
+design for deploying models under binary actions", Section 5 "Regret analysis
+on performative risk", Algorithm 3 and Theorem 5.1. Not read in full.
+
 - **Li and Wai**, "State Dependent Performative Prediction with Stochastic
   Approximation", arXiv:2110.00800. PDF in the repository's own
   `literature/pdfs/`; first page read directly (title, authors, abstract,
@@ -287,23 +292,28 @@ touched): `pdflatex` then `bibtex` then `pdflatex` x3.
 
 ## 5.7 What was NOT verified, stated plainly
 
-- **The real-data leg's 10/10 port validation.** `run_realdata.py` skips without
-  the REFLEX tree, which is not in this repository. The `REALDATA.md` table was
-  read but not reproduced. This is the paper's only external-data claim and it
-  is the one thing in the evidence stack I could not touch.
+**The real-data leg's 10/10 port validation.** `run_realdata.py` skips without
+the REFLEX tree, which is not in this repository. The `REALDATA.md` table was
+read but not reproduced. This is the paper's only external-data claim and it
+is the one thing in the evidence stack I could not touch.
+
 - **`F = 1.63` across the portfolio** was re-derived here (1.6252 from the ten
   published `gamma_PO` cells), but the *provenance* of those ten cells rests on
   the same unverified leg.
-- **The exact behaviour of `sglblindworkshop`**: whether it prints a workshop
-  notice, and what it does to the author block. The official NeurIPS 2026 author
-  kit was not retrievable from this environment. The finding in `04` rests only
-  on the option's existence in `neurips_2026.sty` and its absence from
-  `neurips_2025.sty`, both of which are confirmed.
+
+**The exact behaviour of `sglblindworkshop`**: whether it prints a workshop
+notice, and what it does to the author block. The official NeurIPS 2026 author
+kit was not retrievable from this environment. The finding in `04` rests only
+on the option's existence in `neurips_2026.sty` and its absence from
+`neurips_2025.sty`, both of which are confirmed.
+
 - **Zhang, Hou and Zhang (2026)**: structured report only. Do not cite unread.
-- **Publication venues of record** for the Gueant-Lehalle and Barzykin papers:
-  arXiv identifiers and author lists were read from the PDFs in hand; the
-  journal of record for each was not re-verified. Use the arXiv entry or check
-  before the bibliography goes final.
+
+**Publication venues of record** for the Gueant-Lehalle and Barzykin papers:
+arXiv identifiers and author lists were read from the PDFs in hand; the
+journal of record for each was not re-verified. Use the arXiv entry or check
+before the bibliography goes final.
+
 - **`run_all.py --fast`** was used for the horizon-sensitivity study in 5.1;
   the headline table came from the full run.
 - The claim that the ten measurement-forced pivots are "recorded in code where

@@ -226,31 +226,33 @@ and it is the reason the leg reads as honest rather than promotional.
 - **README and paper disagree on E10.** `ml-or/README.md` says the multi-bond
   risk ratio is 1.21; `RESULTS.md`, the paper's Table 1, and my re-run all say
   1.20. The paper is right. Fix the README.
-- **The OPEN-1 minimum is 1.00007, not 1.005, on a harder search.** My optimizer
-  (60000 random four-point designs plus four rounds of local refinement) drives
-  the family-knowing Cramer-Rao ratio to 1.00007, with the optimal support
-  collapsing to a cluster of spread 0.007 around the anchor. This does not
-  contradict `run_open1.py`; it just searches harder. The conclusion is
-  unchanged and slightly stronger: the infimum looks to be exactly 1, attained
-  at the symmetric local design, rather than 0.5 percent above it. If the body
-  sentence stays as "best family-knowing design: $1.005\times$ the floor", a
-  sharp reviewer may ask why it is not exactly 1, and the answer is "our search
-  stopped early", which is a worse answer than the truth. Consider:
+
+**The OPEN-1 minimum is 1.00007, not 1.005, on a harder search.** My optimizer
+(60000 random four-point designs plus four rounds of local refinement) drives
+the family-knowing Cramer-Rao ratio to 1.00007, with the optimal support
+collapsing to a cluster of spread 0.007 around the anchor. This does not
+contradict `run_open1.py`; it just searches harder. The conclusion is
+unchanged and slightly stronger: the infimum looks to be exactly 1, attained
+at the symmetric local design, rather than 0.5 percent above it. If the body
+sentence stays as "best family-knowing design: $1.005\times$ the floor", a
+sharp reviewer may ask why it is not exactly 1, and the answer is "our search
+stopped early", which is a worse answer than the truth. Consider:
 
   > \textbf{Adversarial numerics show the floor is \emph{structure-proof}} (no
   > family-knowing design beats it; best found $1.005\times$)
 
   which is what the evidence supports and does not invite the question.
-- **V3.4 is cited for something it does not measure.** Appendix A says the sharp
-  constant is one "against which no simulated adaptive policy fell in
-  verification", and Appendix B's T4 proof says "(V3.4: no simulated policy fell
-  below it)". V3.4 measures only the decay of the gain-to-cost ratio at the
-  minimax scale (0.1183 at T=250 to 0.0410 at T=2250, ratio 0.35 against a
-  predicted 1/3). It never computes `Var(eps_hat) x C_T` for any policy. The
-  actual support for the claim is `run_open1.py` section B, which tests three
-  amplitude schedules against the floor and reports ratios 1.018, 0.995 and
-  4.910. Note the 0.995: one of the three schedules lands marginally *below* the
-  floor, within Monte Carlo error. Replacement text for both places:
+
+**V3.4 is cited for something it does not measure.** Appendix A says the sharp
+constant is one "against which no simulated adaptive policy fell in
+verification", and Appendix B's T4 proof says "(V3.4: no simulated policy fell
+below it)". V3.4 measures only the decay of the gain-to-cost ratio at the
+minimax scale (0.1183 at T=250 to 0.0410 at T=2250, ratio 0.35 against a
+predicted 1/3). It never computes `Var(eps_hat) x C_T` for any policy. The
+actual support for the claim is `run_open1.py` section B, which tests three
+amplitude schedules against the floor and reports ratios 1.018, 0.995 and
+4.910. Note the 0.995: one of the three schedules lands marginally *below* the
+floor, within Monte Carlo error. Replacement text for both places:
 
   > against which no simulated policy fell by more than Monte-Carlo error
   > (\texttt{run\_open1.py} §B)
@@ -259,13 +261,14 @@ and it is the reason the leg reads as honest rather than promotional.
 
   > (\texttt{run\_open1.py} §B: three adaptive amplitude schedules, ratios
   > $0.995$ to $1.018$)
-- **The drift cell is correctly reported and should stay exactly as it is.**
-  Measured 0.0062244 against 0.0053539, +16.3 percent, labelled DRIFT, outside
-  A1, not excused. My independent simulation reproduces the same effect in
-  miniature: the A1 remainder on the in-scope cells grows monotonically with
-  amplitude (+0.10, +0.35, +0.87, +3.25 percent), exactly as the local-quadratic
-  scope predicts. The drift cell is the honest end of that curve. Keep it, keep
-  the label, keep the limitations sentence that names it.
+
+**The drift cell is correctly reported and should stay exactly as it is.**
+Measured 0.0062244 against 0.0053539, +16.3 percent, labelled DRIFT, outside
+A1, not excused. My independent simulation reproduces the same effect in
+miniature: the A1 remainder on the in-scope cells grows monotonically with
+amplitude (+0.10, +0.35, +0.87, +3.25 percent), exactly as the local-quadratic
+scope predicts. The drift cell is the honest end of that curve. Keep it, keep
+the label, keep the limitations sentence that names it.
 
 ## 3.8 Two code fixes, written out
 
