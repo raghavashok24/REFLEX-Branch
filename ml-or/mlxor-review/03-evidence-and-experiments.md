@@ -266,3 +266,124 @@ and it is the reason the leg reads as honest rather than promotional.
   amplitude (+0.10, +0.35, +0.87, +3.25 percent), exactly as the local-quadratic
   scope predicts. The drift cell is the honest end of that curve. Keep it, keep
   the label, keep the limitations sentence that names it.
+
+## 3.8 Two code fixes, written out
+
+### (a) `check_docs.py` crashes, and there is no CI
+
+`check_docs.py` exits 1 with an unhandled `FileNotFoundError`. `c4_workflow()`
+opens `.github/workflows/verify.yml` outside a `try`, and no `.github/`
+directory exists anywhere in the repository. Because `main()` calls
+`c4_workflow()` before `c5_file_graph()`, the crash also skips C5, so the
+**assumption-register completeness check never runs**, which is unfortunate
+given that `02` finds two mislabelled assumptions in the body.
+
+This matters beyond the crash. `mlxor-derivations/README.md` says both suites
+are "in CI"; `posk-pipeline/README.md` lists `.github/workflows/ci.yml` in its
+own layout diagram; and Appendix E of the paper says the repository contains
+"continuous integration running the full verification on every push". None of
+that is true of what is in the tree. A reviewer who clicks the link, as the
+checklist says they will, finds no CI and a doc-checker that dies on startup.
+
+Two changes, both small.
+
+**Make C4 skip cleanly instead of crashing.** In `check_docs.py`, replace the
+first two lines of `c4_workflow()`:
+
+```python
+def c4_workflow():
+    print("== C4: workflow YAML ==")
+    path = os.path.join(HERE, ".github", "workflows", "verify.yml")
+    txt = open(path, encoding="utf-8").read()
+```
+
+with:
+
+```python
+def c4_workflow():
+    print("== C4: workflow YAML ==")
+    path = os.path.join(HERE, ".github", "workflows", "verify.yml")
+    if not os.path.isfile(path):
+        print("  [SKIP] no workflow file at %s" % path)
+        return
+    txt = open(path, encoding="utf-8").read()
+```
+
+That alone gets the suite to completion and lets C5 run. I confirmed the nine
+checks before the crash all pass, so the suite should go green.
+
+**Then add the workflow the docs already promise.** As
+`mlxor-derivations/.github/workflows/verify.yml`:
+
+```yaml
+name: verify
+on: [push, pull_request]
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - run: python verify/verify_all.py
+      - run: python verify/check_docs.py
+```
+
+and the matching `posk-pipeline/.github/workflows/ci.yml`:
+
+```yaml
+name: ci
+on: [push, pull_request]
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - run: python -m pytest tests/test_posk.py -q
+      - run: python experiments/run_all.py --fast
+      - run: python experiments/run_open1.py
+```
+
+`run_all.py --fast` rather than the full run: the full profile took 7m49s here
+and `--fast` is what the README already advertises for CI-scale checking.
+`run_realdata.py` stays out, since it skips without the REFLEX tree and a
+skipping step in a badge is worse than no step.
+
+If neither change is made before 31 Aug, the Appendix E sentence has to move.
+Replacement text, which is true of the tree as it stands:
+
+> ... the real-data leg with its 10/10 port validation, and a verification
+> harness runnable end-to-end from a clean checkout.
+
+Do not ship the CI sentence without the CI. It is the one claim in the paper
+that a reviewer can falsify in ten seconds.
+
+### (b) Make `F = 1.63` traceable
+
+`run_realdata.py` already computes the *within-book* dispersion (1.0020) over
+the 170-CUSIP universe. The cross-portfolio number the body quotes is a
+different, simpler quantity over the ten cells, and it is not computed anywhere.
+The section-2 loop already has every value it needs in `ext_rows`.
+
+After the section-2 table loop, insert:
+
+```python
+    # C5.1 across the portfolio: the ten cells' own curvature dispersion
+    gpo_cells = np.array([g for (_, _, _, g, _) in ext_rows])
+    F_port = (len(gpo_cells) * gpo_cells.sum()
+              / np.sqrt(gpo_cells).sum() ** 2)
+    lines += ["", "**F = %.4f across the portfolio** of %d rating x regime "
+              "cells (C5.1): isotropic exploration overpays the A-optimal "
+              "shape by %.0f%% at the portfolio level."
+              % (F_port, len(gpo_cells), 100 * (F_port - 1))]
+```
+
+I verified the value this produces: `F = 1.6252` from the ten published
+`gamma_PO` values, which is the body's 1.63. Fifteen minutes, and it closes the
+checklist's own traceability assertion.
