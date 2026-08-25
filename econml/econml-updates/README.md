@@ -24,3 +24,5 @@ labels in `make_figures.py`, relative to the submission in `../paper/`.
 `neurips_2026.sty`, `checklist.tex`, and the archive are untouched. The
 patch was verified to apply cleanly and to rebuild to a page-compliant
 PDF (content ends page 9, References start page 10, zero overfull boxes).
+
+check all-changes for improvements + add lean4 verification
