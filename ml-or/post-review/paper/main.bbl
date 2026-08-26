@@ -1,0 +1,179 @@
+\begin{thebibliography}{27}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Barzykin et~al.(2026)Barzykin, Bergault, Gu{\'e}ant, and
+  Lemmel]{barzykin2026quoting}
+Alexander Barzykin, Philippe Bergault, Olivier Gu{\'e}ant, and Malo Lemmel.
+\newblock Optimal quoting under adverse selection and price reading.
+\newblock \emph{arXiv preprint arXiv:2508.20225}, 2026.
+
+\bibitem[Bombois et~al.(2006)Bombois, Scorletti, Gevers, Van~den Hof, and
+  Hildebrand]{bombois2006least}
+Xavier Bombois, G{\'e}rard Scorletti, Michel Gevers, Paul M.~J. Van~den Hof,
+  and Roland Hildebrand.
+\newblock Least costly identification experiment for control.
+\newblock \emph{Automatica}, 42\penalty0 (10):\penalty0 1651--1662, 2006.
+
+\bibitem[Bracale et~al.(2025)Bracale, Maity, Sun, and
+  Banerjee]{bracale2025reverse}
+Daniele Bracale, Subha Maity, Yuekai Sun, and Moulinath Banerjee.
+\newblock Learning the distribution map in reverse causal performative
+  prediction.
+\newblock In \emph{Proceedings of the 28th International Conference on
+  Artificial Intelligence and Statistics (AISTATS)}, volume 258 of \emph{PMLR},
+  2025.
+
+\bibitem[Broder and Rusmevichientong(2012)]{broder2012dynamic}
+Josef Broder and Paat Rusmevichientong.
+\newblock Dynamic pricing under a general parametric choice model.
+\newblock \emph{Operations Research}, 60\penalty0 (4):\penalty0 965--980, 2012.
+
+\bibitem[Brown et~al.(2022)Brown, Hod, and Kalemaj]{brown2022performative}
+Gavin Brown, Shlomi Hod, and Iden Kalemaj.
+\newblock Performative prediction in a stateful world.
+\newblock In \emph{Proceedings of the 25th International Conference on
+  Artificial Intelligence and Statistics (AISTATS)}, 2022.
+
+\bibitem[Dean et~al.(2020)Dean, Mania, Matni, Recht, and Tu]{dean2020sample}
+Sarah Dean, Horia Mania, Nikolai Matni, Benjamin Recht, and Stephen Tu.
+\newblock On the sample complexity of the linear quadratic regulator.
+\newblock \emph{Foundations of Computational Mathematics}, 20\penalty0
+  (4):\penalty0 633--679, 2020.
+
+\bibitem[den Boer(2015)]{denboer2015dynamic}
+Arnoud~V. den Boer.
+\newblock Dynamic pricing and learning: Historical origins, current research,
+  and new directions.
+\newblock \emph{Surveys in Operations Research and Management Science},
+  20\penalty0 (1):\penalty0 1--18, 2015.
+
+\bibitem[Drusvyatskiy and Xiao(2023)]{drusvyatskiy2022stochastic}
+Dmitriy Drusvyatskiy and Lin Xiao.
+\newblock Stochastic optimization with decision-dependent distributions.
+\newblock \emph{Mathematics of Operations Research}, 48\penalty0 (2):\penalty0
+  954--998, 2023.
+
+\bibitem[Feldbaum(1960)]{feldbaum1960dual}
+A.~A. Feldbaum.
+\newblock Dual control theory {I}.
+\newblock \emph{Automation and Remote Control}, 21:\penalty0 874--880, 1960.
+
+\bibitem[Gill and Levit(1995)]{gill1995applications}
+Richard~D. Gill and Boris~Y. Levit.
+\newblock Applications of the van {T}rees inequality: A {B}ayesian
+  {C}ram\'er--{R}ao bound.
+\newblock \emph{Bernoulli}, 1\penalty0 (1--2):\penalty0 59--79, 1995.
+
+\bibitem[Gu{\'e}ant et~al.(2013)Gu{\'e}ant, Lehalle, and
+  Fernandez-Tapia]{gueant2013inventory}
+Olivier Gu{\'e}ant, Charles-Albert Lehalle, and Joaquin Fernandez-Tapia.
+\newblock Dealing with the inventory risk: A solution to the market making
+  problem.
+\newblock \emph{arXiv preprint arXiv:1105.3115}, 2013.
+
+\bibitem[Hardt and Mendler-D{\"u}nner(2023)]{hardt2023performative}
+Moritz Hardt and Celestine Mendler-D{\"u}nner.
+\newblock Performative prediction: Past and future.
+\newblock \emph{arXiv preprint arXiv:2310.16608}, 2023.
+
+\bibitem[Harrison et~al.(2012)Harrison, Keskin, and
+  Zeevi]{harrison2012bayesian}
+J.~Michael Harrison, N.~Bora Keskin, and Assaf Zeevi.
+\newblock Bayesian dynamic pricing policies: Learning and earning under a
+  binary prior distribution.
+\newblock \emph{Management Science}, 58\penalty0 (3):\penalty0 570--586, 2012.
+
+\bibitem[Izzo et~al.(2021)Izzo, Ying, and Zou]{izzo2021learn}
+Zachary Izzo, Lexing Ying, and James Zou.
+\newblock How to learn when data reacts to your model: Performative gradient
+  descent.
+\newblock In \emph{Proceedings of the 38th International Conference on Machine
+  Learning (ICML)}, 2021.
+
+\bibitem[Jagadeesan et~al.(2022)Jagadeesan, Zrnic, and
+  Mendler-D{\"u}nner]{jagadeesan2022regret}
+Meena Jagadeesan, Tijana Zrnic, and Celestine Mendler-D{\"u}nner.
+\newblock Regret minimization with performative feedback.
+\newblock In \emph{Proceedings of the 39th International Conference on Machine
+  Learning (ICML)}, 2022.
+
+\bibitem[Keskin and Zeevi(2014)]{keskin2014dynamic}
+N.~Bora Keskin and Assaf Zeevi.
+\newblock Dynamic pricing with an unknown demand model: Asymptotically optimal
+  semi-myopic policies.
+\newblock \emph{Operations Research}, 62\penalty0 (5):\penalty0 1142--1167,
+  2014.
+
+\bibitem[Kiefer and Wolfowitz(1960)]{kiefer1960equivalence}
+Jack Kiefer and Jacob Wolfowitz.
+\newblock The equivalence of two extremum problems.
+\newblock \emph{Canadian Journal of Mathematics}, 12:\penalty0 363--366, 1960.
+
+\bibitem[Lai and Robbins(1979)]{lai1979adaptive}
+Tze~Leung Lai and Herbert Robbins.
+\newblock Adaptive design and stochastic approximation.
+\newblock \emph{The Annals of Statistics}, 7\penalty0 (6):\penalty0 1196--1221,
+  1979.
+
+\bibitem[Li and Wai(2022)]{li2022state}
+Qiang Li and Hoi-To Wai.
+\newblock State dependent performative prediction with stochastic
+  approximation.
+\newblock In \emph{Proceedings of the 25th International Conference on
+  Artificial Intelligence and Statistics (AISTATS)}, 2022.
+
+\bibitem[Lin and Zrnic(2024)]{lin2024plugin}
+Licong Lin and Tijana Zrnic.
+\newblock Plug-in performative optimization.
+\newblock In \emph{Proceedings of the 41st International Conference on Machine
+  Learning (ICML)}, 2024.
+
+\bibitem[Mendler-D{\"u}nner et~al.(2020)Mendler-D{\"u}nner, Perdomo, Zrnic, and
+  Hardt]{mendler2020stochastic}
+Celestine Mendler-D{\"u}nner, Juan~C. Perdomo, Tijana Zrnic, and Moritz Hardt.
+\newblock Stochastic optimization for performative prediction.
+\newblock In \emph{Advances in Neural Information Processing Systems 33
+  (NeurIPS)}, 2020.
+
+\bibitem[Miller et~al.(2021)Miller, Perdomo, and Zrnic]{miller2021outside}
+John Miller, Juan~C. Perdomo, and Tijana Zrnic.
+\newblock Outside the echo chamber: Optimizing the performative risk.
+\newblock In \emph{Proceedings of the 38th International Conference on Machine
+  Learning (ICML)}, 2021.
+
+\bibitem[Perdomo et~al.(2020)Perdomo, Zrnic, Mendler-D{\"u}nner, and
+  Hardt]{perdomo2020performative}
+Juan~C. Perdomo, Tijana Zrnic, Celestine Mendler-D{\"u}nner, and Moritz Hardt.
+\newblock Performative prediction.
+\newblock In \emph{Proceedings of the 37th International Conference on Machine
+  Learning (ICML)}, 2020.
+
+\bibitem[Pukelsheim(2006)]{pukelsheim2006optimal}
+Friedrich Pukelsheim.
+\newblock \emph{Optimal Design of Experiments}.
+\newblock SIAM Classics in Applied Mathematics, 2006.
+
+\bibitem[Rothschild(1974)]{rothschild1974two}
+Michael Rothschild.
+\newblock A two-armed bandit theory of market pricing.
+\newblock \emph{Journal of Economic Theory}, 9\penalty0 (2):\penalty0 185--202,
+  1974.
+
+\bibitem[Simchowitz and Foster(2020)]{simchowitz2020naive}
+Max Simchowitz and Dylan~J. Foster.
+\newblock Naive exploration is optimal for online {LQR}.
+\newblock In \emph{Proceedings of the 37th International Conference on Machine
+  Learning (ICML)}, 2020.
+
+\bibitem[Wagenmaker et~al.(2021)Wagenmaker, Simchowitz, and
+  Jamieson]{wagenmaker2021task}
+Andrew Wagenmaker, Max Simchowitz, and Kevin Jamieson.
+\newblock Task-optimal exploration in linear dynamical systems.
+\newblock In \emph{Proceedings of the 38th International Conference on Machine
+  Learning (ICML)}, 2021.
+
+\end{thebibliography}
