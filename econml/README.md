@@ -78,6 +78,8 @@ model alignment rather than by headcount. Results 2 through 4 are all stated in
 | Panel 6 | **dry run passes**, 12 configurations, zero contradictions of the over-adaptation corollary |
 | Sections 7 to 10 | **drafted** |
 | Page budget | closed **in LaTeX**, at nine content pages. The markdown build folder still holds more than nine pages; `paper/README.md` records what was cut |
+| Statistical layer | **added in v5**. The one random-ensemble fraction carries its sampling measure, its n, its exact count and a Clopper-Pearson interval (`verify_ensemble_intervals.py`, Appendix K); deterministic grid checks keep worst-case-departure language. Checklist Q7 flips to yes |
+| Submission | **v5**, 27 Aug 2026. Citation gap closed, wedge scope corrected, notation unified, track vocabulary in, narrative repairs applied. See `paper/README.md` |
 | Submission PDF | **compiles clean**, 9 content pages, references and checklist after |
 | NeurIPS checklist | **all 16 answered**, instruction block stripped, heading kept |
 | Review of v1 | **back, accept as poster.** Three items would move it: derive the reduction in the body, dispatch Narang et al., measure `s` on real models. See `paper/README.md` |
@@ -87,7 +89,7 @@ model alignment rather than by headcount. Results 2 through 4 are all stated in
 | Appendix | **typeset, in the submission PDF.** Ten appendices: complete proofs of every numbered result, the certificate inventory, the experimental protocol and the deferred register. 31 pages total, content still ending on page 9 |
 
 Theorems 1 through 4 have moved from `[DERIVED]` to `[VERIFIED]` in the claims
-ledger, each against assertion-based certificates that fail loudly. 525 assertions
+ledger, each against assertion-based certificates that fail loudly. 542 assertions
 across seven files, all passing.
 
 **One claim failed, and it was the one the ledger flagged in advance.** The

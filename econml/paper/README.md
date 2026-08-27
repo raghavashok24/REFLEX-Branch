@@ -3,7 +3,7 @@
 The submission itself: `main.tex` compiled against the official NeurIPS 2026
 style files, plus the mandatory paper checklist.
 
-`main.tex` is **v4**. v1, v2 and v3 are archived unmodified side by side in
+`main.tex` is **v5**. v1 to v4 are archived unmodified side by side in
 [`archive/`](archive/), v1 frozen at commit `486d213` and each later one at the
 state it held before the pass that followed it. The version history below records
 what each pass changed and, more importantly, the two review items that keep
@@ -22,7 +22,8 @@ nine content pages. So every numbered result in the body is proved in
 `appendix.tex`, not promised to a supplementary bundle that may have no upload
 slot at this venue. Appendices A to F are the mathematics, G is the deferred
 supervision material, H is the certificate inventory, I is the experimental
-protocol and J is the register of what is not proved.
+protocol, J is the register of what is not proved and K is the statistical
+protocol behind the paper's one inferential number.
 
 **Three passes.** v1 needed two; v2 needs a third because Lemma 1 shifts the
 theorem numbering that the cross-references resolve against. No bibtex run: the
@@ -49,7 +50,7 @@ for the camera-ready**, where the layout differs anyway.
 | `make_figures.py` | Renders the five figures from `../ml-contributions/experiments/results/` |
 | `figures/*.pdf` | Generated, vector |
 | `main.pdf` | The compiled submission |
-| `archive/v1/` to `archive/v3/` | Frozen earlier versions, kept for diffing. Not part of the build |
+| `archive/v1/` to `archive/v4/` | Frozen earlier versions, kept for diffing. Not part of the build |
 
 ## Compliance
 
@@ -58,26 +59,32 @@ which is the double-blind workshop track. The style file is used as shipped;
 tweaking it is grounds for desk rejection. Options `final` and `preprint` are
 both omitted, so the build anonymizes itself and adds line numbers for review.
 
-**Page count.** Nine content pages, ending with the conclusion. References,
-the appendix pointer and the checklist begin on page 10 and do not count
-against the limit. Verify after any edit:
+**Page count.** Nine content pages, ending with the conclusion. References, the
+appendix and the checklist do not count against the limit. As of v5 the
+conclusion ends part-way down page 9 and the References heading follows it on
+the same page, which is the compliant form with a little slack; through v4 the
+body filled page 9 exactly and References began on page 10. Verify after any
+edit:
 
 ```bash
 pdftotext -f 10 -l 10 econml/paper/main.pdf - | head -2
 ```
 
-That should print the References heading. If content has spilled onto page 10,
-the paper is over.
+That should print references, never body prose. If a section heading, a
+paragraph of the conclusion or a figure appears on page 10, the paper is over.
 
 **Checklist.** All 16 questions answered with a justification each, the
 instruction block deleted and the section heading kept, as the template
-requires. Answers: yes to 1, 2, 3, 4, 6, 8, 9, 10, 12; no to 5 and 7; not
-applicable to 11, 13, 14, 15, 16. The two `no` answers are deliberate and
-justified in place. Question 5 is `no` because the repository names an author
-and is withheld until the paper is de-anonymized. Question 7 is `no` because
-the panels are deterministic, so worst-case departure from the closed form
-across a whole grid is reported instead of error bars over seeds, which is the
-stronger statement.
+requires. Answers: yes to 1, 2, 3, 4, 6, 7, 8, 9, 10, 12; no to 5; not
+applicable to 11, 13, 14, 15, 16. The one `no` is deliberate and justified in
+place: question 5 is `no` because the repository names an author and is
+withheld until the paper is de-anonymized. **Question 7 flipped to `yes` in
+v5.** The panels are still deterministic and still report worst-case departure
+rather than error bars, which is the stronger statement and stays; what changed
+is that the paper's one random-ensemble fraction now carries its sampling
+measure, its n, its exact count and a Clopper-Pearson interval, so the honest
+answer to the question as asked is yes with both standards stated in
+Appendix K.
 
 **Double-blind.** No author block, no repository URL, no acknowledgments. PDF
 metadata carries no title, author, subject or keywords. Figure files are
@@ -173,6 +180,7 @@ camera-ready needs no edit beyond adding the `final` option.
 | v2 | Acted on that review. The reduction lemma moved into the body, the containment against Narang et al. was stated, and measuring the shared-model fraction `s` on real models was ruled out for lack of infrastructure and page budget. Supervision folded into the closing section, leaving nine sections |
 | v3 | Appendix typeset into the same PDF. The abstract's herd-immunity law gained its fully-shared-limit qualifier, panel 1 stopped being called external validation, Peng and Garg (2024) and Jagadeesan et al. (2023) were added, and `\workshoptitle` was matched to the call. The anchors table paid for the space |
 | v4 | Cadence terminology matched to what the theorem proves, the containment turned into Proposition 3 with a witness pair, the wedge's exchangeable-symmetric scope stated in the body, (H3) motivated with a concrete market, and the base paper called a preprint rather than published. Paid for by a prose pass against appendix duplication |
+| v5 | The 27 Aug 2026 pass, in five parts: the citation gap closed (Piliouras and Yu, Li/Yau/Wai, Kim et al.), the wedge's orthogonal-corner scope slip corrected and the notation unified to `rho_c`, an exact interval put on the one random-ensemble number with a new certificate and a new Appendix K (checklist Q7 flips to yes), the workshop's two directions spoken once each and the wedge figure moved beside Result 4, and the dry-run framing reworded to internal against external validity with the emphasis budget cut from 23 bolds to 7. Paid for throughout by compressing against the appendices, never by dropping a claim |
 
 ### Two review items that must not be acted on
 

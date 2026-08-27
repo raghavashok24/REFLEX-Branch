@@ -106,7 +106,8 @@ Proof in [`../math/derivations/04-mixed-market-secular.md`](../math/derivations/
 **C18 failed, and the failure is the most consequential result of the build.**
 The radius is nondecreasing in `gamma_ratio`, by Perron-Frobenius on an
 entrywise-nonnegative matrix, so the limit under-states it. The limit theorem is
-**optimistic**, not conservative: on random draws it calls `11.8%` of
+**optimistic**, not conservative: on the ensemble of `verify_ensemble_intervals.py`
+it calls `11.8%` (2157 of 18313 draws, exact 95% interval `[11.3, 12.3]%`) of
 configurations stable that are unstable at finite correction. The plan of record
 anticipated this possibility and required the error direction be stated, which the
 paper now does. The exact two-block root has left the de-scope order as a result.
@@ -195,9 +196,9 @@ certificate here would guard code that nothing in the paper depends on.
 34 new certificates against the base project's 66, for 100. Every one of them is
 deterministic, CPU-only, numpy-only, and runs from `(config, seed)`.
 
-All 34 are written and passing, spread across **525 individual assertions in
-seven files**. Theorem 4's four (C19 to C21 and C34) joined on 18 Aug 2026 when
-the welfare page landed.
+All 34 are written and passing, spread across **542 individual assertions in
+eight files**. Theorem 4's four (C19 to C21 and C34) joined on 18 Aug 2026 when
+the welfare page landed, and the ensemble-interval file on 27 Aug 2026.
 
 ```bash
 for f in econml/ml-contributions/certificates/verify_*.py; do python "$f" || break; done
@@ -212,14 +213,23 @@ for f in econml/ml-contributions/certificates/verify_*.py; do python "$f" || bre
 | `verify_hetero_env.py` | 32 |
 | `verify_theorem1_anchors.py` | 60 |
 | `verify_theorem4_wedge.py` | 125 |
+| `verify_ensemble_intervals.py` | 17 |
 
-525 assertions across seven files, all passing. The anchors file joined the count
+542 assertions across eight files, all passing. The anchors file joined the count
 on 18 Aug 2026 when it was converted to assert rather than print, and the
 Theorem 4 file the same day when the welfare page landed. The theory module
 gained six on 19 Aug 2026 when the wedge replaced the absence assertion.
 
-**Re-run 20 Aug 2026 as the pre-freeze check.** All seven files exit zero, the
-per-file counts above are reproduced exactly, and the total is 525.
+**Re-run 27 Aug 2026 as the pre-freeze check.** All eight files exit zero, the
+per-file counts above are reproduced exactly, and the total is 542.
+
+`verify_ensemble_intervals.py` is the newest and the only one that is
+inferential rather than deterministic. It exists because the paper quotes one
+fraction estimated on a random ensemble, and a fraction without its sampling
+measure, its n and an interval is not a certified number. It records the
+protocol, computes the exact Clopper-Pearson interval on the count C18 first
+measured, and reproduces the estimate on five independent ensembles. The
+direction of the error stays a theorem and is not restated as a statistic.
 
 ## Rule
 

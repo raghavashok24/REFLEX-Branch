@@ -1,6 +1,6 @@
 """Certificates for the paper's one random-ensemble number.
 
-Source of the statement: ../../paper/appendix.tex, Appendix L, and the
+Source of the statement: ../../paper/appendix.tex, Appendix K, and the
 optimistic-limit paragraph of Section 6.
 
 The paper reports two kinds of empirical claim and they do not get the same
@@ -20,7 +20,7 @@ on where the draws are taken from.
 
 Checks:
 
-  L1  the protocol         the sampling measure is the one Appendix L states
+  L1  the protocol         the sampling measure is the one Appendix K states
   L2  the point estimate   reproduces C18's 2157/18313 under the same seed
   L3  the interval         95 percent Clopper-Pearson, exact rather than normal
   L4  seed robustness      five independent seeds land inside a common interval
@@ -68,7 +68,7 @@ def clopper_pearson(k, n, alpha=0.05):
 
 
 # The sampling measure, stated once and used everywhere below. This is the
-# protocol Appendix L records, and it is the certificate's protocol rather than
+# protocol Appendix K records, and it is the certificate's protocol rather than
 # a reconstruction of it: the ranges match random_case() in
 # verify_theorem3_herd_immunity.py exactly.
 PROTOCOL = dict(N=(2, 40), m1=(0.02, 0.9), kappa=(0.05, 1.0), s=(0.05, 1.0),

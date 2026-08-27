@@ -9,7 +9,7 @@ Reviewed as a pass of its own before freeze, against the built PDF rather than
 the source, because a status flag that drifted during writing is invisible in a
 diff. Last reconciled against `paper/main.pdf` on 20 Aug 2026: one `[MEASURED]`
 row and six `[DRY RUN]` rows in Table 2 of the body, matching E1 and E2 through
-E6 here, and 525 certificate assertions passing.
+E6 here, and 542 certificate assertions passing.
 
 **Proofs.** As of 20 Aug 2026 every numbered result in the body is proved in the
 submission PDF's own appendix rather than promised to supplementary material, and
@@ -100,7 +100,7 @@ which supersedes `../math/03` where they disagree.
 | 6.5 | `rho*` increasing in `s`, so diversity and correction are substitutes | `[VERIFIED]` | C16, strict where `rho* > 0` |
 | 6.6 | Worked thresholds: `0.596 / 0.242 / 0` at `s = 1 / 0.5 / 0.2` | `[VERIFIED]` | C17 |
 | 6.7 | Exact two-block secular root | `[VERIFIED]` | 6.0. **Removed from the de-scope order, see 6.8** |
-| 6.8 | **The limit is approached from the UNSTABLE side: it is optimistic, not conservative** | `[VERIFIED]` | C18, zero monotonicity violations on 3000 draws; `11.8%` of draws flip verdict. **The plan's hoped-for direction is false** |
+| 6.8 | **The limit is approached from the UNSTABLE side: it is optimistic, not conservative** | `[VERIFIED]` | C18, zero monotonicity violations on 3000 draws; `11.8%` of draws flip verdict, 2157 of 18313, exact 95% interval `[11.3, 12.3]%` with its sampling measure in `verify_ensemble_intervals.py` and Appendix K. **The plan's hoped-for direction is false** |
 | 6.9 | Correction is a public good, under-supplied in equilibrium | argument | Bergstrom, Blume and Varian, 1986 |
 | 6.10 | **Imperfect correction: `rho*(e) = (1 - 1/m_N)/e` at `kappa = s = 1`, with efficacy `e = 1 - gamma/gamma_PO`** | `[VERIFIED]` | `derivations/04` Thm 3'; H5, `1.8e-15`. The epidemiological imperfect-vaccine law |
 | 6.11 | **Critical efficacy: no corrected fraction stabilizes unless `gamma_PO/gamma > m_N`** | `[VERIFIED]` | H6. Structural parallel of 5.3 |

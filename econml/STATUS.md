@@ -1,6 +1,29 @@
 # Status: EconML @ NeurIPS 2026
 
-**As of 20 Aug 2026. Submission 29 Aug 2026, 9 days out.**
+**As of 27 Aug 2026. Submission 29 Aug 2026, two days out.**
+
+> **v5 landed 27 Aug 2026.** The body of this file still describes the state at
+> 20 Aug and is accurate about the theory, the panels and the port. What changed
+> since is the paper, in five passes recorded in
+> [`paper/README.md`](paper/README.md): the citation gap closed, the wedge's
+> orthogonal-corner scope slip corrected and the notation unified to `rho_c`, an
+> exact interval put on the one random-ensemble number with a new certificate
+> and a new Appendix K, the workshop's two directions spoken once each with the
+> wedge figure moved beside Result 4, and the dry-run framing reworded from
+> "establishes nothing about a market" to internal against external validity.
+> Certificates went from 525 to 542, all passing. Checklist Q7 flipped from no
+> to yes. No status flag moved and no claim was cut.
+>
+> **What remains, and it is not editorial.** The measured-alignment panel, which
+> would put `lambda_max` on real deployed models, is not built. Both the v1
+> external review and the 25 Aug internal review named it as the single item
+> that moves this from poster to oral, and it is gated on a data check nobody
+> has run: whether the Kim et al. (ICML 2025) release has per-item granularity
+> and a usable licence, with HELM per-instance outputs as the named fallback.
+> The Lean 4 layer is also not attempted and no paper text mentions it. Both
+> were scoped for a four-day window in `../paper-updates/` and this pass had
+> two days; if the panel does not land by 28 Aug it moves to camera-ready with
+> its protocol already written.
 
 Paper: "Herd Immunity and Learning Externalities in Markets of Adaptive Models".
 9 pages main body, unlimited appendix, double-blind, in-person.
@@ -49,7 +72,7 @@ consequence.
 | 3, mixed market and herd immunity | `math/derivations/04` | 70 checks |
 | 4, Pigouvian wedge | `math/04-theorem4-wedge.md` | 125 checks |
 
-525 assertions across seven assertion-based files, all passing:
+542 assertions across eight assertion-based files, all passing:
 
 ```bash
 for f in econml/ml-contributions/certificates/verify_*.py; do python "$f" || break; done
