@@ -212,7 +212,7 @@ with $\tilde{\kappa} = \kappa s$ and $N_c = N - N_b$. An empty block needs the s
 $\Neff$ appearing inside $Q$ is why every statement below carries $s$: the mixed market inherits Result~1's crowding through the product term, not by stipulation.
 
 \paragraph{The strong-correction limit, and it errs in the unsafe direction.}
-As $\gamma_{\mathrm{PO}}\to\infty$ the constant term vanishes and the unstable cycle runs through blind firms only, giving $N_b < N_c(s) = 1 + (1/m_1 - 1)/(\kappa s)$. That criterion taken alone is \textbf{optimistic rather than conservative}. The radius is nondecreasing in $\theta$ by Perron-Frobenius on an entrywise-nonnegative matrix, so the limit under-states it: on random draws it calls $11.8\%$ of configurations stable that are unstable at every finite correction strength. The exact root is therefore the criterion and the limit its corollary, quoted with its error direction. The same monotonicity carries the reassuring half: \textbf{correction never backfires}, so no configuration exists in which un-blinding a firm destabilizes the market.
+As $\gamma_{\mathrm{PO}}\to\infty$ the constant term vanishes and the unstable cycle runs through blind firms only, giving $N_b < N_c(s) = 1 + (1/m_1 - 1)/(\kappa s)$. That criterion taken alone is \textbf{optimistic rather than conservative}. The radius is nondecreasing in $\theta$ by Perron-Frobenius on an entrywise-nonnegative matrix, so the limit under-states it: on random draws it calls $11.8\%$ of configurations stable that are unstable at every finite correction strength ($2157$ of $18313$, exact $95\%$ interval $[11.3,12.3]\%$, sampling measure in Appendix~\ref{app:statistics}). The exact root is therefore the criterion and the limit its corollary, quoted with its error direction. The same monotonicity carries the reassuring half: \textbf{correction never backfires}, so no configuration exists in which un-blinding a firm destabilizes the market.
 
 \paragraph{The collapse, and its honest generalization.}
 At $\kappa = s = 1$ the limit reads $\rho_c^{*} = 1 - 1/\mN$, \textbf{exactly the epidemiological herd-immunity threshold $1-1/R_0$} with the systemic modulus as the reproduction number. A market of 10 firms at $\mN = 2.5$ needs 60\% of them un-blinded \emph{if correction is perfect}. It is not, and at that same corner the quadratic degenerates and the stability condition solves exactly for
@@ -298,7 +298,7 @@ Six panels, each with its evidential status in its own row of Table~\ref{tab:pan
 
 \begin{table}[t]
 \centering
-\caption{Panel coverage and status. Panel 1 is measured in the order-flow simulator rather than in the reference environment, and it reproduces the base result this paper generalizes, so it validates the inherited scaffolding rather than any of the four new results.}
+\caption{Panel coverage and status. Panel 1 is measured in the order-flow simulator; the rest run in the linearized reference environment.}
 \label{tab:panels}
 \small
 \begin{tabular}{llll}
@@ -320,9 +320,7 @@ Panel & Tests & Status & Outcome \\
 Panel 1 reproduces a recent preprint's run in that preprint's own simulator, at the relative error Table~\ref{tab:panels} records. Its claim is the monoculture corner $R = \mathbf{1}\mathbf{1}^{\top}$, the symmetric law Theorem~\ref{thm:alignment} generalizes, so it is evidence for the scaffolding the four results stand on rather than for any of the four. \textbf{The gap to the linear prediction is content, not error}: the market runs $-12.9\%$ at $N=2$ and $+5.2\%$ at $N=3$, with \emph{opposite signs}, which is what a nonlinear market with saturating flow does around a linearization. The reference environment omits that nonlinearity, which is why it reproduces the prediction exactly. The differential mode measures $3.4\times 10^{-3}$ against a theoretical zero at $\kappa=1$, so the instability is purely common-mode.
 
 \paragraph{Why the rest are not measured.}
-A heterogeneous-response port of the order-flow simulator was built and is exact at flat exposure profiles, but its acceptance gate failed: liquidity and price impact stay shared whatever the response profiles are, leaving a residual larger than several effects these panels resolve, so we drew no figure from it and moved no status. Panel 6 is a dry run for a different reason: the simulator carries no aggressiveness choice variable and no welfare object, so no measured counterpart exists to be built.
-
-Panel 6's over-adaptation gap widens from $29.0\%$ at $N=2$ to $119.9\%$ at $N=20$, with the degenerate $N=1$ case at exactly zero, as Corollary~\ref{cor:over} requires. Its bisection method, which reads $\mN$ from realized dynamics rather than from the closed form, is in Appendix~\ref{app:experiments}.
+A heterogeneous-response port of the order-flow simulator was built and is exact at flat exposure profiles, but its acceptance gate failed: liquidity and price impact stay shared whatever the response profiles are, leaving a residual larger than several effects these panels resolve, so we drew no figure from it and moved no status. Panel 6 is a dry run for a different reason: the simulator carries no aggressiveness choice variable and no welfare object, so no measured counterpart exists to be built. Its over-adaptation gap widens from $29.0\%$ at $N=2$ to $119.9\%$ at $N=20$, with the degenerate $N=1$ case at exactly zero as Corollary~\ref{cor:over} requires, read from realized dynamics by the bisection of Appendix~\ref{app:experiments} rather than from the closed form.
 
 \begin{figure}[t]
 \centering

@@ -352,7 +352,7 @@ $A_{ij} = \sqrt{m_im_j}B_{ij}$ and $B$ is entrywise nonnegative for $k_s \in [0,
 \]
 \end{proof}
 
-Two readings follow and they point opposite ways. The reassuring one is that correction never backfires: more correction is always weakly stabilizing, so there is no perverse configuration in which un-blinding a firm destabilizes the market. The uncomfortable one is that $\rho(\theta) \geq \rho(0)$, so the strong-correction limit \emph{under-states} the radius. The limit is optimistic rather than conservative, and it can call a market stable that is unstable at any finite correction strength. On uniform random draws with $\theta \in [0.01,1]$ the limit calls $11.8\%$ of configurations stable that are not. Three worked cases, all of which the limit reads as comfortably stable:
+Two readings follow and they point opposite ways. The reassuring one is that correction never backfires: more correction is always weakly stabilizing, so there is no perverse configuration in which un-blinding a firm destabilizes the market. The uncomfortable one is that $\rho(\theta) \geq \rho(0)$, so the strong-correction limit \emph{under-states} the radius. The limit is optimistic rather than conservative, and it can call a market stable that is unstable at any finite correction strength. On the random ensemble of Appendix~\ref{app:statistics} the limit calls $11.8\%$ of configurations stable that are not, which is $2157$ of $18313$ draws with an exact $95\%$ interval of $[11.3,12.3]\%$. The fraction depends on where the draws are taken from and the appendix states the ranges; the \emph{direction} does not, since it follows from the monotonicity just proved and is observed on every seed with zero exceptions. Three worked cases, all of which the limit reads as comfortably stable:
 
 \begin{center}
 \small
@@ -557,8 +557,10 @@ Assertions & File & What it establishes \\
 56 & \texttt{verify\_theory\_module.py} & acceptance tests on the closed-form module \\
 32 & \texttt{verify\_hetero\_env.py} & the reference environment, including its reduction to the \\
  & & homogeneous market at $R=\mathbf{1}\mathbf{1}^{\top}$ \\
+17 & \texttt{verify\_ensemble\_intervals.py} & the sampling measure, the count and the exact interval \\
+ & & behind the one random-ensemble fraction the paper quotes \\
 \midrule
-525 & total & all passing at submission \\
+542 & total & all passing at submission \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -580,3 +582,22 @@ Two of these were falsifying rather than confirming. C18 showed that the strong-
 \label{app:deferred}
 
 Stated so that the boundary of what is proved is legible. The fully heterogeneous case without (H1), which is the Kronecker object of Appendix~\ref{app:alignment}, and share-weighted alignment for unequal-sized firms, which needs a majorization condition on the share vector since the naive claim that any reweighting raises $\lmax$ is false. Non-separable spillover $\kappa_{ij}$, which folds into $R$ only when it factors. The sharp operator-norm rate $\sqrt{N}/d$ of Appendix~\ref{app:concentration}, which needs a matrix-Bernstein argument rather than the Frobenius step, and a version of design assumption (D) under dependence across the idiosyncratic components, which is what shared data rather than shared models would produce. Asynchronous and heterogeneous cadences, which break the eigenvector sharing that Theorem~\ref{thm:cadence} uses. Three or more correction levels, which break the two-block collapse and return a genuine secular equation. A corrected firm that also changes its response direction, which would move $R$ and which hypothesis (M) does not model. And beyond the symmetric point, the observation that $d\mN/dm_i = \Neff v_i^2$ makes the marginal crowding share the leading eigenvector's participation ratio at firm $i$, so a firm sitting on the crowded mode imposes more than its $1/N$ share, and the asymmetric wedge that follows is a genuine open question.
+
+\section{Statistical protocols}
+\label{app:statistics}
+
+The paper makes two kinds of empirical statement and they are held to different standards, stated here once and used everywhere.
+
+\paragraph{Deterministic grid checks keep worst-case language.} Panels 2 to 6 compare a closed form against realized dynamics over a stated grid of configurations, with the run deterministic from a (config, seed) pair. What is reported is the maximum departure over the whole grid, not a mean with an interval. That is the stronger statement of the two, since it bounds every cell rather than describing a typical one, and dressing it in confidence intervals would weaken it while looking more statistical. No interval appears anywhere in Table~\ref{tab:panels}'s dry-run rows for that reason.
+
+\paragraph{Random-ensemble fractions carry a sampling measure, an $n$, an exact count and an exact interval.} The paper quotes one such fraction: how often the strong-correction limit of Section~\ref{sec:herd} calls a configuration stable that is unstable at every finite correction strength. Its protocol, fixed before the number was read and unchanged since:
+
+\begin{itemize}\itemsep2pt
+\item \emph{Sampling measure.} $N$ uniform on the integers $2$ to $39$; the blind count $N_b$ uniform on $1$ to $N-1$, so both blocks are non-empty and the two-block quadratic is the right form; $m_1$ uniform on $[0.02, 0.9]$; $\kappa$ and $s$ each uniform on $[0.05, 1]$; and the correction parameter $\theta = \gamma/\gamma_{PO}$ uniform on $[0.01, 1]$, so the ensemble spans efficacies from $0$ to $0.99$.
+\item \emph{Estimator.} For each draw, the spectral radius is computed twice by dense eigensolve, once at $\theta \to 0$ and once at the drawn $\theta$. A draw counts as a flip when the first is below one and the second is not. The eigensolve is independent of the closed-form quadratic, so this is a second route to the radius rather than a restatement of it.
+\item \emph{Interval.} Clopper-Pearson at $95\%$, from beta quantiles rather than a normal approximation, so no large-$np$ condition is needed.
+\item \emph{Reported.} $2157$ flips of $18313$ draws, $11.8\%$, interval $[11.3, 12.3]\%$. Five independent ensembles of $20000$ draws each give $11.74$, $11.76$, $12.01$, $11.46$ and $11.53\%$, every one inside that interval.
+\item \emph{Protocol dependence, stated rather than hidden.} The fraction is a property of the ensemble as much as of the theorem. Widening the $m_1$ range to $[0.02, 1.2]$ moves it to $9.6\%$. The ranges above are therefore part of the claim, and the number should be read as the flip rate on this ensemble rather than as a universal constant.
+\end{itemize}
+
+\paragraph{What is not statistical here.} The \emph{direction} of the limit's error is a theorem, not an estimate: $\rho$ is nondecreasing in $\theta$ by Perron-Frobenius on an entrywise-nonnegative matrix (Appendix~\ref{app:mixed}), so the limit can only under-state the radius. Across the five ensembles above, zero draws erred the other way, which is what a proved direction looks like when it is sampled and is not offered as evidence for it. Certificate \texttt{verify\_ensemble\_intervals.py} carries all of the above as $17$ assertions, including the protocol itself, so the interval in the body is a function of a certified count rather than of a fresh draw.
