@@ -92,8 +92,8 @@ for s_ in p4["series"]:
             label=f"efficacy {s_['efficacy']:.2f}")
 ax.axhline(1.0, ls=":", color="0.35", lw=1)
 ax.axvline(p4["rho_star_limit"], ls="--", color="k", lw=1,
-           label=r"$\rho^*$, perfect correction")
-ax.set_xlabel(r"corrected fraction $\rho$")
+           label=r"$\rho_c^*$, perfect correction")
+ax.set_xlabel(r"corrected fraction $\rho_c$")
 ax.set_ylabel(r"measured $m_N$")
 ax.legend(loc="upper right", framealpha=0.9)
 fig.savefig(OUT / "fig_herd.pdf")
@@ -107,13 +107,13 @@ fig, ax = plt.subplots(figsize=(3.3, 2.5))
 ax.fill_between(xs, [p["predicted_rho_star"] for p in p5["curve"]], 1.0,
                 alpha=0.14, color="tab:blue", label="stable")
 ax.plot(xs, [p["predicted_rho_star"] for p in p5["curve"]], "-", lw=1.8,
-        label=r"predicted $\rho^*(s)$")
+        label=r"predicted $\rho_c^*(s)$")
 ax.step(xs, [p["predicted_threshold_firms"] / N5 for p in p5["curve"]],
         where="mid", lw=1.0, color="tab:green", label="predicted, whole firms")
 ax.plot(xs, [p["measured_rho"] for p in p5["curve"]], "o", ms=4.5, mfc="none",
         color="tab:orange", label="measured threshold")
 ax.set_xlabel(r"shared-model fraction $s$")
-ax.set_ylabel(r"corrected fraction $\rho$")
+ax.set_ylabel(r"corrected fraction $\rho_c$")
 ax.set_ylim(-0.03, 1.0)
 ax.legend(loc="upper left", framealpha=0.9)
 fig.savefig(OUT / "fig_substitution.pdf")

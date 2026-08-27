@@ -26,11 +26,11 @@ $s$ & shared-model fraction \emph{(new)} & $[0,1]$ \\
 $K$ & gradient steps per deployment & integer $\geq 1$ \\
 $\eta$ & inner learning rate & $>0$ \\
 $c$ & inner per-step contraction, $1-\eta\gamma$ & $(0,1)$ \\
-$\gamma_{PO}$ & curvature governing the corrected dynamics & $>\gamma$ \\
+$\gamma_{PO}$ & curvature governing the corrected dynamics & $\geq\gamma$ \\
 $\theta$ & $\gamma/\gamma_{PO}$, the correction factor \emph{(new)} & $(0,1]$ \\
 $e$ & correction efficacy, $1-\theta$ \emph{(new)} & $[0,1)$ \\
 $N_b$ & blind (uncorrected) firms \emph{(new)} & $0 \ldots N$ \\
-$\rho^\ast$ & herd-immunity threshold \emph{(new)} & $[0,1)$ \\
+$\rho_c^\ast$ & herd-immunity threshold \emph{(new)} & $[0,1)$ \\
 $a_i$ & firm $i$'s adaptation aggressiveness \emph{(new)} & $>0$ \\
 $t^\ast$ & the Pigouvian wedge \emph{(new)} & \\
 \bottomrule
@@ -372,9 +372,9 @@ Certificate C18 finds zero violations of Proposition~\ref{aprop:theta} on 3000 r
 \subsection{Imperfect correction}
 
 \begin{proof}[Proof of the imperfect-correction law and of Corollary~\ref{cor:efficacy}]
-At $\kappa = s = 1$ the quadratic degenerates, since $1-k_s = 0$ kills $a$, $b$ and $Q$, leaving $\rho = P = m_1(N_b + \theta N_{\text{corr}})$. Writing the corrected fraction as $\rho_c = 1 - N_b/N$ and solving $\rho < 1$ for it gives
+At $\kappa = s = 1$ the quadratic degenerates, since $1-k_s = 0$ kills $a$, $b$ and $Q$, leaving $\rho(J) = P = m_1(N_b + \theta N_{\text{corr}})$. Writing the corrected fraction as $\rho_c = 1 - N_b/N$ and solving $\rho(J) < 1$ for it gives
 \[
-  \rho^\ast(\theta) \;=\; \frac{1 - 1/\mN}{1-\theta} \;=\; \frac{1-1/\mN}{e}, \qquad e = 1-\theta = 1 - \gamma/\gamma_{PO},
+  \rho_c^\ast(\theta) \;=\; \frac{1 - 1/\mN}{1-\theta} \;=\; \frac{1-1/\mN}{e}, \qquad e = 1-\theta = 1 - \gamma/\gamma_{PO},
 \]
 which is the standard epidemiological coverage requirement for an imperfect vaccine, with the clean law $1-1/\mN$ as its perfect-efficacy corner. The required fraction exceeds one, so that no corrected fraction stabilizes the market, exactly when $\theta > 1/\mN$, that is when $\gamma_{PO}/\gamma \leq \mN$, which is Corollary~\ref{cor:efficacy}.
 \end{proof}
@@ -394,19 +394,19 @@ The strong-correction limit is stable if and only if $N_b < N_c(s) = 1 + (1/m_1 
 Rearrange $m_1(1+\kappa s(N_b-1)) < 1$.
 \end{proof}
 
-Certificate C14 finds zero mismatches on 4000 draws for this form. The clamped restatement is \emph{not} equivalent: writing $\rho_c = 1-N_b/N$ and $\rho^\ast = \max(0,\,1-N_c(s)/N)$, the criterion $\rho_c > \rho^\ast$ fails on 134 of those same 4000 draws, every failure at the same corner, namely $N_b = N$ with $N_c(s) \geq N$, the all-blind market that is stable because it needs no correction at all and that a clamp at zero combined with a strict inequality excludes. The paper therefore states $N_b < N_c(s)$ as the theorem, which is primitive and exact, and presents the clamped $\rho^\ast$ as the policy object, read as the fraction that must be corrected, with $\rho^\ast = 0$ meaning no requirement rather than a strict inequality to clear.
+Certificate C14 finds zero mismatches on 4000 draws for this form. The clamped restatement is \emph{not} equivalent: writing $\rho_c = 1-N_b/N$ and $\rho_c^\ast = \max(0,\,1-N_c(s)/N)$, the criterion $\rho_c > \rho_c^\ast$ fails on 134 of those same 4000 draws, every failure at the same corner, namely $N_b = N$ with $N_c(s) \geq N$, the all-blind market that is stable because it needs no correction at all and that a clamp at zero combined with a strict inequality excludes. The paper therefore states $N_b < N_c(s)$ as the theorem, which is primitive and exact, and presents the clamped $\rho_c^\ast$ as the policy object, read as the fraction that must be corrected, with $\rho_c^\ast = 0$ meaning no requirement rather than a strict inequality to clear.
 
-Since $\rho^\ast N$ is generally not an integer and the panels run at $N$ in the tens, where one firm is several percentage points, the realized requirement is
+Since $\rho_c^\ast N$ is generally not an integer and the panels run at $N$ in the tens, where one firm is several percentage points, the realized requirement is
 \[
   \text{minimum corrected firms} \;=\; N - \lceil N_c(s)\rceil + 1,
 \]
-clamped to $[0,N]$, because the largest stable blind count is $\lceil N_c\rceil - 1$. The natural guess $\lceil \rho^\ast N\rceil$ agrees on every random draw, since random draws never land on an exact integer $N_c$, but it is off by one exactly when $N_c$ is an integer: at $N=20$, $m_1=0.15$, $\kappa=0.8$ and the $s$ giving $N_c=8$, the truth is 13 corrected firms and the guess says 12. Certificate H4 checks the correct form exactly on 3000 draws. Worked at $N=20$, $m_1=0.15$ and $\kappa=0.8$:
+clamped to $[0,N]$, because the largest stable blind count is $\lceil N_c\rceil - 1$. The natural guess $\lceil \rho_c^\ast N\rceil$ agrees on every random draw, since random draws never land on an exact integer $N_c$, but it is off by one exactly when $N_c$ is an integer: at $N=20$, $m_1=0.15$, $\kappa=0.8$ and the $s$ giving $N_c=8$, the truth is 13 corrected firms and the guess says 12. Certificate H4 checks the correct form exactly on 3000 draws. Worked at $N=20$, $m_1=0.15$ and $\kappa=0.8$:
 
 \begin{center}
 \small
 \begin{tabular}{llll}
 \toprule
-$s$ & $N_c(s)$ & $\rho^\ast$ & minimum corrected firms \\
+$s$ & $N_c(s)$ & $\rho_c^\ast$ & minimum corrected firms \\
 \midrule
 $1.0$ & $8.08$ & $0.596$ & $12$ \\
 $0.5$ & $15.17$ & $0.242$ & $5$ \\
@@ -415,7 +415,7 @@ $0.2$ & $36.42$ & $0$ & $0$ \\
 \end{tabular}
 \end{center}
 
-At $\kappa = s = 1$ we have $N_c = 1/m_1$ and $\Neff = N$, so $\rho^\ast = 1 - 1/(m_1N) = 1 - 1/\mN$, the epidemiological threshold with the systemic modulus as the reproduction number: a market of ten firms at $\mN = 2.5$ needs $60\%$ un-blinded. And $\rho^\ast$ is increasing in $s$, strictly so wherever it is positive, which is what makes model diversity and corrected learning substitutes and what the $(\rho,s)$ frontier plots. Certified in C15 and C16.
+At $\kappa = s = 1$ we have $N_c = 1/m_1$ and $\Neff = N$, so $\rho_c^\ast = 1 - 1/(m_1N) = 1 - 1/\mN$, the epidemiological threshold with the systemic modulus as the reproduction number: a market of ten firms at $\mN = 2.5$ needs $60\%$ un-blinded. And $\rho_c^\ast$ is increasing in $s$, strictly so wherever it is positive, which is what makes model diversity and corrected learning substitutes and what the $(\rho,s)$ frontier plots. Certified in C15 and C16.
 
 Panel 4 runs at $N=20$, $m_1=0.15$, $\kappa=0.8$ and $s=1$, where the imperfect-correction law is not exact, and measures thresholds of $12$, $14$, $16$ and $20$ firms at efficacies $1.00$, $0.90$, $0.75$ and $0.60$ against a law predicting $12$, $14$, $16$ and $20$. That is four out of four at the integer granularity a market actually faces. It is a dry run in the linearized reference environment and is recorded as evidence rather than as proof; the exact statement away from $\kappa = s = 1$ remains the quadratic's root.
 
@@ -430,12 +430,12 @@ Drive the linearized joint map with noise. Under (A1) and (A5) the binding mode 
 \]
 The coefficient is $-\mN$ and not $\mN$ because the retraining Jacobian is $J = -m_1[(1-\kappa)I+\kappa R]$ and the common mode inherits its sign. The stationary variance is blind to that sign, since the recursion enters squared, which is why the same expression serves both. The sign is not lost information: it reappears in the lag-1 autocorrelation, which is $-\mN$ and therefore negative, so a crowded market shows oscillatory rather than persistent common-mode error. That is the observable the supervision estimator reads, and it is why a positive-autocorrelation diagnostic would look for the wrong thing. Certificate C19 checks both facts by simulation rather than asserting them.
 
-$V$ is the paper's price of instability, and it is a modeling choice: stationary variance is the smooth proxy for divergence risk, finite everywhere strictly inside the stable region and divergent exactly at the boundary the rest of the paper is about. Nothing below depends on the functional form beyond $V$ being positive, increasing and convex in $\mN$ on $[0,1)$, all three of which the closed form satisfies.
+$V$ is the paper's price of instability, and it is a modelling choice: stationary variance is the smooth proxy for divergence risk, finite everywhere strictly inside the stable region and divergent exactly at the boundary the rest of the paper is about. Nothing below depends on the functional form beyond $V$ being positive, increasing and convex in $\mN$ on $[0,1)$, all three of which the closed form satisfies.
 
 \begin{description}
 \item[(W1) Aggressiveness.] Each firm chooses $a_i > 0$, meaning cadence, learning rate or responsiveness: anything that scales its own modulus. Write $m_i = \mu(a_i)$ with $\mu$ differentiable, strictly increasing and common across firms. Aggressiveness moves a firm's gain and not its response direction, so $R$ and $\kappa$ are held fixed.
 \item[(W2) Benefit.] Aggressiveness buys tracking benefit $B(a_i)$, strictly increasing and strictly concave. Only firm $i$'s own benefit depends on $a_i$, so the entire interaction runs through $\mN$.
-\item[(W3) Exchangeable alignment.] $R$ is invariant under a common permutation of firms. The supply-chain alignment is exchangeable, as are the monoculture and orthogonal corners. This buys the uniform leading eigenvector at the symmetric point.
+\item[(W3) Exchangeable alignment, with a simple leading eigenvalue.] $R$ is invariant under a common permutation of firms, $\kappa>0$, and $\lmax(R)$ is simple. The supply-chain alignment at any $s>0$ is exchangeable with a simple leading eigenvalue, as is the monoculture corner. The orthogonal corner $R=I$ is excluded: there the coupling matrix is the identity, $\lmax$ has multiplicity $N$, and the perturbation argument below has no unique $v$ to differentiate along. Simplicity is what buys the uniform leading eigenvector at the symmetric point, and it is used in Lemma~\ref{lem:share}'s proof rather than assumed away.
 \item[(W4) Client exposure.] The planner's variance weight satisfies $W > \sum_i w_i$, with all weights positive.
 \end{description}
 
