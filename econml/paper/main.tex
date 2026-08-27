@@ -85,10 +85,10 @@ Because every result is stated in $\mN$, each inherits the supply chain for free
 \citet{kleinberg2021} show that when many firms adopt the same algorithm welfare can fall even when the shared algorithm is the better one, because correlated selection destroys the option value of independent evaluation; \citet{bommasani2022} formalize systemic exclusion when many deployments inherit one model. \citet{peng2024} is the nearest neighbour and the first to carry market effects, a two-sided matching model in which many decision-makers share one evaluation algorithm; \citet{jagadeesan2023} make the supply-side move, characterizing what producers supply when they compete through a shared recommender. All four are equilibrium statements, read at the market's resting point. None expresses a stability boundary or a rate, and none carries an object for \emph{which direction} a firm perturbs the environment, so a market can be statically fine and dynamically fragile at the same shared-model fraction.
 
 \paragraph{Multiplayer performative prediction, and the containment relation.}
-\citet{narang2023} is the nearest dynamics: multiple learners in a shared decision-dependent environment, with equilibrium concepts and convergence conditions for repeated retraining. Their condition bounds scalars, the Lipschitz sensitivity of the joint distribution map against objective curvature, uniformly over the joint action. Ours bounds a spectral radius in which those scalars appear only inside $m_1$. The relation is strict refinement rather than corollary, and Proposition~\ref{prop:containment} gives the witness: two markets agreeing on every scalar of that kind, differing in stability, and so indistinguishable to any criterion built from those scalars alone. The substitution $\mathbf{1}\mathbf{1}^{\top}\!\to R$ adds an object rather than tightening a constant, and that object carries monoculture, provenance, the supply chain and every policy statement below. The single-learner lazy-deployment slope of \citet{mendlerdunner2020} is what Theorem~\ref{thm:cadence} composes with multi-agent amplification, a composition not previously made; the corrected update of \citet{izzo2021} is what Theorem~\ref{thm:mixed} puts into the game, having only ever been run single-learner.
+\citet{narang2023} is the nearest dynamics: multiple learners in a shared decision-dependent environment, with equilibrium concepts and convergence conditions for repeated retraining. Their condition bounds scalars, the Lipschitz sensitivity of the joint distribution map against objective curvature, uniformly over the joint action. Ours bounds a spectral radius in which those scalars appear only inside $m_1$. The relation is strict refinement rather than corollary, and Proposition~\ref{prop:containment} gives the witness: two markets agreeing on every scalar of that kind, differing in stability, and so indistinguishable to any criterion built from those scalars alone. The substitution $\mathbf{1}\mathbf{1}^{\top}\!\to R$ adds an object rather than tightening a constant, and that object carries monoculture, provenance, the supply chain and every policy statement below. Two further multi-agent treatments border this one. \citet{piliouras2023} follow many predictors of one common outcome from global stability through instability into formal chaos as learning rates and agent counts grow, which is the monoculture corner $R = \mathbf{1}\mathbf{1}^{\top}$ carried past its linearization rather than one configuration among many. \citet{li2022} schedule deployments for decentralized agents coupled by a consensus constraint, so their coupling is chosen cooperatively and no externality arises. The single-learner lazy-deployment slope of \citet{mendlerdunner2020} is what Theorem~\ref{thm:cadence} composes with amplification no firm chooses, a composition not previously made; the corrected update of \citet{izzo2021} is what Theorem~\ref{thm:mixed} puts into the game, having only ever been run single-learner.
 
 \paragraph{Systemic risk, epidemiology, and the statistic.}
-\citet{beale2011} asked this question of banks, showing individually prudent portfolio choices can be collectively destabilizing; their agents do not learn, so the homogeneity is a portfolio overlap rather than an alignment of feedback directions, and there is no second instrument to trade diversity against. \citet{diekmann1990} converts the epidemiological parallel from analogy into identity: $R_0$ in a heterogeneous population is \emph{defined} as the spectral radius of a next-generation operator, and $\mN$ is the spectral radius of a linearized joint retraining operator, so the two thresholds are the same statement and the vaccination law transfers with its refinements. The largest eigenvalue of a correlation matrix as an effective count is meanwhile standard in random-matrix finance \citep{laloux1999,plerou2002}, signal processing \citep{roy2007} and ecology \citep{hill1973}; the novelty is the matrix it is computed from, response Jacobians rather than returns, and the condition it enters.
+\citet{beale2011} asked this of banks, but their agents do not learn, so the homogeneity is portfolio overlap rather than alignment of feedback directions and there is no second instrument to trade diversity against. \citet{diekmann1990} converts the epidemiological parallel from analogy into identity: $R_0$ in a heterogeneous population is \emph{defined} as the spectral radius of a next-generation operator, and $\mN$ is the spectral radius of a linearized joint retraining operator, so the two thresholds are the same statement and the vaccination law transfers with its refinements. The largest eigenvalue of a correlation matrix as an effective count is meanwhile standard in random-matrix finance \citep{laloux1999,plerou2002}, signal processing \citep{roy2007} and ecology \citep{hill1973}; the novelty is the matrix it is computed from, response Jacobians rather than returns, and the condition it enters.
 
 \section{Setup: private against systemic stability}
 \label{sec:setup}
@@ -113,7 +113,7 @@ The substitution of $R$ for $\mathbf{1}\mathbf{1}^{\top}$ is the whole paper, so
 
 \begin{lemma}[Reduction]
 \label{lem:reduction}
-Assume \textup{(H1)} firm $i$'s deviation from equilibrium is a scalar $x_i$ along its unit response direction $\hat{E}_i = E_i/\|E_i\|_F$, so the state is $x \in \mathbb{R}^N$ rather than $\mathbb{R}^{Nd}$; \textup{(H2)} $\|E_i\|_F = \varepsilon$ for every $i$, which is \textup{(A2)} restated in the new object; \textup{(H3)} firm $i$ retrains against the component of the pool distortion along $\hat{E}_i$, feeling its own contribution in full and each competitor's with weight $\kappa$; and \textup{(H4)} firm $i$ minimizes a $\gamma$-strongly-convex objective with sensitivity $\beta$ to the felt distortion, so $x_i^{+} = -(\beta/\gamma)\,\mathrm{felt}_i$. Then the joint retraining map is linear with Jacobian
+Assume \textup{(H1)} firm $i$'s deviation from equilibrium is a scalar $x_i$ along its unit response direction $\hat{E}_i = E_i/\|E_i\|_F$, so the state is $x \in \mathbb{R}^N$ rather than $\mathbb{R}^{Nd}$; \textup{(H2)} $\|E_i\|_F = \varepsilon$ for every $i$, which is \textup{(A2)} in the new object; \textup{(H3)} firm $i$ retrains against the component of the pool distortion along $\hat{E}_i$, feeling its own contribution in full and each competitor's with weight $\kappa$; and \textup{(H4)} firm $i$ best-responds to the felt distortion under a $\gamma$-strongly-convex objective of sensitivity $\beta$, so $x_i^{+} = -(\beta/\gamma)\,\mathrm{felt}_i$. Then the joint retraining map is linear with Jacobian
 \begin{equation}
 \label{eq:reduction}
 J \;=\; -m_1\bigl[(1-\kappa)I + \kappa R\bigr], \qquad m_1 = \varepsilon\beta/\gamma .
@@ -140,17 +140,17 @@ Under Assumption~\ref{ass:standing} with equal moduli and heterogeneous response
 so the market is stable if and only if $\mN < 1$.
 \end{theorem}
 
-Setting $R = \mathbf{1}\mathbf{1}^{\top}$ recovers the symmetric multi-dealer law of \citet{reflex2026} exactly, so the earlier result is not generalized away but located: it is the monoculture corner, where every firm's feedback points the same way. Four anchors follow, each checked independently and derived in Appendices~\ref{app:alignment} and \ref{app:concentration}. Monoculture gives $\Neff = 1+\kappa(N-1)$, the inherited law. Orthogonal responses, $R=I$, give $\Neff = 1$: a hundred firms perturbing the environment in a hundred orthogonal directions are dynamically one firm. The simplex, $r_{ij} = -\nicefrac{1}{(N-1)}$, gives $\Neff = 1+\nicefrac{\kappa}{(N-1)}$. A supply chain of share $s$ gives $\Neff = 1+\kappa s(N-1)$, the number of independent \emph{models} rather than of firms. $\Neff \geq 1$ always, so interaction never stabilizes a market below what its members achieve alone.
+Setting $R = \mathbf{1}\mathbf{1}^{\top}$ recovers the symmetric multi-dealer law of \citet{reflex2026} exactly, so the earlier result is not generalized away but located: it is the monoculture corner, where every firm's feedback points the same way. Four anchors follow, each checked independently and derived in Appendices~\ref{app:alignment} and \ref{app:concentration}. Monoculture gives $\Neff = 1+\kappa(N-1)$, the inherited law. Orthogonal responses, $R=I$, give $\Neff = 1$: a hundred firms perturbing the environment in a hundred orthogonal directions are dynamically one firm, and the simplex $r_{ij} = -\nicefrac{1}{(N-1)}$ gives $1+\nicefrac{\kappa}{(N-1)}$. A supply chain of share $s$ gives $\Neff = 1+\kappa s(N-1)$, the number of independent \emph{models} rather than of firms. $\Neff \geq 1$ always, so interaction never stabilizes a market below what its members achieve alone.
 
 \begin{proposition}[Strict refinement, with a witness]
 \label{prop:containment}
 Fix $N \geq 2$, $\kappa \in (0,1]$ and $m_1$ with $1/(1+\kappa(N-1)) < m_1 < 1$. Compare the market at $R = I$ with the market at $R = \mathbf{1}\mathbf{1}^{\top}$. The two agree on every scalar a uniform Lipschitz-and-curvature criterion can read: the same response magnitude $\varepsilon$ by \textup{(H2)}, the same objective curvature $\gamma$ and sensitivity $\beta$ by \textup{(H4)}, hence the same $m_1$ and the same spillover $\kappa$. Their radii are $\mN = m_1$ and $\mN = m_1(1+\kappa(N-1))$, which the choice of $m_1$ places on opposite sides of one. Any criterion measurable from those scalars alone therefore returns the same verdict for both, and is wrong about one of them.
 \end{proposition}
 
-At $N=20$, $\kappa=0.8$ and $m_1 = 0.15$ the orthogonal market runs $\mN = 0.15$ and the monoculture $\mN = 2.43$: one converges, the other diverges, and no Lipschitz constant in either model distinguishes them. This is why Theorem~\ref{thm:alignment} is a strict refinement of a uniform condition rather than a corollary of one. The object doing the separating is $R$, which no scalar criterion carries.
+At $N=20$, $\kappa=0.8$ and $m_1 = 0.15$ the orthogonal market runs $\mN = 0.15$ and the monoculture $\mN = 2.43$: one converges, the other diverges, and no Lipschitz constant in either model distinguishes them. The object doing the separating is $R$, which no scalar criterion carries, so Theorem~\ref{thm:alignment} refines a uniform condition rather than following from one.
 
 \paragraph{The supply chain.}
-Decompose $E_i = \sqrt{s}\,E_{\text{shared}} + \sqrt{1-s}\,\Xi_i$, where $s\in[0,1]$ is the fraction attributable to a shared foundation model, vendor or pretraining corpus. Alignments concentrate at $r_{ij}\to s$ with $O(1/d)$ fluctuation and an explicit failure probability, so $\Neff \to 1 + \kappa s (N-1)$ and every result below inherits $s$ for free: fifty dealers fine-tuning one vendor's model are dynamically ${\sim}1+49\kappa$ learners at $s\approx 1$ and barely more than one at $s \approx 0$.
+Decompose $E_i = \sqrt{s}\,E_{\text{shared}} + \sqrt{1-s}\,\Xi_i$, where $s\in[0,1]$ is the fraction attributable to a shared foundation model, vendor or pretraining corpus. Error correlation across more than 350 hosted models is substantial and concentrated within shared providers \citep{kim2025}, so the premise of this decomposition is observed on deployed systems rather than assumed. Alignments concentrate at $r_{ij}\to s$ with $O(1/d)$ fluctuation and an explicit failure probability, so $\Neff \to 1 + \kappa s (N-1)$ and every result below inherits $s$ for free: fifty dealers fine-tuning one vendor's model are dynamically ${\sim}1+49\kappa$ learners at $s\approx 1$ and barely more than one at $s \approx 0$.
 
 \paragraph{Why the naive diversity index fails, twice.}
 Mean alignment understates \emph{clustered} alignment. Three tightly aligned firms among ten otherwise-orthogonal ones give $\Neff = 2.60$ at $\kappa = 0.8$, against $1.48$ for the uniform configuration with the identical mean: the market runs $\mN = 1.30$ at $m_1 = 0.5$ and is unstable, while the index reports $0.74$ and calls it safe with margin. The simplex is sharper still, minimizing mean alignment while carrying $\lmax = N/(N-1) > 1$, so the mean fails as a \emph{ranking} and not only as a level. And the failure is signed: $\Neff \geq 1 + \kappa(N-1)\overline{r}$ for every $R$, so the index never over-states risk (Appendix~\ref{app:alignment}).
@@ -182,11 +182,11 @@ Cadence buys stability with staleness, and the exchange rate is the same quantit
 
 \begin{figure}[t]
 \centering
-\begin{subfigure}{0.40\textwidth}
+\begin{subfigure}{0.36\textwidth}
 \includegraphics[width=\linewidth]{figures/fig_phase.pdf}
 \end{subfigure}
 \hfill
-\begin{subfigure}{0.40\textwidth}
+\begin{subfigure}{0.36\textwidth}
 \includegraphics[width=\linewidth]{figures/fig_cadence.pdf}
 \end{subfigure}
 \caption{Left: the $(N,s)$ phase diagram over 48 cells (Theorem~\ref{thm:alignment}). Right: the cadence window over 175 cells of the $(\Neff,K)$ grid against predicted $K_{\max}$, with $s$ contours and $c=0.8$ (Theorem~\ref{thm:cadence}); the realized window is $\lfloor K_{\max}\rfloor$ and the plotted frontier continuous. Both are dry runs (Section~\ref{sec:experiments}).}
@@ -236,11 +236,11 @@ Correction is a public good: an un-blinded firm captures a private benefit while
 
 \begin{figure}[t]
 \centering
-\begin{subfigure}{0.40\textwidth}
+\begin{subfigure}{0.36\textwidth}
 \includegraphics[width=\linewidth]{figures/fig_herd.pdf}
 \end{subfigure}
 \hfill
-\begin{subfigure}{0.40\textwidth}
+\begin{subfigure}{0.36\textwidth}
 \includegraphics[width=\linewidth]{figures/fig_substitution.pdf}
 \end{subfigure}
 \caption{Left: stability against corrected fraction at $N=20$, $m_1=0.15$, $\kappa=0.8$, $s=1$, across efficacies; the gap between the exact threshold and the perfect-correction limit is a result, not an error bar. Right: \textbf{the substitution frontier}, the $(\rho,s)$ iso-stability curve, matching at 18 of 18 points. Both are dry runs (Section~\ref{sec:experiments}).}
@@ -262,7 +262,7 @@ At the symmetric point, $\partial \mN/\partial m_i = \Neff v_i^2$ where $v$ is t
 \paragraph{Where a sign condition is needed, and where it is not.}
 Theorem~\ref{thm:alignment}'s radius needs none. $R$ is positive semidefinite with unit diagonal, so $1+\kappa(\lambda_i-1)$ increases in $\lambda_i$ and the radius sits at $\lmax$ whatever the off-diagonal signs. What needs a sign is the \emph{reading} of Lemma~\ref{lem:share}, that the binding mode is the common one and $v$ is therefore a vector of market shares. \textbf{(A5)} supplies it: entrywise nonnegative $R$ puts the leading eigenvector in the nonnegative orthant by Perron-Frobenius, and shared vendors produce positive alignment.
 
-Both readings of Lemma~\ref{lem:share} matter. The \emph{sum} is $\Neff$, so the market's total sensitivity to a uniform increase in aggressiveness is amplified by exactly the effective learner count of Result~1. The \emph{individual} share is $\Neff v_i^2$, which collapses to $\Neff/N$ when $R$ is exchangeable. The naive guess is $1/N$ by analogy with the commons, and it is wrong by the factor $\Neff$, which at $N=20$, $\kappa=0.8$, $s=1$ is $16.2$.
+Both readings matter. The \emph{sum} is $\Neff$, so the market's total sensitivity to a uniform increase in aggressiveness is amplified by exactly the effective learner count of Result~1; the \emph{individual} share $\Neff v_i^2$ collapses to $\Neff/N$ on exchangeable $R$, against a naive commons guess of $1/N$ that is wrong by the factor $\Neff$, which at $N=20$, $\kappa=0.8$, $s=1$ is $16.2$.
 
 \begin{theorem}[The wedge]
 \label{thm:wedge}
@@ -320,13 +320,13 @@ Panel & Tests & Status & Outcome \\
 Panel 1 reproduces a recent preprint's run in that preprint's own simulator, at the relative error Table~\ref{tab:panels} records. Its claim is the monoculture corner $R = \mathbf{1}\mathbf{1}^{\top}$, the symmetric law Theorem~\ref{thm:alignment} generalizes, so it is evidence for the scaffolding the four results stand on rather than for any of the four. \textbf{The gap to the linear prediction is content, not error}: the market runs $-12.9\%$ at $N=2$ and $+5.2\%$ at $N=3$, with \emph{opposite signs}, which is what a nonlinear market with saturating flow does around a linearization. The reference environment omits that nonlinearity, which is why it reproduces the prediction exactly. The differential mode measures $3.4\times 10^{-3}$ against a theoretical zero at $\kappa=1$, so the instability is purely common-mode.
 
 \paragraph{Why the rest are not measured.}
-A heterogeneous-response port of the order-flow simulator was built and is exact at flat exposure profiles, but its acceptance gate failed: the liquidity and price-impact channels stay shared whatever the response profiles are, leaving a residual larger than several effects these panels resolve. We drew no figure from that port and moved no status. Panel 6 is a dry run for a different reason: the simulator carries no aggressiveness choice variable and no welfare object, so no measured counterpart exists to be built.
+A heterogeneous-response port of the order-flow simulator was built and is exact at flat exposure profiles, but its acceptance gate failed: liquidity and price impact stay shared whatever the response profiles are, leaving a residual larger than several effects these panels resolve, so we drew no figure from it and moved no status. Panel 6 is a dry run for a different reason: the simulator carries no aggressiveness choice variable and no welfare object, so no measured counterpart exists to be built.
 
 Panel 6's over-adaptation gap widens from $29.0\%$ at $N=2$ to $119.9\%$ at $N=20$, with the degenerate $N=1$ case at exactly zero, as Corollary~\ref{cor:over} requires. Its bisection method, which reads $\mN$ from realized dynamics rather than from the closed form, is in Appendix~\ref{app:experiments}.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.60\textwidth]{figures/fig_wedge.pdf}
+\includegraphics[width=0.54\textwidth]{figures/fig_wedge.pdf}
 \caption{Over-adaptation and the wedge. Left: decentralized against socially optimal aggressiveness across $N$ at $\chi=1$, $s=1$. Right: $t^{*}$ against $N$, log scale. Dry run; the boundary divergence fits $(1-\mN)^{-2}$ at log-log slope $-2.000$.}
 \label{fig:wedge}
 \end{figure}
@@ -368,9 +368,13 @@ The analysis is linearized around the joint equilibrium (A1), and panel 1 shows 
 
 \bibitem[Khandani and Lo(2007)]{khandani2007} A.~E. Khandani and A.~W. Lo. What happened to the quants in August 2007? \emph{Journal of Investment Management}, 5(4):29--78, 2007.
 
+\bibitem[Kim et al.(2025)]{kim2025} E.~Kim, A.~Garg, K.~Peng, and N.~Garg. Correlated errors in large language models. In \emph{ICML}, 2025.
+
 \bibitem[Kleinberg and Raghavan(2021)]{kleinberg2021} J.~Kleinberg and M.~Raghavan. Algorithmic monoculture and social welfare. \emph{PNAS}, 118(22):e2018340118, 2021.
 
 \bibitem[Laloux et al.(1999)]{laloux1999} L.~Laloux, P.~Cizeau, J.-P. Bouchaud, and M.~Potters. Noise dressing of financial correlation matrices. \emph{Physical Review Letters}, 83(7):1467--1470, 1999.
+
+\bibitem[Li et al.(2022)]{li2022} Q.~Li, C.-Y. Yau, and H.-T. Wai. Multi-agent performative prediction with greedy deployment and consensus seeking agents. In \emph{NeurIPS}, 2022.
 
 \bibitem[Mendler-D\"unner et al.(2020)]{mendlerdunner2020} C.~Mendler-D\"unner, J.~C. Perdomo, T.~Zrnic, and M.~Hardt. Stochastic optimization for performative prediction. In \emph{NeurIPS}, 2020.
 
@@ -383,6 +387,8 @@ The analysis is linearized around the joint equilibrium (A1), and panel 1 shows 
 \bibitem[Peng and Garg(2024)]{peng2024} K.~Peng and N.~Garg. Monoculture in matching markets. In \emph{NeurIPS}, 2024.
 
 \bibitem[Perdomo et al.(2020)]{perdomo2020} J.~C. Perdomo, T.~Zrnic, C.~Mendler-D\"unner, and M.~Hardt. Performative prediction. In \emph{ICML}, 2020.
+
+\bibitem[Piliouras and Yu(2023)]{piliouras2023} G.~Piliouras and F.-Y. Yu. Multi-agent performative prediction: From global stability and optimality to chaos. In \emph{EC}, 2023.
 
 \bibitem[Plerou et al.(2002)]{plerou2002} V.~Plerou, P.~Gopikrishnan, B.~Rosenow, L.~A.~N. Amaral, T.~Guhr, and H.~E. Stanley. Random matrix approach to cross correlations in financial data. \emph{Physical Review E}, 65(6):066126, 2002.
 
