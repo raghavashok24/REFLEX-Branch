@@ -67,7 +67,7 @@ consequence.
 
 | Theorem | Proof | Certificate |
 |---|---|---|
-| 1, effective number of independent learners | `math/derivations/01`, `02` | 123 checks |
+| 1, effective crowding, firms per independent model | `math/derivations/01`, `02` | 123 checks |
 | 2, crowding-cadence frontier | `math/derivations/03` | 59 checks |
 | 3, mixed market and herd immunity | `math/derivations/04` | 70 checks |
 | 4, Pigouvian wedge | `math/04-theorem4-wedge.md` | 125 checks |

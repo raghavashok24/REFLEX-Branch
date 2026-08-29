@@ -19,7 +19,7 @@ and nothing else.
 | `E_i` | firm `i`'s response Jacobian: how its own deployment reshapes the flow it faces | `d x d` | **new here** |
 | `r_ij` | pairwise alignment of feedback directions | `[-1, 1]` | **new here** |
 | `R` | alignment matrix `(r_ij)`, a correlation matrix of feedback directions | `N x N`, PSD, unit diagonal | **new here** |
-| `lambda_max(R)` | the effective number of independent learners | `[1, N]` | **new here** |
+| `lambda_max(R)` | firms per independent model (effective crowding) | `[1, N]` | **new here** |
 | `N_eff` | effective crowding, `= 1 + kappa(lambda_max(R) - 1)` | `[1, 1 + kappa(N-1)]` | **new here** |
 | `m_N` | systemic modulus, `= N_eff * m_1`. The feedback reproduction number | `> 0`, stable iff `< 1` | **new here** |
 | `s` | shared-model fraction: fraction of each firm's response attributable to a shared foundation model, vendor, or pretraining corpus | `[0, 1]` | **new here** |

@@ -23,8 +23,8 @@ An individual learning agent can pass every stability test we know how to run
 and still help destabilize the market it operates in, because each agent's
 retraining reshapes the data every other agent will learn from next. The
 strength of that **learning externality** is set not by the number of firms but
-by the **effective number of independent learners**, a spectral measure of how
-aligned the firms' feedback directions are, so foundation-model concentration
+by the firms' **effective crowding**, a spectral measure of how aligned their
+feedback directions are, counting firms per independent model, so foundation-model concentration
 enters the stability condition as a term rather than as a talking point. Three
 closed-form levers follow, and the last two trade off against each other:
 model diversity and corrected learning are substitutes, and the paper gives the
@@ -34,7 +34,7 @@ frontier along which a market can buy stability with either.
 
 | # | Result | Object | Status |
 |---|---|---|---|
-| 1 | Effective number of independent learners | `N_eff = 1 + kappa(lambda_max(R) - 1)`; supply chain `N_eff = 1 + kappa*s*(N-1)` | anchors verified, identity derived |
+| 1 | Effective crowding (firms per independent model) | `N_eff = 1 + kappa(lambda_max(R) - 1)`; supply chain `N_eff = 1 + kappa*s*(N-1)` | anchors verified, identity derived |
 | 2 | Crowding-cadence frontier | `K_max = ln((m_N-1)/(m_N+1)) / ln c`; critical crowding `(1+c)/(1-c)` | derived, arithmetic checked |
 | 3 | Herd immunity and the substitution frontier | `rho*(s) = max(0, 1 - N_c(s)/N)`, collapsing to `1 - 1/m_N` | derived, limit case checked |
 | 4 | Pigouvian wedge | `t*` from stationary variance `1/(1-m_N^2)`; over-adaptation corollary | proved and certified |

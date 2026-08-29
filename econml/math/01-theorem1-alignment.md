@@ -1,4 +1,4 @@
-# Theorem 1: the effective number of independent learners
+# Theorem 1: effective crowding, not the count of firms
 
 The base result counts firms. Counting firms is wrong, and the correction is
 where the monoculture and supply-chain content enters the paper.
@@ -135,8 +135,10 @@ matrix entries. Hence
    m_N    =  m_1 ( 1 + kappa * s * (N - 1) ) .
 ```
 
-**The effective number of learners is the number of independent models, not the
-number of firms.** Fifty dealers fine-tuning one vendor's model are dynamically
+**What enters the stability condition is the provenance of the models, not the
+number of firms.** `lambda_max` counts firms *per* independent model, so `V`
+equal vendors give `lambda_max = N/V`: it is a crowding measure, and naming it a
+count of independent learners inverts it at both corners. Fifty dealers fine-tuning one vendor's model are dynamically
 about `1 + 49 kappa` learners at `s` near one and barely more than one at `s`
 near zero. The critical population generalizes from `N_c = 1/m_1` to a critical
 surface in `(N, s)`, which is the paper's first figure. [DERIVED]
@@ -211,7 +213,7 @@ twelve days.
 
 ## Naming, and the defensive footnote
 
-`lambda_max(R)` is called the effective number of independent learners, and the
+`lambda_max(R)` is called the effective crowding, firms per independent model, and the
 paper does not present the *quantity* as new, only its role. Spectral summaries
 of a correlation matrix have a long history as effective counts: participation
 ratio and inverse participation ratio in physics, effective rank in signal
