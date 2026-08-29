@@ -168,7 +168,7 @@ def main():
     out = {
         "panel": "1. amplification replication, external anchor",
         "status": "MEASURED, in the base project's genuine shared-pool market",
-        "base_project": str(base_root),
+        "base_project": base_root.name,  # leaf only: the absolute path carries a username
         "protocol": PROTOCOL,
         "rows": rows,
         "published_reproduced_exactly": reproduced,

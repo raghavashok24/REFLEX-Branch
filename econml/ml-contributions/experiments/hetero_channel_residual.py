@@ -185,7 +185,7 @@ def main():
         "status": "NOT A PANEL AND NOT A CLAIM. This is the gate the port "
                   "design puts in front of every heterogeneous panel. No ledger "
                   "entry changes status on the strength of it.",
-        "base_project": str(base_root),
+        "base_project": base_root.name,  # leaf only: the absolute path carries a username
         "protocol": PROTOCOL,
         "universe": {"n_bonds": n_bonds_cfg,
                      "decision": "kept at 8 rather than enlarged, so panel 1's "

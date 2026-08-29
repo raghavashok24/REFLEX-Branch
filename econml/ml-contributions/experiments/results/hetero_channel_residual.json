@@ -1,7 +1,7 @@
 {
   "panel": "port step 3: residual from the still-shared liquidity and price-impact channels",
   "status": "NOT A PANEL AND NOT A CLAIM. This is the gate the port design puts in front of every heterogeneous panel. No ledger entry changes status on the strength of it.",
-  "base_project": "C:\\Users\\nrvig\\GitHub Projects\\REFLEX",
+  "base_project": "REFLEX",
   "protocol": {
     "kappa": 1.0,
     "probe_feedback": 0.5,

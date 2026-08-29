@@ -1,7 +1,7 @@
 {
   "panel": "simulator port, monoculture reduction test only",
   "status": "NOT A MEASUREMENT. Reproduces panel 1's already-published anchors as an acceptance test of the port. No heterogeneous sweep was run and no claim changes status.",
-  "base_project": "C:\\Users\\nrvig\\GitHub Projects\\REFLEX",
+  "base_project": "REFLEX",
   "protocol": {
     "kappa": 1.0,
     "probe_feedback": 0.5,

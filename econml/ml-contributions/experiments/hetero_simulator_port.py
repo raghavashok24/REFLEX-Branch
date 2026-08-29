@@ -557,7 +557,7 @@ def main():
         "status": "NOT A MEASUREMENT. Reproduces panel 1's already-published "
                   "anchors as an acceptance test of the port. No heterogeneous "
                   "sweep was run and no claim changes status.",
-        "base_project": str(base_root),
+        "base_project": base_root.name,  # leaf only: the absolute path carries a username
         "protocol": PROTOCOL,
         "reproduction_tolerance": REPRODUCTION_TOL,
         "rows": rows,
