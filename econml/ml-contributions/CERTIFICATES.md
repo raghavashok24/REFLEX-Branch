@@ -194,7 +194,8 @@ certificate here would guard code that nothing in the paper depends on.
 ## Running total
 
 34 new certificates against the base project's 66, for 100. Every one of them is
-deterministic, CPU-only, numpy-only, and runs from `(config, seed)`.
+deterministic, CPU-only, numpy-only apart from `scipy.stats` in
+`verify_ensemble_intervals.py`, and runs from `(config, seed)`.
 
 All 34 are written and passing, spread across **542 individual assertions in
 eight files**. Theorem 4's four (C19 to C21 and C34) joined on 18 Aug 2026 when

@@ -115,7 +115,7 @@
 \item {\bf Experiments compute resources}
     \item[] Question: For each experiment, does the paper provide sufficient information on the computer resources (type of compute workers, memory, time of execution) needed to reproduce the experiments?
     \item[] Answer: \answerYes{}
-    \item[] Justification: All experiments are CPU-only and numpy-only. All eight certificate files and the full six-panel suite together run in about twenty seconds on a single commodity laptop core, with no GPU, no accelerator and no distributed compute. No unreported large-scale preliminary experiments were run.
+    \item[] Justification: All experiments are CPU-only, and numpy-only except for the one exact interval, which uses \texttt{scipy.stats}. All eight certificate files and the full six-panel suite together run in about twenty seconds on a single commodity laptop core, with no GPU, no accelerator and no distributed compute. No unreported large-scale preliminary experiments were run.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer \answerNA{} means that the paper does not include experiments.
