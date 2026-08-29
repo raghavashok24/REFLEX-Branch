@@ -124,8 +124,9 @@ p6 = load("panel6_over_adaptation")
 p6b = load("panel6b_comparative_statics")
 fig, axes = plt.subplots(1, 2, figsize=(6.6, 2.4))
 ax = axes[0]
-sym = [r for r in p6["rows"]
-       if r["chi"] == 1.0 and r["s"] == 1.0 and r["kappa"] == 0.8]
+sym = sorted((r for r in p6["rows"]
+              if r["chi"] == 1.0 and r["s"] == 1.0 and r["kappa"] == 0.8),
+             key=lambda r: r["N"])  # the JSON stores N=1 last; unsorted x draws chords
 Ns6 = [r["N"] for r in sym]
 ax.plot(Ns6, [r["a_decentralized"] for r in sym], "o-", ms=4,
         label=r"decentralized $a_d$")
