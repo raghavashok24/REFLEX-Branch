@@ -90,7 +90,7 @@ model alignment rather than by headcount. Results 2 through 4 are all stated in
 
 Theorems 1 through 4 have moved from `[DERIVED]` to `[VERIFIED]` in the claims
 ledger, each against assertion-based certificates that fail loudly. 542 assertions
-across seven files, all passing.
+across eight files, all passing.
 
 **One claim failed, and it was the one the ledger flagged in advance.** The
 strong-correction limit in Theorem 3 is optimistic rather than conservative, so it

@@ -27,7 +27,7 @@ protocol behind the paper's one inferential number.
 
 **Three passes.** v1 needed two; v2 needs a third because Lemma 1 shifts the
 theorem numbering that the cross-references resolve against. No bibtex run: the
-bibliography is a `thebibliography` block inside `main.tex`, since 23 entries do
+bibliography is a `thebibliography` block inside `main.tex`, since 27 entries do
 not justify a `.bib` and a manual list cannot go stale against one.
 
 **`\hypersetup{draft=true}` is deliberate.** A cross-reference link straddling
@@ -89,21 +89,25 @@ Appendix K.
 **Double-blind.** No author block, no repository URL, no acknowledgments. PDF
 metadata carries no title, author, subject or keywords. Figure files are
 generated from result JSONs and carry no local paths. No sentence positions
-REFLEX as the authors' own work. The PEBSA reference was dropped in v4.
+REFLEX as the authors' own work. PEBSA was dropped in v4 and restored in v5,
+so two entries again share an author with the submission; both are cited in the
+third person, which is what the rule asks.
 
 **On the base paper carrying author names.** REFLEX is cited in full, with
 authors, which puts a name shared with this submission's author list into the
 bibliography. That is the plan of record's instruction and it is the right call:
 the rule under double-blind is that self-citation happens in the third person,
 not that it is scrubbed. A reference stripped of its authors is the more
-revealing artifact, because it is visibly anomalous next to twenty-two ordinary
+revealing artifact, because it is visibly anomalous next to the ordinary
 entries and reads as a paper hiding its own lineage. The submission cites it the
 way any third party would and lets the third-person prose carry the blind.
 
-**v4 dropped the second one.** PEBSA supported a single contrast in the
-systemic-risk paragraph that nothing else depended on, so removing it cost one
-sentence and left REFLEX as the only entry sharing an author with the
-submission.
+**v4 dropped the second one, and v5 brought it back.** PEBSA supported a single
+contrast in the systemic-risk paragraph that nothing else depended on, so v4
+removed it at the cost of one sentence. v5 restored the contrast, so PEBSA and
+REFLEX both share an author with the submission. This stays policy-compliant for
+the same reason REFLEX does: third-person citation, no URL, no claim of
+authorship.
 
 **No entry carries a URL**, REFLEX included. It briefly did, and a DOI trailing
 the one reference sharing an author with the submission is a worse tell than the
@@ -172,7 +176,7 @@ camera-ready needs no edit beyond adding the `final` option.
 
 ## Version history
 
-`main.tex` is v4. Earlier versions are frozen in `archive/`.
+`main.tex` is v5. Earlier versions are frozen in `archive/`.
 
 | Version | What it changed |
 |---|---|
