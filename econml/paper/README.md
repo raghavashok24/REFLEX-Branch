@@ -3,7 +3,7 @@
 The submission itself: `main.tex` compiled against the official NeurIPS 2026
 style files, plus the mandatory paper checklist.
 
-`main.tex` is **v5**. v1 to v4 are archived unmodified side by side in
+`main.tex` is **v6**. v1 to v5 are archived unmodified side by side in
 [`archive/`](archive/), v1 frozen at commit `486d213` and each later one at the
 state it held before the pass that followed it. The version history below records
 what each pass changed and, more importantly, the two review items that keep
@@ -50,7 +50,7 @@ for the camera-ready**, where the layout differs anyway.
 | `make_figures.py` | Renders the five figures from `../ml-contributions/experiments/results/` |
 | `figures/*.pdf` | Generated, vector |
 | `main.pdf` | The compiled submission |
-| `archive/v1/` to `archive/v4/` | Frozen earlier versions, kept for diffing. Not part of the build |
+| `archive/v1/` to `archive/v5/` | Frozen earlier versions, kept for diffing. Not part of the build |
 
 ## Compliance
 
@@ -176,7 +176,7 @@ camera-ready needs no edit beyond adding the `final` option.
 
 ## Version history
 
-`main.tex` is v5. Earlier versions are frozen in `archive/`.
+`main.tex` is v6. Earlier versions are frozen in `archive/`.
 
 | Version | What it changed |
 |---|---|
@@ -184,7 +184,8 @@ camera-ready needs no edit beyond adding the `final` option.
 | v2 | Acted on that review. The reduction lemma moved into the body, the containment against Narang et al. was stated, and measuring the shared-model fraction `s` on real models was ruled out for lack of infrastructure and page budget. Supervision folded into the closing section, leaving nine sections |
 | v3 | Appendix typeset into the same PDF. The abstract's herd-immunity law gained its fully-shared-limit qualifier, panel 1 stopped being called external validation, Peng and Garg (2024) and Jagadeesan et al. (2023) were added, and `\workshoptitle` was matched to the call. The anchors table paid for the space |
 | v4 | Cadence terminology matched to what the theorem proves, the containment turned into Proposition 3 with a witness pair, the wedge's exchangeable-symmetric scope stated in the body, (H3) motivated with a concrete market, and the base paper called a preprint rather than published. Paid for by a prose pass against appendix duplication |
-| v5 | The 27 Aug 2026 pass, in five parts: the citation gap closed (Piliouras and Yu, Li/Yau/Wai, Kim et al.), the wedge's orthogonal-corner scope slip corrected and the notation unified to `rho_c`, an exact interval put on the one random-ensemble number with a new certificate and a new Appendix K (checklist Q7 flips to yes), the workshop's two directions spoken once each and the wedge figure moved beside Result 4, and the dry-run framing reworded to internal against external validity with the emphasis budget cut from 23 bolds to 7. Paid for throughout by compressing against the appendices, never by dropping a claim |
+| v5 | The 27 Aug 2026 pass, in five parts: the citation gap closed (Piliouras and Yu, Li/Yau/Wai, Kim et al.), the wedge's orthogonal-corner scope slip corrected and the notation unified to `rho_c`, an exact interval put on the one random-ensemble number with a new certificate and a new Appendix K (checklist Q7 flips to yes), the workshop's two directions spoken once each and the wedge figure moved beside Result 4, and the dry-run framing reworded to internal against external validity with the emphasis budget cut from 23 bolds to 7. Paid for throughout by compressing against the appendices, never by dropping a claim. Then the submission audit's F1--F10 and C5: `lambda_max` renamed from the inverted "effective number of independent learners" to **effective crowding**, firms per independent model; the abstract's substitutes repaired to correction and diversity; figure 3's chord artifact fixed; the machine path scrubbed from three result JSONs |
+| v6 | Retitled to name the shared-model mechanism. The abstract rewritten on Shriraghav's upgrade draft (`../writing/11-abstract-updates.md`): domain-grounded opening, `m_N` named as the feedback reproduction number, and the emphasis rebalanced so all four results appear, with the preprint attribution and "bit for bit" kept on the one measured number. 247 words, under the 250 limit |
 
 ### Two review items that must not be acted on
 

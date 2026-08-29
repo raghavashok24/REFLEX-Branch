@@ -59,9 +59,10 @@ systems increasingly...") or with the venue's vocabulary ("Algorithmic
 monoculture has emerged as..."). The first sentence is the paper's claim, and it
 is the sentence a reviewer decides on.
 
-**Title check.** "Herd Immunity and Learning Externalities in Markets of Adaptive
-Models" pairs the memorable law with the economic mechanism that produces it, and
-"externalities" is the word an EconML reviewer scans for. The effective number of
-independent learners is left to the abstract rather than carried in the title,
-since it is the object that makes the law computable rather than the reason a
-reviewer stops to read.
+**Title check.** "Herd Immunity and Adaptive Learning Externalities under Shared
+Foundational Models" (v6) pairs the memorable law with the economic mechanism
+that produces it, and "externalities" is the word an EconML reviewer scans for.
+The v6 title adds the mechanism the paper is actually about: shared models, not
+firm count. Effective crowding is left to the abstract rather than carried in the
+title, since it is the object that makes the law computable rather than the
+reason a reviewer stops to read.
