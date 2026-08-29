@@ -21,7 +21,7 @@
 > has run: whether the Kim et al. (ICML 2025) release has per-item granularity
 > and a usable licence, with HELM per-instance outputs as the named fallback.
 > The Lean 4 layer is also not attempted and no paper text mentions it. Both
-> were scoped for a four-day window in `../paper-updates/` and this pass had
+> were scoped for a four-day window in `paper-updates/` and this pass had
 > two days; if the panel does not land by 28 Aug it moves to camera-ready with
 > its protocol already written.
 

@@ -1,7 +1,7 @@
 # Review package: the ML x OR paper, 25 Aug 2026
 
 A peer review of `ml-or/submission-materials/` against five axes, written to be
-the mirror of the EconML review in `paper-updates/` and the earlier six-axis
+the mirror of the EconML review in `econml/paper-updates/` and the earlier six-axis
 package. Deadline 31 Aug AoE, six days out.
 
 Read `00-EXECUTIVE-SUMMARY.md` first. It carries the verdict and the ranked
