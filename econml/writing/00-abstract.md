@@ -59,10 +59,13 @@ systems increasingly...") or with the venue's vocabulary ("Algorithmic
 monoculture has emerged as..."). The first sentence is the paper's claim, and it
 is the sentence a reviewer decides on.
 
-**Title check.** "Herd Immunity and Adaptive Learning Externalities under Shared
-Foundational Models" (v6) pairs the memorable law with the economic mechanism
-that produces it, and "externalities" is the word an EconML reviewer scans for.
-The v6 title adds the mechanism the paper is actually about: shared models, not
-firm count. Effective crowding is left to the abstract rather than carried in the
+**Title check.** "Herd Immunity and Learning Externalities in Markets of Shared
+Foundation Models" (v6) pairs the memorable law with the economic mechanism that
+produces it, and "externalities" is the word an EconML reviewer scans for. The
+v6 title names the mechanism the paper is actually about, shared models rather
+than firm count, and names it as the setting rather than as a scope restriction:
+Theorem 1 holds for any alignment matrix `R`, and the supply chain is one of its
+four anchors. "Markets" is kept because it is the venue's own word and the body's
+(41 uses). Effective crowding is left to the abstract rather than carried in the
 title, since it is the object that makes the law computable rather than the
 reason a reviewer stops to read.
