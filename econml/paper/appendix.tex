@@ -72,7 +72,7 @@ The alignment enters because firm $i$ senses the pool through its own response c
 
 Hypothesis (H1) is the substantive one. Without it the state is $(h_1,\ldots,h_N) \in \mathbb{R}^{Nd}$ and the Jacobian carries a Kronecker structure with block $(i,j)$ equal to $-(\beta/\gamma)c_{ij}E_j$, where $c_{ij}=1$ for $i=j$ and $\kappa$ otherwise, whose spectral radius is not in general $m_1 \Neff$. Reducing that object is the fully heterogeneous block-secular problem, and it is deferred.
 
-\subsection{What \texorpdfstring{$R$}{R} is}
+\subsection{The alignment matrix \texorpdfstring{$R$}{R}}
 
 \begin{alemma}
 \label{alem:Rprops}
@@ -115,7 +115,7 @@ $\rho(J) \geq m_1$, with equality if and only if $R=I$. A market of adaptive mod
 
 Corollary~\ref{acor:nostab} says the externality has a sign: coupling can only amplify feedback, never damp it, so there is no configuration in which crowding does a market a favour. Individual modes can be more damped than $m_1$, and the differential mode at $m_1(1-\kappa)$ is one, but the radius governs and the radius cannot fall below $m_1$.
 
-\subsection{Which mode binds}
+\subsection{The binding mode}
 
 \begin{aproposition}
 \label{aprop:pf}
@@ -124,7 +124,7 @@ If $R$ is entrywise nonnegative and irreducible then $B=(1-\kappa)I+\kappa R$ is
 
 Entrywise nonnegativity of $R$ is exactly the condition that no firm's feedback anti-aligns with another's. Shared vendors and shared pretraining corpora produce positive alignment, so the realistic regime satisfies it, and the paper states the condition rather than assuming it silently. This is (A5), and Proposition~\ref{aprop:pf} is the only place it is used.
 
-\subsection{Three anchors, and a mode swap}
+\subsection{Anchors and the mode swap}
 
 \emph{Monoculture.} $R=\mathbf{1}\mathbf{1}^{\top}$ has rank one with eigenvalue $N$ on the all-ones direction, so $\lmax=N$ and $\Neff = 1+\kappa(N-1)$. This is the inherited law whose predicted $2\times$ and $3\times$ at $N=2,3$ were measured at $1.74\times$ and $3.16\times$.
 
@@ -146,7 +146,7 @@ Both markets satisfy (H1) to (H4) with the same response magnitude $\varepsilon$
 
 The witness is not a knife-edge construction. Any $m_1$ in an interval of length $1 - 1/\Neff$ works, which at $N = 20$ and $\kappa = 0.8$ is $94\%$ of the unit interval.
 
-\subsection{Mean-alignment indices err, and always in the same direction}
+\subsection{Mean-alignment indices}
 
 \begin{aproposition}
 \label{aprop:mean}
@@ -336,9 +336,9 @@ Certificate H1 reports a maximum error of $2.5\times 10^{-14}$ against dense eig
 
 \paragraph{Degenerate blocks.} When $N_b = 0$ or $N_b = N$ one block is empty, but the quadratic still carries that block's factor and leaves a phantom root behind. At $N_b = 0$ the naive quadratic returns $(1-k_s)m_1$, a value no firm's modulus supports, and at small $\theta$ that phantom exceeds the true radius: $0.132$ against a true $0.043$ at $N=12$, $m_1=0.3$, $\kappa=0.8$, $s=0.7$ and $\theta=0.02$. The correct values are the single-block ones, $\rho = m_1\Neff$ at $N_b=N$ and $\rho = \theta m_1 \Neff$ at $N_b=0$, and any implementation must branch on this. Certified in H2.
 
-\paragraph{Both limits are corollaries.} At $\theta = 1$, $P = m_1[2(1-k_s)+k_sN]$ and $Q = m_1^2(1-k_s)\Neff$, whose roots are $m_1\Neff$ and $m_1(1-k_s)$, recovering Theorem~\ref{thm:alignment} exactly. As $\theta \to 0$, $Q \to 0$, so one root goes to zero and the other to $P \to m_1(1+\kappa s(N_b-1))$, the blind-block condition. The argument that corrected firms transmit no feedback and drop out of the cycle is right, and it is now a corollary of the exact root rather than a separate claim.
+\paragraph{The two limits.} At $\theta = 1$, $P = m_1[2(1-k_s)+k_sN]$ and $Q = m_1^2(1-k_s)\Neff$, whose roots are $m_1\Neff$ and $m_1(1-k_s)$, recovering Theorem~\ref{thm:alignment} exactly. As $\theta \to 0$, $Q \to 0$, so one root goes to zero and the other to $P \to m_1(1+\kappa s(N_b-1))$, the blind-block condition. The argument that corrected firms transmit no feedback and drop out of the cycle is right, and it is now a corollary of the exact root rather than a separate claim.
 
-\subsection{The limit errs, and it errs optimistic}
+\subsection{Error direction of the limit}
 
 \begin{aproposition}
 \label{aprop:theta}
@@ -576,7 +576,7 @@ Two of these were falsifying rather than confirming. C18 showed that the strong-
 
 \paragraph{The panels.} Panel 1 sweeps $N$ in the homogeneous shared-pool market and reproduces the amplification reported in a recent preprint. It is the paper's one measured result, and what it validates is the monoculture corner that Theorem~\ref{thm:alignment} generalizes rather than any of the four results built on it. Its differential mode measures $3.4\times 10^{-3}$ against a theoretical zero at $\kappa=1$, so the instability it exhibits is purely common-mode, which is the mechanism Theorem~\ref{thm:alignment} generalizes. Panel 2 measures $\mN$ over a grid of firms by shared-model fraction against the predicted boundary, with firms placed at the target alignment exactly rather than in distribution so that an $s$ sweep moves along the exact curve; its clustered companion, three aligned firms among ten, is the topology worked in Appendix~\ref{app:alignment}. Panel 3 sweeps the $(\Neff, K)$ grid against $K_{\max}$ at $c = 0.8$, including the critical-crowding column where the window closes. Panel 4 runs mixed markets at corrected fractions $0, 1/N, \ldots, 1$ in an unstable market. Panel 5 traces the $(\rho_c, s)$ iso-stability curve, and it is the paper's most policy-legible object. Panel 6 solves both first-order conditions by bisection with $\mN$ read from the reference environment's realized dynamics rather than from the closed form, so the over-adaptation verdict is a property of the simulated market.
 
-\paragraph{Why five of six are dry runs.} A heterogeneous-response port of the order-flow simulator was built and is exact at flat exposure profiles, reproducing the unmodified simulator at every $N$ from 1 to 3 at relative error $0.00$, the range the committed artifact records. Its acceptance gate then failed. The liquidity and price-impact channels stay shared whatever the response profiles are, leaving a residual reaching $17.7$ percentage points across the separation range at $N=2$, larger than several effects these panels resolve, and at $N \geq 4$ the finite-difference probe no longer measures a local slope. Two repairs are identified, routing liquidity and impact through the profiles as well, or finding a configuration whose probe stays local at the $N$ the panels need, and neither is attempted for this submission, since both are multi-day edits and the first risks the bit-for-bit anchor that panel 1 rests on. No figure is drawn from that port and no status was moved. Panel 6 is a dry run for a different reason: the order-flow simulator carries no aggressiveness choice variable and no welfare object, so a measured counterpart does not exist to be built.
+\paragraph{The dry-run panels.} A heterogeneous-response port of the order-flow simulator was built and is exact at flat exposure profiles, reproducing the unmodified simulator at every $N$ from 1 to 3 at relative error $0.00$, the range the committed artifact records. Its acceptance gate then failed. The liquidity and price-impact channels stay shared whatever the response profiles are, leaving a residual reaching $17.7$ percentage points across the separation range at $N=2$, larger than several effects these panels resolve, and at $N \geq 4$ the finite-difference probe no longer measures a local slope. Two repairs are identified, routing liquidity and impact through the profiles as well, or finding a configuration whose probe stays local at the $N$ the panels need, and neither is attempted for this submission, since both are multi-day edits and the first risks the bit-for-bit anchor that panel 1 rests on. No figure is drawn from that port and no status was moved. Panel 6 is a dry run for a different reason: the order-flow simulator carries no aggressiveness choice variable and no welfare object, so a measured counterpart does not exist to be built.
 
 \section{Deferred items}
 \label{app:deferred}
@@ -588,9 +588,9 @@ Stated so that the boundary of what is proved is legible. The fully heterogeneou
 
 The paper makes two kinds of empirical statement and they are held to different standards, stated here once and used everywhere.
 
-\paragraph{Deterministic grid checks keep worst-case language.} Panels 2 to 6 compare a closed form against realized dynamics over a stated grid of configurations, with the run deterministic from a (config, seed) pair. What is reported is the maximum departure over the whole grid, not a mean with an interval. That is the stronger statement of the two, since it bounds every cell rather than describing a typical one, and dressing it in confidence intervals would weaken it while looking more statistical. No interval appears anywhere in Table~\ref{tab:panels}'s dry-run rows for that reason.
+\paragraph{Deterministic grid checks.} Panels 2 to 6 compare a closed form against realized dynamics over a stated grid of configurations, with the run deterministic from a (config, seed) pair. What is reported is the maximum departure over the whole grid, not a mean with an interval. That is the stronger statement of the two, since it bounds every cell rather than describing a typical one, and dressing it in confidence intervals would weaken it while looking more statistical. No interval appears anywhere in Table~\ref{tab:panels}'s dry-run rows for that reason.
 
-\paragraph{Random-ensemble fractions carry a sampling measure, an $n$, an exact count and an exact interval.} The paper quotes one such fraction: how often the strong-correction limit of Section~\ref{sec:herd} calls a configuration stable that is unstable at every finite correction strength. Its protocol, fixed before the number was read and unchanged since:
+\paragraph{Random-ensemble fractions.} The paper quotes one such fraction: how often the strong-correction limit of Section~\ref{sec:herd} calls a configuration stable that is unstable at every finite correction strength. Its protocol, fixed before the number was read and unchanged since:
 
 \begin{itemize}\itemsep2pt
 \item \emph{Sampling measure.} $N$ uniform on the integers $2$ to $39$; the blind count $N_b$ uniform on $1$ to $N-1$, so both blocks are non-empty and the two-block quadratic is the right form; $m_1$ uniform on $[0.02, 0.9]$; $\kappa$ and $s$ each uniform on $[0.05, 1]$; and the correction parameter $\theta = \gamma/\gamma_{PO}$ uniform on $[0.01, 1]$, so the ensemble spans efficacies from $0$ to $0.99$.
@@ -600,4 +600,4 @@ The paper makes two kinds of empirical statement and they are held to different 
 \item \emph{Protocol dependence, stated rather than hidden.} The fraction is a property of the ensemble as much as of the theorem. Widening the $m_1$ range to $[0.02, 1.2]$ moves it to $9.6\%$. The ranges above are therefore part of the claim, and the number should be read as the flip rate on this ensemble rather than as a universal constant.
 \end{itemize}
 
-\paragraph{What is not statistical here.} The \emph{direction} of the limit's error is a theorem, not an estimate: $\rho$ is nondecreasing in $\theta$ by Perron-Frobenius on an entrywise-nonnegative matrix (Appendix~\ref{app:mixed}), so the limit can only under-state the radius. Across the five ensembles above, zero draws erred the other way, which is what a proved direction looks like when it is sampled and is not offered as evidence for it. Certificate \texttt{verify\_ensemble\_intervals.py} carries all of the above as $17$ assertions, including the protocol itself, so the interval in the body is a function of a certified count rather than of a fresh draw.
+\paragraph{Non-statistical claims.} The \emph{direction} of the limit's error is a theorem, not an estimate: $\rho$ is nondecreasing in $\theta$ by Perron-Frobenius on an entrywise-nonnegative matrix (Appendix~\ref{app:mixed}), so the limit can only under-state the radius. Across the five ensembles above, zero draws erred the other way, which is what a proved direction looks like when it is sampled and is not offered as evidence for it. Certificate \texttt{verify\_ensemble\_intervals.py} carries all of the above as $17$ assertions, including the protocol itself, so the interval in the body is a function of a certified count rather than of a fresh draw.
