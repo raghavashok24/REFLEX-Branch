@@ -1,0 +1,1663 @@
+\subsection*{Notation, assumptions, and the two anchoring conventions}
+
+This subsection is the canonical register for the derivation record D0 through
+D9, with D3b the adaptive companion of D3: D0 is the model and cost lemma, D1
+information saturation, D2 the exchange rate, D3 the minimax lower bounds, D4
+and D5 the design geometry, D6 safe certainty equivalence, D7 the anchoring
+crossover, and D8 and D9 the ROI analysis and the instantiation. Every symbol
+is defined once, here; every assumption is numbered here and is cited by
+number in the derivation sections and in the register statements (T1, L2,
+\dots). Where a later section restates a condition, this register is
+authoritative. The formal proofs of the register statements are collected in
+the proofs appendix.
+
+\paragraph{Notation.}
+The symbol table is reproduced in three blocks: the retraining loop and its
+objective, the stochastic and informational quantities, and the symbols
+specific to the design and economic analyses. The third column records where
+each symbol is introduced: a derivation section (D0 through D9), the base
+structural market theory (cited as REFLEX \citep{reflex2026} with its section numbers,
+a third-party source), or an entry of the assumption register below (the
+trust-region radius $r$ is fixed by A4). Two register conventions carry over
+unchanged: all logarithms are natural, and a prime denotes the derivative of
+a scalar function (in the ASCII sources it also denotes the matrix transpose;
+in this appendix transposes are written $(\cdot)^\top$, so the prime is
+unambiguous).
+
+\begin{center}\small
+\begin{tabular}{@{}lp{4.9cm}l@{}}
+\hline
+Symbol & Meaning & Defined in / source\\
+\hline
+$h$, $h_t$ & deployed decision (half-spread); its value at
+  step $t$ & D0\\
+$\hstar$ & performatively stable point (RRM fixed point)
+  & REFLEX \citep{reflex2026}\\
+$\hsp$, $\hpo$ & stable point ($\hsp = \hstar$); performative
+  optimum & REFLEX \citep{reflex2026}\\
+$\dev_t$ & deviation $\dev_t = h_t - \hstar$ & D0\\
+$m$ & retraining modulus $m = \eps\beta/\gamma \in [0,1)$
+  & REFLEX \citep{reflex2026}\\
+$\gamma$, $\beta$, $\eps$, $\psi$ & curvature, smoothness,
+  response slope, adverse severity & REFLEX \citep{reflex2026} (closed forms)\\
+$\Phi$ & true performative objective $\Phi(h) = J(h;\tau(h))$
+  & REFLEX \citep{reflex2026}\\
+$\delta_0$ & $\Phi'(\hstar) = -\beta(\hstar-\psi)\,\eps(\hstar)$,
+  nonzero & D0 Sec.~1\\
+$\gpo$ & $-\Phi''$ at the operating point & REFLEX \citep{reflex2026}.1\\
+$M$ & $d$-dimensional loop Jacobian, $\rho(M) < 1$ & D1 Sec.~2\\
+$P$, $P_u$ & discrete-Lyapunov energy matrices & D1 Sec.~2\\
+$\Gpo$ & $d$-dimensional objective curvature matrix & D9\\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}\small
+\begin{tabular}{@{}lp{4.9cm}l@{}}
+\hline
+Symbol & Meaning & Defined in / source\\
+\hline
+$\sigma$ & response-noise standard deviation ($\sigma_\tau$ in
+  REFLEX) & D0\\
+$\sigma_e$, $u_t$ & exploration intensity; exploration input & D0\\
+$\xi_t$, $\zeta_t$ & deployment and response noise (iid, mean
+  zero) & D0\\
+$\phi$ & noise-feedback gain (observed noise flowing into the
+  next deployment) & D2 Sec.~4\\
+$v$ & stationary deviation variance $\sigma_e^2/(1-m^2)$ & D2\\
+$v_\phi$ & the same with feedback:
+  $(\sigma_e^2 + \phi^2\sigma^2)/(1-m^2)$ & D2 Sec.~4\\
+$\Sxx$ & centered design energy
+  $\sum_t (\dev_t - \bar{\dev})^2$ & D2\\
+$D_T$ & deviation budget $\sum_t \dev_t^2$ & D0 Sec.~2\\
+$C_T$ & value budget: expected incremental cost (L1)
+  & D0 Secs.~2--3\\
+$I_T$ & Fisher information for $\eps$ & D1/D3\\
+$\mathcal{F}_t$ & history sigma-field
+  $\sigma(\dev_0, u_{<t}, \tau_{<t})$ & D0\\
+$\delta$, $s$ & two-point prior half-width; its sign (minimax)
+  & D3\\
+$g_1$ & $\beta\,\lvert \hstar - \psi \rvert$, coefficient of the
+  unknown linear part & D3\\
+$\TV$, $\KL$ & total variation; Kullback--Leibler divergence & D3\\
+$r$ & trust-region radius on $\lvert \dev_t \rvert$ & A4\\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}\small
+\begin{tabular}{@{}lp{4.9cm}l@{}}
+\hline
+Symbol & Meaning & Defined in / source\\
+\hline
+$M$ (design) & exploration second moment $\E[\dev\,\dev^\top]$;
+  appears only in D4 & D4\\
+$B$ & value budget in the design problems & D4\\
+$F$ & curvature dispersion
+  $d\,\tr(\Gpo)/(\tr \Gpo^{1/2})^2$ & D4 (C5.1)\\
+$c$ & correction-direction vector ($c$-optimality) & D4 Sec.~3\\
+$s(h)$ & structural-family sensitivity vector, $p = 3$ & D5\\
+$w$ & probe half-width (crossover analysis) & D7\\
+$\delta_{\mathrm{mis}}$ & $C^1$ misspecification of the
+  structural family & D6/D7\\
+$\kappa$ & correction sensitivity
+  $\lvert\, d\hpo/d\eps \,\rvert$ & D8\\
+$\rho_{\mathrm{disc}}$ & discount rate (ROI analysis) & D8\\
+\hline
+\end{tabular}
+\end{center}
+
+Three deliberate symbol reuses deserve a caveat, recorded here so that no
+derivation needs to repeat it. First, $M$ names both the loop Jacobian and
+the exploration second moment; the design $M$ occurs only in D4/D5, and
+context disambiguates the two. Second, $\kappa$ is the correction
+sensitivity $\lvert\, d\hpo/d\eps \,\rvert$ of D8/D9, not a multi-dealer
+spillover parameter: no such symbol occurs in this paper. Third, $\phi$ is
+the noise-feedback gain of D2, while the T9 material in D3 separately
+writes $\phi_u$ and $\phi_0$ for elements of the sensitivity span, a
+self-contained reuse local to that subsection.
+
+\paragraph{Assumption register.}
+Assumptions are cited by number (A1 through A6) throughout the record.
+
+\begin{itemize}
+\item \textbf{A1 (local quadratic scope).} $\Phi$ is $C^3$ and strongly
+concave on the operating interval; all expansions are taken at $\hstar$, with
+the third-order remainder controlled through $L_3 = \sup \lvert \Phi'''
+\rvert$. The identities of the record are exact for the quadratic model and
+first-order accurate otherwise. As a matter of method, the nonlinear
+deviation is measured (the drift study), never assumed away.
+\item \textbf{A2 (exploration classes).} All policies are non-anticipating:
+$u_t$ is $\mathcal{F}_t$-measurable. Two subclasses are used.
+\emph{A2-sym}, conditionally symmetric exploration,
+$\E[u_t \mid \mathcal{F}_t] = 0$, under which the linear term of L1 vanishes
+in expectation. \emph{A2-adaptive}, unrestricted non-anticipating
+exploration, under which costs are measured from the certainty-equivalent
+anchor (D0 Sec.~4; convention 2 below) and the exploitation lemma L2 of D3b
+applies.
+\item \textbf{A3 (noise exogeneity, with its named relaxation).} The
+response noise $\zeta_t$ is iid, mean zero, with variance $\sigma^2$,
+independent of $\mathcal{F}_t$. Relaxation A3$'$: the feedback channel
+$\phi\,\zeta_t$ enters $\dev_{t+1}$. Under A3$'$ the exact $O(1/T)$ bias of
+D2 Sec.~4 applies, with its $(3m-1)$ sign structure (P2.2), and
+``exploration-dominant design'' means $\sigma_e^2 \gg \phi^2 \sigma^2$.
+\item \textbf{A4 (trust region).} $\lvert \dev_t \rvert \le r$ pathwise.
+The radius $r$ enters the constants of D3b (L2, T4), the feasible set of
+the design problems (T5), and the basin argument of D6.
+\item \textbf{A5 (stationary-scale exploration; D3b only).}
+$S_T = \Theta(T)$, with $S_T = \sum_{t \le T} \dev_t^2$ the cumulative
+design energy. The transient-dominated regime $S_T = o(T)$ is governed by
+D1 (T1) instead.
+\item \textbf{A6 (stable base loop).} $m < 1$ in the scalar case and
+$\rho(M) < 1$ in the $d$-dimensional case, for all stationary-regime
+statements. Boundary behaviour ($m = 1$) appears only in the degeneracy
+statement C1.2.
+\end{itemize}
+
+\paragraph{The two anchoring conventions (audit-critical).}
+$C_T$ is an incremental cost, and its value depends on the baseline against
+which the increment is measured. The record fixes one anchor per exploration
+class; these are the two audit-critical definitions.
+
+\emph{Convention 1 (incremental anchor; all A2-sym results).} $C_T$ is
+measured relative to the jitter-free loop at $\hstar$, that is, the same
+retraining loop run without exploration. Anchoring at $\hpo$ instead adds
+the sunk echo-chamber term and provably destroys the invariance of D2 (T2):
+with anchor gap $g = \hstar - \hpo$, the anchored exchange-rate product is
+inflated by exactly the factor
+\begin{equation*}
+1 + \frac{g^2}{v},
+\end{equation*}
+a computation verified in D0. The formal proof is recorded in the proofs
+appendix.
+
+\emph{Convention 2 (certainty-equivalent anchor; all A2-adaptive results).}
+$C_T$ is measured relative to the deployment that is optimal under current
+posterior knowledge. Exploitation of learned structure is thereby
+re-anchored away, and D3b (L2, T4) prices only the unlearned residual.
+
+The two anchors coincide under A2-sym with an uninformative start, so the
+conventions agree on the class where both are defined.
+
+\subsection*{D0: The model, the two budgets, and the cost-equivalence lemma (L1)}
+
+This subsection records the local model, the two exploration budgets, and the
+computation behind the cost-equivalence lemma L1. It is derived in full and
+verified numerically (\texttt{verify\_all.py}, section V0). Everything
+downstream (D1 through D8) consumes the definitions and the lemma established
+here. Notation follows the REFLEX market model \citep{reflex2026} and 1.2 ($\gamma$, $\beta$, $\eps$,
+$\psi$, $\hsp$, $\hpo$).
+
+\paragraph{The local model.}
+Work in a neighbourhood of the performatively stable point $\hstar$ (the RRM
+fixed point, the REFLEX market model \citep{reflex2026}, section 4) and write deviations
+$\dev_t := h_t - \hstar$. The linearized closed loop is
+\begin{align*}
+  \dev_{t+1} &= -m\,\dev_t + u_t
+    && \text{(retraining cobweb plus exploration)},\\
+  \tau_t &= \tau(\hstar) - \eps\,\dev_t + \zeta_t
+    && \text{(observed flow)}.
+\end{align*}
+Here $m = \eps\beta/\gamma \in [0,1)$ is the retraining modulus (closed form
+in the REFLEX market model \citep{reflex2026}). The exploration input $u_t$ is chosen by the operator:
+it may be iid noise ($u_t = \sigma_e\,\xi_t$), a deterministic schedule, or
+adaptive, that is $\mathcal{F}_t$-measurable with
+$\mathcal{F}_t = \sigma(\dev_0, u_0, \dots, u_{t-1}, \tau_0, \dots,
+\tau_{t-1})$. The response noise $\zeta_t$ is iid, mean zero, with variance
+$\sigma^2$, independent of $\mathcal{F}_t$; the feedback violation of this
+independence assumption is quantified in the exchange-rate derivation D2,
+section 4 (the feedback-bias result P2.2). The estimand is the response
+slope $\eps$, scalar here; the $d$-dimensional version (D4, behind T5) and
+the structural-family version (D5, behind T6) are treated in their own
+derivation subsections.
+
+The true performative objective $\Phi(h) = J(h; \tau(h))$ (REFLEX theory
+1.2) is smooth and strongly concave on the operating interval, with
+\begin{equation*}
+  \Phi'(\hstar) = \Delta(\hstar) = -\beta\,(\hstar - \psi)\,\eps(\hstar)
+  =: \delta_0, \qquad
+  \Phi''(\hstar) = -\gpo
+\end{equation*}
+(the REFLEX market model \citep{reflex2026}, section 4.1). The slope $\delta_0$ is nonzero precisely
+because $\hstar \neq \hpo$.
+
+\paragraph{The two budgets.}
+Two notions of exploration budget are used throughout:
+\begin{align*}
+  D_T &:= \sum_{t\le T} \dev_t^2
+    && \text{(deviation budget: realized design energy)},\\
+  C_T &:= \E\Big[\sum_{t\le T} \big(\Phi(\hstar) - \Phi(h_t)\big)\Big]
+    && \text{(value budget: expected incremental cost)}.
+\end{align*}
+$D_T$ is the tracking-error form, a desk's deviation limit: it is
+observable, its meaning is policy-independent, and it is the correct
+constraint for the exact minimax theorem T3 (derivation D3). $C_T$ is the
+realized-P\&L form. Lemma L1 relates the two.
+
+\textbf{Lemma L1 (cost equivalence).} For any exploration rule that is
+non-anticipating and conditionally symmetric, meaning
+$\E[u_t \mid \mathcal{F}_t] = 0$ (for example iid exploration, or a
+scheduled sign-symmetric jitter), in the regime where third-order terms are
+negligible,
+\begin{equation*}
+  C_T = \tfrac{1}{2}\,\gpo\,\E[D_T] + R_T, \qquad
+  |R_T| \le \frac{L_3}{6}\,\E\Big[\sum_{t\le T} |\dev_t|^3\Big],
+\end{equation*}
+with $L_3 = \sup |\Phi'''|$ on the operating interval. The linear term of
+the expansion contributes exactly zero to the expectation, and contributes
+a fluctuation of standard deviation
+$|\delta_0|\,\sqrt{\Var\big(\sum_{t\le T}\dev_t\big)}$ to the realized
+cost.
+
+\textbf{Proof.} Taylor-expand $\Phi$ at $\hstar$:
+\begin{equation*}
+  \Phi(\hstar) - \Phi(h_t)
+  = -\delta_0\,\dev_t + \tfrac{1}{2}\,\gpo\,\dev_t^2 + r_t,
+  \qquad |r_t| \le \tfrac{L_3}{6}\,|\dev_t|^3,
+\end{equation*}
+then sum over $t \le T$ and take expectations. For the linear term: $\dev_t$
+is built from $\{u_s\}_{s<t}$ through the linear recursion, so the mean
+obeys $\E[\dev_{t+1}] = -m\,\E[\dev_t] + \E[u_t]$; conditional symmetry
+gives $\E[u_t] = \E\big[\E[u_t \mid \mathcal{F}_t]\big] = 0$, hence
+$\E[\dev_t] = (-m)^t\,\E[\dev_0]$. Starting at the operating point
+($\dev_0 = 0$), or in the stationary regime, $\E[\dev_t] = 0$ for all $t$,
+so $\E\big[\sum_{t\le T} \delta_0\,\dev_t\big] = 0$. The quadratic term
+yields $\tfrac{1}{2}\gpo\,\E[D_T]$, and the remainder is bounded by the
+stated third-order term. \qedsymbol
+
+\paragraph{Fluctuation decomposition (exact, and a corrected earlier
+claim).}
+The realized cost's variance splits into two terms with zero cross term:
+the cross-moment sums built from $\E[\dev_t\,\dev_s^2]$ vanish by the sign
+symmetry of the stationary law. Exactly,
+\begin{equation*}
+  \Var\big(C_T^{\mathrm{real}}\big)
+  = \delta_0^2\,\Var\Big(\sum_{t\le T}\dev_t\Big)
+  + \frac{\gpo^2}{4}\,\Var\Big(\sum_{t\le T}\dev_t^2\Big),
+\end{equation*}
+with the long-run scales, $v$ denoting the stationary variance of $\dev_t$,
+\begin{align*}
+  \Var\Big(\sum_{t\le T}\dev_t\Big)
+    &\sim T\,v\,\frac{1-m}{1+m}
+    && \text{(long-run variance: negative autocorrelation helps)},\\
+  \Var\Big(\sum_{t\le T}\dev_t^2\Big)
+    &\sim T\,\frac{2\,v^2\,(1+m^2)}{1-m^2}
+    && \text{(Gaussian stationary AR(1))}.
+\end{align*}
+A caveat, recorded per the falsification convention: an earlier draft
+asserted that the linear term always dominates. The first verification run
+falsified that at moderate $\delta_0$ (measured sd ratio $1.62$, exactly
+reproduced by the two-term formula above), and the claim is now stated as
+the full decomposition. Which term dominates is decided by comparing
+$\delta_0^2\,(1-m)/(1+m)$ against
+$(\gpo^2\,v/2)\,(1+m^2)/(1-m^2)$, both computable. V0 now verifies the
+decomposition itself.
+
+\paragraph{Why the anchoring is load-bearing (recorded from the audit).}
+Anchoring the cost at the performative optimum $\hpo$ instead of $\hstar$
+adds terms of the type $T\,(\hstar - \hpo)^2$ that are paid whether or not
+the operator explores: the sunk echo-chamber cost of blindness (REFLEX
+theory 1.2, 6b). Numerically (\texttt{verify\_m2\_identity.py}, Claim 3):
+writing $g = \hstar - \hpo$ for the gap, the mis-anchored product equals
+\begin{equation*}
+  \tfrac{1}{2}\,\gpo\,\sigma^2\,\Big(1 + \frac{g^2}{v}\Big),
+\end{equation*}
+which destroys the exchange-rate invariance of D2 (theorem T2). The
+incremental anchor at $\hstar$ is the definition under which every later
+theorem is true.
+
+\paragraph{The certainty-equivalent anchor (needed for the adaptive
+minimax bound T4, derivation D3).}
+For adaptive policies the symmetric-exploration condition can be violated
+deliberately: since $\delta_0 \neq 0$, drifting toward $\hpo$ earns
+first-order value. Two observations discipline this.
+First, decompose $\Phi'(\hstar)$ as a function of the estimand:
+\begin{equation*}
+  \varphi(\eps) := \Phi'(\hstar; \eps) = -\beta\,(\hstar - \psi)\,\eps,
+\end{equation*}
+which is linear in $\eps$. Under a prior centred at $\bar\eps$, split
+$\varphi(\eps) = \varphi(\bar\eps)
++ \varphi'(\bar\eps)\,(\eps - \bar\eps)$.
+Second, the first (known) part is exploitable without any learning: it is a
+pure consequence of already-known information, that is, of choosing the
+anchor wrongly. Define therefore the certainty-equivalent anchor
+$\hstar_{\mathrm{CE}}$: the deployment that is optimal under current
+knowledge (the posterior mean), with exploration cost measured relative to
+the trajectory that sits at $\hstar_{\mathrm{CE}}$. Relative to that anchor
+the residual linear coefficient is
+\begin{equation*}
+  \varphi'(\bar\eps)\,(\eps - \bar\eps)
+  = -\beta\,(\hstar - \psi)\,(\eps - \bar\eps),
+\end{equation*}
+which has zero prior mean: only genuinely unknown structure can be
+exploited, and the exploitation--information lemma L2 (in D3, feeding T4)
+bounds that exploitation by the information already purchased. This
+definition also matches practice: a desk's exploration cost is measured
+against its own current best policy, not against an oracle's.
+
+\paragraph{Numerical verification (V0).}
+Three checks close the record for this subsection.
+\begin{itemize}
+  \item $\E[C_T] = \tfrac{1}{2}\,\gpo\,\E[D_T]$ holds within Monte Carlo
+    error, for a quadratic-plus-linear objective with $\delta_0 \neq 0$,
+    under iid exploration.
+  \item The realized-cost fluctuation scale matches
+    $|\delta_0|\,\mathrm{sd}\big(\sum_{t\le T}\dev_t\big)$: the linear
+    term is a variance contribution, not a bias.
+  \item A deliberately asymmetric (drifting) exploration rule breaks the
+    lemma in the predicted direction and by the predicted first-order
+    amount $-\delta_0\,\E\big[\sum_{t\le T}\dev_t\big]$: the
+    conditional-symmetry condition of L1 is necessary, not decorative.
+\end{itemize}
+
+\subsection*{D1: Information saturation by the Lyapunov identity (T1, C1.1, C1.2, R1)}
+
+This subsection records the derivation behind T1 and its corollaries C1.1 and
+C1.2, together with the non-normal refinement R1. Status of the record: the
+scalar closed form is verified to $10^{-16}$, and the $d$-dimensional
+identity, including the non-normal amplification, is verified numerically
+(V1); the proofs are complete.
+
+\paragraph{Scalar warm-up (the verified base case).}
+With no exploration ($u_t = 0$) and modulus $m < 1$, the deviation obeys
+$\dev_t = (-m)^t \dev_0$, so the design energy accumulated by horizon $T$ is
+\begin{equation*}
+D_T \;=\; \sum_{t=0}^{T} \dev_t^2
+\;=\; \dev_0^2\,\frac{1 - m^{2(T+1)}}{1 - m^2}
+\;\longrightarrow\; \frac{\dev_0^2}{1 - m^2}
+\qquad (T \to \infty).
+\end{equation*}
+The Fisher information for the response slope $\eps$ from OLS on the
+trajectory is $\Sxx/\sigma^2 \le D_\infty/\sigma^2$: bounded uniformly in
+the horizon. Hence, by Cram\'er--Rao, for any unbiased estimator and at
+every horizon,
+\begin{equation*}
+\Var(\hat\eps) \;\ge\; \frac{\sigma^2\,(1 - m^2)}{\dev_0^2}.
+\end{equation*}
+This is the scalar case of T1; with $\dev_0 = h_0 - \hstar$ the cap
+$\dev_0^2/(1-m^2)$ is the quantity in the register statement of C1.1.
+
+\paragraph{C1.1 (safety implies blindness).}
+The cap $\dev_0^2/(1-m^2)$ is strictly increasing in $m$: the
+fast-contracting (safe) loop reveals least about its own performativity, and
+identifiability is a near-instability phenomenon. This is immediate from the
+closed form above; the economic content is stated in the paper body.
+
+\paragraph{C1.2 (design degeneracy).}
+At $m = 1$ the noiseless iterates form the period-two orbit
+$\{+\dev_0, -\dev_0\}$; for $m < 1$ the support collapses geometrically onto
+$\{0\}$. In either case the empirical design measure has at most two
+effective support points, which by the Chebyshev counting argument of D5
+(theorem T6) cannot identify a three-parameter response family. Curvature is
+invisible to retraining trajectories at every $m$.
+
+\paragraph{The $d$-dimensional identity via the discrete Lyapunov equation.}
+Let the linearized joint loop be $\dev_{t+1} = M \dev_t$ with
+$M \in \mathbb{R}^{d \times d}$ and $\rho(M) < 1$; in the multi-bond and
+multi-dealer instantiations $M$ comes from the REFLEX market model \citep{reflex2026} (the base
+structural market theory) and is generally not symmetric.
+
+\textbf{Theorem (exact energy; T1).} The total design energy is the
+quadratic form
+\begin{equation*}
+E(\dev_0) \;:=\; \sum_{t \ge 0} \big\| M^t \dev_0 \big\|^2
+\;=\; \dev_0^\top P\,\dev_0,
+\end{equation*}
+where $P$ is the unique positive semidefinite solution of the discrete
+Lyapunov equation
+\begin{equation*}
+P \;=\; I + M^\top P M.
+\end{equation*}
+
+\textbf{Proof.} Set $P := \sum_{t \ge 0} (M^\top)^t M^t$; the series
+converges absolutely if and only if $\rho(M) < 1$ (Gelfand's spectral
+radius formula). Then
+\begin{equation*}
+M^\top P M \;=\; \sum_{t \ge 0} (M^\top)^{t+1} M^{t+1} \;=\; P - I,
+\end{equation*}
+so $P$ solves the equation. Uniqueness: the difference $Q$ of two solutions
+satisfies $Q = M^\top Q M = (M^\top)^t Q\, M^t \to 0$. Finally,
+$\dev_0^\top P\,\dev_0 = \sum_{t \ge 0} \|M^t \dev_0\|^2$ by expanding the
+sum term by term. \qedsymbol
+
+Scalar check: $P = 1/(1 - m^2)$, recovering the warm-up above.
+
+\paragraph{Directional information.}
+For the response slope in a direction $u$ (the observation
+$\tau_t = \tau^{*} - \eps\, u^\top \dev_t + \zeta_t$ probes the component
+along $u$), the relevant energy is
+\begin{equation*}
+\sum_{t \ge 0} \big( u^\top M^t \dev_0 \big)^2
+\;=\; \dev_0^\top P_u\,\dev_0,
+\qquad
+P_u \;=\; u u^\top + M^\top P_u M,
+\end{equation*}
+the same Lyapunov structure with a rank-one right-hand side. By
+Cram\'er--Rao this yields
+$\Var(\hat\eps) \ge \sigma^2 \big( \dev_0^\top P_u\,\dev_0 \big)^{-1}$ for
+the component along any direction $u$, which is the bound stated in T1.
+Hence the Fisher information is bounded in every direction, and the
+information operator satisfies
+$\mathcal{I} \preceq P_{\mathrm{full}} / \sigma^2$, where
+$P_{\mathrm{full}}$ solves the matrix-valued Lyapunov equation. Saturation
+is not a scalar accident.
+
+\paragraph{Non-normality: transiently amplified information (R1).}
+If $M$ is normal, $P$ has eigenvalues $1/(1 - \lambda_i^2)$ and the energy
+is governed by the spectrum alone. If $M$ is non-normal (heterogeneous
+multi-dealer Jacobians are), transient growth inflates the energy beyond the
+spectral prediction:
+\begin{equation*}
+E(\dev_0) \;\le\; \kappa(V)^2\,\frac{\|\dev_0\|^2}{1 - \rho(M)^2},
+\end{equation*}
+where $V$ is the eigenbasis of $M$ and $\kappa(V)$ its condition number, and
+the inequality is achieved in order: for the Jordan-type family
+\begin{equation*}
+M \;=\; \begin{pmatrix} m & a \\ 0 & m \end{pmatrix},
+\end{equation*}
+the energy along the first coordinate grows like $a^2/(1 - m^2)^3$ for
+large $a$, verified numerically in V1 against the exact Lyapunov solve.
+Reading: badly-conditioned ecosystems leak extra information about
+themselves during transients, the free-information remark of the paper, now
+with an exact constant ($P$ itself). The paper states the exact $P$-form and
+keeps the pseudospectral refinement for the journal version.
+
+\paragraph{Scope: what T1 does not say.}
+Two caveats are part of the record and are stated in the paper.
+\begin{itemize}
+\item With exploration on, saturation is replaced by the exchange rate of
+D2 (T2): the transient information $\dev_0^\top P\,\dev_0 / \sigma^2$ is
+the free part; everything after is bought.
+\item The bound is for the linearized loop; the simulator's nonlinear
+regimes are handled empirically (the drift study, under the D2/V2
+protocol).
+\end{itemize}
+
+\paragraph{Numerical verification (V1).}
+Four checks anchor the derivation. (i) The scalar closed form against the
+direct sum: exact to floating point. (ii) Random stable $M$ of sizes
+$2 \times 2$ and $5 \times 5$: the direct energy sum against the Lyapunov
+solve (a \texttt{scipy}-free fixed-point iteration), agreement to
+$10^{-12}$. (iii) Non-normal amplification: the energy for the family
+$M = \left(\begin{smallmatrix} m & a \\ 0 & m \end{smallmatrix}\right)$
+grows as $a^2$, far exceeding the normal-matrix bound $1/(1 - m^2)$, and
+matches $\dev_0^\top P\,\dev_0$ exactly. (iv) The directional version: the
+rank-one Lyapunov solution $P_u$ against the direct directional sum.
+
+\subsection*{D2: The exchange-rate identity and its concentration (T2, P2.1, P2.2)}
+
+This subsection records the derivations behind T2 (the exchange-rate identity in
+pathwise form), P2.1 (its concentration), and P2.2 (the feedback-bias constant).
+Status of record: the identity was verified to zero relative error by a pre-existing
+check; the pathwise refinement, the concentration rate, and the feedback-bias
+constant are derived here and verified in V2. The formal statements live in the
+register of theorem statements, and the proofs in the proofs appendix.
+
+\paragraph{Setup.}
+The stationary jittered loop is
+\begin{equation*}
+\dev_{t+1} \;=\; -m\,\dev_t + \sigma_e\,\xi_t,
+\qquad
+v \;=\; \Var(\dev_t) \;=\; \frac{\sigma_e^2}{1-m^2}.
+\end{equation*}
+OLS of the response $\tau_t$ on the quote $h_t$ has conditional-on-design variance
+$\Var(\hat\eps \mid \mathrm{design}) = \sigma^2/\Sxx$ with
+$\Sxx = \sum_{t\le T}(\dev_t-\bar{\dev})^2$, and the cost of Lemma L1 is
+$\tfrac12\gpo\sum_{t\le T}\dev_t^2$.
+
+\paragraph{The identity, upgraded from expectation to pathwise (T2).}
+\textbf{Proposition (pathwise identity).} On every realization,
+\begin{align*}
+\Var(\hat\eps \mid \mathrm{design}) \times \tfrac12\gpo\sum_{t\le T}\dev_t^2
+&\;=\; \tfrac12\,\gpo\,\sigma^2\,\frac{\sum_{t\le T}\dev_t^2}{\Sxx} \\
+&\;=\; \tfrac12\,\gpo\,\sigma^2\Big(1+\frac{T\,\bar{\dev}^2}{\Sxx}\Big).
+\end{align*}
+Since $\bar{\dev}\to 0$ almost surely at rate $T^{-1/2}$ in the stationary regime,
+the product equals $\tfrac12\gpo\sigma^2\,(1+O_P(1/T))$ pathwise: a strictly
+stronger statement than the in-expectation identity, and the form the experiments
+actually measure. The correction term $T\bar{\dev}^2/\Sxx$ is nonnegative, so the
+realized product can only sit above the constant, by a vanishing amount.
+
+\textbf{Invariance.} Neither $\sigma_e$, nor $m$, nor $T$ appears: more jitter buys
+information and burns value at the same rate; a larger modulus amplifies the jitter
+into more excitation and more cost at the same rate. The constant
+$\tfrac12\gpo\sigma^2$ is the exchange rate between self-knowledge and value.
+
+\paragraph{Concentration: the identity is observable (P2.1).}
+The realized value cost (Lemma L1) carries the linear-term fluctuation
+$-\delta_0\sum_{t\le T}\dev_t$. In the stationary regime $\sum_t\dev_t$ is a
+mean-zero weakly dependent sum, so
+\begin{equation*}
+\frac{\operatorname{sd}(\text{realized } C_T)}{\E[C_T]} \;=\; O\big(T^{-1/2}\big),
+\end{equation*}
+with the explicit leading constant given by the AR(1) long-run variance
+$v\,(1+\rho)/(1-\rho)$ at lag-one autocorrelation $\rho=-m$, that is
+$v\,(1-m)/(1+m)$:
+\begin{equation*}
+\Var\Big(\sum_{t\le T}\dev_t\Big)
+\;=\; T\,v\,\frac{1-m}{1+m}\,(1+o(1)).
+\end{equation*}
+The negative autocorrelation of the cobweb shrinks the fluctuation below the iid
+level $T\,v$: a small bonus worth one sentence in the paper. Hence the measured
+product concentrates around the invariant at rate $T^{-1/2}$. Verified in V2: the
+seed-variance of the measured product scales as $1/T$ (it halves when $T$ doubles,
+a factor-4 drop when $T$ quadruples, within Monte-Carlo tolerance).
+
+\paragraph{Detail: $\Sxx$ versus $\sum_t\dev_t^2$.}
+The estimator uses the centered $\Sxx$; the cost uses the raw $\sum_t\dev_t^2$.
+Their ratio is
+\begin{equation*}
+\frac{\sum_{t\le T}\dev_t^2}{\Sxx}
+\;=\; 1+\frac{T\,\bar{\dev}^2}{\Sxx}
+\;=\; 1+O_P(1/T),
+\end{equation*}
+as above. Statements in the paper use whichever form is natural and record this
+$O(1/T)$ equivalence once, in the present form.
+
+\paragraph{The feedback (predetermined-regressor) bias, with its constant (P2.2).}
+In the real loop the observed response feeds the next deployment. Model this as
+\begin{equation*}
+\dev_{t+1} \;=\; -m\,\dev_t + \sigma_e\,\xi_t + \phi\,\zeta_t,
+\end{equation*}
+with $\phi$ the noise-feedback gain: retraining on the realized flow moves the next
+quote by $\phi\,\zeta_t$. Now $\dev_t$ is correlated with past $\zeta$, so the
+regressor is predetermined but not strictly exogenous.
+
+\textbf{Proposition (Stambaugh-type bias, full form, corrected by verification).}
+The OLS slope satisfies
+\begin{equation*}
+\E\big[\hat\eps-(-\eps)\big]
+\;=\; \frac{\phi\,\sigma^2\,(3m-1)}{(1-m^2)\,T\,v_\phi}\,(1+o(1)),
+\qquad
+v_\phi \;=\; \frac{\sigma_e^2+\phi^2\sigma^2}{1-m^2},
+\end{equation*}
+where $-\eps$ is the true slope in this sign convention (written
+$\eps_{\mathrm{true}}$ in P2.2) and $v_\phi$ is the stationary variance of the
+feedback loop. The bias is $O(1/T)$, proportional to the feedback gain, and changes
+sign at $m=1/3$: slow-contracting loops bias the slope estimate upward,
+fast-contracting ones downward, and at $m=1/3$ exactly the feedback bias vanishes
+at first order.
+
+\textbf{Derivation, both terms.} (Honesty record, kept per the falsification
+convention: the first draft retained only the centering term and was falsified by
+V2; the covariance term below is the correction.) Write $\hat b - b = N/S$ with
+$N=\sum_{t\le T}(\dev_t-\bar{\dev})\,\zeta_t$ and $S=\Sxx$, and expand
+\begin{equation*}
+\E\Big[\frac{N}{S}\Big]
+\;=\; \frac{\E[N]}{\E[S]} \;-\; \frac{\Cov(N,S)}{\E[S]^2} \;+\; O(T^{-2}).
+\end{equation*}
+
+\emph{Centering term.} Here $\E[\dev_t\zeta_t]=0$, since $\zeta_t$ is independent
+of the past-built $\dev_t$, so $\E[N]=-\E\big[\bar{\dev}\sum_t\zeta_t\big]$. With
+$\E[\dev_s\zeta_t]=\phi\sigma^2(-m)^{s-t-1}$ for $s>t$,
+\begin{equation*}
+\E[N]
+\;=\; -\frac{1}{T}\sum_{s>t}\phi\,\sigma^2\,(-m)^{s-t-1}
+\;=\; -\frac{\phi\,\sigma^2}{1+m} \;+\; O(1/T).
+\end{equation*}
+
+\emph{Covariance term (the one the first draft missed).} By the Gaussian
+fourth-moment (Wick) expansion,
+\begin{equation*}
+\Cov(N,S)
+\;=\; 2\sum_{t,s}\E[\tilde{\dev}_t\tilde{\dev}_s]\,\E[\tilde{\dev}_s\zeta_t],
+\qquad \tilde{\dev} = \dev-\bar{\dev};
+\end{equation*}
+substituting $\E[\tilde{\dev}_t\tilde{\dev}_s]\simeq v_\phi\,(-m)^{|s-t|}$ and the
+cross-covariance above,
+\begin{equation*}
+\Cov(N,S)
+\;=\; 2\,v_\phi\,\phi\,\sigma^2\,T\sum_{k\ge 1}(-m)^{k}(-m)^{k-1}
+\;=\; -\,\frac{2\,v_\phi\,\phi\,\sigma^2\,T\,m}{1-m^2}.
+\end{equation*}
+
+\emph{Combine.} With $\E[S]\simeq T\,v_\phi$,
+\begin{equation*}
+\mathrm{bias}
+\;=\; \Big[-\frac{1}{1+m}+\frac{2m}{1-m^2}\Big]\,
+\frac{\phi\,\sigma^2}{T\,v_\phi}
+\;=\; \frac{3m-1}{1-m^2}\cdot\frac{\phi\,\sigma^2}{T\,v_\phi},
+\end{equation*}
+which is P2.2. Verified in V2 at two moduli straddling the sign change: $m=0.5$
+gives a positive bias and $m=0.2$ a negative one, each within Monte-Carlo tolerance
+of the constant. The sign change is the sharpest possible falsification test of the
+two-term structure, and it passes.
+
+\textbf{Paper usage.} State the identity (T2) under exploration-dominant design;
+report the bias formula (P2.2) as the known, computable deviation, a checkable
+condition ($\phi$ is estimable from the loop's own update rule), not an assumption.
+
+\paragraph{Verified numerically (V2).}
+The V2 checks for this subsection: (1) the pathwise product equals
+$\tfrac12\gpo\sigma^2\,(1+T\bar{\dev}^2/\Sxx)$ exactly; (2) product concentration:
+the seed-variance of the measured product scales as $1/T$, a factor-4 drop when $T$
+quadruples, within Monte-Carlo tolerance; (3) the long-run variance of
+$\sum_t\dev_t$ matches $T\,v\,(1-m)/(1+m)$; (4) the feedback bias: sign, magnitude,
+and $1/T$ scaling of $\phi\,\sigma^2\,(3m-1)/\big((1-m^2)\,T\,v_\phi\big)$.
+
+\subsection*{D3: Minimax lower bounds and the exact reach (T3, L2, T4, T9)}
+
+This record derives the two lower bounds that turn the exchange-rate identity
+of D2 (register T2) from a property of one scheme into a property of the
+problem, and then the exact reach within which that floor is structure-proof
+against a policy that knows the response family (T9). T2 shows that a
+specific scheme, stationary symmetric jitter with ordinary least squares,
+achieves $\Var(\hat\eps)\times\text{cost} = \tfrac{1}{2}\gpo\sigma^2$. The
+claim that makes this an exchange rate is that no adaptive exploration
+policy and no estimator does better. There are two versions of the bound,
+one per budget type: an exact deviation-budget bound (T3, derived in full
+and verified numerically in V3a) and a value-budget bound (T4), whose engine
+is the exploitation--information lemma (L2), proved below with its
+$O(T^{-1/2})$ correction established and verified in V3b. Throughout, the
+formal proofs are recorded in the proofs appendix; this subsection records
+the derivations and the caveats attached to them.
+
+\paragraph{Deviation budget: van Trees over adaptive designs (T3).}
+Setting: the exploration policy is arbitrary and adaptive (each $u_t$ any
+measurable function of the history), subject to the pathwise budget
+$\sum_{t\le T}\dev_t^2 \le D$ almost surely; the estimator $\hat\eps$ of
+$\eps$ is arbitrary, bias allowed. The claim (T3) is that the minimax risk
+over an interval of $\eps$ values of width $w$ satisfies
+\begin{equation*}
+\inf_{\text{policy, estimator}}\;\sup_{\eps}\;
+\E\big[(\hat\eps-\eps)^2\big]
+\;\ge\; \frac{\sigma^2}{D+\sigma^2(\pi/w)^2}
+\;=\; \frac{\sigma^2}{D}\,\big(1-o(1)\big)
+\qquad\text{as } D\,(w/\sigma)^2\to\infty .
+\end{equation*}
+Multiplying by the budget cost $\tfrac{1}{2}\gpo D$ (cost equivalence, L1)
+gives
+\begin{equation*}
+\sup_{\eps}\;\Var(\hat\eps)\times\tfrac{1}{2}\gpo D
+\;\ge\; \tfrac{1}{2}\,\gpo\,\sigma^2\,\big(1-o(1)\big):
+\end{equation*}
+the exchange rate is a floor.
+
+The derivation is the van Trees inequality (Bayesian Cram\'er--Rao, in the
+form of Gill and Levit, 1995) with a prior density $\pi_0$ supported on the
+width-$w$ interval:
+\begin{equation*}
+\E_{\pi_0}\,\E\big[(\hat\eps-\eps)^2\big]
+\;\ge\; \frac{1}{\E_{\pi_0}\big[I_T(\eps)\big] + I(\pi_0)},
+\qquad
+I(\pi_0)=\int \frac{(\pi_0')^2}{\pi_0},
+\end{equation*}
+where $I(\pi_0)$ is the prior information, equal to $(\pi/w)^2$ for the
+cosine-squared prior (the minimizer of prior information on an interval of
+width $w$), and $I_T(\eps)$ is the Fisher information of the adaptively
+designed experiment. The one nonstandard step is that $I_T$ for an adaptive
+design is still bounded by the design energy: by the chain rule for Fisher
+information over the filtration,
+\begin{equation*}
+I_T(\eps)
+\;=\; \sum_{t\le T}\E\big[I(\tau_t \mid \mathcal{F}_t;\eps)\big]
+\;=\; \sum_{t\le T}\frac{\E[\dev_t^2]}{\sigma^2},
+\end{equation*}
+because conditionally on $\mathcal{F}_t$ the observation $\tau_t$ is Gaussian
+with mean linear in $\eps$ (slope $-\dev_t$, with $\dev_t$
+$\mathcal{F}_t$-measurable): the policy can place information but cannot
+manufacture it. The pathwise budget then gives $\E[I_T]\le D/\sigma^2$;
+substituting, and taking the supremum over the interval
+($\sup \ge \E_{\pi_0}$), yields the bound.
+
+Three remarks recorded with the derivation. (i) Biased estimators are
+covered: van Trees needs no unbiasedness. (ii) The bound is achieved, up to
+the $o(1)$, by two-point symmetric probing at the budget with least squares,
+tying back to the D2 identity (T2); this is the ``attained with equality''
+clause of T3. (iii) The $o(1)$ is explicit: it equals
+$\sigma^2(\pi/w)^2/D$.
+
+\paragraph{D3b, the adaptive companion. Value budget: the exploitation problem.}
+Under the value budget the policy pays
+$\Phi(\hstar_{\mathrm{CE}})-\Phi(h_t)$ per step (the certainty-equivalent
+anchor of D0). The residual linear coefficient at the anchor is
+\begin{equation*}
+\phi'(\bar\eps)\,(\eps-\bar\eps)
+\;=\; -\beta\,(\hstar-\psi)\,(\eps-\bar\eps),
+\end{equation*}
+so a policy could try to earn while exploring: guess the sign of
+$\eps-\bar\eps$ and drift accordingly. The lemma below says this
+self-financing is bounded by the information already purchased: the policy
+cannot exploit what it has not yet paid to know.
+
+Setting: symmetric two-point prior
+$\eps\in\{\bar\eps-\delta,\ \bar\eps+\delta\}$; write
+$s=\operatorname{sign}(\eps-\bar\eps)$ and
+$g_1 := \beta\,|\hstar-\psi|$, the known coefficient of the unknown part.
+The policy is non-anticipating, with per-step trust region $|\dev_t|\le r$;
+write $S_t := \sum_{i\le t}\dev_i^2$ for the design energy.
+
+\paragraph{The exploitation--information lemma (L2).}
+Two ingredients. First, the posterior-imbalance step: the policy's knowledge
+of $s$ at time $t$ obeys
+\begin{equation*}
+\big|\E[s\mid\mathcal{F}_t]\big| \;\le\; \TV(P^+_t,P^-_t) \;=:\; \TV_t
+\end{equation*}
+(posterior imbalance is bounded by the distinguishability of the two
+environments; the starting prior is symmetric). Register L2 records the
+averaged form of this step as the exact identity
+$\E\big|\E[s\mid\mathcal{F}_t]\big| = \TV(P^+_t,P^-_t)$. Second, the
+Pinsker step: the two environments differ only in the observation means, by
+$2\delta\dev_i$ at step $i$, so
+\begin{equation*}
+\KL_t \;=\; \sum_{i\le t}\frac{(2\delta\dev_i)^2}{2\sigma^2}
+\;=\; \frac{2\delta^2 S_t}{\sigma^2},
+\qquad
+\TV_t \;\le\; \sqrt{\KL_t/2} \;=\; \frac{\delta\sqrt{S_t}}{\sigma}.
+\end{equation*}
+(For adaptive designs the same computation runs through the chain rule for
+$\KL$ over the filtration, with $S_t$ replaced by $\E S_t$, exactly as in the
+Fisher computation for T3; this is the form registered in L2.)
+
+Chaining these, the expected exploitation gain obeys, for any
+non-anticipating policy,
+\begin{align*}
+\E[\mathrm{gain}_T]
+\;:=\; \E\Big[\sum_{t\le T} g_1\,\delta\, s\,\dev_t\Big]
+&\;\le\; g_1\,\delta\,\sum_{t\le T}\E\big[\TV_t\,|\dev_t|\big] \\
+&\;\le\; \frac{g_1\,\delta^2}{\sigma}\,\sqrt{S_T}\,
+\sum_{t\le T}\E\,|\dev_t|
+\;\le\; \frac{g_1\,\delta^2}{\sigma}\, S_T\,\sqrt{T},
+\end{align*}
+where the first inequality is the tower rule plus the posterior-imbalance
+step, the second uses $\TV_t\le\delta\sqrt{S_t}/\sigma
+\le\delta\sqrt{S_T}/\sigma$, and the last is Cauchy--Schwarz
+($\sum_{t\le T}|\dev_t| \le \sqrt{T\,S_T}$). For fully adaptive designs the
+same chain, run with expected energies, gives the closed form recorded in
+L2, $\E[\mathrm{gain}_T]\le g_1\,\delta^{3/2}\,T^{1/2}
+(\E S_T)^{3/4}/\sigma^{1/2}$; both forms are $O(\sigma\sqrt{T})$ at the
+minimax scale below. The formal proof is recorded in the proofs appendix
+under L2.
+
+\paragraph{The minimax scale and the value-budget bound (T4).}
+The minimax-relevant prior scale is
+$\delta = c\,\sigma/\sqrt{S_T}$: this is the accuracy the budget can buy
+(any larger $\delta$ is learned exactly, any smaller is unlearnable).
+Substituting into the lemma,
+\begin{equation*}
+\E[\mathrm{gain}_T] \;\le\; g_1\, c^2\,\sigma\,\sqrt{T},
+\qquad\text{while}\qquad
+\E[C_T] \;=\; \tfrac{1}{2}\,\gpo\, S_T \;\sim\; \tfrac{1}{2}\,\gpo\, T\, v
+\end{equation*}
+(cost equivalence L1, stationary-scale exploration $S_T=\Theta(T)$ with
+per-step exploration variance $v$). The exploitable fraction of the budget
+is therefore
+\begin{equation*}
+\frac{\E[\mathrm{gain}_T]}{\E[C_T]}
+\;\le\; \frac{2\,g_1\,c^2\,\sigma}{\gpo\, v\,\sqrt{T}}
+\;=\; O\big(T^{-1/2}\big).
+\end{equation*}
+The Le Cam two-point reduction then quantifies the constant. At the minimax
+scale $\TV_T\le c$, so any estimator's worst-case risk over the pair obeys
+\begin{equation*}
+\sup_{\eps}\,\E\big[(\hat\eps-\eps)^2\big]
+\;\ge\; \frac{\delta^2}{2}\,\big(1-\TV_T\big)
+\;\ge\; \frac{\delta^2}{2}\,(1-c).
+\end{equation*}
+Multiplying by $\E[C_T]=\tfrac{1}{2}\gpo S_T$, using
+$\delta^2 S_T = c^2\sigma^2$, and applying the exploitation rebate (the
+value budget can be underpaid only by the exploited gain, an
+$O(T^{-1/2})$ fraction by the display above):
+\begin{equation*}
+\sup\;\Var(\hat\eps)\times C_T
+\;\ge\; \frac{\gpo\,\sigma^2}{4}\; c^2\,(1-c)\;
+\big(1-O(T^{-1/2})\big).
+\end{equation*}
+The factor $c^2(1-c)$ is maximized at $c=2/3$, with value $4/27$, giving the
+registered bound of T4:
+\begin{equation*}
+\inf_{\text{policy, estimator}}\;\sup\;\Var(\hat\eps)\times C_T
+\;\ge\; \frac{\gpo\,\sigma^2}{27}\,\big(1-O(T^{-1/2})\big).
+\end{equation*}
+The sharp constant $\tfrac{1}{2}$, matching the achievable product of T2,
+that is
+$\inf\sup\,\Var(\hat\eps)\times C_T
+\ge \tfrac{1}{2}\gpo\sigma^2\,(1-O(T^{-1/2}))$,
+is conjectured and is part of OPEN-1: no simulated policy fell below it by
+more than Monte-Carlo error (\texttt{run\_open1.py}, part B).
+
+\paragraph{Interpretation: the self-referential structure.}
+The profitable direction is $s$, the very thing being estimated. Pinsker
+converts ``how much the policy knows about $s$'' into ``how much design
+energy it has already spent''; any gain is therefore a rebate proportional
+to information already paid for, and the rebate's rate vanishes. Knowledge
+cannot be bootstrapped from its own purchase. To our knowledge no analog of
+this lemma appears in the performative-prediction, pricing, or
+experimental-design literatures (literature review items G1 to G3).
+
+\paragraph{Caveats recorded with the derivation.}
+(i) The constant in the $O(T^{-1/2})$ is explicit,
+$2\,g_1\,c^2\,\sigma/(\gpo\, v)$, and blows up as $v\to 0$: a policy that
+barely explores can have its tiny cost substantially rebated. This is
+consistent, since in that regime both sides of the product are dominated by
+the transient (D1); the theorem is stated for stationary-scale exploration,
+$S_T=\Theta(T)$.
+(ii) $g_1=\beta|\hstar-\psi|$ is $O(1)$ in general; in the
+weak-performativity regime it is $O(\eps)$, giving the sharper factor
+$\big(1-O(\eps\, T^{-1/2})\big)$.
+(iii) The fixed-$\delta$ regime is different, and the certainty-equivalent
+anchor is the reason. At fixed prior separation the policy eventually learns
+$s$ outright and can exploit it indefinitely: the exploitation fraction does
+not vanish (observed directly in V3b's first, deliberately mis-scaled run).
+That regime is not a counterexample. Sustained exploitation of learned
+structure is exactly what D0's certainty-equivalent anchor re-anchors away:
+once $\eps$ is known, the CE-optimal deployment shifts, and the ``gain'' is
+no longer measured as a rebate against exploration. The theorem's content
+concerns the unlearned residual, whose hardest instances live at the minimax
+scale $\delta\sim\sigma/\sqrt{S_T}$, and there the rebate vanishes at rate
+$T^{-1/2}$ (verified). We state this distinction explicitly: it separates
+the theorem's content from an apparent counterexample.
+
+\paragraph{Numerical verification (V3).}
+Three checks. (V3a) A Bayes-risk simulation with a Gaussian-prior
+posterior-mean estimator under three designs (front-loaded, spread,
+adaptive-greedy) with capped budget $D$: the measured risk respects
+$\sigma^2/\big(D+\sigma^2/\sigma_{\pi}^2\big)$ in every arm, with the spread
+design near-tight. (V3b-i) The Pinsker chain: the measured posterior
+imbalance satisfies
+$\big|\E[s\mid\mathcal{F}_t]\big| \le \delta\sqrt{S_t}/\sigma$ pathwise
+along simulated runs. (V3b-ii) An explicitly exploiting policy, which
+drifts by the posterior mean of the unknown linear term, simulated at
+several horizons $T$: its realized $\mathrm{gain}_T/C_T$ decays
+consistently with $O(T^{-1/2})$, and its achieved
+$\Var(\hat\eps)\times\text{cost}$ never falls below
+$\tfrac{1}{2}\gpo\sigma^2\,(1-\text{measured rebate})$.
+
+\paragraph{Structure-proofness within reach (T9).}
+The floors above are nonparametric. A separate threat is a policy that
+knows the response family's functional form $\tau(h)=C_0+C_1 e^{-ch}$ and
+shops for designs whose parametric Cram\'er--Rao product undercuts the
+floor. Define, for a finitely supported design $\mu$,
+\begin{equation*}
+R(\mu) \;=\; \big(g^\top M(\mu)^{-1} g\big)\!\int (h-\hstar)^2\, d\mu,
+\qquad
+M(\mu) \;=\; \int s\, s^\top d\mu,
+\end{equation*}
+with the sensitivity and the estimand gradient
+\begin{equation*}
+s(h) \;=\; \big(1,\; e^{-ch},\; -C_1\, h\, e^{-ch}\big)^\top,
+\qquad
+g \;=\; \nabla_\theta\, \eps(\hstar) \;=\; -s'(\hstar),
+\end{equation*}
+normalized so that $R(\mu)\ge 1$ says the family-knowing product is at
+least the exchange-rate floor $\tfrac{1}{2}\gpo\sigma^2$ under the
+local-quadratic (A1) cost.
+
+\paragraph{One-dimensional reduction.}
+The generalized Rayleigh identity plus the bijection
+$u \leftrightarrow \phi_u = u^\top s$ between $\mathbb{R}^3$ and
+$V=\operatorname{span}\{1,\ e^{-ch},\ h e^{-ch}\}$ (using $C_1\neq 0$)
+gives
+\begin{equation*}
+g^\top M(\mu)^{-1} g
+\;=\; \frac{1}{\inf\big\{\ \|\phi\|_\mu^2 \ :\ \phi\in V,\
+\phi'(\hstar)=1\ \big\}},
+\end{equation*}
+because $u^\top g = -\phi_u'(\hstar)$ (the sign squares away). So the floor
+holds at $\mu$ if and only if some unit-slope family element is
+$\mu$-cheaper than the linear function $\dev(h)=h-\hstar$.
+
+\paragraph{The candidate and its reach.}
+The unique element of $V$ with 2-jet $(0,1,0)$ at the anchor is
+\begin{equation*}
+\phi_0(h) \;=\; \frac{2}{c}
+\;-\; e^{-c(h-\hstar)}\Big(\frac{2}{c} + (h-\hstar)\Big),
+\end{equation*}
+with expansion $\phi_0(x) = x - (c^2/6)\,x^3 + \cdots$ in $x=h-\hstar$.
+The pointwise domination $|\phi_0(x)|\le |x|$ holds exactly on
+$x\in[-2/c,\ \infty)$ (equality only at $x=0$ and $x=-2/c$), and fails
+strictly and exponentially below $-2/c$. The three elementary ingredients
+are $1+t < e^t$ (which makes $\phi_0(x)-x$ strictly decreasing),
+$\phi_0'(x) = e^{-cx}(1+cx) > 0$ above $-1/c$, and the single sign change
+of $e^{-cx}(1+cx)+1$ on $(-2/c,\,0)$ (since $e^{-cx}(1+cx)$ is increasing
+there from $-e^2$ to $1$). The full proof is recorded in the proofs
+appendix under T9; verified in V9.1.
+
+\paragraph{Consequence (T9(i)).}
+For any design supported in $[\hstar-2/c,\ \infty)$: $R(\mu)\ge 1$
+whenever the estimand is estimable, strict as soon as $\mu$ places mass
+off the two equality points $\{\hstar,\ \hstar-2/c\}$, and
+$\inf_\mu R(\mu)=1$, approached by symmetric
+three-point designs collapsing at the anchor (at rate $\delta^2$ in the
+collapse half-width $\delta$, V9.2; the limit is exact because in 2-jet
+coordinates the collapsing model is the quadratic family, where every
+symmetric design has $R=1$ on the nose). The trust region A4 with
+$r\le 2/c$ is therefore exactly the condition under which the floor is
+structure-proof, not a technicality.
+
+
+\paragraph{Sharpness of the candidate, and an exact duality.}
+Three facts sharpen the picture, established in the adversarial
+verification campaign with certified numerics (the full write-up is
+journal material under OPEN-5). (i) The easy direction of a duality: for
+a finite support $X$ let
+$m(X) = \max\{\phi'(\hstar) : \phi \in V,\ |\phi(x)| \le |x - \hstar|
+\ \forall x \in X\}$; then for \emph{every} weighting $w$ of $X$,
+$R(X, w) \ge m(X)^2$, because the maximizer $\psi^*$ scaled to unit slope
+is feasible in the Rayleigh infimum with
+$\int (\psi^*/m)^2\, dw \le \int d^2\, dw / m(X)^2$. Within reach
+$\phi_0$ certifies $m(X) \ge 1$, which is exactly T9(i); numerically the
+duality is tight ($\inf_w R(X, w) = m(X)^2$ by linear-programming
+duality, certified on random supports), so pointwise domination is not a
+lossy proof device: the reach question \emph{is} the domination question.
+(ii) Single-candidate sharpness: among all unit-slope elements of $V$,
+$\phi_0$ is the unique one whose domination set contains a full interval
+$[\hstar - a, \hstar)$ with $a > 0$, and the maximal such $a$ is exactly
+$2/c$. The affine family with 2-jet $(0, 1, \gamma)$, $\gamma \in (-1, 0)$,
+trades the reach boundary outward (to $u_2(\gamma) < -2/c$ in units of
+$1/c$) at the proved price of vacating an interval just below the anchor,
+and the violating designs live exactly in the vacated gap. (iii) The
+below-reach failure is generic, not a boundary artifact: for every
+$A > 2/c$ there are nonsingular designs supported in
+$[\hstar - A, \infty) \cap (0, \infty)$ with $R < 1$ (a certified
+three-point example in the register market attains $R = 0.8537$).
+Consequence for the statement of T9: by the extended-Chebyshev property
+of $V$ (any nonzero element has at most two zeros counting multiplicity),
+every design with at least three distinct support points automatically
+has nonsingular information, so the estimability caveat in T9 concerns
+only one- and two-point designs.
+
+\paragraph{The reach is exact (T9(ii)).}
+Below $\hstar-2/c$ the domination fails, and the failure is realized: the
+frozen witness (support $\{1.8726,\ 1.8665,\ 1.3073,\ 0.05\}$, weights
+$\{0.003329,\ 0.955702,\ 0.040697,\ 0.000272\}$ normalized, frozen anchor
+$\hstar=1.8461$, register market $c=1.5$) attains
+\begin{equation*}
+R \;=\; 0.8516504721831888870\ldots
+\end{equation*}
+(50-digit precision; V9.2), with every support point except the $0.05$
+probe inside the reach: one vanishing-weight below-reach probe breaks the
+floor by 15 percent. Its true-cost ratio is $1.011>1$, so the violation
+lives in the local-quadratic cost model, which is the floor's own scope.
+Symmetric pair-plus-far-probe families never violate (their ratio tends to
+$1$ from above as the probe weight vanishes; the old scan's verdict of
+global structure-proofness was a weight-grid artifact, recorded as the
+eleventh measurement-forced pivot). The characterization of the full
+below-reach violation set is OPEN-5.
+
+\subsection*{D4/D5: Design geometry: optimal shapes, dispersion, temporal shaping, Chebyshev support (T5, C5.1, L3, T6)}
+
+This subsection records the derivations behind the three exact design optima
+of T5, the dispersion corollary C5.1, the temporal-shaping collapse L3, and
+the Chebyshev counting result T6; it covers both register slots D4 and D5,
+the Chebyshev material being the D5 portion. All three design optima are
+derived with proofs, the temporal-shaping lemma and the counting result are
+proved, and everything is verified in the V4 and V5 numerical checks. It is
+a derivation record: each optimum is computed in full, the caveats are
+stated where they arose, and the numerical anchors are those of V4 and V5.
+The formal statements live in the theorem register under the IDs above.
+
+\paragraph{Setting.}
+The decision is $d$-dimensional and the estimand is the response Jacobian.
+Exploration has stationary second moment $M := \E[\dev\dev^\top]$ (positive
+semidefinite), the response noise has variance $\sigma^2$ per coordinate,
+and by the $d$-dimensional form of the cost equivalence lemma L1 (from D0)
+the value cost rate is
+\begin{equation*}
+\tfrac{1}{2}\,\E\big[\dev^\top \Gpo\, \dev\big]
+\;=\; \tfrac{1}{2}\,\tr(\Gpo M),
+\end{equation*}
+so the value budget over horizon $T$ is $B = (T/2)\,\tr(\Gpo M)$. The
+per-unit-time information matrix is $M/\sigma^2$. Absorbing $T$ and
+$\sigma^2$ into units, all three problems take the static normal form of a
+linear budget constraint $\tr(\Gpo M) \le B$ on the design $M$.
+
+\paragraph{A-optimality (T5(a)): what to do if you must know everything
+equally.}
+The problem and its exact solution are
+\begin{align*}
+& \text{minimize} \quad \tr\big(M^{-1}\big)
+\qquad \text{subject to} \quad \tr(\Gpo M) \le B, \quad M \succ 0, \\
+& M^{*} \;=\; \frac{B}{\tr\,\Gpo^{1/2}}\;\Gpo^{-1/2},
+\qquad
+\tr\big((M^{*})^{-1}\big) \;=\; \frac{\big(\tr\,\Gpo^{1/2}\big)^{2}}{B}.
+\end{align*}
+Derivation: the objective is strictly convex on the positive definite cone
+and the constraint is linear, so the KKT conditions are sufficient.
+Stationarity reads $-M^{-2} + \lambda\,\Gpo = 0$, hence
+$M = \lambda^{-1/2}\,\Gpo^{-1/2}$; the budget pins the multiplier through
+$\tr(\Gpo M) = \lambda^{-1/2}\,\tr\,\Gpo^{1/2} = B$, so
+$\lambda^{-1/2} = B/\tr\,\Gpo^{1/2}$, and substituting back gives the
+stated value. A diagonal-case Cauchy--Schwarz check confirms the shape:
+with curvatures $g_i$ and design weights $m_i$,
+\begin{equation*}
+\Big(\sum_i \frac{1}{m_i}\Big)\Big(\sum_i g_i\, m_i\Big)
+\;\ge\; \Big(\sum_i \sqrt{g_i}\Big)^{2},
+\end{equation*}
+with equality at $m_i \propto g_i^{-1/2}$.
+
+The reading is: explore where the objective is flat, but only to the
+square-root degree. The optimal exploration covariance is $\Gpo^{-1/2}$,
+the inverse square root and not the inverse: flat directions are cheap per
+unit information but not infinitely favoured, while curved directions are
+expensive but cannot be abandoned when every coordinate of the Jacobian is
+needed.
+
+\paragraph{The price of isotropic jitter (C5.1).}
+Isotropic exploration at the same budget, $M = (B/\tr\,\Gpo)\,I$, is
+feasible with the budget tight and has risk
+$\tr(M^{-1}) = d\,\tr(\Gpo)/B$. The ratio to the A-optimal value is
+\begin{equation*}
+F \;=\; \frac{d\,\tr(\Gpo)}{\big(\tr\,\Gpo^{1/2}\big)^{2}} \;\ge\; 1,
+\end{equation*}
+with equality if and only if all curvatures are equal (Cauchy--Schwarz
+again). $F$ is the curvature dispersion of the objective: the exact factor
+by which naive isotropic exploration, which is optimal in LQR-like settings
+(Simchowitz and Foster, 2020), overpays in the performative setting. This
+is the content of C5.1, restated as the isotropy contrast P9.2, and $F$ is
+computable on the calibrated multi-bond $\Gpo$ (whose diagonal is given
+exactly by P9.3).
+
+\paragraph{D-optimality (T5(b)): what the confidence-volume objective
+wants.}
+\begin{align*}
+& \text{maximize} \quad \log\det M
+\qquad \text{subject to} \quad \tr(\Gpo M) \le B, \\
+& M^{*} \;=\; \frac{B}{d}\;\Gpo^{-1},
+\qquad
+\log\det M^{*} \;=\; d\,\log\frac{B}{d} \;-\; \log\det \Gpo .
+\end{align*}
+Derivation: $\nabla \log\det M = M^{-1}$, so stationarity reads
+$M^{-1} = \lambda\,\Gpo$; the objective is concave and the constraint
+linear, and the budget gives $\lambda^{-1} = B/d$.
+
+A caveat recorded at derivation time: the two shapes differ, A-optimality
+giving $\Gpo^{-1/2}$ and D-optimality giving $\Gpo^{-1}$, and the two must
+never be conflated in the paper. The algorithm derivation (D6) uses the
+D-optimal criterion internally (Frank--Wolfe on $\log\det$), while the
+headline risk statement is A-optimal; both are stated, and the discrepancy
+factor between them is itself computable and is small when the dispersion
+$F$ is moderate.
+
+\paragraph{c-optimality (T5(c)): what the corrected (PerfGD-style) update
+actually needs.}
+This is the new result of the three. The corrected update consumes the
+response estimate through a single functional, the correction direction
+$c$: in the scalar family the correction $\Delta$ needs only
+$\eps(\hstar)$, and in $d$ dimensions $c = \nabla_{E}\,\Delta$ is a fixed
+vector once the operating point is known. Estimating the scalar
+$c^\top\theta$ alone:
+\begin{align*}
+& \text{minimize} \quad c^\top M^{-1} c
+\qquad \text{subject to} \quad \tr(\Gpo M) \le B, \\
+& M^{*} \;=\; B\,\frac{c\,c^\top}{c^\top \Gpo\, c}
+\quad \text{(rank one: probe along $c$ itself)},
+\qquad
+c^\top (M^{*})^{+}\, c \;=\; \frac{c^\top \Gpo\, c}{B}.
+\end{align*}
+Derivation: substitute $N = \Gpo^{1/2} M\, \Gpo^{1/2}$, so that
+$\tr N = \tr(\Gpo M) \le B$, and $w = \Gpo^{1/2} c$; the objective becomes
+$w^\top N^{-1} w$. By Cauchy--Schwarz,
+\begin{equation*}
+\big(w^\top w\big)^{2}
+\;=\; \big(w^\top N^{-1/2}\, N^{1/2}\, w\big)^{2}
+\;\le\; \big(w^\top N^{-1} w\big)\big(w^\top N w\big),
+\end{equation*}
+and $w^\top N w \le \|w\|^{2}\,\tr N \le \|w\|^{2} B$, so
+$w^\top N^{-1} w \ge \|w\|^{2}/B$, attained at
+$N^{*} = B\,ww^\top/\|w\|^{2}$. Back-substituting,
+\begin{equation*}
+M^{*} \;=\; \Gpo^{-1/2} N^{*}\, \Gpo^{-1/2}
+\;=\; B\,\frac{\big(\Gpo^{-1/2} w\big)\big(\Gpo^{-1/2} w\big)^\top}
+{\|w\|^{2}},
+\qquad \Gpo^{-1/2} w = c,\quad \|w\|^{2} = c^\top\Gpo\,c,
+\end{equation*}
+giving $M^{*} = B\,cc^\top/(c^\top \Gpo\, c)$ as stated.
+
+The corrected trio is worth displaying side by side:
+\begin{equation*}
+\text{A-opt:}\;\; M^{*} \propto \Gpo^{-1/2},
+\qquad
+\text{D-opt:}\;\; M^{*} \propto \Gpo^{-1},
+\qquad
+\text{c-opt:}\;\; M^{*} \propto c\,c^\top .
+\end{equation*}
+A-optimality shapes exploration as $\Gpo^{-1/2}$, D-optimality as
+$\Gpo^{-1}$, and c-optimality probes along the correction direction itself:
+the curvature does not tilt the direction at all, it only prices it. The
+value $c^\top \Gpo\, c / B$ says that the cost of knowing your correction
+is the $\Gpo$-norm of what the correction asks for. The savings over the
+A-optimal value is the operational argument for correction-targeted
+probing: a desk does not need the whole Jacobian, and the geometry says
+exactly what it may skip.
+
+Two caveats, recorded as they arose. First, an earlier draft of this
+derivation mis-stated the c-optimal direction as $\Gpo^{-1} c$; the
+substitution above corrects it. The error is recorded here per the
+project's falsification convention, and the corrected direction is locked
+by the V4 numerical check. Second, rank-one designs are singular (hence the
+pseudo-inverse in the value); in practice they are regularized by the trust
+region, and the paper states both the limiting and the regularized forms.
+
+\paragraph{Temporal shaping is irrelevant (L3): design space collapse.}
+\textbf{Lemma L3 (temporal shaping is irrelevant).} With response noise
+i.i.d.\ and independent of the deployment path, the information about the
+response parameters depends on the exploration process only through its
+empirical second moment $\sum_t \dev_t \dev_t^\top$. The computation is one
+line: the conditional log-likelihood is
+\begin{equation*}
+\sum_t -\frac{\big(\tau_t - a - \theta^\top \dev_t\big)^{2}}{2\sigma^{2}},
+\end{equation*}
+and its Hessian in $\theta$ is $-\sum_t \dev_t \dev_t^\top / \sigma^{2}$,
+regardless of the temporal order or dependence structure of $\{\dev_t\}$.
+Hence temporally correlated exploration (AR-shaped, cyclic, burst) buys
+nothing beyond its stationary design measure, and the design problem is
+exactly the static problems treated above. Scope boundary: the lemma fails
+when the noise is serially correlated or feedback-coupled (the regime of
+section 4 of D2), where shaping does matter; this is stated as the
+boundary of L3 and left to the journal version.
+
+\paragraph{Chebyshev counting (T6): why curvature is invisible to
+trajectories.}
+This is the D5 portion of the record. The structural family of REFLEX
+theory 1.1 (\texttt{structural\_response.py}) is
+\begin{equation*}
+\tau(h) \;=\; C_0 + C_1\, e^{-c h},
+\qquad \text{parameters } (C_0, C_1, c), \quad p = 3,
+\end{equation*}
+with sensitivity vector
+\begin{equation*}
+s(h) \;=\; \big(\,1,\; e^{-c h},\; -C_1\, h\, e^{-c h}\,\big)^{\!\top}.
+\end{equation*}
+(In this paragraph $c$ is the decay rate of the structural family, not the
+correction direction of the c-optimal problem.) The counting argument has
+four parts.
+
+(i) $\{1,\, e^{-ch},\, h e^{-ch}\}$ is an extended Chebyshev system on any
+interval: the relevant Wronskian-type determinants are nonzero (standard).
+
+(ii) Consequently the Fisher matrix
+$M(\xi) = \sum_i w_i\, s(h_i)\, s(h_i)^\top$ of any design $\xi$ with fewer
+than three distinct support points is singular, and the decay rate $c$ is
+unidentified. The computation: $\operatorname{rank} M(\xi) \le
+\#\mathrm{support}(\xi)$, so a two-point design gives rank at most
+$2 < 3 = p$, hence $\det M(\xi) = 0$ and the $c$-direction lies in (or
+meets) the null space. The exact-arithmetic check in V5 finds
+$\det M = 0$ to machine precision for every random two-point design and
+$\det M > 0$ for generic three-point designs.
+
+(iii) Any noiseless RRM trajectory has effective support at most two
+(C1.2 of D1: geometric collapse for modulus below one, a period-two orbit
+at the boundary). Hence no retraining trajectory, at any modulus,
+identifies the curvature of its own response family.
+
+(iv) D-optimal designs for this family on a trust-region interval
+$[\hstar - r,\, \hstar + r]$ are supported on exactly three points
+including both endpoints (a de la Garza-type argument; the interior point
+is computed numerically in the experiments).
+
+This is the sharp form of the repository's empirical rule that exponential
+response fits need a wide spread range, and the formal reason the
+anti-echo freeze (the \texttt{identified} flag in
+\texttt{structural\_response.py}) exists.
+
+\paragraph{Verified numerically (V4, V5).}
+Six checks anchor the results above. (1)~A-optimality: random search over
+positive semidefinite $M$ at fixed budget never beats
+$(\tr\,\Gpo^{1/2})^{2}/B$, and the closed-form $M^{*}$ achieves it (run at
+$d = 5$ with random symmetric positive definite $\Gpo$). (2)~D-optimality:
+$M^{*} = (B/d)\,\Gpo^{-1}$ beats random feasible designs in $\log\det$.
+(3)~c-optimality: random search never beats $c^\top \Gpo\, c / B$, and the
+rank-one construction approaches it. (4)~The isotropic factor
+$F = d\,\tr(\Gpo)/(\tr\,\Gpo^{1/2})^{2}$ matches the measured ratio.
+(5)~Temporal lemma: AR-shaped and i.i.d.\ exploration with matched
+empirical second moment give identical OLS covariance. (6)~Chebyshev:
+$\det M = 0$ for two-point designs versus $\det M > 0$ for three-point
+designs, and the $c$-direction variance is infinite or huge under
+two-point designs.
+
+\subsection*{D6: Safe certainty equivalence (L4, R2, P7.1)}
+
+This derivation records the safety analysis of the certainty-equivalent
+corrected loop: the structural observation R2 (open-loop exploration cannot
+destabilize the linearized retraining dynamics), the perturbed-modulus
+lemma L4 (how $C^1$ estimation error in the response moves the closed-loop
+modulus), and the safety proposition P7.1 (the pessimism gate inherits
+uniform-in-time safety from an anytime-valid confidence sequence). The
+formal statements are recorded in the register under these IDs, and the
+proofs in the proofs appendix. Status of the record: R2 and L4 are derived
+and verified (V6); P7.1 is proved conditional on the validity of the
+confidence sequence; the $O(\sqrt{T})$ design-regret bound in the closing
+paragraph is stated with a proof strategy only and is labeled a
+journal-version item.
+
+\paragraph{Where the stability constraint actually bites (R2).}
+A fact discovered in the derivation and promoted to the paper: open-loop
+exploration cannot destabilize the linearized loop. The linearized
+deviation dynamics under a planned (history-independent) probe sequence
+$(u_t)$ read
+\begin{equation*}
+\dev_{t+1} \;=\; -m\,\dev_t \;+\; u_t ,
+\end{equation*}
+and the homogeneous part keeps its modulus $m<1$ regardless of the input
+$u$: bounded inputs give bounded outputs. This is R2. The stability risk
+of probing therefore enters through exactly two channels.
+
+First, estimate feedback, the real one. The corrected update deploys
+\begin{equation*}
+h_{t+1} \;=\; h_t + \eta\,\hat\Phi'(h_t),
+\qquad
+\hat\Phi' \;=\; G + \hat\Delta ,
+\end{equation*}
+where $\hat\Delta$ is built from the estimated response
+$\hat\eps(\cdot)$. Estimation error changes the closed-loop map itself;
+this is where safety must be engineered, and it is the subject of L4.
+
+Second, basin exit, the nonlinear channel: large probes can leave the
+contraction neighbourhood. This is handled by the trust region
+$|\dev_t| \le r$, a constraint the design problems of D4 already carry.
+
+\paragraph{The perturbed-modulus lemma (L4).}
+Let the corrected map be
+\begin{equation*}
+\Psi(h) \;=\; h + \eta\,\big[\,G(h) - \beta\,(h-\psi)\,\hat\eps(h)\,\big],
+\end{equation*}
+let $\hat\rho$ be its slope at the fixed point, and let $\rho$ be the
+slope under the true response $\eps(\cdot)$, namely
+$\rho = 1 - \eta\,\gpo$, as derived in the REFLEX market model \citep{reflex2026}.
+
+\textbf{Lemma L4 (perturbed modulus).} With
+$e(h) := \hat\eps(h) - \eps(h)$ the $C^1$ estimation error,
+\begin{equation*}
+\big|\hat\rho - \rho\big|
+\;\le\;
+\eta\,\beta\,\Big( \|e\|_\infty + |\hstar - \psi|\,\|e'\|_\infty \Big)
+\;=:\;
+\eta\,\beta\,L_{\mathrm{corr}}\,\|e\|_{C^1} .
+\end{equation*}
+The computation is short. The slope of the corrected map is
+$\Psi'(h) = 1 + \eta\,\hat\Phi''(h)$, so the modulus perturbation is
+$\eta$ times the curvature error, and
+\begin{align*}
+\hat\Phi''(h) - \Phi''(h)
+&= -\beta\,\frac{d}{dh}\Big[\,(h-\psi)\,e(h)\,\Big] \\
+&= -\beta\,\Big[\, e(h) + (h-\psi)\,e'(h) \,\Big].
+\end{align*}
+Taking absolute values and the supremum over the operating interval gives
+the bound.
+
+For the structural family the $C^1$ error is controlled by the parameter
+error with explicit constants: with
+$e = \eps(\cdot\,;\hat\theta) - \eps(\cdot\,;\theta)$,
+\begin{equation*}
+\|e\|_{C^1} \;\le\; L_\theta\,\|\hat\theta - \theta\| ,
+\end{equation*}
+where $L_\theta$ is computable from $(C_1, c, r)$; the constant is stated
+with the formal proof in the proofs appendix. Consequently a confidence
+region for $\theta$ translates directly into an interval for the
+closed-loop modulus.
+
+\paragraph{The pessimism rule and the safety proposition (P7.1).}
+Maintain any anytime-valid confidence sequence $\Theta_t$ for the response
+parameters (from the CRN machinery of the REFLEX market model \citep{reflex2026}, or a standard
+self-normalized bound; its width shrinks as information accumulates, per
+D2).
+
+\textbf{Rule.} At each step choose the pair (step size $\eta_t$, design)
+so that the worst-case modulus over $\Theta_t$ respects the margin,
+\begin{equation*}
+\sup_{\theta \in \Theta_t}\; \big|\hat\rho(\theta)\big|
+\;\le\; 1 - c_{\mathrm{margin}} ,
+\end{equation*}
+that is, pessimistic on stability, while the design objective of D4 is
+evaluated optimistically. When $\Theta_t$ is too wide to certify the
+margin, the rule freezes the correction and explores under the blind loop,
+which is provably stable with modulus $m<1$ by R2. This is exactly the
+anti-echo freeze of \texttt{structural\_response.py}, now derived rather
+than engineered: this freeze is the pessimism gate.
+
+\textbf{Proposition P7.1 (safety).} If the confidence sequence is valid
+at level $1-\delta$ uniformly over time, then with probability at least
+$1-\delta$ the realized modulus satisfies
+$|\rho_t| \le 1 - c_{\mathrm{margin}}$ for all $t$ simultaneously. The
+argument is one line: on the event that $\theta \in \Theta_t$ for every
+$t$, which has probability at least $1-\delta$ by anytime-validity, the
+rule's supremum dominates the realized modulus at every step. The
+engineering reading: safety is inherited from the confidence sequence's
+uniform validity; there is no union bound over steps and no per-step
+failure accumulation.
+
+\paragraph{Design regret (stated; journal deliverable).}
+\textbf{Claim (to be proved in full).} The certainty-equivalent
+re-solving scheme (the D-optimal objective from D4, the pessimism rule
+above, and the trust region $r$) attains identification regret
+$O(\sqrt{T})$ against the budget-matched oracle design. The
+elliptical-potential argument of linear-bandit design theory supplies the
+rate, and the freeze episodes contribute an additive $O(\log T)$ term:
+each freeze ends when the confidence width halves, and the widths shrink
+geometrically in the accumulated design energy. As a remark on scope,
+this item is labeled partial for the workshop version: the algorithm and
+the safety guarantee are proved, while the regret constant and the
+freeze-episode accounting are the journal version's work.
+
+\paragraph{Numerical verification (V6).}
+Three checks, all in V6.
+\begin{itemize}
+\item Open-loop neutrality: injected bounded probe schedules never change
+the measured homogeneous contraction rate, read off as the slope of the
+deviation envelope, confirming R2.
+\item The perturbed-modulus lemma: corrected loops were run with
+deliberately corrupted $\hat\eps$, the $C^1$ error swept over a grid; in
+every cell the measured fixed-point slope deviates from $1 - \eta\,\gpo$
+by less than the bound of L4, and the bound is tight within a factor of
+about two at small errors.
+\item The pessimism rule: under a simulated valid confidence sequence, no
+trajectory in 400 seeded runs violates the margin; under a deliberately
+invalid (too-narrow) sequence, violations appear, so the validity
+assumption of P7.1 is necessary, not an artifact of the proof.
+\end{itemize}
+
+\subsection*{D7: The anchoring crossover (T7)}
+
+This subsection records the derivation behind T7: when does anchoring the
+response estimate to the structural family (``structure'') beat a free-form
+nonparametric estimator (``capacity'')? The headline of the derivation
+record is that the crossover is horizon-dependent, not budget-only. The
+formal statement is recorded as T7 in the theorem register. A status remark
+carried over from the derivation record: the derivation is complete,
+including the subtlety that changes the statement of the theorem (the
+nonparametric bias floor is horizon-dependent), and both the exact
+secant-bias constant and the two MSE formulas below are verified
+numerically in V7.
+
+\paragraph{The question.}
+REFLEX's headline empirical finding is that anchoring the response estimate
+to the structural family beats a free-form estimator: the v3/v4
+negative-then-positive result. When is that the right choice
+\emph{in general}? The naive answer prices misspecification against the
+exchange rate of T2 alone:
+\begin{equation*}
+  \text{anchor} \quad \text{iff} \quad
+  \delta_{\mathrm{mis}}^2 \;<\; \frac{\gpo\,\sigma^2}{2B}.
+\end{equation*}
+Working the derivation shows the naive answer is incomplete: the
+nonparametric alternative's bias is horizon-dependent, and the honest
+crossover involves $(\delta_{\mathrm{mis}}, B, T)$ jointly.
+
+\paragraph{The nonparametric side: local (secant) slope estimation.}
+Estimate $\eps = -\tau'(\hstar)$ from symmetric probes at $\hstar \pm w$,
+using $n$ probe pairs, under the value budget and the horizon. Writing
+$S = 2 n w^2$ for the design energy, the two constraints read
+\begin{equation*}
+\begin{aligned}
+  &\text{budget:} \quad \tfrac{1}{2}\,\gpo\,S \;\le\; B, \\
+  &\text{horizon:} \quad 2n \;\le\; T
+  \;\;\Longrightarrow\;\;
+  w^2 \;=\; \frac{S}{2n} \;\ge\; \frac{S}{T},
+\end{aligned}
+\end{equation*}
+and with the budget binding, $S = 2B/\gpo$, the horizon forces fat probes:
+\begin{equation*}
+  w^2 \;\ge\; \frac{2B}{\gpo\,T}.
+\end{equation*}
+
+Secant bias, with its exact leading constant. For the symmetric difference
+quotient,
+\begin{equation*}
+  \frac{\tau(\hstar+w) - \tau(\hstar-w)}{2w}
+  \;=\; \tau'(\hstar) \;+\; \frac{\tau'''(\hstar)}{6}\,w^2 \;+\; O(w^4):
+\end{equation*}
+the even-order terms cancel by symmetry, so the second derivative does not
+enter at all. Symmetric probing is therefore already bias-optimal at its
+order, a point worth one sentence in the paper. For the structural family
+$\tau(h) = C_0 + C_1 e^{-ch}$ one has $\tau'''(h) = -c^3 C_1 e^{-ch}$, so
+\begin{equation*}
+  \mathrm{bias}(w)
+  \;=\; -\frac{c^3 C_1 e^{-c\hstar}}{6}\,w^2
+  \;=\; -\frac{c^2}{6}\,\eps\,w^2,
+\end{equation*}
+using $\eps = \eps(\hstar) = -\tau'(\hstar) = c\,C_1 e^{-c\hstar}$: a
+curvature multiple of the slope itself, with the sign fixed by the family
+(only the magnitude enters the MSE below).
+
+MSE at the budget- and horizon-constrained optimum. Each probe pair yields
+a difference quotient with variance $\sigma^2/(2w^2)$; averaging the $n$
+pairs gives
+\begin{equation*}
+  \Var \;=\; \frac{\sigma^2}{2 n w^2} \;=\; \frac{\sigma^2}{S}
+  \;=\; \frac{\gpo\,\sigma^2}{2B}
+\end{equation*}
+at the binding budget, independent of how $S$ splits into $n$ and $w$. The
+bias, in contrast, requires small $w$, and the horizon caps how small:
+$w^2 \ge 2B/(\gpo T)$. Hence, at the constrained optimum,
+\begin{equation*}
+  \mathrm{MSE}_{\mathrm{np}}
+  \;=\; \frac{\gpo\,\sigma^2}{2B}
+  \;+\; \Big(\frac{\tau'''(\hstar)}{6}\Big)^{\!2}
+        \Big(\frac{2B}{\gpo\,T}\Big)^{\!2}.
+\end{equation*}
+
+The discovered subtlety, and the reason T7 carries the horizon: the bias
+term \emph{falls} as $T$ grows at fixed budget. With more (cheaper,
+smaller) probes the nonparametric estimator approaches the parametric
+rate. Nonparametric identification is not uniformly worse; it is worse at
+\emph{short horizons and fat probes}.
+
+\paragraph{The parametric (anchored) side.}
+For a correctly specified family,
+$\mathrm{MSE}_{\mathrm{p}} = \kappa_p\,\gpo\,\sigma^2/(2B)$, where
+$\kappa_p \ge 1$ is the design efficiency for extracting $\tau'(\hstar)$
+through the family; c-optimal probing in the sense of T5(c), worked in D4,
+makes $\kappa_p \approx 1$, and the constant is computable. Misspecified by
+$\delta_{\mathrm{mis}}$, the $C^1$ distance from the true response to the
+family as in D6, the anchored estimator picks up an irreducible squared
+bias $\delta_{\mathrm{mis}}^2$:
+\begin{equation*}
+  \mathrm{MSE}_{\mathrm{anchor}}
+  \;=\; \kappa_p\,\frac{\gpo\,\sigma^2}{2B} \;+\; \delta_{\mathrm{mis}}^2.
+\end{equation*}
+
+\paragraph{The crossover.}
+Anchor iff $\mathrm{MSE}_{\mathrm{anchor}} < \mathrm{MSE}_{\mathrm{np}}$,
+that is,
+\begin{equation*}
+  \delta_{\mathrm{mis}}^2 \;<\;
+  \Big(\frac{\tau'''(\hstar)}{6}\Big)^{\!2}
+  \Big(\frac{2B}{\gpo\,T}\Big)^{\!2}
+  \;+\; (1 - \kappa_p)\,\frac{\gpo\,\sigma^2}{2B};
+\end{equation*}
+since $\kappa_p \ge 1$, the second term is a (small) penalty on anchoring
+that vanishes under c-optimal probing through the family. The dominant
+first term gives the memorable form stated in T7:
+\begin{equation*}
+  \text{anchor} \quad \text{iff} \quad
+  \delta_{\mathrm{mis}} \;<\;
+  \frac{|\tau'''(\hstar)|\,B}{3\,\gpo\,T}
+  \quad \text{(to leading order)}.
+\end{equation*}
+
+\paragraph{Readings.}
+(i) Anchoring wins at short horizons, tight budgets, and strongly curved
+responses; the free-form route wins asymptotically in $T$ at fixed budget.
+(ii) The formula retrodicts the v3 negative result \emph{quantitatively}:
+the free-form loop failed at modest $T$ with the trust region forcing fat
+effective probes, exactly the regime the formula assigns to anchoring.
+(iii) It also predicts when the finding would reverse (long horizons,
+generous probe counts), a regime no REFLEX experiment tests \citep{reflex2026}:
+a falsifiable novel prediction. (iv) Delta over Lin--Zrnic (literature
+review item G5): their plug-in analysis has neither the budget nor the
+horizon; this formula prices both in the paper's single currency.
+
+\paragraph{Numerical verification (V7).}
+Three checks. (1) The secant-bias constant: the measured ratio
+$(\text{secant} - \tau')/w^2$ converges to $\tau'''(\hstar)/6$ for the
+exponential family (a deterministic check with exact function evaluations,
+three values of $w$ extrapolated). (2) The $\mathrm{MSE}_{\mathrm{np}}$
+formula: Monte-Carlo secant estimation at the constrained optimum matches
+the two-term formula across a $(B, T)$ grid. (3) The crossover: simulated
+anchored fits (correct family plus injected misspecification) against the
+secant estimator show an empirical crossover $\delta_{\mathrm{mis}}^{*}$
+tracking the formula within Monte-Carlo tolerance, including its $B/T$
+scaling (halving $T$ doubles the crossover threshold).
+
+\subsection*{D8/D9: The ROI of self-knowledge and the LQ and multi-bond instantiations (T8, P9.1, P9.2, P9.3)}
+
+This subsection records the derivations behind Theorem T8 (the return on
+investment of self-knowledge), the two consistency propositions P9.1 and
+P9.2, and the multi-bond curvature instantiation P9.3. Status of the
+underlying derivation document: the ROI closed forms are derived and
+verified (V8); both consistency propositions are proved (one-line proofs,
+verified); the multi-bond $\Gpo$ is derived exactly in the separable case,
+with the coupled extension stated to first order. The formal statements
+live in the theorem register and are quoted here only as needed for the
+algebra.
+
+\paragraph{Ingredients.}
+Three constants, all computable from earlier derivations and the
+primitives of the base structural market theory (the REFLEX market model \citep{reflex2026}),
+enter the decision problem:
+\begin{equation*}
+A = \tfrac{1}{2}\,\gpo\,(\hsp - \hpo)^2, \qquad
+b = \tfrac{1}{2}\,\gpo\,\sigma^2, \qquad
+a = \tfrac{1}{2}\,\gpo\,\kappa^2 .
+\end{equation*}
+Here $A$ is the echo-chamber value gap per step (the per-step value of
+running the corrected deployment $\hpo$ instead of the naive $\hsp$,
+the REFLEX market model \citep{reflex2026}, eq.\ (6b)); $b$ is the exchange rate of T2, under
+which estimator accuracy $v$ costs $b/v$ in performative value
+(derivation D2); and $a$ is the residual gap per unit of estimator
+variance: an error in $\hat\eps$ of variance $v$ displaces the corrected
+deployment by $\kappa^2 v$ in squared spread units, where
+$\kappa = |\,d\hpo/d\eps\,|$ is the fixed-point sensitivity of the
+corrected optimum to the response slope, available in closed form from
+the fixed-point equation of the REFLEX market model \citep{reflex2026}.
+
+\paragraph{The decision problem.}
+Explore once to accuracy $v$ (paying the exchange-rate price $b/v$ up
+front), then run the corrected deployment forever, discounting the
+perpetual stream at rate $\rho_{\mathrm{disc}}$. The corrected stream is
+worth $A - a v$ per step, so the net present value is
+\begin{equation*}
+\mathrm{NPV}(v) \;=\; \frac{A - a v}{\rho_{\mathrm{disc}}} \;-\;
+\frac{b}{v}, \qquad v \in (0,\infty).
+\end{equation*}
+
+\paragraph{Optimal accuracy and break-even patience (T8).}
+Differentiating,
+\begin{equation*}
+\mathrm{NPV}'(v) \;=\; -\frac{a}{\rho_{\mathrm{disc}}} + \frac{b}{v^2}
+\;=\; 0
+\qquad\Longrightarrow\qquad
+v^{*} \;=\; \sqrt{\frac{b\,\rho_{\mathrm{disc}}}{a}}
+\;=\; \frac{\sigma}{\kappa}\,\sqrt{\rho_{\mathrm{disc}}},
+\end{equation*}
+where the second form follows by substituting $a$ and $b$: the common
+factor $\tfrac{1}{2}\gpo$ cancels, so the optimal accuracy does not
+involve the curvature at all. Since $\mathrm{NPV}''(v) = -2b/v^3 < 0$ on
+$(0,\infty)$, the objective is concave there and $v^{*}$ is the global
+maximizer. At the optimum the two $v$-dependent terms are equal,
+\begin{equation*}
+\frac{a\,v^{*}}{\rho_{\mathrm{disc}}}
+= \sqrt{\frac{a\,b}{\rho_{\mathrm{disc}}}}
+= \frac{b}{v^{*}},
+\end{equation*}
+so the optimal value is
+\begin{equation*}
+\mathrm{NPV}(v^{*}) \;=\; \frac{A}{\rho_{\mathrm{disc}}}
+\;-\; 2\,\sqrt{\frac{a\,b}{\rho_{\mathrm{disc}}}} .
+\end{equation*}
+Exploring at all is worthwhile iff $\mathrm{NPV}(v^{*}) > 0$, which
+rearranges to
+\begin{equation*}
+A \;>\; 2\,\sqrt{a\,b\,\rho_{\mathrm{disc}}}
+\qquad\Longleftrightarrow\qquad
+\rho_{\mathrm{disc}} \;<\; \rho^{*} \;:=\; \frac{A^2}{4\,a\,b}
+\;=\; \frac{(\hsp - \hpo)^4}{4\,\kappa^2\,\sigma^2}.
+\end{equation*}
+The last equality is the substitution
+$A^2/(4ab) = \big(\tfrac{1}{2}\gpo\big)^2 (\hsp-\hpo)^4 \,/\,
+\big(4 \cdot \tfrac{1}{2}\gpo \kappa^2 \cdot \tfrac{1}{2}\gpo
+\sigma^2\big)$, in which $\gpo$ cancels completely.
+
+Three readings of the closed forms. (i) The break-even patience
+$\rho^{*} = (\hsp-\hpo)^4/(4\kappa^2\sigma^2)$ involves only the
+deployment gap, the correction's sensitivity, and the response noise:
+the curvature drops out, a genuinely clean and slightly surprising
+closed form (it cancels between the gap's value and the exploration
+price). (ii) Everything on the right-hand side is computable from the
+primitives of REFLEX theory before exploring, which is the point of the
+result as a decision rule. (iii) $v^{*}$ is the right amount of
+self-knowledge: more accuracy than $v^{*}$ is vanity, less is blindness.
+
+\paragraph{Frontier consistency (P9.1).}
+For any deterministic design $\dev_t$ with energy
+$S_T = \sum_{t\le T}\dev_t^2$, the pathwise exchange-rate product is
+\begin{equation*}
+\frac{\sigma^2}{S_T} \times \tfrac{1}{2}\,\gpo\, S_T
+\;=\; \tfrac{1}{2}\,\gpo\,\sigma^2 :
+\end{equation*}
+the $S_T$ cancels, so nothing about the schedule matters. In particular
+the $\dev_t \sim c/\sqrt{t}$ schedules with $S_T = c^2 \log T$, the
+Lai--Robbins cost-$O(\log T)$ regime of adaptive design, satisfy the
+exchange rate of T2 with equality: their celebrated cheapness buys
+proportionally little information, and they sit exactly on the frontier.
+
+\paragraph{Isotropy contrast (P9.2).}
+In the $d$-dimensional problem, the ratio of the isotropic design's risk
+to the A-optimal design's risk at matched budget is the
+curvature-dispersion factor of D4 and C5.1,
+\begin{equation*}
+F \;=\; \frac{d\,\tr(\Gpo)}{\big(\tr \Gpo^{1/2}\big)^{2}} \;\ge\; 1,
+\end{equation*}
+with $F = 1$ iff $\Gpo$ is a multiple of the identity. That is exactly
+the LQR-like isotropic case in which naive isotropic exploration is
+optimal (Simchowitz--Foster 2020); generically $F > 1$ and grows with
+the spread of the curvature spectrum. The performative setting is
+generically anisotropic (the bond-level curvatures $\gamma_a$ span
+decades across the calibrated universe), so naive exploration is
+generically suboptimal: this is the contrast between the two regimes
+stated in the main text.
+
+\paragraph{Separable multi-bond curvature (P9.3, exact).}
+In the multi-bond market with per-bond decisions $h_a$ and separable
+flows, the response Jacobian is diagonal,
+$E = \operatorname{diag}(\eps_a)$, and the performative objective
+separates across bonds. Applying the scalar curvature computation of
+the REFLEX market model \citep{reflex2026}, section 4.1, bond by bond gives, exactly,
+\begin{equation*}
+(\Gpo)_{aa} \;=\; \gamma_a \;+\; \beta\,\eps_a\,
+\big( 2 + c_t\,\psi_a - c_t\,h_a \big),
+\qquad (\Gpo)_{ab} = 0 \;\; (a \ne b).
+\end{equation*}
+All quantities on the right are the calibrated per-bond constants of
+the REFLEX market model \citep{reflex2026} (\texttt{per\_bond\_constants}). Consequently the
+dispersion factor $F$ of P9.2 is directly computable on the 128-bond
+calibrated universe; that computed value is the number quoted in the
+paper's experiments.
+
+\paragraph{Factor-coupled case (construction, first order).}
+With factor-coupled responses, $E$ diagonal plus low rank as in REFLEX
+theory 1.5, the same differentiation at the operating point gives
+\begin{equation*}
+\begin{aligned}
+\Gpo \;&=\; \Gamma \;+\; \beta\,\Big[\, 2\,E_{\mathrm{sym}}
++ c_t\big( \operatorname{diag}(\psi)\,E_{\mathrm{sym}}
+- H\,E_{\mathrm{sym}} \big) \Big]
+\;+\; O\!\big(\|E_{\mathrm{offdiag}}\|^2\big), \\[2pt]
+E_{\mathrm{sym}} \;&=\; \tfrac{1}{2}\,(E + E^{\top}), \qquad
+H = \operatorname{diag}(h_a),
+\end{aligned}
+\end{equation*}
+which is exact when $E$ is symmetric and is evaluated at the operating
+point. The low-rank structure of $E$ is inherited by the correction, so
+$\Gpo^{-1/2}$ and $\tr \Gpo^{1/2}$ remain computable in $O(d k^2)$ via
+the same Woodbury and eigen-split machinery already used in REFLEX
+theory 1.5: the instantiation adds no new computational burden.
+
+Caveat (honesty convention). The paper states the separable case as an
+exact result (P9.3) and the coupled case only as a first-order
+construction carrying its explicit $O(\|E_{\mathrm{offdiag}}\|^2)$ error
+term, matching the reporting conventions of \citet{reflex2026}.
+
+\paragraph{Numerical verification (V8).}
+Five checks. (1) $v^{*} = \sqrt{b\,\rho_{\mathrm{disc}}/a}$ and the
+$\mathrm{NPV}(v^{*})$ formula match a direct numerical scan over $v$ on
+three parameter sets. (2) Root-finding
+$\mathrm{NPV}(v^{*})(\rho_{\mathrm{disc}}) = 0$ in $\rho_{\mathrm{disc}}$
+recovers $\rho^{*} = (\hsp-\hpo)^4/(4\kappa^2\sigma^2)$ to $10^{-10}$,
+confirming the $\gpo$ cancellation. (3) The frontier proposition:
+$c/\sqrt{t}$ schedules measure exactly on-frontier. (4) The dispersion
+factor on a synthetic curvature spectrum spanning two decades: $F$
+matches the measured isotropic-to-optimal risk ratio (cross-checked
+against V4). (5) The separable $\Gpo$: a finite-difference Hessian of
+the separable objective matches the per-bond formula entrywise.
