@@ -1,8 +1,5 @@
 # PRICE (the price of self-knowledge) - complete paper repository
 
-Two legs of the ML x OR @ NeurIPS 2026 paper, designed to be pushed as one
-GitHub repository (or two - each folder is self-contained with its own CI):
-
 | Folder | What it is | Verification |
 |---|---|---|
 | `mlxor-derivations/` | The mathematical foundation: 9 derivation documents, the theorem register (26 results), full LaTeX appendix proofs, notation/assumption register, open-problems register (OPEN-1 now carrying a numerical premise check), novelty crosswalk, symbol->REFLEX map | 38/38 numerical checks + document-consistency suite, both in CI |
