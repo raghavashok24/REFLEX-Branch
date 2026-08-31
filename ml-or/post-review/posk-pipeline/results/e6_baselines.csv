@@ -1,7 +1,0 @@
-baseline,err_median,err_q1,err_q3,regret_median,regret_q1,regret_q3,n_seeds
-SafeD-PerfGD,0.0599,0.0398,0.0687,1007.86,910.00,1130.79,12
-FD-PerfGD,0.0263,0.0251,0.0283,9586.79,9580.86,9593.83,12
-ZO-PerfOpt,0.3868,0.3089,0.4693,952.33,915.92,963.12,12
-UCB-Grid,0.1547,0.1036,0.1990,315.92,309.40,341.71,12
-BlindRRM,1.2293,1.2192,1.2429,2115.54,2101.94,2125.89,12
-# seed-by-seed Pareto: SafeD dominated in 1 of 12 seeds; seed 106 by UCB-Grid
