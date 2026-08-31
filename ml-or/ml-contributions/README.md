@@ -1,1 +1,1 @@
-view finalized-materials folder for completed project
+VIEW SUBMISSION-MATERIALS FOLDER
