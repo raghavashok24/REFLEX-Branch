@@ -1,0 +1,603 @@
+\section{Notation and standing assumptions}
+\label{app:notation}
+
+Symbols marked \emph{new} are this paper's contribution surface. Everything else is inherited from the base performative-retraining model and cited rather than re-derived.
+
+\begin{center}
+\small
+\begin{tabular}{lll}
+\toprule
+Symbol & Meaning & Range \\
+\midrule
+$N$ & firms in the market & integer $\geq 1$ \\
+$d$ & dimension of each firm's decision & integer $\geq 1$ \\
+$\varepsilon$ & performative response strength of the environment & $>0$ \\
+$\beta$ & sensitivity of the objective to the induced shift & $>0$ \\
+$\gamma$ & own-objective curvature & $>0$ \\
+$m_1$ & single-firm retraining modulus, $\varepsilon\beta/\gamma$ & stable iff $<1$ \\
+$\kappa$ & spillover between firms through the shared pool & $[0,1]$ \\
+$E_i$ & firm $i$'s response Jacobian \emph{(new)} & $d \times d$ \\
+$r_{ij}$ & pairwise alignment of feedback directions \emph{(new)} & $[-1,1]$ \\
+$R$ & alignment matrix $(r_{ij})$ \emph{(new)} & PSD, unit diagonal \\
+$\lmax(R)$ & firms per independent model \emph{(new)} & $[1,N]$ \\
+$\Neff$ & effective crowding, $1+\kappa(\lmax(R)-1)$ \emph{(new)} & $[1, 1+\kappa(N-1)]$ \\
+$\mN$ & systemic modulus, $\Neff m_1$ \emph{(new)} & stable iff $<1$ \\
+$s$ & shared-model fraction \emph{(new)} & $[0,1]$ \\
+$K$ & gradient steps per deployment & integer $\geq 1$ \\
+$\eta$ & inner learning rate & $>0$ \\
+$c$ & inner per-step contraction, $1-\eta\gamma$ & $(0,1)$ \\
+$\gamma_{PO}$ & curvature governing the corrected dynamics & $\geq\gamma$ \\
+$\theta$ & $\gamma/\gamma_{PO}$, the correction factor \emph{(new)} & $(0,1]$ \\
+$e$ & correction efficacy, $1-\theta$ \emph{(new)} & $[0,1)$ \\
+$N_b$ & blind (uncorrected) firms \emph{(new)} & $0 \ldots N$ \\
+$\rho_c^\ast$ & herd-immunity threshold \emph{(new)} & $[0,1)$ \\
+$a_i$ & firm $i$'s adaptation aggressiveness \emph{(new)} & $>0$ \\
+$t^\ast$ & the Pigouvian wedge \emph{(new)} & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The standing assumptions of Assumption~\ref{ass:standing} are (A1) linearization of the joint retraining map around the joint equilibrium, with the simulator as the nonlinear check; (A2) equal moduli $m_i = m_1$, under which Theorem~\ref{thm:alignment} is an identity and outside which it is the two-sided bound of Proposition~\ref{prop:hetmod} below; (A3) synchronous retraining on a common clock at a common cadence $K$; and (A4) coupling through one pool with a scalar spillover $\kappa$. The sign condition (A5), that $R$ is entrywise nonnegative, is not a standing assumption: Theorem~\ref{thm:alignment}'s radius does not need it, and it is invoked only in Section~\ref{sec:wedge}, where the reading of Lemma~\ref{lem:share} depends on it. This appendix makes both halves of that statement precise.
+
+\section{The reduction and the alignment spectrum}
+\label{app:alignment}
+
+This appendix proves Lemma~\ref{lem:reduction}, Theorem~\ref{thm:alignment} and Proposition~\ref{prop:containment}, establishes the properties of $R$ they use, gives the three anchors, and proves that mean-based diversity indices err with a sign.
+
+\subsection{Hypotheses and the reduction}
+
+Firm $i$ deploys $h_i \in \mathbb{R}^d$, and its deployment reshapes the flow it faces through the response Jacobian $E_i \in \mathbb{R}^{d\times d}$. Write $\mathrm{vec}\, E_i$ for the $d^2$-vector form, $\|\cdot\|_F$ for the Frobenius norm, and $\hat{E}_i = E_i/\|E_i\|_F$ for firm $i$'s unit response direction. The reduction uses four hypotheses.
+
+\begin{description}
+\item[(H1) Rank-one deviation.] Firm $i$'s deviation from the joint equilibrium is a scalar $x_i$ along its own response direction, so the market state is $x \in \mathbb{R}^N$ rather than $\mathbb{R}^{Nd}$.
+\item[(H2) Equal response magnitude.] $\|E_i\|_F = \varepsilon$ for every $i$. This is (A2) restated in the new object: the inherited response strength $\varepsilon$ \emph{is} the Frobenius norm of the response Jacobian.
+\item[(H3) Own-channel sensing.] Firm $i$ retrains against the component of the pool distortion lying along its own response direction, feeling its own contribution in full and each competitor's with weight $\kappa$.
+\item[(H4) Quadratic retraining.] Firm $i$ minimizes a $\gamma$-strongly-convex own objective with sensitivity $\beta$ to the felt distortion, giving $x_i^{+} = -(\beta/\gamma)\,\mathrm{felt}_i$.
+\end{description}
+
+\begin{proof}[Proof of Lemma~\ref{lem:reduction}]
+The pool carries the aggregate distortion $Z = \sum_j x_j E_j$. By (H3) the distortion firm $i$ feels is
+\[
+  \mathrm{felt}_i \;=\; \langle \hat{E}_i,\, x_i E_i\rangle \;+\; \kappa \sum_{j \neq i} \langle \hat{E}_i,\, x_j E_j\rangle
+  \;=\; \varepsilon\Big[\, x_i \;+\; \kappa \sum_{j\neq i} r_{ij} x_j \Big],
+\]
+using $\langle \hat{E}_i, E_j\rangle = \varepsilon\, r_{ij}$, which is (H2). Since $r_{ii}=1$ the own term folds into the sum,
+\[
+  \mathrm{felt}_i \;=\; \varepsilon\Big[\,(1-\kappa)\, x_i \;+\; \kappa \sum_j r_{ij} x_j \Big].
+\]
+By (H4), $x^{+} = -(\beta/\gamma)\varepsilon\big[(1-\kappa)I + \kappa R\big]x$, and $m_1 = \varepsilon\beta/\gamma$ is the single-firm modulus, which is \eqref{eq:reduction}.
+\end{proof}
+
+The alignment enters because firm $i$ senses the pool through its own response channel, so two firms whose deployments perturb the environment in orthogonal directions do not read each other's perturbations at all, however large those perturbations are. Hypothesis (H3) is what carries that mechanism. If every $E_i$ is equal then $r_{ij}=1$ throughout, $R = \mathbf{1}\mathbf{1}^{\top}$, and the reduction returns the inherited shared-pool law exactly, so the base model is the corner of the new one in which every firm's feedback points the same way. Certificate P1 builds random $E_i$, forms the retraining map from the felt distortion without ever constructing $R$, differentiates it numerically and compares against \eqref{eq:reduction}, agreeing to $5.6\times 10^{-17}$ at $(N,d,\kappa)$ equal to $(3,4,0.8)$, $(5,6,0.35)$, $(8,5,1.0)$ and $(6,7,0.0)$, so both spillover endpoints are covered.
+
+Hypothesis (H1) is the substantive one. Without it the state is $(h_1,\ldots,h_N) \in \mathbb{R}^{Nd}$ and the Jacobian carries a Kronecker structure with block $(i,j)$ equal to $-(\beta/\gamma)c_{ij}E_j$, where $c_{ij}=1$ for $i=j$ and $\kappa$ otherwise, whose spectral radius is not in general $m_1 \Neff$. Reducing that object is the fully heterogeneous block-secular problem, and it is deferred.
+
+\subsection{The alignment matrix \texorpdfstring{$R$}{R}}
+
+\begin{alemma}
+\label{alem:Rprops}
+Let $V$ be the $N \times d^2$ matrix whose rows are the unit vectors $\mathrm{vec}\,\hat{E}_i$. Then $R = VV^{\top}$ and:
+(1) $R$ is positive semidefinite, so every $\lambda_i(R)\geq 0$;
+(2) $r_{ii}=1$, hence $\mathrm{tr}\,R = N$ and $\sum_i \lambda_i(R) = N$;
+(3) $|r_{ij}|\leq 1$;
+(4) $1 \leq \lmax(R) \leq N$;
+(5) $\lmax(R)=1$ if and only if $R=I$;
+(6) $\lmax(R)=N$ if and only if $R = D\mathbf{1}\mathbf{1}^{\top}D$ for a sign matrix $D=\mathrm{diag}(\pm 1)$, that is, if and only if every response is parallel or antiparallel to one common direction.
+\end{alemma}
+
+\begin{proof}
+(1) and (2) are immediate from $R=VV^{\top}$ with unit rows. (3) is Cauchy-Schwarz. For (4), the eigenvalues are nonnegative and sum to $N$, so the largest is at least the mean $1$ and at most the total $N$. For (5), $\lmax=1$ with nonnegative eigenvalues summing to $N$ forces all $N$ eigenvalues to equal $1$. For (6), $\lmax=N$ forces every other eigenvalue to zero, so $R$ has rank one, $R=vv^{\top}$, and unit diagonal gives $v_i^2=1$.
+\end{proof}
+
+Item (4) is the one the paper leans on: $\lmax(R)$ is a genuine effective count, bounded below by one firm and above by $N$, with both ends attained.
+
+\subsection{The spectrum}
+
+\begin{proof}[Proof of Theorem~\ref{thm:alignment}]
+Write $J = -m_1 B$ with $B = (1-\kappa)I + \kappa R$. $B$ is symmetric and shares its eigenvectors with $R$, with eigenvalues $\nu_i = (1-\kappa) + \kappa\lambda_i(R)$, so $\rho(J) = m_1 \max_i |\nu_i|$. By Lemma~\ref{alem:Rprops}(1) every $\lambda_i(R)\geq 0$, and $\kappa \leq 1$ gives $1-\kappa\geq 0$, so every $\nu_i \geq 1-\kappa \geq 0$. The absolute value is therefore inert and the maximum sits at $\lmax$ rather than at $\lambda_{\min}$:
+\[
+  \rho(J) \;=\; m_1\big[(1-\kappa) + \kappa\lmax(R)\big] \;=\; m_1\big[1 + \kappa(\lmax(R)-1)\big] \;=\; m_1 \Neff.
+\]
+Stability of the linearized joint map is $\rho(J)<1$; substituting $m_1 = \varepsilon\beta/\gamma$ and solving for $\varepsilon$ gives the stated form.
+\end{proof}
+
+Certificate P3 checks this on 384 random configurations with maximum deviation $4.7\times 10^{-15}$. Dropping the absolute value is legitimate only because $R$ is a Gram matrix. A symmetric unit-diagonal matrix with entries outside $[-1,1]$ can put the radius on $\lambda_{\min}$ instead: at $N=3$ with every off-diagonal equal to $-3$ the spectrum is $\{-5,4,4\}$ and the negative mode dominates. Cauchy-Schwarz is what rules this out for a real alignment matrix, and P3 certifies both directions.
+
+\begin{acorollary}
+\label{acor:range}
+$\Neff \in [1,\, 1+\kappa(N-1)]$, attained at $R=I$ and $R=\mathbf{1}\mathbf{1}^{\top}$ respectively.
+\end{acorollary}
+
+\begin{acorollary}
+\label{acor:nostab}
+$\rho(J) \geq m_1$, with equality if and only if $R=I$. A market of adaptive models sharing an environment is never more stable than one of its members in isolation, and exact neutrality requires fully orthogonal responses.
+\end{acorollary}
+
+Corollary~\ref{acor:nostab} says the externality has a sign: coupling can only amplify feedback, never damp it, so there is no configuration in which crowding does a market a favour. Individual modes can be more damped than $m_1$, and the differential mode at $m_1(1-\kappa)$ is one, but the radius governs and the radius cannot fall below $m_1$.
+
+\subsection{The binding mode}
+
+\begin{aproposition}
+\label{aprop:pf}
+If $R$ is entrywise nonnegative and irreducible then $B=(1-\kappa)I+\kappa R$ is entrywise nonnegative and irreducible, so by Perron-Frobenius its leading eigenvector is strictly positive and simple, and the binding mode is a genuine common mode in which every firm deviates in the same direction.
+\end{aproposition}
+
+Entrywise nonnegativity of $R$ is exactly the condition that no firm's feedback anti-aligns with another's. Shared vendors and shared pretraining corpora produce positive alignment, so the realistic regime satisfies it, and the paper states the condition rather than assuming it silently. This is (A5), and Proposition~\ref{aprop:pf} is the only place it is used.
+
+\subsection{Anchors and the mode swap}
+
+\emph{Monoculture.} $R=\mathbf{1}\mathbf{1}^{\top}$ has rank one with eigenvalue $N$ on the all-ones direction, so $\lmax=N$ and $\Neff = 1+\kappa(N-1)$. This is the inherited law whose predicted $2\times$ and $3\times$ at $N=2,3$ were measured at $1.74\times$ and $3.16\times$.
+
+\emph{Orthogonal.} $R=I$ gives $\lmax=1$, $\Neff=1$ and $\mN = m_1$. A hundred firms perturbing the environment in a hundred orthogonal directions are dynamically one firm.
+
+\emph{Simplex.} With $r_{ij} = -1/(N-1)$ off the diagonal,
+\[
+  R_{\text{simplex}} \;=\; \tfrac{N}{N-1}I \;-\; \tfrac{1}{N-1}\mathbf{1}\mathbf{1}^{\top},
+\]
+whose diagonal is $N/(N-1) - 1/(N-1) = 1$ as required. Since $\mathbf{1}\mathbf{1}^{\top}$ has eigenvalue $N$ on the all-ones direction and $0$ on its complement, the spectrum is $0$ on $\mathbf{1}$ and $N/(N-1)$ with multiplicity $N-1$. So $\lmax = N/(N-1)$, $\Neff = 1 + \kappa/(N-1)$, and the radius tends to $m_1$ as $N$ grows. The value $m_1(1-\kappa)$ does sit in the spectrum, carried by the all-ones direction at $\lambda=0$, and it matches the inherited differential-mode eigenvalue derived by a different route, but it is not the spectral radius.
+
+Under the simplex the all-ones direction carries the \emph{smallest} eigenvalue, so the leading eigenvector is orthogonal to it and (A5) fails. That is consistent with Proposition~\ref{aprop:pf}, since the simplex has negative entries and Perron-Frobenius does not apply. Certificate P4 checks all three parts, that the all-ones direction is annihilated, that the leading eigenvector is orthogonal to it, and that the entries are negative, at $N \in \{3,5,10,30,50\}$.
+
+\subsection{A witness for strict refinement}
+
+\begin{proof}[Proof of Proposition~\ref{prop:containment}]
+Both markets satisfy (H1) to (H4) with the same response magnitude $\varepsilon$, the same objective curvature $\gamma$ and sensitivity $\beta$, and the same spillover $\kappa$. They therefore share $m_1 = \varepsilon\beta/\gamma$ and share the joint map \eqref{eq:reduction} in everything except $R$, so any quantity computed from response magnitudes, objective curvature and spillover alone takes the same value in both. By Theorem~\ref{thm:alignment} the radii differ: $\lmax(I) = 1$ gives $\mN = m_1$, while $\lmax(\mathbf{1}\mathbf{1}^{\top}) = N$ gives $\mN = m_1(1+\kappa(N-1))$. The hypothesis $1/(1+\kappa(N-1)) < m_1 < 1$ puts the first below one and the second above it. The two markets thus agree on every scalar of the stated kind and disagree in stability, so a criterion that is a function of those scalars alone returns one verdict for both and is wrong about at least one. The interval is nonempty for every $N \geq 2$ and $\kappa > 0$.
+\end{proof}
+
+The witness is not a knife-edge construction. Any $m_1$ in an interval of length $1 - 1/\Neff$ works, which at $N = 20$ and $\kappa = 0.8$ is $94\%$ of the unit interval.
+
+\subsection{Mean-alignment indices}
+
+\begin{aproposition}
+\label{aprop:mean}
+Let $\bar{m}$ be the off-diagonal mean of $R$. Then $\lmax(R) \geq 1 + (N-1)\bar{m}$, hence $\Neff \geq 1 + \kappa(N-1)\bar{m}$, with equality if and only if $\mathbf{1}$ is a leading eigenvector of $R$, that is, if and only if $R$ has constant row sums.
+\end{aproposition}
+
+\begin{proof}
+$\mathbf{1}^{\top}R\mathbf{1} = N + N(N-1)\bar{m}$, since the diagonal contributes $N$. The Rayleigh quotient at the all-ones vector gives $\lmax(R) \geq \mathbf{1}^{\top}R\mathbf{1}/N = 1 + (N-1)\bar{m}$, with equality if and only if $\mathbf{1}$ attains the Rayleigh maximum, that is if and only if $R\mathbf{1}$ is parallel to $\mathbf{1}$. Multiplying by $\kappa$ and adding $1-\kappa$ preserves the inequality.
+\end{proof}
+
+Certificate P5 finds zero violations on 360 random $R$ and confirms equality on uniform $R$. Two readings follow. First, a mean-similarity diversity index never over-states systemic risk: it under-states it or is exact, so every error it makes is in the unsafe direction. A regulator using mean similarity is not merely imprecise, it is imprecise in the direction that lets unstable markets pass. Second, $\mathbf{1}^{\top}R\mathbf{1} = \|\sum_i \mathrm{vec}\,\hat{E}_i\|^2 \geq 0$ forces $\bar{m} \geq -1/(N-1)$, attained exactly at the simplex.
+
+The gap is largest at the realistic topology, which is the vendor with a plurality rather than a monopoly. Take $N=10$ with three firms fully aligned and every other pair orthogonal, so that $R$ is block diagonal with a $3\times 3$ all-ones block and $\lmax = 3$. Three of the forty-five pairs are aligned, so $\bar{m} = 1/15$ and the mean index reports $\lmax = 1.6$. At $\kappa = 0.8$ the true $\Neff$ is $2.60$ against the index's $1.48$, an understatement by a factor of $1.757$, and a market at $m_1 = 0.5$ then runs $\mN = 1.30$ and is unstable while the index reports $0.74$ and calls it safe with margin.
+
+The failure is not only one of level. The simplex \emph{minimizes} the mean at $\bar{m} = -1/(N-1)$ while carrying $\lmax = N/(N-1)$, which exceeds one, so it is spectrally worse than orthogonality even though it has the smaller mean. The mean therefore does not order configurations correctly, which is why every stability claim in this paper uses the spectral form and never a mean.
+
+\subsection{Heterogeneous moduli}
+
+\begin{aproposition}
+\label{prop:hetmod}
+Let $M=\mathrm{diag}(m_i)$ with every $m_i>0$, and let $J = -M[(1-\kappa)I+\kappa R]$. Then
+\[
+  \max_i m_i \;\;\leq\;\; \rho(J) \;\;\leq\;\; \big(\max_i m_i\big)\,\Neff .
+\]
+\end{aproposition}
+
+\begin{proof}
+$J$ is not symmetric, but the congruence $S = M^{1/2}$ gives $M^{1/2}(MB)M^{-1/2} = M^{1/2}BM^{1/2}$, so $\rho(J) = \lmax(A)$ with $A = (1-\kappa)M + \kappa M^{1/2}RM^{1/2}$, symmetric and positive semidefinite. For the lower bound, $e_i^{\top}Ae_i = (1-\kappa)m_i + \kappa m_i r_{ii} = m_i$ since $r_{ii}=1$, and the Rayleigh quotient at each $e_i$ gives $\lmax(A) \geq m_i$ for every $i$. For the upper bound, $R \preceq \lmax(R) I$ in the Loewner order and congruence by $M^{1/2}$ preserves it, so $M^{1/2}RM^{1/2} \preceq \lmax(R)M$ and hence $A \preceq \Neff M$, giving $\lmax(A) \leq \Neff \max_i m_i$.
+\end{proof}
+
+The bound is exact at $\kappa=0$ and at $R=I$, where $A=M$ and both sides equal $\max_i m_i$, and its upper half is exact at equal moduli, where it is Theorem~\ref{thm:alignment}. A mean-modulus formula is provably wrong: at $R=I$ the firms decouple and $\rho(J) = \max_i m_i$, certified with $m$ ranging over $\{0.1,\ldots,0.9\}$ at $\rho = 0.900$ against a mean of $0.400$. Certificate P8 finds no violation on 300 random draws.
+
+\section{Concentration to the supply-chain limit}
+\label{app:concentration}
+
+The decomposition $E_i = \sqrt{s}\,E_{\text{shared}} + \sqrt{1-s}\,\Xi_i$ is meant to deliver $R \to (1-s)I + s\mathbf{1}\mathbf{1}^{\top}$ and therefore $\Neff \to 1 + \kappa s(N-1)$. Saying the cross terms vanish in expectation is not enough for a stability claim, because a market is unstable or not at the realized alignment matrix rather than at its mean.
+
+\begin{description}
+\item[(D) Design assumption.] $E_{\text{shared}}$ and the $\Xi_i$ have independent entries, mean zero, unit variance, sub-Gaussian with a common constant, and the $\Xi_i$ are independent of each other and of $E_{\text{shared}}$.
+\end{description}
+
+This is an idealization. Real response Jacobians are neither Gaussian nor independent across firms beyond the shared component, and what the argument uses is sub-Gaussian entries and independence of the idiosyncratic parts. Write $D = d^2$, $u = \mathrm{vec}\,E_{\text{shared}}$ and $\xi_i = \mathrm{vec}\,\Xi_i$, so that $\mathrm{vec}\,E_i = \sqrt{s}\,u + \sqrt{1-s}\,\xi_i$ in $\mathbb{R}^D$. Under (D), $\|u\|^2/D$ and $\|\xi_i\|^2/D$ concentrate at $1$ while $u^{\top}\xi_j/D$ and $\xi_i^{\top}\xi_j/D$ concentrate at $0$, all at rate $1/\sqrt{D}$, so $r_{ij}\to s$ for $i\neq j$ and $\lmax(R_\infty) = 1 + s(N-1)$ exactly by the rank-one structure.
+
+\begin{alemma}
+\label{alem:entrywise}
+Under (D) there is an absolute constant $C$ such that for any $\delta \in (0,1)$, with probability at least $1-\delta$,
+\[
+  \max_{i \neq j} \big| r_{ij} - s \big| \;\;\leq\;\; C\,\frac{\sqrt{\log(N/\delta)}}{d}.
+\]
+\end{alemma}
+
+\begin{proof}
+Each of $\|u\|^2/D - 1$, $\|\xi_i\|^2/D - 1$, $u^{\top}\xi_i/D$ and $\xi_i^{\top}\xi_j/D$ is an average of $D$ independent mean-zero sub-exponential terms, so Bernstein's inequality gives a tail $2\exp(-cDt^2)$ for $t \in (0,1)$. There are $O(N^2)$ such quantities across all pairs, and a union bound with $t = C\sqrt{\log(N/\delta)/D}$ controls all of them simultaneously with probability at least $1-\delta$. The ratio defining $r_{ij}$ is a smooth function of these quantities with bounded derivatives in a neighbourhood of the limit point, so the same rate carries to $r_{ij}-s$, and $\sqrt{D}=d$ gives the statement.
+\end{proof}
+
+The inner products average over $d^2$ matrix entries, so the fluctuation is $1/d$. Certificate P7 measures a log-log slope of $-1.018$ against a target of $-1$, at $N=8$, $s=0.6$, $d \in \{8,16,32,64,128\}$ and 40 trials per point.
+
+\begin{aproposition}
+\label{aprop:weyl}
+Under the event of Lemma~\ref{alem:entrywise},
+\begin{align*}
+  \big|\lmax(R) - (1+s(N-1))\big| &\;\leq\; C\,\frac{N\sqrt{\log(N/\delta)}}{d}, \\
+  \big|\Neff - (1+\kappa s(N-1))\big| &\;\leq\; \kappa C\,\frac{N\sqrt{\log(N/\delta)}}{d}.
+\end{align*}
+\end{aproposition}
+
+\begin{proof}
+Write $\Delta = R - R_\infty$, which has zero diagonal since both matrices have unit diagonal. Weyl's inequality gives $|\lmax(R)-\lmax(R_\infty)| \leq \|\Delta\|_2$, and $\|\Delta\|_2 \leq \|\Delta\|_F \leq \sqrt{N(N-1)}\max_{i\neq j}|\Delta_{ij}| \leq N\max_{i \neq j}|r_{ij}-s|$. Apply Lemma~\ref{alem:entrywise}; the $\Neff$ form follows on multiplying by $\kappa$.
+\end{proof}
+
+The bound matters in relative terms, because $\Neff$ itself grows with $N$. For large $N$ the limit is $1+s(N-1) \approx sN$, so the relative error is of order $C\sqrt{\log N}/(sd)$, with the $N$ in the numerator cancelling against the $N$ in $\Neff$. The closed form is therefore accurate once $d \gg \sqrt{\log N}/s$, a condition on dimension against vendor concentration rather than against firm count, and it degrades as $s \to 0$, which is correct: at low shared-model fraction the limit matrix is close to the identity and the leading eigenvalue is set by fluctuations rather than by the shared component. In the instantiation the base model calibrates, $d$ is in the low hundreds and $N$ in the tens, so the requirement is met with room for $s$ above roughly $0.2$.
+
+The step $\|\Delta\|_2 \leq \|\Delta\|_F$ is crude and is used because it is elementary and unconditional. For a $\Delta$ with the Wishart-type structure that (D) produces, the operator norm concentrates at $\sqrt{N}/d$ rather than at $N/d$, which would improve the relative error to $1/(sd\sqrt{N})$, better for larger markets rather than worse. The sharp rate is reported as measured and not as proved, since claiming it otherwise would violate the paper's rule on status flags.
+
+\section{The cadence composition}
+\label{app:cadence}
+
+\begin{alemma}
+\label{alem:inner}
+Let firm $i$ retrain by gradient descent on a $\gamma$-strongly-convex quadratic own objective whose minimizer is the frozen best response $b$, with step size $\eta$. Then $K$ steps from $z_0$ land at $z_K = b + c^K(z_0-b)$ with $c = 1-\eta\gamma$.
+\end{alemma}
+
+\begin{proof}
+The gradient is $\gamma(z-b)$, so the update is $z \mapsto z - \eta\gamma(z-b) = b + (1-\eta\gamma)(z-b)$. Induct on $K$.
+\end{proof}
+
+Here $c \in (0,1)$ requires $0 < \eta < 2/\gamma$, and $\eta \leq 1/\gamma$ gives $c \in [0,1)$. Certificate Q1 runs actual gradient descent and measures the realized gap ratio, exact to $10^{-12}$ at three $(\eta,\gamma)$ pairs and $K \in \{1,3,7,20\}$. The constant $c$ is never written into the loop; it is whatever the loop does.
+
+\begin{alemma}
+\label{alem:lazy}
+For a single firm whose full-retraining best response has slope $-m$, the $K$-step outer map has slope $\mu(K) = -m + c^K(1+m)$.
+\end{alemma}
+
+\begin{proof}
+The frozen best response at the current deployment $h_t$ is $b = -mh_t$, so by Lemma~\ref{alem:inner}, $h_{t+1} = -mh_t + c^K(h_t + mh_t) = h_t[-m + c^K(1+m)]$.
+\end{proof}
+
+At $K \to \infty$ this gives $-m$, the full-retraining slope, and at $K=0$ it gives the identity, since a firm taking no gradient steps does not move. The inherited single-firm lemma is therefore reproduced rather than assumed.
+
+The composition rests on one hypothesis, stated so that it can be checked.
+
+\begin{description}
+\item[(C)] The contraction $c$ is the same scalar in the joint market as in the single-firm market. It is built from own-objective curvature $\gamma$ and inner step size $\eta$, neither of which involves $N$, $\kappa$ or $R$: competitors change \emph{where} firm $i$ is heading, through the frozen best response, and not \emph{how fast} it gets there.
+\end{description}
+
+This is the only place the composition can fail, so it is certified rather than argued. Certificate C12 measures the realized one-step contraction inside the joint market across 45 configurations spanning $N \in \{1,2,5,12,30\}$, $\kappa \in \{0,0.5,1\}$ and $m_1 \in \{0.05,0.15,0.6\}$ with random $R$ at each, and the spread across all of them is $4.4\times 10^{-16}$.
+
+\begin{proof}[Proof of Theorem~\ref{thm:cadence}]
+All firms compute their frozen best responses from the common current state $x$, giving $b = Jx$, then each takes $K$ inner steps. By Lemma~\ref{alem:inner} applied coordinatewise, and using (C) so that the same $c$ applies in every coordinate,
+\[
+  x_{t+1} \;=\; Jx_t + c^K(x_t - Jx_t) \;=\; \big[c^K I + (1-c^K)J\big]x_t .
+\]
+This matrix is an affine function of $J$, so it shares $J$'s eigenvectors, with eigenvalues $\mu_i(K) = c^K - (1-c^K)m_1\nu_i$ where $\nu_i = (1-\kappa)+\kappa\lambda_i(R)$. On the mode carrying $\lmax(R)$, where $m_1\nu_{\max} = \mN$ by Theorem~\ref{thm:alignment}, this is $\mu_N(K) = c^K - (1-c^K)\mN = -\mN + c^K(1+\mN)$.
+
+For the stability claim, $\mu_i(K)$ is strictly decreasing in $\nu_i$ because $(1-c^K)m_1 > 0$ for every $K \geq 1$. Every $\nu_i \geq 0$ by Lemma~\ref{alem:Rprops}(1) with $\kappa \leq 1$, so $\mu_i(K) \leq c^K < 1$ for all $i$ and the upper side never binds, whatever $R$ is; and $\min_i \mu_i(K)$ is attained at $\nu_{\max}$, so the constraint is exactly $\mu_N(K) > -1$. Expanding,
+\[
+  c^K - (1-c^K)\mN > -1
+  \iff \mN < \frac{1+c^K}{1-c^K}
+  \iff c^K > \frac{\mN-1}{\mN+1},
+\]
+and taking logarithms, with $\ln c < 0$ flipping the inequality on division, gives $K < K_{\max}$. When $\mN \leq 1$ the right-hand side of the last inequality is non-positive while $c^K > 0$, so the constraint is vacuous and every cadence is stable.
+\end{proof}
+
+Certificate Q2 builds the joint map by running the actual inner gradient descent on each basis vector and comparing against $c^KI + (1-c^K)J$ at 32 combinations of $(N,\kappa,m_1,K)$, agreeing below $10^{-12}$; C8 checks the frontier on 51600 integer cases with zero mismatches; and Q5 iterates the actual joint map to convergence or divergence on 59 decisive trials at random $(N,\kappa,s,m_1,K)$, with zero disagreements with the predicted side.
+
+The monotonicity argument replaces an earlier route through the size of the differential modes. It is shorter and it is unconditional: it needs no Perron-Frobenius condition, because monotonicity places the extreme at $\lmax$ regardless of the sign pattern of $R$.
+
+\begin{acorollary}
+\label{acor:kmono}
+$K_{\max}$ is strictly decreasing in $\mN$, and hence in $s$.
+\end{acorollary}
+
+\begin{proof}
+With $f(m) = \ln\frac{m-1}{m+1}$ we have $f'(m) = \frac{1}{m-1}-\frac{1}{m+1} = \frac{2}{m^2-1} > 0$ for $m>1$, and dividing by $\ln c < 0$ flips the sign. Since $\mN = m_1(1+\kappa s(N-1))$ is increasing in $s$, the composition is decreasing in $s$.
+\end{proof}
+
+Two readings the body uses. Since $K$ is a positive integer, the realized window is $\lfloor K_{\max}\rfloor$ while the plotted frontier is continuous, and certificate Q4 confirms that $\lfloor K_{\max}\rfloor$ is the largest stable integer and $\lfloor K_{\max}\rfloor + 1$ is unstable at five $(c,\mN)$ pairs. And a feasible cadence exists if and only if $K_{\max} > 1$, which is exactly $\mN < (1+c)/(1-c)$: past that level of effective crowding the market is unstable at every retraining frequency, and minimum-cadence operation multiplies the sustainable crowding by exactly $(1+c)/(1-c)$, a factor of $9$ at $c=0.8$. Critical crowding is therefore not a separate result but the $K=1$ instance of the frontier.
+
+Worked at $m_1 = 0.15$, $\kappa=0.8$, $N=30$ and $c=0.8$, so that $\Neff = 1+23.2s$:
+
+\begin{center}
+\small
+\begin{tabular}{llll}
+\toprule
+$s$ & $\Neff$ & $\mN$ & $K_{\max}$ \\
+\midrule
+$0.25$ & $6.80$ & $1.020$ & $20.68$ \\
+$0.50$ & $12.60$ & $1.890$ & $5.28$ \\
+$1.00$ & $24.20$ & $3.630$ & $2.53$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+All three $\mN$ values sit below the critical crowding level of $9$, which is why every column has a finite window. The table is not reproducible without $c$, so $c = 0.8$ is stated wherever it appears. The operational reading is that the externality is not only that a competitor's entry consumes a firm's retraining budget, but that a competitor's choice of vendor does too, without their entering at all and without either firm doing anything wrong.
+
+Two scope notes close this appendix. By Lemma~\ref{alem:inner} the deployed model's gap to the frozen best response after a round is exactly $c^K$ times the gap before it, so $c^K$ is simultaneously what buys stability and what measures the staleness of the deployed model: the lever is not free, and its price is quantified in the same parameter that delivers its benefit. And at $\mN = 1$ exactly, $\mu_N(K) = -1 + 2c^K$ lies strictly inside $(-1,1)$ for every finite $K$, so lazy retraining strictly stabilizes the marginally unstable market, with a margin $2c^K$ that decays geometrically and falls below double precision past $K=171$ at $c=0.8$. That last is a floating-point limit and not a statement about markets, and the certificate records it as such.
+\section{The mixed market}
+\label{app:mixed}
+
+Of $N$ firms sharing one pool, $N_b$ are blind and run the ordinary retraining loop while $N_{\text{corr}} = N - N_b$ are corrected and run the feedback-aware update governed by $\gamma_{PO}$. Write $\theta = \gamma/\gamma_{PO} \in (0,1]$, so that $\theta=1$ is no correction and $\theta \to 0$ is the strong-correction limit.
+
+\begin{description}
+\item[(M)] Correction scales a firm's modulus: a corrected firm carries $\theta m_1$ where a blind firm carries $m_1$. This is the faithful reading of the single-firm result, in which the corrected loop's modulus is $m_1\gamma/\gamma_{PO}$. Correction changes a firm's gain and not its response direction, so $R$ is untouched.
+\end{description}
+
+Take the supply-chain alignment $R = (1-s)I + s\mathbf{1}\mathbf{1}^{\top}$ and write $k_s = \kappa s$, so that $B = (1-k_s)I + k_s\mathbf{1}\mathbf{1}^{\top}$. By Proposition~\ref{prop:hetmod} the radius of $J = -MB$ is $\lmax(A)$ for $A = M^{1/2}BM^{1/2}$, and substituting $B$,
+\[
+  A \;=\; (1-k_s)M \;+\; k_s\, ww^{\top}, \qquad w = M^{1/2}\mathbf{1}, \quad w_i = \sqrt{m_i}.
+\]
+So $A$ is a diagonal matrix plus a positive-weight rank-one term, and its eigenvalues not equal to a diagonal entry solve the secular equation $1 + k_s\sum_i m_i/((1-k_s)m_i - \lambda) = 0$. With only two distinct moduli the sum collapses to two terms and the equation clears to a quadratic, which is why the mixed market has a closed form at all and why three or more correction levels would not.
+
+\begin{proof}[Proof of Theorem~\ref{thm:mixed}]
+Write $a = (1-k_s)m_1$ and $b = (1-k_s)\theta m_1$ for the two diagonal values. Clearing denominators in the secular equation gives
+\[
+  (a-\lambda)(b-\lambda) + k_s N_b m_1 (b-\lambda) + k_s N_{\text{corr}}\theta m_1 (a-\lambda) = 0,
+\]
+that is $\lambda^2 - P\lambda + Q = 0$ with
+\[
+  P = a + b + k_s m_1\big(N_b + \theta N_{\text{corr}}\big),
+  \qquad
+  Q = \theta m_1^2 (1-k_s)\big(1 + k_s(N-1)\big) = \theta m_1^2 (1-k_s)\Neff .
+\]
+The two secular roots are this quadratic's roots, and the eigenvectors constant within each block and orthogonal to $w$ supply the rest of the spectrum, namely $a$ with multiplicity $N_b-1$ and $b$ with multiplicity $N_{\text{corr}}-1$. Because the rank-one weight $k_s$ is positive, the eigenvalues of $A$ interlace those of $(1-k_s)M$, so the largest eigenvalue of $A$ exceeds every diagonal entry and is therefore the larger secular root rather than a degenerate one, giving $\rho(J) = \tfrac{1}{2}(P + \sqrt{P^2-4Q})$.
+\end{proof}
+
+Certificate H1 reports a maximum error of $2.5\times 10^{-14}$ against dense eigensolves over 6000 random draws. The appearance of $\Neff$ inside $Q$ is not cosmetic: the mixed market inherits Theorem~\ref{thm:alignment}'s crowding through that product, which is why every statement here carries $s$.
+
+\paragraph{Degenerate blocks.} When $N_b = 0$ or $N_b = N$ one block is empty, but the quadratic still carries that block's factor and leaves a phantom root behind. At $N_b = 0$ the naive quadratic returns $(1-k_s)m_1$, a value no firm's modulus supports, and at small $\theta$ that phantom exceeds the true radius: $0.132$ against a true $0.043$ at $N=12$, $m_1=0.3$, $\kappa=0.8$, $s=0.7$ and $\theta=0.02$. The correct values are the single-block ones, $\rho = m_1\Neff$ at $N_b=N$ and $\rho = \theta m_1 \Neff$ at $N_b=0$, and any implementation must branch on this. Certified in H2.
+
+\paragraph{The two limits.} At $\theta = 1$, $P = m_1[2(1-k_s)+k_sN]$ and $Q = m_1^2(1-k_s)\Neff$, whose roots are $m_1\Neff$ and $m_1(1-k_s)$, recovering Theorem~\ref{thm:alignment} exactly. As $\theta \to 0$, $Q \to 0$, so one root goes to zero and the other to $P \to m_1(1+\kappa s(N_b-1))$, the blind-block condition. The argument that corrected firms transmit no feedback and drop out of the cycle is right, and it is now a corollary of the exact root rather than a separate claim.
+
+\subsection{Error direction of the limit}
+
+\begin{aproposition}
+\label{aprop:theta}
+$\rho(J)$ is nondecreasing in $\theta$.
+\end{aproposition}
+
+\begin{proof}
+$A_{ij} = \sqrt{m_im_j}B_{ij}$ and $B$ is entrywise nonnegative for $k_s \in [0,1]$, so $A$ is entrywise nonnegative. Every $m_i$ is nondecreasing in $\theta$, constant for blind firms and $\theta m_1$ for corrected ones, so every entry of $A$ is nondecreasing in $\theta$. Since $A$ is symmetric and nonnegative, by Perron-Frobenius its Rayleigh maximizer may be taken in the nonnegative orthant, and for such an $x$ the form $x^{\top}A(\theta)x$ is nondecreasing in $\theta$. Taking $x$ to be the maximizer at $\theta_1 < \theta_2$,
+\[
+  \lmax(A(\theta_2)) \geq x^{\top}A(\theta_2)x \geq x^{\top}A(\theta_1)x = \lmax(A(\theta_1)). \qedhere
+\]
+\end{proof}
+
+Two readings follow and they point opposite ways. The reassuring one is that correction never backfires: more correction is always weakly stabilizing, so there is no perverse configuration in which un-blinding a firm destabilizes the market. The uncomfortable one is that $\rho(\theta) \geq \rho(0)$, so the strong-correction limit \emph{under-states} the radius. The limit is optimistic rather than conservative, and it can call a market stable that is unstable at any finite correction strength. On the random ensemble of Appendix~\ref{app:statistics} the limit calls $11.8\%$ of configurations stable that are not, which is $2157$ of $18313$ draws with an exact $95\%$ interval of $[11.3,12.3]\%$. The fraction depends on where the draws are taken from and the appendix states the ranges; the \emph{direction} does not, since it follows from the monotonicity just proved and is observed on every seed with zero exceptions. Three worked cases, all of which the limit reads as comfortably stable:
+
+\begin{center}
+\small
+\begin{tabular}{lll}
+\toprule
+Configuration & limit reads & truly unstable unless \\
+\midrule
+$N=10$, $N_b=6$, $m_1=0.15$, $\kappa=0.8$, $s=1$ & $0.750$ & $\gamma_{PO} > 1.9\gamma$ \\
+$N=30$, $N_b=8$, $m_1=0.10$, $\kappa=0.9$, $s=0.8$ & $0.604$ & $\gamma_{PO} > 3.9\gamma$ \\
+$N=20$, $N_b=10$, $m_1=0.12$, $\kappa=0.8$, $s=1$ & $0.984$ & $\gamma_{PO} > 58.6\gamma$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Certificate C18 finds zero violations of Proposition~\ref{aprop:theta} on 3000 random configurations, each swept over 50 values of $\theta$, and reports the verdict flips above. This is why the paper states the exact two-block root as the theorem and the limit as a corollary carrying its own error direction: shipping the limit alone would state a stability criterion that errs in the unsafe direction without saying so.
+
+\subsection{Imperfect correction}
+
+\begin{proof}[Proof of the imperfect-correction law and of Corollary~\ref{cor:efficacy}]
+At $\kappa = s = 1$ the quadratic degenerates, since $1-k_s = 0$ kills $a$, $b$ and $Q$, leaving $\rho(J) = P = m_1(N_b + \theta N_{\text{corr}})$. Writing the corrected fraction as $\rho_c = 1 - N_b/N$ and solving $\rho(J) < 1$ for it gives
+\[
+  \rho_c^\ast(\theta) \;=\; \frac{1 - 1/\mN}{1-\theta} \;=\; \frac{1-1/\mN}{e}, \qquad e = 1-\theta = 1 - \gamma/\gamma_{PO},
+\]
+which is the standard epidemiological coverage requirement for an imperfect vaccine, with the clean law $1-1/\mN$ as its perfect-efficacy corner. The required fraction exceeds one, so that no corrected fraction stabilizes the market, exactly when $\theta > 1/\mN$, that is when $\gamma_{PO}/\gamma \leq \mN$, which is Corollary~\ref{cor:efficacy}.
+\end{proof}
+
+Certificate H5 reports agreement to $1.8\times 10^{-15}$ over 120 configurations, with the radius form checked against dense eigensolves, and H6 certifies the critical efficacy. At $\mN = 2.5$ the corrected update must deliver at least a $2.5\times$ curvature improvement or the market cannot be stabilized by un-blinding at all, whatever fraction is treated. This is the exact structural parallel of the critical crowding level of Appendix~\ref{app:cadence}: each lever has a regime past which it stops working, and stating both is what makes the substitution frontier an honest object rather than an extrapolation.
+
+The correspondence is worth being precise about. It now transfers not only the threshold but the standard refinement of the threshold, which is what a structural analogy predicts and a decorative one does not. Away from $\kappa = s = 1$ the closed form is no longer exact and the exact threshold comes from setting the quadratic's larger root to one; the law remains accurate to well under one firm's granularity at the parameters this paper uses.
+
+\subsection{The threshold in firms}
+
+\begin{aproposition}
+\label{aprop:Nc}
+The strong-correction limit is stable if and only if $N_b < N_c(s) = 1 + (1/m_1 - 1)/(\kappa s)$.
+\end{aproposition}
+
+\begin{proof}
+Rearrange $m_1(1+\kappa s(N_b-1)) < 1$.
+\end{proof}
+
+Certificate C14 finds zero mismatches on 4000 draws for this form. The clamped restatement is \emph{not} equivalent: writing $\rho_c = 1-N_b/N$ and $\rho_c^\ast = \max(0,\,1-N_c(s)/N)$, the criterion $\rho_c > \rho_c^\ast$ fails on 134 of those same 4000 draws, every failure at the same corner, namely $N_b = N$ with $N_c(s) \geq N$, the all-blind market that is stable because it needs no correction at all and that a clamp at zero combined with a strict inequality excludes. The paper therefore states $N_b < N_c(s)$ as the theorem, which is primitive and exact, and presents the clamped $\rho_c^\ast$ as the policy object, read as the fraction that must be corrected, with $\rho_c^\ast = 0$ meaning no requirement rather than a strict inequality to clear.
+
+Since $\rho_c^\ast N$ is generally not an integer and the panels run at $N$ in the tens, where one firm is several percentage points, the realized requirement is
+\[
+  \text{minimum corrected firms} \;=\; N - \lceil N_c(s)\rceil + 1,
+\]
+clamped to $[0,N]$, because the largest stable blind count is $\lceil N_c\rceil - 1$. The natural guess $\lceil \rho_c^\ast N\rceil$ agrees on every random draw, since random draws never land on an exact integer $N_c$, but it is off by one exactly when $N_c$ is an integer: at $N=20$, $m_1=0.15$, $\kappa=0.8$ and the $s$ giving $N_c=8$, the truth is 13 corrected firms and the guess says 12. Certificate H4 checks the correct form exactly on 3000 draws. Worked at $N=20$, $m_1=0.15$ and $\kappa=0.8$:
+
+\begin{center}
+\small
+\begin{tabular}{llll}
+\toprule
+$s$ & $N_c(s)$ & $\rho_c^\ast$ & minimum corrected firms \\
+\midrule
+$1.0$ & $8.08$ & $0.596$ & $12$ \\
+$0.5$ & $15.17$ & $0.242$ & $5$ \\
+$0.2$ & $36.42$ & $0$ & $0$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+At $\kappa = s = 1$ we have $N_c = 1/m_1$ and $\Neff = N$, so $\rho_c^\ast = 1 - 1/(m_1N) = 1 - 1/\mN$, the epidemiological threshold with the systemic modulus as the reproduction number: a market of ten firms at $\mN = 2.5$ needs $60\%$ un-blinded. And $\rho_c^\ast$ is increasing in $s$, strictly so wherever it is positive, which is what makes model diversity and corrected learning substitutes and what the $(\rho,s)$ frontier plots. Certified in C15 and C16.
+
+Panel 4 runs at $N=20$, $m_1=0.15$, $\kappa=0.8$ and $s=1$, where the imperfect-correction law is not exact, and measures thresholds of $12$, $14$, $16$ and $20$ firms at efficacies $1.00$, $0.90$, $0.75$ and $0.60$ against a law predicting $12$, $14$, $16$ and $20$. That is four out of four at the integer granularity a market actually faces. It is a dry run in the linearized reference environment and is recorded as evidence rather than as proof; the exact statement away from $\kappa = s = 1$ remains the quadratic's root.
+
+\section{The Pigouvian wedge}
+\label{app:wedge}
+
+\subsection{The welfare object}
+
+Drive the linearized joint map with noise. Under (A1) and (A5) the binding mode is the common one, whose deviation $z_t$ from the joint equilibrium obeys $z_{t+1} = -\mN z_t + \xi_t$ with $\xi_t$ independent, mean zero and variance $\sigma^2$. This is an AR(1) with coefficient $-\mN$. Stationarity requires $|\mN| < 1$, which is the stability condition the rest of the paper works with, and taking variances of a stationary solution gives $V = \mN^2V + \sigma^2$, hence
+\[
+  V(\mN) \;=\; \frac{\sigma^2}{1-\mN^2}.
+\]
+The coefficient is $-\mN$ and not $\mN$ because the retraining Jacobian is $J = -m_1[(1-\kappa)I+\kappa R]$ and the common mode inherits its sign. The stationary variance is blind to that sign, since the recursion enters squared, which is why the same expression serves both. The sign is not lost information: it reappears in the lag-1 autocorrelation, which is $-\mN$ and therefore negative, so a crowded market shows oscillatory rather than persistent common-mode error. That is the observable the supervision estimator reads, and it is why a positive-autocorrelation diagnostic would look for the wrong thing. Certificate C19 checks both facts by simulation rather than asserting them.
+
+$V$ is the paper's price of instability, and it is a modelling choice: stationary variance is the smooth proxy for divergence risk, finite everywhere strictly inside the stable region and divergent exactly at the boundary the rest of the paper is about. Nothing below depends on the functional form beyond $V$ being positive, increasing and convex in $\mN$ on $[0,1)$, all three of which the closed form satisfies.
+
+\begin{description}
+\item[(W1) Aggressiveness.] Each firm chooses $a_i > 0$, meaning cadence, learning rate or responsiveness: anything that scales its own modulus. Write $m_i = \mu(a_i)$ with $\mu$ differentiable, strictly increasing and common across firms. Aggressiveness moves a firm's gain and not its response direction, so $R$ and $\kappa$ are held fixed.
+\item[(W2) Benefit.] Aggressiveness buys tracking benefit $B(a_i)$, strictly increasing and strictly concave. Only firm $i$'s own benefit depends on $a_i$, so the entire interaction runs through $\mN$.
+\item[(W3) Exchangeable alignment, with a simple leading eigenvalue.] $R$ is invariant under a common permutation of firms, $\kappa>0$, and $\lmax(R)$ is simple. The supply-chain alignment at any $s>0$ is exchangeable with a simple leading eigenvalue, as is the monoculture corner. The orthogonal corner $R=I$ is excluded: there the coupling matrix is the identity, $\lmax$ has multiplicity $N$, and the perturbation argument below has no unique $v$ to differentiate along. Simplicity is what buys the uniform leading eigenvector at the symmetric point, and it is used in Lemma~\ref{lem:share}'s proof rather than assumed away.
+\item[(W4) Client exposure.] The planner's variance weight satisfies $W > \sum_i w_i$, with all weights positive.
+\end{description}
+
+(W4) is stated as an assumption and is not microfounded. Every trade has a client on the other side who bears execution-quality variance while no dealer's objective contains it, so the planner's weight on common-mode variance strictly exceeds what the dealers together internalize. The results below turn on the sign of $W - \sum_i w_i$ and never on its size, so a microfoundation would fix a magnitude the theorem does not use.
+
+\subsection{The marginal crowding share}
+
+\begin{proof}[Proof of Lemma~\ref{lem:share}]
+By Proposition~\ref{prop:hetmod}, for $M = \mathrm{diag}(m_1,\ldots,m_N)$ and $B = (1-\kappa)I + \kappa R$ the radius of $J = -MB$ is $\lmax(A)$ for $A(M) = M^{1/2}BM^{1/2}$. Since $dM^{1/2}/dm_i = (1/(2\sqrt{m_i}))e_ie_i^{\top}$,
+\[
+  \frac{dA}{dm_i} \;=\; \frac{1}{2\sqrt{m_i}}\Big(e_ie_i^{\top}BM^{1/2} + M^{1/2}Be_ie_i^{\top}\Big).
+\]
+For a simple eigenvalue with unit eigenvector $v$, first-order perturbation gives $d\lmax/dm_i = v^{\top}(dA/dm_i)v$. The two terms are transposes of one another and $A$ is symmetric, so they contribute equally, giving $d\lmax/dm_i = (BM^{1/2}v)_i v_i/\sqrt{m_i}$. At the symmetric point $M = m_1I$ we have $A = m_1B$, so $v$ is the leading eigenvector of $B$ and $BM^{1/2}v = \sqrt{m_1}\lmax(B)v = \sqrt{m_1}\Neff v$, whence $d\lmax/dm_i = \Neff v_i^2$. Summing over $i$ gives $\Neff$, because $v$ is a unit vector. Under (W3) an exchangeable $B$ commutes with every permutation matrix, so a simple leading eigenvector must be permutation invariant, giving $v_i^2 = 1/N$ and $d\mN/dm_i = \Neff/N$.
+\end{proof}
+
+Certificate C34 checks this by finite differences on random alignment matrices, confirming that the shares sum to $\Neff$ and equal $\Neff/N$ on exchangeable $R$. It is the load-bearing certificate of this section: everything else in the theorem is arithmetic on top of the marginal crowding share, and until C34 that share was the step where a plausible-looking $1/N$ could have been wrong by a factor of $\Neff$.
+
+Two things are worth reading off. The \emph{sum} of the marginal effects is $\Neff$ and not $1$, so the market's total sensitivity to a uniform increase in aggressiveness is amplified by exactly the effective learner count. And an \emph{individual} firm moves $\mN$ by $\Neff/N$, so as $N$ grows each firm's own footprint shrinks while the total grows, which is the arithmetic shape of every commons problem.
+
+\subsection{The two problems and the wedge}
+
+Firm $i$ bears weight $w_i$ on common-mode variance and the planner bears $W$:
+\[
+  \text{private:}\;\; \max_{a_i} B(a_i) - w_iV(\mN(a)),
+  \qquad
+  \text{social:}\;\; \max_{a} \sum_j B(a_j) - WV(\mN(a)).
+\]
+Write $V'(m) = 2\sigma^2m/(1-m^2)^2 > 0$ on $(0,1)$ and evaluate at a symmetric profile $a_i = a$, so that $\mN = \mu(a)\Neff$. Chaining (W1) with Lemma~\ref{lem:share} gives $d\mN/da_i = (\Neff/N)\mu'(a)$ at the symmetric profile, and the two first-order conditions are
+\[
+  \text{(P)}\quad B'(a) = w_i V'(\mN)\frac{\Neff}{N}\mu'(a),
+  \qquad
+  \text{(S)}\quad B'(a) = W V'(\mN)\frac{\Neff}{N}\mu'(a).
+\]
+They are the same equation with a different price on crowding, and the theorem is the gap between the two coefficients.
+
+\begin{proof}[Proof of Theorem~\ref{thm:wedge}]
+Subtract (P) from (S). A firm facing a per-unit fee $t$ on aggressiveness solves $\max B(a_i) - w_iV(\mN(a)) - ta_i$, whose first-order condition is (P) with $B'(a)$ replaced by $B'(a)-t$. Substituting
+\[
+  t^\ast = (W - w_i)V'(\mN)\frac{\Neff}{N}\mu'(a) = (W-w_i)\frac{2\sigma^2\mN}{(1-\mN^2)^2}\cdot\frac{\Neff}{N}\mu'(a)
+\]
+reproduces (S) term for term, so the taxed decentralized equilibrium implements the symmetric social optimum.
+\end{proof}
+
+With symmetric weights $w_i = w$ and $W = \chi Nw$ for the $\chi > 1$ that (W4) supplies, $t^\ast = (\chi N - 1)wV'(\mN)(\Neff/N)\mu'(a)$ against a total marginal cost of $\chi NwV'(\mN)(\Neff/N)\mu'(a)$, so the ignored fraction is $(\chi N-1)/(\chi N)$. Setting $\chi = 1$, which shuts off client exposure entirely and leaves only the firm-to-firm channel, the ignored fraction is exactly $(N-1)/N$. Note that $\Neff$ cancels from this ratio, so the $(N-1)/N$ reading is a generic commons result and it is the provenance asymmetry below that is specific to this paper.
+
+\begin{aproposition}
+\label{aprop:cstat}
+$t^\ast$ is strictly increasing in $N$, in $\kappa$, in $s$ and in $\mN$, and diverges as $\mN \to 1$.
+\end{aproposition}
+
+\begin{proof}
+Take the supply-chain specialization $\Neff = 1+\kappa s(N-1)$ with symmetric weights, so that $t^\ast = (\chi - 1/N)wV'(\mN)\Neff\mu'(a)$. The factor $\chi - 1/N$ is strictly increasing in $N$; $\Neff$ is strictly increasing in $N$ whenever $\kappa s > 0$ and in $\kappa$ whenever $s>0$ and $N \geq 2$; $\mN = \mu(a)\Neff$ inherits both; and $V'(m) = 2\sigma^2m/(1-m^2)^2$ is strictly increasing on $(0,1)$ and diverges at $1$, since both $m$ and $(1-m^2)^{-2}$ are. Every factor moves the same way, so the product does.
+\end{proof}
+
+The divergence is the economically loaded part. The fee that would correct a market is not proportional to how crowded it is; it blows up like $(1-\mN)^{-2}$ as the market approaches its stability boundary, so a regulator setting a fee from a comfortable-looking market and holding it fixed is setting it far too low by the time the market is close to the edge. Certified in C20.
+
+\begin{proof}[Proof of Corollary~\ref{cor:over}]
+Write $C(a) = V(\mN(a))$ and
+\[
+  F_{\text{priv}}(a) = B'(a) - wC'(a), \qquad F_{\text{soc}}(a) = B'(a) - WC'(a).
+\]
+Both are strictly decreasing, since $B'$ is strictly decreasing by (W2) and $C'$ is nondecreasing by convexity, so each has at most one zero and by the interior assumption exactly one, namely $a_d$ and $a_s$. Because $C'(a) > 0$ on the stable range, as $V' > 0$, $\Neff > 0$ and $\mu' > 0$, and because $W > w$ by (W4),
+\[
+  F_{\text{soc}}(a) = F_{\text{priv}}(a) - (W-w)C'(a) < F_{\text{priv}}(a) \quad \text{for every } a.
+\]
+Evaluating at $a_d$ gives $F_{\text{soc}}(a_d) < F_{\text{priv}}(a_d) = 0$, and since $F_{\text{soc}}$ is strictly decreasing and vanishes at $a_s$, this forces $a_s < a_d$. Setting $\chi = 1$ so that $W = Nw$ gives $W - w = (N-1)w > 0$ exactly when $N \geq 2$, so the strict inequality survives with no client-side channel at all. At $N=1$ with $\chi=1$ the wedge is zero and the two problems coincide, which is the correct degenerate case: a single firm bearing its own variance in full internalizes everything.
+\end{proof}
+
+The distortion grows as the market crowds, since the coefficient gap $(W-w)C'(a)$ is proportional to $V'(\mN)\Neff$, both of which increase in $N$ and in $\kappa$. Certified in C21, including the vanishing gap at $N=1$.
+
+\subsection{The provenance channel}
+
+\begin{aproposition}
+\label{aprop:prov}
+Under the supply-chain specialization, $d\mN/ds = m_1\kappa(N-1)$ exactly, and the corresponding adoption wedge is $t^\ast_s = (W-w_i)V'(\mN)m_1\kappa(N-1)$.
+\end{aproposition}
+
+\begin{proof}
+$\mN = m_1(1+\kappa s(N-1))$ is affine in $s$, so the derivative is the coefficient, and the wedge follows from the proof of Theorem~\ref{thm:wedge} with $s$ in place of $a_i$ as the choice variable.
+\end{proof}
+
+The same wedge therefore prices shared-model adoption directly, which turns the monoculture externality into a fee rather than a warning. The contrast with the aggressiveness channel is the paper-specific result. The aggressiveness derivative carries a factor $\Neff/N$, bounded above by $(1+\kappa(N-1))/N$ and therefore tending to $\kappa$ from above as $N$ grows, so a firm's marginal footprint through its own cadence does not grow without bound. The provenance channel is linear in $N$ and does not decay. A firm's decision to adopt the market-leading vendor imposes a marginal cost on the market that grows with market size while its private quality gain does not, and that asymmetry is why unregulated adoption dynamics run toward the unstable configuration rather than away from it, and why a diversity floor is a different instrument from a cadence cap rather than a restatement of it. Certificate W6 measures the provenance channel growing from $0.79$ to $87.91$ between $N=10$ and $N=1000$ while the aggressiveness channel falls from $0.82$ toward $\kappa = 0.8$.
+
+The three levers are the standard instrument taxonomy: cadence caps are quantity regulation, correction mandates are a technology mandate, diversity floors are a structural remedy, and the wedge is a price instrument. The choice between prices and quantities under uncertainty is Weitzman's question, which this paper cites for framing rather than solves.
+
+\section{Supervision from public prices}
+\label{app:supervision}
+
+Every quantity in Theorems~\ref{thm:alignment} through~\ref{thm:wedge} involves $R$ and $s$, which no outsider observes. Supervisors do not inspect firms' models, training sets or vendor contracts, so a theory whose every variable is unobservable to the regulator it addresses is a theory of a problem rather than a theory a regulator can act on.
+
+Near the boundary the system tells on itself. As $\mN \to 1$ the aligned combination of firms' decisions exhibits critical slowing down: the lag-1 autocorrelation of the leading principal component of public quotes approaches one in magnitude, negative because the common mode oscillates, and its variance share grows like $1/(1-\mN)$. A supervisor can therefore estimate distance to instability from public prices alone, with no access to any firm's model, data or code, and the estimator sharpens exactly as the market approaches the boundary, which is the opposite of the usual situation in which risk measurement degrades in the regime that matters.
+
+This material is deliberately thin and the body flags it as deferred. The body carries the estimator and the consistency claim in one paragraph. The empirical panel, namely the leading component's variance share and lag-1 autocorrelation of cross-sectional spread co-movement overlaid on the model-implied fragility index, together with a placebo on series where no dealer-model channel exists, is scoped and is not run for this submission. It would be framed as consistency evidence and never as identification, since spread co-movement is contaminated by common macro shocks and the data are public proxies rather than trade-level records. The consistency proof, the central limit theorem and the detection sample complexity are journal material. Writing the estimator down formally, rather than as the description above, is the first open item.
+
+\section{Certificates}
+\label{app:certificates}
+
+Every closed form in the body carries a numerical certificate. A certificate is an assertion-based script that re-derives the expectation independently, by dense eigensolve, finite difference, brute force or direct simulation, rather than importing the theory module's own answer, and that exits nonzero on any disagreement. A closed form reaching the paper without a passing certificate ships as derived and never as verified.
+
+\begin{center}
+\footnotesize
+\begin{tabular}{rll}
+\toprule
+Assertions & File & What it establishes \\
+\midrule
+123 & \texttt{verify\_theorem1\_proof.py} & the reduction, the properties of $R$, the spectrum, the mean \\
+ & & bound, the heterogeneous-modulus bound, and the \\
+ & & supply-chain concentration rate \\
+60 & \texttt{verify\_theorem1\_anchors.py} & the three anchors, the clustered topology, and the signed \\
+ & & error of the mean index \\
+59 & \texttt{verify\_theorem2\_cadence.py} & the inner contraction, hypothesis (C), the joint map, the \\
+ & & frontier in both forms, and the realized dynamics \\
+70 & \texttt{verify\_theorem3\_herd\_immunity.py} & the two-block quadratic, the degenerate blocks, \\
+ & & monotonicity in $\theta$, the imperfect-correction law, \\
+ & & the critical efficacy and the integer threshold \\
+125 & \texttt{verify\_theorem4\_wedge.py} & the AR(1) reduction and its sign convention, \\
+ & & Lemma~\ref{lem:share} by finite differences, the comparative statics, \\
+ & & and over-adaptation \\
+56 & \texttt{verify\_theory\_module.py} & acceptance tests on the closed-form module \\
+32 & \texttt{verify\_hetero\_env.py} & the reference environment, including its reduction to the \\
+ & & homogeneous market at $R=\mathbf{1}\mathbf{1}^{\top}$ \\
+17 & \texttt{verify\_ensemble\_intervals.py} & the sampling measure, the count and the exact interval \\
+ & & behind the one random-ensemble fraction the paper quotes \\
+\midrule
+542 & total & all passing at submission \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Two of these were falsifying rather than confirming. C18 showed that the strong-correction limit errs optimistic, which changed what Theorem~\ref{thm:mixed} claims and moved the exact two-block root from an optional refinement to the theorem itself. C14 showed that the clamped restatement of the blind-firm threshold is not equivalent to the primitive form, failing on 134 of 4000 draws at the all-blind corner. Both corrections are recorded above, where they apply.
+
+\section{Experimental specifications}
+\label{app:experiments}
+
+\paragraph{Environments.} There are two, and the distinction between them is what the status flags track. The \emph{order-flow simulator} is a genuine $N$-dealer market with informed flow, spread and inventory, which reduces bit for bit to the single-dealer market at $N=1$. The \emph{reference environment} places firms at chosen response directions and lets them retrain against a shared pool, realizing the response geometry of Lemma~\ref{lem:reduction} and nothing else: no informed flow, no spread, no inventory, no microstructure of any kind. Its acceptance test, run before any measurement is taken from it, is that at $R = \mathbf{1}\mathbf{1}^{\top}$ it reproduces the homogeneous market on three counts, namely a measured alignment of exactly $\mathbf{1}\mathbf{1}^{\top}$, an $\Neff$ of exactly $1+\kappa(N-1)$, and a built Jacobian equal to \eqref{eq:reduction} to $10^{-10}$.
+
+\paragraph{Protocol.} Inherited from the base model and non-negotiable, since violating any of these silently invalidates a panel: sweep the feedback gain and never the confounded adversariality parameter; probe at the operating spread with common random numbers; scale the liquidity boost per the environment's guidance when multi-dealer runs approach the informed-flow cap, and never de-saturate silently; and treat beyond-boundary probe readings as diagnostics rather than as slopes. All runs are CPU-only and deterministic from a (config, seed) pair. Stability is estimated from the trajectory's asymptotic growth rate under the actual retraining map rather than read off an eigensolve, so a panel can disagree with its closed form.
+
+\paragraph{The panels.} Panel 1 sweeps $N$ in the homogeneous shared-pool market and reproduces the amplification reported in a recent preprint. It is the paper's one measured result, and what it validates is the monoculture corner that Theorem~\ref{thm:alignment} generalizes rather than any of the four results built on it. Its differential mode measures $3.4\times 10^{-3}$ against a theoretical zero at $\kappa=1$, so the instability it exhibits is purely common-mode, which is the mechanism Theorem~\ref{thm:alignment} generalizes. Panel 2 measures $\mN$ over a grid of firms by shared-model fraction against the predicted boundary, with firms placed at the target alignment exactly rather than in distribution so that an $s$ sweep moves along the exact curve; its clustered companion, three aligned firms among ten, is the topology worked in Appendix~\ref{app:alignment}. Panel 3 sweeps the $(\Neff, K)$ grid against $K_{\max}$ at $c = 0.8$, including the critical-crowding column where the window closes. Panel 4 runs mixed markets at corrected fractions $0, 1/N, \ldots, 1$ in an unstable market. Panel 5 traces the $(\rho_c, s)$ iso-stability curve, and it is the paper's most policy-legible object. Panel 6 solves both first-order conditions by bisection with $\mN$ read from the reference environment's realized dynamics rather than from the closed form, so the over-adaptation verdict is a property of the simulated market.
+
+\paragraph{The dry-run panels.} A heterogeneous-response port of the order-flow simulator was built and is exact at flat exposure profiles, reproducing the unmodified simulator at every $N$ from 1 to 3 at relative error $0.00$, the range the committed artifact records. Its acceptance gate then failed. The liquidity and price-impact channels stay shared whatever the response profiles are, leaving a residual reaching $17.7$ percentage points across the separation range at $N=2$, larger than several effects these panels resolve, and at $N \geq 4$ the finite-difference probe no longer measures a local slope. Two repairs are identified, routing liquidity and impact through the profiles as well, or finding a configuration whose probe stays local at the $N$ the panels need, and neither is attempted for this submission, since both are multi-day edits and the first risks the bit-for-bit anchor that panel 1 rests on. No figure is drawn from that port and no status was moved. Panel 6 is a dry run for a different reason: the order-flow simulator carries no aggressiveness choice variable and no welfare object, so a measured counterpart does not exist to be built.
+
+\section{Deferred items}
+\label{app:deferred}
+
+Stated so that the boundary of what is proved is legible. The fully heterogeneous case without (H1), which is the Kronecker object of Appendix~\ref{app:alignment}, and share-weighted alignment for unequal-sized firms, which needs a majorization condition on the share vector since the naive claim that any reweighting raises $\lmax$ is false. Non-separable spillover $\kappa_{ij}$, which folds into $R$ only when it factors. The sharp operator-norm rate $\sqrt{N}/d$ of Appendix~\ref{app:concentration}, which needs a matrix-Bernstein argument rather than the Frobenius step, and a version of design assumption (D) under dependence across the idiosyncratic components, which is what shared data rather than shared models would produce. Asynchronous and heterogeneous cadences, which break the eigenvector sharing that Theorem~\ref{thm:cadence} uses. Three or more correction levels, which break the two-block collapse and return a genuine secular equation. A corrected firm that also changes its response direction, which would move $R$ and which hypothesis (M) does not model. And beyond the symmetric point, the observation that $d\mN/dm_i = \Neff v_i^2$ makes the marginal crowding share the leading eigenvector's participation ratio at firm $i$, so a firm sitting on the crowded mode imposes more than its $1/N$ share, and the asymmetric wedge that follows is a genuine open question.
+
+\section{Statistical protocols}
+\label{app:statistics}
+
+The paper makes two kinds of empirical statement and they are held to different standards, stated here once and used everywhere.
+
+\paragraph{Deterministic grid checks.} Panels 2 to 6 compare a closed form against realized dynamics over a stated grid of configurations, with the run deterministic from a (config, seed) pair. What is reported is the maximum departure over the whole grid, not a mean with an interval. That is the stronger statement of the two, since it bounds every cell rather than describing a typical one, and dressing it in confidence intervals would weaken it while looking more statistical. No interval appears anywhere in Table~\ref{tab:panels}'s dry-run rows for that reason.
+
+\paragraph{Random-ensemble fractions.} The paper quotes one such fraction: how often the strong-correction limit of Section~\ref{sec:herd} calls a configuration stable that is unstable at every finite correction strength. Its protocol, fixed before the number was read and unchanged since:
+
+\begin{itemize}\itemsep2pt
+\item \emph{Sampling measure.} $N$ uniform on the integers $2$ to $39$; the blind count $N_b$ uniform on $1$ to $N-1$, so both blocks are non-empty and the two-block quadratic is the right form; $m_1$ uniform on $[0.02, 0.9]$; $\kappa$ and $s$ each uniform on $[0.05, 1]$; and the correction parameter $\theta = \gamma/\gamma_{PO}$ uniform on $[0.01, 1]$, so the ensemble spans efficacies from $0$ to $0.99$.
+\item \emph{Estimator.} For each draw, the spectral radius is computed twice by dense eigensolve, once at $\theta \to 0$ and once at the drawn $\theta$. A draw counts as a flip when the first is below one and the second is not. The eigensolve is independent of the closed-form quadratic, so this is a second route to the radius rather than a restatement of it.
+\item \emph{Interval.} Clopper-Pearson at $95\%$, from beta quantiles rather than a normal approximation, so no large-$np$ condition is needed.
+\item \emph{Reported.} $2157$ flips of $18313$ draws, $11.8\%$, interval $[11.3, 12.3]\%$. Five independent ensembles of $20000$ draws each give $11.74$, $11.76$, $12.01$, $11.46$ and $11.53\%$, every one inside that interval.
+\item \emph{Protocol dependence, stated rather than hidden.} The fraction is a property of the ensemble as much as of the theorem. Widening the $m_1$ range to $[0.02, 1.2]$ moves it to $9.6\%$. The ranges above are therefore part of the claim, and the number should be read as the flip rate on this ensemble rather than as a universal constant.
+\end{itemize}
+
+\paragraph{Non-statistical claims.} The \emph{direction} of the limit's error is a theorem, not an estimate: $\rho$ is nondecreasing in $\theta$ by Perron-Frobenius on an entrywise-nonnegative matrix (Appendix~\ref{app:mixed}), so the limit can only under-state the radius. Across the five ensembles above, zero draws erred the other way, which is what a proved direction looks like when it is sampled and is not offered as evidence for it. Certificate \texttt{verify\_ensemble\_intervals.py} carries all of the above as $17$ assertions, including the protocol itself, so the interval in the body is a function of a certified count rather than of a fresh draw.
