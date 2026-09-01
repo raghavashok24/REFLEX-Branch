@@ -61,26 +61,36 @@ submission build has twice.
 
 ## Uploading to arXiv
 
-arXiv wants the source, and it rejects a package carrying both TeX source and a
-compiled PDF. Build the upload tarball with:
+`arxiv-submission.zip` in this directory is the upload, ready as it stands.
+Rebuild it after any edit to the sources with:
 
 ```bash
-sh econml/paper/arxiv/package.sh
+python econml/paper/arxiv/package.py
 ```
 
-That writes `arxiv-submission.tar.gz` with `main.tex`, `appendix.tex`,
-`checklist.tex`, `neurips_2026.sty` and the five figures, excluding `main.pdf`
-and this README. Everything arXiv's TeX Live does not already provide is in the
-tarball: the only non-standard file is `neurips_2026.sty`, and the packages it
-pulls in (`environ`, `natbib`, `geometry`, `lineno`) ship with TeX Live, as do
-the ones `main.tex` requests directly (`inputenc`, `fontenc`, `hyperref`, `url`,
+It holds `main.tex`, `appendix.tex`, `checklist.tex`, `neurips_2026.sty` and the
+five figures, stored at the archive root, which is the layout arXiv expects.
+`main.pdf` is excluded because arXiv rejects a package carrying both TeX source
+and a compiled PDF; this README and the packaging script are excluded as
+repository documentation.
+
+Everything arXiv's TeX Live does not already provide is inside the zip. The only
+non-standard file is `neurips_2026.sty`, and the packages it pulls in
+(`environ`, `natbib`, `geometry`, `lineno`) ship with TeX Live, as do the ones
+`main.tex` requests directly (`inputenc`, `fontenc`, `hyperref`, `url`,
 `booktabs`, `amsfonts`, `amsmath`, `amssymb`, `amsthm`, `nicefrac`, `microtype`,
 `xcolor`, `graphicx`, `subcaption`).
 
 No BibTeX pass is needed: the bibliography is a `thebibliography` environment
-inside `main.tex`. The tarball was verified by extracting it into an empty
-directory and running three bare `pdflatex` passes, which is what arXiv's
-AutoTeX does; it produced the same 32-page PDF with no undefined references.
+inside `main.tex`. The zip was verified by extracting it into an empty directory
+and running three bare `pdflatex` passes, which is what arXiv's AutoTeX does; it
+produced the same 32-page PDF with no undefined references.
 
-Suggested primary category `cs.LG`, with `cs.GT`, `econ.TH` and `q-fin.CP` as
-cross-lists.
+Primary category `cs.LG`, cross-listed to `cs.GT` for the equilibrium and
+welfare results and `cs.CY` for the governance ones. `econ.TH` is the natural
+home for the Pigouvian material, and arXiv allows cross-lists to be added after
+announcement, so it can go on once endorsement for the econ archive is in hand.
+
+License: the arXiv.org perpetual non-exclusive license, matching REFLEX. It is
+the reversible choice, since a later version can relax to CC BY but no version
+can take a CC BY grant back.
