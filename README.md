@@ -28,5 +28,5 @@ Decision notifications for both venues are on Sept 29.
 
 - [x] [Both] Ideate workshop submissions today (8/14) and call to finalize this weekend (8/16).
 - [x] [Vignesh] Get endorsement for cs.LG (ML) on arXiv and preprint the original REFLEX paper (https://arxiv.org/abs/2608.16155).
-- [ ] [Both] Split paper by person for writing/research, swap midway for peer-review / validation, then continue.
-- [ ] {REMOVE ONCE COMPLETE} [Both] Call on Aug 23rd for swap and peer-review. Get preliminary draft done by then.
+- [x] [Both] Split paper by person for writing/research, swap midway for peer-review / validation, then continue.
+- [x] [Both] Complete reivew, revisions, and submit paper to both venues by deadlines.
