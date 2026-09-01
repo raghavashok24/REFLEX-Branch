@@ -8,3 +8,6 @@
 *.synctex.gz
 *.fls
 *.fdb_latexmk
+
+# Generated arXiv upload package; rebuild with econml/paper/arxiv/package.sh.
+arxiv-submission.tar.gz
