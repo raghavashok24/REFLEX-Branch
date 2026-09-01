@@ -1,0 +1,209 @@
+\documentclass{article}
+
+% ML x OR @ NeurIPS 2026: 4-page main body, NeurIPS conference format,
+% unlimited refs + appendix. This build is FULLY ANONYMOUS (dblblindworkshop:
+% anonymous author block, no identifying URLs, prior work cited in third
+% person). NOTE: the CFP as verified on 25 Aug 2026 says the workshop is
+% single-blind ("submissions are non-anonymous", option sglblindworkshop);
+% if that stands, swap the option below to sglblindworkshop and restore the
+% author block. Add ",final" at camera-ready.
+\usepackage[dblblindworkshop]{neurips_2026}
+\workshoptitle{Second Workshop on ML$\times$OR}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{amsfonts}
+\usepackage{nicefrac}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{macros}   % shared with the derivation folder: theorem envs, \eps, \gpo, ...
+
+\graphicspath{{figures/}}
+
+\title{PRICE: Minimax Estimation--Regret Tradeoffs and\\ Certified Exploration in Performative Prediction}
+
+\author{%
+  Anonymous Author(s) \\
+  Affiliation \\
+  Address \\
+  \texttt{email} \\
+}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+A decision-maker whose deployed policy reshapes its own data distribution must pay, in its own objective, to learn how it moves the world. We price that self-knowledge exactly. In a structural performative market (a dealer whose quoted spread summons the adverse flow it must then price), we prove a conservation law: along any stationary exploration policy, the variance of the response-slope estimate times the cumulative performative regret equals $\tfrac{1}{2}\gpo\sigma^2$, an invariant of the environment, not the policy. Around the identity sit minimax floors (exact for deviation budgets, constant-factor for value budgets); a structure-proofness theorem with an exact reach (within two curvature lengths of the anchor the floor survives full knowledge of the response family; just beyond, a verified design beats it); an optimal-design theory (explore as $\Gpo^{-1/2}$; isotropy overpays by an explicit dispersion factor); and a deployable agent, SafeD-PerfGD, which corrects only when an anytime confidence sequence certifies, via a perturbed-modulus lemma, that the correction cannot destabilize the retraining loop. Every closed form is verified in a live deploy--observe--fit--correct pipeline (36 preregistered checks, 0 failures), transplanted to a second economy, and instantiated on the REFLEX corporate-bond calibration \citep{reflex2026}, matching its published run in 10/10 cells. Code, derivations, and all checks ship as an anonymized repository in the supplementary material.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:intro}
+
+When a deployed model changes the distribution it is trained on, retraining becomes a fixed-point iteration: performative prediction \citep{perdomo2020performative,hardt2023performative} shows repeated risk minimization converges when the distribution's sensitivity $\eps$ is small against the loss curvature $\gamma$ ($m = \eps\beta/\gamma < 1$), and converges to a \emph{performatively stable} point that is not the \emph{performative optimum}. Algorithms that close this gap, performative gradient descent and its descendants \citep{izzo2021learn,miller2021outside,mendler2020stochastic,drusvyatskiy2022stochastic,li2022state,brown2022performative}, all consume an estimate of the distribution's response $dD/d\theta$, obtained by perturbing deployments. The literature treats that estimate's accuracy as an assumption and the perturbations as free. Neither is: the perturbations are deployments of a real decision variable, and their cost lands in the decision-maker's own objective. \emph{What does it cost to learn your own influence?} This paper answers with an identity, a floor, a design rule, and an agent.
+
+\textbf{Contributions.}
+\begin{enumerate}\itemsep1pt\topsep2pt\parsep0pt
+\item \textbf{A conservation law (\S\ref{sec:price}).} Along any stationary exploration policy, $\Var(\hat\eps)\times C_T = \tfrac{1}{2}\gpo\sigma^2$: slope uncertainty times cumulative performative regret is a policy-independent invariant (Theorem~\ref{thm:exchange}). The anchoring is delicate: anchored at the performative optimum instead, the product is \emph{false}, inflated by a verified factor.
+\item \textbf{Minimax floors, and their exact reach (\S\ref{sec:price}).} No non-anticipating policy beats the floor: exactly under deviation budgets; within $\le 13.5\times$ under value budgets, sharp constant numerically supported but open (Theorem~\ref{thm:devbudget}). The floor is also \emph{structure-proof within an exact reach} (Theorem~\ref{thm:reach}): within $2/c$ of the anchor even full knowledge of the family cannot beat it; one probe beyond, an explicit design does. The trust region keeps the agent inside the protection.
+\item \textbf{Optimal exploration design (\S\ref{sec:design}).} Under a budget priced by the decision-maker's own curvature, the optimal exploration covariance is $\Gpo^{-1/2}$-shaped; isotropic exploration overpays by the dispersion factor $F = d\,\tr\Gamma/(\tr\Gamma^{1/2})^2$: an inversion of ``naive exploration is optimal'' for LQR \citep{simchowitz2020naive}; a support-degeneracy theorem and a misspecification crossover complete the picture.
+\item \textbf{A certified agent (\S\ref{sec:design}--\ref{sec:experiments}).} SafeD-PerfGD explores on a D-optimal support, fits an anchored response family with an anytime confidence sequence, and corrects only when a perturbed-modulus certificate guarantees closed-loop stability; otherwise it freezes the correction while the provably-stable blind step keeps running. It reaches the performative optimum where blind retraining stalls; no published baseline Pareto-dominates it on median (final error, regret).
+\end{enumerate}
+
+\textbf{Positioning.} \citet{jagadeesan2022regret} bound the regret of \emph{finding} the performative optimum; we price \emph{knowing your own feedback}: lower bounds and an invariance identity where they give algorithmic upper bounds, with no retraining loop, stability constraint, or design shaping in their model. \citet{bracale2025reverse} design deployments to learn the distribution map and bound the regret of doing so at an order level; we price the same activity exactly, in the objective's own curvature, and close it from below. \citet{lin2024plugin} show misspecified structural models still help performative optimization; our crossover theorem sharpens that message into a budget-explicit rule. In operations research, incomplete learning under myopic pricing is classical \citep{rothschild1974two,harrison2012bayesian,keskin2014dynamic,broder2012dynamic,denboer2015dynamic}; \citet{lai1979adaptive}'s adaptive designs are \emph{points on} our frontier, but the frontier, its floor, and the performative loop generating it do not appear: the demand curve is exogenous. From control we inherit dual control \citep{feldbaum1960dual} and least-costly identification \citep{bombois2006least}: the plant is a retraining learner, the budget is the optimizer's objective, the constraint is loop contraction (lower bounds are van Trees arguments \citep{gill1995applications}); task-optimal design \citep{wagenmaker2021task,dean2020sample} and the classical canon \citep{kiefer1960equivalence,pukelsheim2006optimal} never price the design in the experimenter's own objective.
+
+\section{Model}
+\label{sec:model}
+
+The environment is the single-book structural market of REFLEX \citep{reflex2026}, the foundation this paper builds on, its gate and participation constants folded into the flow scales. A dealer quotes half-spread $h$. Benign flow arrives at rate $U(h) = A e^{-kh}$; informed (toxic) flow at rate $\tau(h) = C_0 + C_1 e^{-c h}$: tighter quotes summon more toxic flow. The quote-summons-toxicity channel is the dealer's adverse-selection problem \citep{gueant2013inventory}; that its own quotes feed the flow it reads is \citet{barzykin2026quoting}'s price-reading effect. Profit at frozen toxic level $T$ is $J(h;T) = h\,U(h) + (h - \psi)\,T - w (h - h_{\mathrm{ref}})^2$ ($\psi$: adverse severity; $w$: quoting-cost convexity); the \emph{performative value} is $\Phi(h) = J(h,\tau(h))$. Write $\eps(h) = -\tau'(h)$ for the response slope (the scalar $dD/d\theta$), $\gamma = -\partial^2_h J$, and $\gpo = -\Phi'' = \gamma + \eps\,(2 + c\psi - ch)$. Blind retraining (RRM) is the cobweb $h_{t+1} = \mathrm{BR}(\tau(h_t))$, a contraction iff the modulus $m = \eps\beta/\gamma = \eps/\gamma$ ($\beta = 1$ here) is below one \citep{perdomo2020performative}; it converges to the stable point $\hsp$, while the optimum $\hpo = \arg\max\Phi$ sits at a \emph{tighter} spread here, since toxic flow is profitable net of $\psi$: the echo-chamber gap \citep{miller2021outside}. Deployments return noisy flow $y_t = \tau(h_t) + \sigma\zeta_t$ (A3). The estimand is $\eps$ at the operating point; exploration deviations $\dev_t = h_t - \hstar$ are priced by the \emph{incremental} cost $C_T = \sum_{t \le T} \E[\Phi(\hstar) - \Phi(h_t)]$, anchored at the certainty-equivalent operating point $\hstar$ (A1: local quadratic scope; A5: stationary exploration scale). Results are stated for this scalar family and, where flagged, its $d$-dimensional and LQ instances; full statements and proofs, keyed by register identifiers (T1, T2, \ldots), are in Appendices~\ref{app:theorems}--\ref{app:proofs}.
+
+\section{The price of self-knowledge}
+\label{sec:price}
+
+\textbf{Free data saturates.} Without deliberate exploration the retraining trajectory's identifying energy is finite: for deployment error $d_0$ and modulus $m$ it is capped at $d_0^2/(1-m^2)$ (T1; matrix version by a Lyapunov identity). A corollary was discovered by a failed prediction (\S\ref{sec:experiments}): retraining on \emph{noisy} observations converts observation noise to deployment noise with gain $1/\gamma$, adding a stationary excitation floor $(\sigma/\gamma)^2/(1-m^2)$ per step; both closed forms verify. The stabler the loop, the less it reveals: \emph{safety implies blindness}, the performative sharpening of incomplete learning under myopic policies \citep{keskin2014dynamic,harrison2012bayesian}, where the stall comes from optimization converging, not feedback strength.
+
+\textbf{The exchange rate.} Deliberate exploration buys information at an exact, policy-independent price.
+
+\begin{theorem}[Exchange rate; T2]
+\label{thm:exchange}
+Under A1, A2-sym, A3 and A6, for the OLS slope estimator on any stationary exploration policy with deviations $\{\dev_t\}$,
+\[
+\Var(\hat\eps)\;\times\;C_T \;=\; \tfrac{1}{2}\,\gpo\,\sigma^2\;\big(1 + o(1)\big),
+\]
+independent of the exploration amplitude, shape, schedule, and modulus.
+\end{theorem}
+
+The mechanism is cancellation: information scales as the centered energy $S_T$, cost as $\tfrac{1}{2}\gpo\sum_t \dev_t^2$; for mean-centered exploration these coincide. Anchored at $\hpo$ instead, the same product is false (inflated by an explicit factor, falsified numerically before the incremental version was proved): the invariant prices \emph{exploration}, not \emph{suboptimality}. \citet{lai1979adaptive}'s $O(\log n)$-cost schemes are points on this frontier; the identity says \emph{every} stationary policy is. A corollary prices the echo chamber: closing it pays iff the horizon exceeds an explicit break-even (T8, Appendix).
+
+\textbf{Minimax floors.} The identity is for OLS-on-stationary policies; the floors are for everyone.
+
+\begin{theorem}[Minimax floors; T3--T4]
+\label{thm:devbudget}
+(i) Over all non-anticipating (randomized, adaptive) policies with pathwise budget $\sum_{t\le T}\dev_t^2 \le D$, all estimators, and any prior of width $w$: $\inf\sup\Var(\hat\eps) \ge \sigma^2/(D + \sigma^2(\pi/w)^2)$, so the product floor is attained up to the prior term, with equality by symmetric probing. (ii)~Under a budget on realized performative cost with certainty-equivalent anchoring: $\sup \Var(\hat\eps)\times C_T \ge \gpo\sigma^2/27\,(1-O(T^{-1/2}))$ over adaptive policies, by a Le~Cam two-point reduction with the exploited rebate vanishing at rate $T^{-1/2}$ (Lemma L2, Appendix~\ref{app:theorems}); the sharp constant $\tfrac{1}{2}$ is numerically supported and open (OPEN-1).
+\end{theorem}
+
+Can a policy that \emph{knows the family's functional form} shop for designs that beat the floor? The answer has an exact boundary:
+
+\begin{theorem}[Structure-proofness, exact reach; T9]
+\label{thm:reach}
+Let $R(\mu)$ be the known-family Cram\'er--Rao product of design $\mu$, normalized by the floor (a bound for unbiased, and asymptotically all regular, estimation). (i) Every estimable $\mu$ supported in $[\hstar - 2/c, \infty)$ has $R(\mu) \ge 1$, strict off one two-point configuration, and $\inf_\mu R(\mu) = 1$: \emph{within reach, knowing the family cannot beat the floor}. (ii) The reach is exact: a four-point design with one below-reach probe of weight $3{\times}10^{-4}$ attains $R = 0.8517$ (50-digit verified).
+\end{theorem}
+
+The proof exhibits the family element $\phi_0 = 2/c - e^{-c(h-\hstar)}(2/c + h - \hstar)$, whose pointwise domination $|\phi_0| \le |h-\hstar|$ holds exactly on the reach; a Rayleigh reduction converts domination into the floor. Two boundary phenomena calibrate the scope: with $c$ known the floor breaks outright (ratio $0.30$ at $t{=}1.0$, $0.04$ at $t{=}0.05$), and below the reach the violators are asymmetric near-anchor clusters with one vanishing-weight far probe, invisible to coarse search (our $1.005\times$ verdict, corrected as pivot eleven). \emph{The floor is an ignorance-of-curvature phenomenon with an exactly known reach}, and the trust region $r \le 2/c$ keeps the agent inside it.
+
+\begin{figure}[t]
+\centering
+\begin{minipage}{0.24\textwidth}
+\includegraphics[width=\textwidth]{fig1_exchange_rate.png}
+\end{minipage}\hfill
+\begin{minipage}{0.24\textwidth}
+\includegraphics[width=\textwidth]{fig4_crossover.png}
+\end{minipage}\hfill
+\begin{minipage}{0.24\textwidth}
+\includegraphics[width=\textwidth]{fig3_certification.png}
+\end{minipage}
+\caption{\textbf{Left:} $\Var(\hat\eps)\times C_T$ vs amplitude, two moduli: flat on the invariant (dashed), small drift as A1 predicts. \textbf{Middle:} the T7 misspecification crossover. \textbf{Right:} certification before exploitation (shaded: frozen): the gate clears after ${\sim}1{,}300$ deployments (freeze fraction $0.33$ of $T{=}4000$, E4 log) and the agent steps to $\hpo$.\label{fig:gate}}
+\end{figure}
+
+\section{Optimal design and certified correction}
+\label{sec:design}
+
+\textbf{Shape (T5).} In $d$ dimensions with curvature $\Gpo \succ 0$ pricing the budget $\tfrac12\E[u^\top\Gpo u]$, the A-optimal exploration second moment is $M^* \propto \Gpo^{-1/2}$: explore \emph{where your objective is flat}. Isotropic exploration overpays by exactly the dispersion factor $F = d\,\tr\Gpo/(\tr\Gpo^{1/2})^2 \in [1, d]$: naive exploration, optimal for LQR \citep{simchowitz2020naive}, is suboptimal here by $F$. \textbf{Support (T6).} The exponential family is Chebyshev-degenerate on thin designs: fewer than three support points (or vanishing spread, or collinear probe schedules) cannot identify $(C_0, C_1, c)$, a cliff we hit twice in the wild (\S\ref{sec:experiments}). \textbf{Anchor (T7).} With budget $B$ and horizon $T$, fitting the structural family beats nonparametric slope estimation iff the misspecification at the operating point is below $|\tau'''|B/(3\gpo T)$: \citet{lin2024plugin}'s message sharpened to a budget-priced rule.
+
+\textbf{The agent.} SafeD-PerfGD composes the three results per deployment round: (i) \emph{explore} on the D-optimal three-point support re-centered at the operating point, trust-region clipped; (ii) \emph{fit} $(C_0, C_1, c)$ by profile least squares with an anytime self-normalized confidence width $\mathrm{ci}_t$ for $\hat\eps$; (iii) \emph{gate}: apply the performative correction $-(h-\psi)\hat\eps$ with Newton scaling $\eta = 1/\hat\gamma_{\mathrm{PO}}$ only if $\eta\,\mathrm{ci}_t\,L_{\mathrm{fam}} \le \text{margin}$, where the perturbed-modulus lemma (L4), with the family's own Lipschitz constant $L_{\mathrm{fam}} = 1 + \hat c\,|h - \psi|$, certifies the closed-loop modulus; (iv) otherwise \emph{freeze} the correction: the blind step, provably stable at $m<1$, keeps running. The freeze is derived, not tuned. Safety holds on the confidence-sequence event, and certification is not free: the gate opens only after design energy accumulates, which by Theorem~\ref{thm:exchange} \emph{is} a regret payment (Figure~\ref{fig:gate}).
+
+\section{Verified results}
+\label{sec:experiments}
+
+Every claim above is a preregistered row in a measured-vs-predicted harness on the live pipeline: \textbf{36 rows, 0 failures} (35 pass, one deliberately out-of-scope drift cell measured, not excused). Eleven pivots were forced by measurement and recorded in code; three became results (the feedback floor, Theorem~\ref{thm:reach}'s reach, and its below-reach witness), and the derivation suite's falsification record supplies a fourth, the false $\hpo$-anchored identity. Headline rows are in Table~\ref{tab:results}, Appendix~\ref{app:table}.
+
+
+
+\textbf{Baselines.} Against finite-difference PerfGD \citep{izzo2021learn}, zeroth-order P\&L optimization, a performative-confidence-bounds explorer \citep{jagadeesan2022regret}, and blind RRM on identical environments, none Pareto-dominates SafeD-PerfGD on median (final error, regret) over $12$ seeds; the unsafe gradient baseline pays $>5\times$ its median regret. We deliberately report: the UCB explorer attains \emph{lower raw regret} and edges SafeD in one of the twelve seeds; certification is a real cost, and its visibility is the thesis. \textbf{Second economy.} Transplanted unchanged to LQ performative pricing (deployed price anchors demand), the exchange rate is exact in all four cells (A1 is global in LQ, so the drift vanishes) and the agent reaches the pricing optimum ($12.65$ vs.\ $12.5$, tail-averaged) once its probes were randomized (alternating probes make price and lag collinear: T6 in the wild). \textbf{Real data.} On \citet{reflex2026}'s public-data corporate-bond calibration (10 rating$\times$regime cells), the port matches the published REFLEX run in \textbf{10/10} cells ($h^*$, $\eps^* = \gamma$, $m$ within $0.8\%$; validation inputs live in the REFLEX repository), then extends it: $\gpo$ spans $510.6$ to $2.3$; echo-chamber gaps are $1.9$--$4.3\%$ of the anchor spread; and the shaping dispersion is $F = 1.63$ \emph{across} the portfolio against $1.002$ within one book: the shaping gain lives across ratings and regimes, where a desk allocates exploration.
+
+\paragraph{Limitations and outlook.}\label{sec:limits} The identity is local (A1): wide-side probing undercuts it at finite amplitude and the saturating cell drifts $+16\%$, so the $o(1)$ qualifier is load-bearing. So is the trust region: beyond the reach the floor provably fails (Theorem~\ref{thm:reach}(ii)). The value-budget floor is proved to within $13.5\times$; the sharp constant $\tfrac12$ is numerically supported, not proved, at any prior class. At matched transit energy full-support jitter identifies on par with the design (advantage: small-amplitude, allocational); calibrated moduli are deeply stable and the toxic channel structurally scaled: the real-data leg validates machinery, not effect size.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\clearpage
+\appendix
+
+\section{Theorem statements (register copy)}
+\label{app:theorems}
+\input{theorems_body}
+
+\section{Proofs}
+\label{app:proofs}
+\input{proofs_body}
+
+\section{Complete derivations}
+\label{app:derivations}
+
+This appendix reproduces the full derivation record behind every register
+result: the model's closed forms, both budgets, and every intermediate
+computation, including the measurement-forced corrections recorded where
+they happened. Sections carry the derivation-record identifiers (D0--D9)
+that the register and Appendices~\ref{app:theorems}--\ref{app:proofs}
+cite.
+
+\input{derivations_body}
+
+\section{Selected verification rows}
+\label{app:table}
+
+\begin{table}[h]
+\centering
+\small
+\caption{Selected verification rows (full table, seeds, and code in the repository).}
+\label{tab:results}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Claim (register) & Measured & Predicted & \\
+\midrule
+Exchange rate, $m{=}0.3$, two amplitudes (T2) & $0.01062,\ 0.01070$ & $0.01056$ & pass \\
+Exchange rate, $m{=}0.6$, two amplitudes (T2) & $0.00549,\ 0.00569$ & $0.00535$ & pass \\
+Saturating environment (outside A1) & $+16\%$ over rate & out of scope & drift \\
+Feedback floor, $m{=}0.3/0.6/0.85$ (T1 corollary; E1) & within $0.2$--$6.4\%$ & $(\sigma/\gamma)^2/(1{-}m^2)$ & pass \\
+Design arm $\mathrm{sd}(\hat c)$; jitter/design ratio (T6) & $0.234$; $7.8\times$ & Fisher $0.248$; $\ge 3$ & pass \\
+SafeD reaches $\hpo$; trust region (L4) & $1.258$; $0$ violations & $1.296$; $0$ & pass \\
+Isotropic/A-optimal risk ratio, $d{=}8$ (T5) & $1.529$ & $F = 1.506$ & pass \\
+Nonparametric MSE at $(B,T)$ optimum (T7) & $0.0132$ & $0.0123$ & pass \\
+Pricing domain, 4 cells (T2, exact: LQ); agent & $0.384,\ 0.192$; $12.65$ & $0.384,\ 0.192$; $12.5$ & pass \\
+Multi-bond shaped/iso steady-state risk (T5) & $1.20$ (flat control $1.00$) & $>1.15$ ($\approx 1$) & pass \\
+Within-reach min CR ratio; witness beyond (T9) & $1.0005$; $0.8517$ & $\ge 1$; $< 1$ & pass \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Additional figures}
+\label{app:figures}
+
+\begin{figure}[h]
+\centering
+\begin{minipage}{0.48\textwidth}
+\includegraphics[width=\textwidth]{fig2_saturation.png}
+\end{minipage}\hfill
+\begin{minipage}{0.48\textwidth}
+\includegraphics[width=\textwidth]{fig6_open1.png}
+\end{minipage}\\[4pt]
+\begin{minipage}{0.48\textwidth}
+\includegraphics[width=\textwidth]{fig5_baselines.png}
+\end{minipage}\hfill
+\begin{minipage}{0.48\textwidth}
+\includegraphics[width=\textwidth]{fig7_realdata.png}
+\end{minipage}
+\caption{\textbf{Top left:} information saturation: measured loop energy against the cap $d_0^2/(1-m^2)$ (T1). \textbf{Top right:} best Cram\'er--Rao ratio with one tight probe at $t$ over the coarse weight grid ($w \ge 0.05$): at appreciable weight, tight probes only hurt. The below-reach violation of Theorem~\ref{thm:reach}(ii) lives outside this family (a vanishing-weight probe, $3{\times}10^{-4}$, inside an asymmetric cluster), which is exactly why the coarse scan missed it. \textbf{Bottom left:} baseline Pareto frontier: no baseline dominates SafeD-PerfGD on median (final error, regret), 12 seeds. \textbf{Bottom right:} the paper's constants on the REFLEX calibration, 10 rating$\times$regime cells.}
+\end{figure}
+
+\section{Reproducibility}
+\label{app:repro}
+
+All results are deterministic from seeds, numpy-only, CPU-only; reported final errors are $300$-step tail averages over the deployed path, stable within $0.01$ under horizon perturbation (worst measured spread $0.0062$; the repository's stability report audits every cell at five horizons). The repository contains: the derivation documents and theorem register (26 results; 38 numerical derivation checks), the pipeline (environments, estimators, designs, agents, baselines; 36 measured-vs-predicted rows; 9 unit tests), the real-data leg with its 10/10 port validation, and continuous integration running the verification suites on every push. The register of eleven measurement-forced pivots, each recorded in the code where it happened, with the failed prediction and the fix, is in the repository README.
+
+\end{document}
