@@ -1,4 +1,4 @@
-# PRICE (the price of self-knowledge) - complete paper repository
+# ML x OR 2026
 
 | Folder | What it is | Verification |
 |---|---|---|
