@@ -1,4 +1,4 @@
-# ML x OR 2026 - minimax estimation
+# ML x OR 2026 - Minimax Estimation
 
 | Folder | What it is | Verification |
 |---|---|---|
