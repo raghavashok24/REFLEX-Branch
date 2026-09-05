@@ -1,0 +1,45 @@
+\begin{thebibliography}{6}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Drusvyatskiy and Xiao(2023)]{drusvyatskiy2022stochastic}
+Dmitriy Drusvyatskiy and Lin Xiao.
+\newblock Stochastic optimization with decision-dependent distributions.
+\newblock \emph{Mathematics of Operations Research}, 48\penalty0 (2):\penalty0
+  954--998, 2023.
+
+\bibitem[Hardt and Mendler-D{\"u}nner(2023)]{hardt2023performative}
+Moritz Hardt and Celestine Mendler-D{\"u}nner.
+\newblock Performative prediction: Past and future.
+\newblock \emph{arXiv preprint arXiv:2310.16608}, 2023.
+
+\bibitem[Izzo et~al.(2021)Izzo, Ying, and Zou]{izzo2021learn}
+Zachary Izzo, Lexing Ying, and James Zou.
+\newblock How to learn when data reacts to your model: Performative gradient
+  descent.
+\newblock In \emph{Proceedings of the 38th International Conference on Machine
+  Learning (ICML)}, 2021.
+
+\bibitem[Miller et~al.(2021)Miller, Perdomo, and Zrnic]{miller2021outside}
+John Miller, Juan~C. Perdomo, and Tijana Zrnic.
+\newblock Outside the echo chamber: Optimizing the performative risk.
+\newblock In \emph{Proceedings of the 38th International Conference on Machine
+  Learning (ICML)}, 2021.
+
+\bibitem[Nagarajan and Ashok(2026)]{reflex2026}
+Vignesh Nagarajan and Shriraghav Ashok.
+\newblock {REFLEX}: Reflexive equilibrium fixed-point learning for endogenous
+  exchanges.
+\newblock \emph{arXiv preprint arXiv:2608.16155}, 2026.
+
+\bibitem[Perdomo et~al.(2020)Perdomo, Zrnic, Mendler-D{\"u}nner, and
+  Hardt]{perdomo2020performative}
+Juan~C. Perdomo, Tijana Zrnic, Celestine Mendler-D{\"u}nner, and Moritz Hardt.
+\newblock Performative prediction.
+\newblock In \emph{Proceedings of the 37th International Conference on Machine
+  Learning (ICML)}, 2020.
+
+\end{thebibliography}
