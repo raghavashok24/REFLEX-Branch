@@ -1,0 +1,422 @@
+\documentclass{article}
+
+% MATH-AI 2026 (The 6th Workshop on Mathematical Reasoning and AI, NeurIPS
+% 2026, Atlanta). 4-page main body, NeurIPS 2026 workshop format, unlimited
+% references, trimmed appendix. Double-blind, per the CFP: anonymous author
+% block, no identifying URLs, prior work cited in third person. Add ",final"
+% at camera-ready (which allows 5 body pages).
+\usepackage[dblblindworkshop]{neurips_2026}
+\workshoptitle{The 6th Workshop on Mathematical Reasoning and AI (MATH-AI)}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{amsfonts}
+\usepackage{nicefrac}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{macros}
+
+\graphicspath{{figures/}}
+
+\title{A Proof Attempt Told the Search Where to Look:\\
+A Case Study in Machine-Assisted Mathematical Research}
+
+\author{%
+  Anonymous Author(s) \\
+  Affiliation \\
+  Address \\
+  \texttt{email} \\
+}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+We report a research loop in which a numerical search and a human proof
+attempt corrected each other, in enough detail that the mechanism is
+visible. An adversarial machine search over experimental designs suggested
+that a certain estimation-theoretic lower bound could not be beaten even by
+an adversary who knows the model's functional form. The best ratio it found
+after thousands of designs was $1.005$, so we wrote the bound down as
+structure-proof. The proof we then wrote did not cover that claim. It
+established the bound only within two curvature lengths of the anchor point,
+and the obstruction was a single inequality that fails outside that region.
+Searching exactly where the proof stopped produced a counterexample: a
+four-point design with one far probe of weight $3\times 10^{-4}$, attaining
+ratio $0.8517$, verified at 50-digit precision. The earlier verdict was a
+search artifact, and the result is now two-sided and exact. Neither half of
+the loop found this alone. We place the episode inside a larger body of
+machine-checked mathematics on the cost of self-knowledge in performative
+prediction, in which eleven measurement-forced pivots are recorded in the
+code where each occurred.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:intro}
+
+This paper is about how a piece of mathematics got made, and it uses one
+concrete body of theory as the specimen. Our answer to the venue's guiding
+question is narrow and, we hope, checkable. In the loop we ran, machines were
+good at refuting and at certifying, people were good at proving, and the
+interesting events happened where the two disagreed. We document one such
+event completely, then ask how far it generalizes using ten more of its own
+kind.
+
+The specimen is a theory of what it costs a decision-maker to learn how its
+own deployed actions reshape the world it then retrains on. Section
+\ref{sec:substrate} says what that means in plain terms. What matters here is
+that the theory is large enough to have a texture: proved theorems,
+numerically supported conjectures, and a live simulation pipeline, each of
+which turned out capable of correcting the others. Over its development,
+measurement forced eleven changes to claims that had already been written
+down, and each pivot is recorded in the code file where it happened.
+
+We lead with the eleventh, because it is the one where the two halves of the
+loop needed each other. A machine search believed a statement. A human proof
+attempt failed to reach the statement, and failed in a way that named the
+exact region where it stopped. A second machine search, aimed only at that
+region, refuted the statement.
+
+\textbf{What this paper is not.} It is not an autonomous mathematical agent,
+and we make no claim in that direction. The proofs here were written by
+people. What was automated is numerical checking against declared tolerances,
+adversarial search over designs, and high-precision verification of candidate
+witnesses. Section \ref{sec:loop} draws that line explicitly.
+
+\textbf{Contributions.}
+\begin{enumerate}\itemsep1pt\topsep2pt\parsep0pt
+\item A reproducible account of one proof-and-search correction cycle, from
+the false belief through the failed proof to the frozen counterexample
+(Section \ref{sec:t9}). The resulting statement, Theorem \ref{thm:reach}, is
+two-sided and exact.
+\item Ten further measurement-forced pivots from the same project, three of
+them the same pattern at smaller scale, and an account of what that sample
+does and does not support (Section \ref{sec:loop}).
+\item The infrastructure that made the correction detectable: a theorem
+register carrying per-result proof status, preregistered numerical checks
+with tolerances declared before the run, and continuous integration over the
+derivation suite (Section \ref{sec:loop}), all shipped as an anonymized
+repository in the supplementary material.
+\end{enumerate}
+
+\section{The mathematical substrate, briefly}
+\label{sec:substrate}
+
+This section says what the theory is about, so that the counterexample in
+Section \ref{sec:t9} has something to be a counterexample to. A reader who
+wants only the case study can take Theorem \ref{thm:exchange} on faith.
+
+Consider a decision-maker whose deployed action changes the data it will
+later retrain on. A dealer who quotes a wide spread sees different order flow
+than one who quotes a tight spread, so the flow it must price is partly its
+own doing. This is performative prediction
+\citep{perdomo2020performative,hardt2023performative}: retraining becomes a
+fixed-point iteration, and it converges to a point that is not the one
+maximizing value. Algorithms that close that gap
+\citep{izzo2021learn,miller2021outside,drusvyatskiy2022stochastic} all need
+an estimate of how the distribution responds to the action, and they get it
+by perturbing deployments. Those perturbations are deployments of a real
+decision variable, so their cost lands in the decision-maker's own objective.
+
+Write $h$ for the scalar action, $\hstar$ for the operating point the
+decision-maker would choose if it already knew everything, and
+$\dev_t = h_t - \hstar$ for the deviation deployed at round $t$. Let $\eps$
+be the response slope to be estimated, $\sigma^2$ the observation noise
+variance, $\Phi$ the value function, and $\gpo$ its curvature at $\hstar$.
+The cost of exploring is the value forgone,
+$C_T = \sum_{t \le T}\E[\Phi(\hstar) - \Phi(h_t)]$. Formal statements are in
+Appendix \ref{app:statements}.
+
+\begin{theorem}[Exchange rate; T2]
+\label{thm:exchange}
+Along any stationary exploration policy, for the least-squares slope
+estimator,
+$\Var(\hat\eps)\times C_T = \tfrac{1}{2}\gpo\sigma^2\,(1 + o(1))$,
+independent of the exploration amplitude, shape, schedule, and of how
+strongly the loop contracts.
+\end{theorem}
+
+Learning how your own deployment moves the world costs a fixed amount. You
+can choose what to buy with it, but not how much to pay. The mechanism is a
+cancellation. Information accumulates as the centered energy of the design,
+cost accumulates as half the curvature times that same energy, and for
+mean-centered exploration the two coincide.
+
+Three further results sit around that identity, all in Appendix
+\ref{app:statements}. No policy at all can beat the product, only match it
+(T3, T4). The cheapest way to spend a multidimensional budget is to probe
+where the objective is flat (T5a, C5.1). And a deployed agent can be made to
+correct only when a confidence sequence certifies that correcting cannot
+destabilize the retraining loop (L4, P7.1). The theory was also instantiated
+on a calibrated real-data problem and on a second economy, both in Table
+\ref{tab:results}.
+
+\section{The lead story: a belief, a proof that missed it, and a witness}
+\label{sec:t9}
+
+Theorem \ref{thm:exchange} is a statement about one estimator on one class of
+policies, and the minimax floors T3 and T4 extend it to all policies and
+all estimators. Both leave a natural question open. Suppose the adversary knows
+the functional form of the response, not just its slope. Concretely, suppose
+it knows that the response is $\tau_\theta(h) = C_0 + C_1 e^{-ch}$ and has
+only to learn the three parameters. Knowing the form is real information, so
+it might buy a design that beats the floor. Does it?
+
+\textbf{The machine's answer, and why we believed it.} We asked a search. For
+each candidate design $\mu$ the relevant quantity is the Cram\'er--Rao
+product normalized by the floor,
+$R(\mu) = (g^\top M(\mu)^{-1} g)\int (h-\hstar)^2 d\mu$, where $M(\mu)$ is
+the design's Fisher information and $g$ is the gradient of the estimand. The
+floor survives structural knowledge exactly when $R(\mu)\ge 1$ for every
+$\mu$. Four thousand random designs plus 2,500 local refinements returned a
+minimum of $R = 1.0050$, and a systematic scan over designs pairing two
+near-anchor points with one distant probe found distant probes monotonically
+worse, reaching $R = 40.9$ at the grid's furthest. Two independent strategies
+agreeing is the kind of evidence that gets written down, and we wrote it
+down: the floor is structure-proof, best attained ratio $1.005$.
+
+\textbf{The proof did not reach the claim.} The proof attempt reduces
+$R(\mu)$ to a one-dimensional problem. A generalized Rayleigh identity gives
+$R(\mu) = \int d^2\, d\mu \,/\, \inf\{\int \phi^2 d\mu\}$, where $d(h) = h -
+\hstar$ and the infimum runs over functions $\phi$ in the span of the model's
+sensitivity components, normalized by $\phi'(\hstar) = 1$. So it suffices to
+exhibit one such $\phi$ that is pointwise dominated by $|d|$. There is a
+canonical candidate, the unique element of the span with the right 2-jet at
+the anchor:
+\[
+\phi_0(h) \;=\; \frac{2}{c} - e^{-c(h-\hstar)}\Big(\frac{2}{c} + h - \hstar\Big).
+\]
+Writing $x = h - \hstar$, the required domination $|\phi_0| \le |x|$ holds for
+every $x \ge -2/c$, with equality only at $x = 0$ and $x = -2/c$. That is a
+clean elementary argument (Appendix \ref{app:proofs}). It is also the whole
+story, because for $x < -2/c$ the domination does not merely resist proof. It
+is false, and it fails exponentially, since $\phi_0(x) = 2/c +
+e^{c|x|}(|x| - 2/c)$ there. The proof therefore delivered the floor on
+$[\hstar - 2/c, \infty)$ and nowhere else, and it named the boundary.
+
+\textbf{Searching where the proof stopped.} The failed step is not a gap in
+the argument. It is a location. We re-ran the adversarial search twice, once
+restricted to the reach and once with support allowed far below it. Inside
+the reach, a hardened search (three runs of 30,000 random designs plus
+10,000 refinements) returned $R = 1.00054$, consistent with the proof and
+with an infimum of exactly $1$. Allowed below the reach, the same search
+found $R = 0.85164$. The witness is a four-point design with support
+$\{1.8726,\, 1.8665,\, 1.3073,\, 0.0500\}$ and weights
+$\{0.003329,\, 0.955702,\, 0.040697,\, 0.000272\}$, in the register market
+with $c = 1.5$ and anchor $\hstar = 1.8461$. Every support point except the
+one at $0.05$ lies inside the reach, so that single below-reach probe of
+weight $3\times 10^{-4}$ is what breaks the floor. We froze the design and
+recomputed its ratio at 50-digit precision with \texttt{mpmath}, obtaining
+$0.851650\ldots$; the check now runs on every push as V9.2.
+
+\begin{figure}[t]
+\centering
+\begin{minipage}{0.335\textwidth}
+\includegraphics[width=\textwidth]{fig1_exchange_rate.png}
+\end{minipage}\hspace{0.03\textwidth}
+\begin{minipage}{0.335\textwidth}
+\includegraphics[width=\textwidth]{fig6_open1.png}
+\end{minipage}
+\caption{\textbf{Left:} the exchange rate of Theorem \ref{thm:exchange}.
+Measured $\Var(\hat\eps)\times C_T$ against exploration amplitude at two
+contraction moduli, flat on the invariant (dashed). \textbf{Right:} the
+search that produced the false verdict. Best Cram\'er--Rao ratio with one
+tight probe at $t$, over the coarse weight grid with $w \ge 0.05$. On this
+family tight probes are monotonically worse, which is what we believed. The
+counterexample lives outside it: probe weight $3\times 10^{-4}$, inside an
+asymmetric cluster the search never generated.\label{fig:two}}
+\end{figure}
+
+\textbf{Why the first search missed it, exactly.} Two gaps, both now
+identified. The scan's weight grid never went below $0.05$, and the violating
+probe carries $3\times 10^{-4}$. The random search did generate distant
+probes, but always alongside a symmetric near-anchor pair, and
+symmetric-pair-plus-far-probe families never break the floor: their ratio
+approaches $1$ from above as the probe weight vanishes. The violation
+requires the asymmetric cluster. The earlier verdict was therefore neither
+noise nor a coding error. It was a correct summary of a search space that
+happened to exclude the answer, and nothing inside that search could have
+revealed the exclusion.
+
+\begin{theorem}[Structure-proofness, exact reach; T9]
+\label{thm:reach}
+(i) Every estimable design supported in $[\hstar - 2/c, \infty)$ satisfies
+$R(\mu) \ge 1$, strictly except on one two-point configuration, and
+$\inf_\mu R(\mu) = 1$. Within reach, knowing the family cannot beat the
+floor. (ii) The reach is exact: the four-point witness above attains
+$R = 0.8517$.
+\end{theorem}
+
+\textbf{The corrected result explains itself.} The two-sided statement says
+something the one-sided belief did not. Structure-proofness is an
+ignorance-of-curvature phenomenon with an exactly known extent. A design
+reaching far enough below the anchor learns the curvature parameter $c$
+cheaply enough to bank that cheapness rather than pay for it, and the floor
+stops binding. Two boundary checks confirm the reading. With $c$ known a
+priori, so that the ignorance is gone, the floor breaks outright and keeps
+falling with no limit the scan reaches ($R = 0.3002$ at probe $t = 1.0$,
+$0.0425$ at $t = 0.05$, $0.0348$ and still decreasing at $t = 0.001$). And the
+reach is exactly where a trust-region agent can deploy, since its clip is
+$r \le 0.8 < 2/c = 1.333$: the constraint that keeps it safe is the one that
+keeps its lower bound valid. That was read off the corrected theorem, not
+designed.
+
+\section{The loop, and what it generalizes to}
+\label{sec:loop}
+
+One episode is an anecdote. This section gives the sample it sits in and
+states what that sample supports.
+
+\textbf{The division of labour.} Automated: numerical evaluation of every
+closed form against a simulation, at tolerances declared before the run;
+adversarial search over designs; high-precision arithmetic on frozen
+candidates; regression checking on every push. Not automated: every proof in
+this work, every choice of what to conjecture, and the decision to search
+below the reach. The machine in this loop is a fast, tireless, uncreative
+referee. It never proposed a theorem. It refuted several, and in the eleventh
+case only after a human argument told it where to look.
+
+\textbf{Eleven pivots, three of them the same shape.} Measurement forced
+eleven changes to written-down claims, and three repeat the lead story at
+smaller scale. In E1, a saturation cap derived without noise failed by a
+factor of four against the noisy pipeline; the gap was a missing term, since
+retraining on noisy observations adds a stationary excitation floor of
+$(\sigma/\gamma)^2/(1-m^2)$ per step, now itself verified within $0.2$ to
+$6.4$ percent. In E5, an injected misspecification $a e^{-2ch}$ had decayed
+to about $10^{-3}$ by the operating point, so the anchored fit correctly
+never saw it; replacing it with a linear leak the family cannot represent
+produced the crossover the theory predicts. In E7, a claimed threefold
+advantage for shaped exploration collapsed to parity once the comparison arm
+was funded with the same energy, the unshaped arm having been given $r^2/3$
+per step against the design's $2r^2/3$; the corrected claim is sharper, since
+the identification cliff is a support and amplitude phenomenon rather than a
+shape phenomenon. In each case the replacement was a stronger statement than
+the claim it displaced.
+
+\textbf{What the sample supports.} A modest and specific thing: on this
+project, numerical falsification was cheap and frequent, and it improved
+claims rather than merely deleting them. It supports no claim about proof
+automation, about other areas of mathematics, or about what happens without a
+person deciding where to look. The eleventh pivot needed a proof to produce
+the region, and no further search inside the original space would have found
+it.
+
+\textbf{The infrastructure, which is the transferable part.} A theorem
+register lists all 26 results with per-result proof status, distinguishing
+proved, proved for a stated class, and proved conditional on a hypothesis, so
+a numerically supported conjecture cannot quietly be cited as a theorem. A
+preregistered harness compares each measurement to a closed form at a
+tolerance fixed before the run; the state is 36 rows with 0 failures, one of
+them a deliberately out-of-scope cell reported as drift rather than excused.
+A derivation suite of 38 checks runs in continuous integration, and its first
+runs falsified three drafted claims, one with the wrong predicted sign. Every
+pivot is written into the code file where it occurred, which is why the
+eleventh survives as a record and not as a memory.
+
+\textbf{The honesty discipline is part of the contribution.} We report the
+drift cell as drift. We label the sharp constant $\tfrac12$ in T4 as
+numerically supported and open, since what is proved is the constant-factor
+version. And we say plainly that our own written verdict of
+structure-proofness was a search artifact. A record containing only successes
+cannot calibrate how much to trust the next numerical verdict, which is the
+only reason to keep one.
+
+\textbf{Limitations.}\label{sec:limits} Theorem \ref{thm:exchange} is local
+and its $o(1)$ is load-bearing: wide-side probing at finite amplitude
+undercuts the identity, and the out-of-scope saturating cell drifts $+16$
+percent. The value-budget floor T4 is proved only to within a factor of
+$13.5$ of the conjectured constant. Theorem \ref{thm:reach}(ii) lives inside
+the local-quadratic cost model, where under the true cost the same witness
+has ratio $1.0112$, so the violation concerns the floor's own scope and not
+the underlying market. Which below-reach designs violate it, and by how much
+at most, is open. And this section rests on eleven pivots from one project by
+one group, which is a sample and not a study.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\clearpage
+\appendix
+
+\section{Assumptions and statements}
+\label{app:statements}
+\input{appendix_statements}
+
+\section{Proofs}
+\label{app:proofs}
+\input{appendix_proofs}
+
+\section{Verification rows}
+\label{app:table}
+
+\begin{table}[h]
+\centering
+\small
+\caption{Selected rows from the preregistered check harness. The full table
+(36 rows, 0 FAIL), all seeds, tolerances, and code are in the supplementary
+repository. The drift row is a deliberately out-of-scope cell, measured and
+reported rather than excused.}
+\label{tab:results}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Claim (register) & Measured & Predicted & \\
+\midrule
+Exchange rate, $m{=}0.3$, two amplitudes (T2) & $0.01062,\ 0.01070$ & $0.01056$ & pass \\
+Exchange rate, $m{=}0.6$, two amplitudes (T2) & $0.00549,\ 0.00569$ & $0.00535$ & pass \\
+Saturating environment (outside A1) & $+16\%$ over rate & out of scope & drift \\
+Feedback floor, $m{=}0.3/0.6/0.85$ (T1 corollary) & within $0.2$--$6.4\%$ & $(\sigma/\gamma)^2/(1{-}m^2)$ & pass \\
+Design arm $\mathrm{sd}(\hat c)$; jitter/design ratio (T6) & $0.234$; $7.8\times$ & Fisher $0.248$; $\ge 3$ & pass \\
+Certified agent reaches $\hpo$; trust region (L4) & $1.258$; $0$ violations & $1.296$; $0$ & pass \\
+Isotropic/A-optimal risk ratio, $d{=}8$ (T5a) & $1.529$ & $F = 1.506$ & pass \\
+Nonparametric MSE at $(B,T)$ optimum (T7) & $0.0132$ & $0.0123$ & pass \\
+Second economy, 4 cells (T2, exact in LQ); agent & $0.384,\ 0.192$; $12.65$ & $0.384,\ 0.192$; $12.5$ & pass \\
+Multi-book shaped/isotropic steady-state risk (T5a) & $1.20$ (flat control $1.00$) & $>1.15$ ($\approx 1$) & pass \\
+Real-data calibration port, 10 cells & $10/10$ reproduce & within $0.8\%$ & pass \\
+Within-reach min CR ratio; witness beyond (T9) & $1.0005$; $0.8517$ & $\ge 1$; $< 1$ & pass \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Reproducibility and scope of this version}
+\label{app:repro}
+
+\textbf{What ships.} The supplementary repository contains the derivation
+documents and the theorem register (26 results, 38 numerical derivation
+checks), the simulation pipeline (environments, estimators, designs, agents,
+baselines; 36 measured-versus-predicted rows; 9 unit tests), the real-data
+port with its 10-cell validation, and the eleven-pivot record in the pipeline
+README. Both verification suites run in continuous integration on every push
+in the project repository; the two workflow files are not part of this
+anonymized copy. The structural market used throughout, and the corporate-bond
+calibration behind the real-data row of Table \ref{tab:results}, are those of REFLEX
+\citep{reflex2026}, on which this work builds. All results are deterministic from seeds, numpy-only, and CPU-only.
+Reported final errors are 300-step tail averages over the deployed path,
+stable within $0.01$ under horizon perturbation, with a worst measured spread
+of $0.0062$.
+
+\textbf{What is stated here but not proved here.} This version proves
+Theorem \ref{thm:exchange} and Theorem \ref{thm:reach}, the two results the
+body argues from. The minimax floors and the design and certification
+results (T3, T4, T5a, C5.1, T6, T7, L4, P7.1) are stated in Appendix
+\ref{app:statements} and proved in the supplementary repository, in
+\texttt{mlxor-derivations/latex/proofs.tex} and the corresponding derivation
+documents, with the register recording each result's proof status.
+
+\textbf{Provenance of the numbers.} Every quantity in the body and in Table
+\ref{tab:results} is copied from a committed artifact:
+\texttt{results/RESULTS.md} for the harness rows, \texttt{results/OPEN1.md}
+for the reach, the witness, and the search history,
+\texttt{results/REALDATA.md} for the calibration port,
+\texttt{results/STABILITY.md} for the tail-average stability,
+\texttt{results/full\_run.log} for quantities not surfaced in the summary
+tables, and \texttt{THEOREMS.md} for the register. The runs behind them were
+executed and recorded on 1 September 2026. This version re-narrates them and
+does not re-run them, since none of its changes touch their inputs.
+
+\end{document}
