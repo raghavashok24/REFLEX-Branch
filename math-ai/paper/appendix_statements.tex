@@ -1,0 +1,191 @@
+
+This appendix collects the standing assumptions and the formal statements of
+every result the body refers to, and nothing else. Identifiers (L1, T2, T9,
+and so on) are the register identifiers used throughout the supplementary
+repository, so each statement here can be matched to its derivation
+document, its proof, and its numerical checks. The register itself, with
+per-result proof status, is \texttt{mlxor-derivations/THEOREMS.md}.
+
+\subsection{Standing assumptions}
+
+\textbf{A1} (local quadratic scope): $\Phi$ is $C^3$ and strongly concave on
+the operating interval, with expansions taken at $\hstar$ and third-order
+remainder bounded by $L_3 = \sup|\Phi'''|$.
+\textbf{A2} (exploration class): all policies are non-anticipating; A2-sym
+adds $\E[u_t \mid \mathcal{F}_t] = 0$, A2-adaptive is
+unrestricted, and costs are measured from the certainty-equivalent anchor.
+\textbf{A3} (noise exogeneity): the observation noise $\zeta_t$ is i.i.d.,
+mean zero, variance $\sigma^2$, independent of $\mathcal{F}_t$. A3$'$ relaxes
+this to a feedback channel with gain $\phi$.
+\textbf{A4} (trust region): $|\dev_t| \le r$ pathwise.
+\textbf{A5} (stationary scale): $S_T = \Theta(T)$.
+\textbf{A6} (stable base loop): the retraining modulus satisfies $m < 1$.
+
+The local dynamics are $\dev_{t+1} = -m\,\dev_t + u_t$ with
+$\dev_t = h_t - \hstar$, observations
+$\tau_t = \tau(\hstar) - \eps\,\dev_t + \zeta_t$, and $\Phi$ satisfying
+$\Phi'(\hstar) = \delta_0$ and $-\Phi'' = \gpo$ at the operating point.
+$\Sxx$ denotes the centered design energy $\sum_{t\le T}(\dev_t -
+\bar\dev)^2$.
+
+\subsection{The exchange rate and its floors}
+
+\begin{lemma}[Cost equivalence; L1]
+\label{lem:cost}
+Under A1--A3 with conditionally symmetric exploration, the expected
+incremental performative cost satisfies
+$C_T = \tfrac{1}{2}\gpo\,\E\!\big[\sum_{t\le T}\dev_t^2\big] + R_T$ with
+$|R_T| \le \tfrac{L_3}{6}\,\E\sum_t |\dev_t|^3$, and the realized cost's
+variance decomposes exactly as
+$\Var(C_T^{\mathrm{real}}) = \delta_0^2\,\Var\!\big(\sum_t \dev_t\big)
++ \tfrac{\gpo^2}{4}\,\Var\!\big(\sum_t \dev_t^2\big)$
+with vanishing cross term.
+\end{lemma}
+
+\begin{theorem}[Information saturation; T1]
+\label{thm:sat}
+With no deliberate exploration and $\rho(M)<1$, the total design energy of
+the retraining trajectory equals $\dev_0^\top P\,\dev_0$, where $P$ solves
+the discrete Lyapunov equation $P = I + M^\top P M$. Consequently the Fisher
+information for the response Jacobian is bounded in every direction,
+uniformly in the horizon. In the scalar case the cap is
+$\dev_0^2/(1-m^2)$, strictly increasing in $m$: a fast-contracting loop
+reveals least about its own performativity (C1.1). Under the noisy feedback
+channel A3$'$ the trajectory additionally carries a stationary excitation
+floor of $(\sigma/\gamma)^2/(1-m^2)$ per step.
+\end{theorem}
+
+The body's Theorem \ref{thm:exchange} is the asymptotic form of the following
+pathwise identity, which is what is proved in Appendix \ref{app:proofs}.
+
+\begin{theorem}[The exchange rate, pathwise; T2]
+\label{thm:t2exact}
+Under A1, A2-sym, A3 and A6, in the stationary regime, on every realization,
+\[
+\Var(\hat\eps \mid \mathrm{design}) \times \tfrac{1}{2}\gpo \sum_{t\le T}
+\dev_t^2 \;=\; \tfrac{1}{2}\,\gpo\,\sigma^2\Big(1 +
+\tfrac{T\,\bar{\dev}^2}{\Sxx}\Big)
+\;=\; \tfrac{1}{2}\,\gpo\,\sigma^2\,\big(1 + O_P(1/T)\big),
+\]
+independent of the exploration intensity, the horizon, and the modulus.
+\end{theorem}
+
+\begin{theorem}[Minimax lower bound, deviation budget; T3]
+\label{thm:t3}
+Over all non-anticipating exploration policies with
+$\sum_{t\le T} \dev_t^2 \le D$ almost surely and all estimators, biased
+included, the minimax risk over an interval of width $w$ satisfies
+$\inf \sup_{\eps} \E[(\hat\eps - \eps)^2] \ge \sigma^2/(D + \sigma^2
+(\pi/w)^2)$, so the exchange-rate product is a floor, attained with equality
+by symmetric probing with least squares.
+\end{theorem}
+
+\begin{lemma}[Exploitation and information; L2]
+\label{lem:l2}
+For the symmetric two-point response family with half-width $\delta$ and any
+non-anticipating policy under the certainty-equivalent anchor,
+$\E[\mathrm{gain}_T] \le g_1\,\delta^{3/2}\,T^{1/2}\,(\E S_T)^{3/4}
+\sigma^{-1/2}$ with $g_1 = \beta\,|\hstar - \psi|$, via the identity
+$\E|\E[s\mid\mathcal{F}_t]| = \TV(P^+_t, P^-_t)$ and Pinsker's inequality.
+At the minimax scale this is an $O(T^{-1/2})$ fraction of the exploration
+cost.
+\end{lemma}
+
+\begin{theorem}[Minimax lower bound, value budget; T4]
+\label{thm:t4}
+Under stationary-scale exploration and the certainty-equivalent anchor, for
+every non-anticipating policy and every estimator,
+$\sup \Var(\hat\eps)\times C_T \ge \gpo\,\sigma^2/27\,(1 - O(T^{-1/2}))$,
+the supremum over the two-point response family at the minimax scale, the
+constant arising from a Le Cam reduction optimized at $c = 2/3$. The sharp
+constant $\tfrac{1}{2}$, against which no simulated policy fell by more than
+Monte Carlo error, is conjectured and is part of the open problem OPEN-1. It
+is not proved here or anywhere in the repository.
+\end{theorem}
+
+\subsection{Design and certification}
+
+\begin{theorem}[A-optimal exploration; T5a]
+\label{thm:t5a}
+Under the value budget $\tr(\Gpo M) \le B$ on the exploration second moment
+$M$, the A-optimal design is $M^{*} = (B/\tr\,\Gpo^{1/2})\,\Gpo^{-1/2}$,
+with value $(\tr\,\Gpo^{1/2})^2/B$: explore where the objective is flat.
+\end{theorem}
+
+\begin{corollary}[Price of isotropic jitter; C5.1]
+\label{cor:c51}
+Isotropic exploration at matched budget overpays the A-optimal design by
+exactly the curvature-dispersion factor
+$F = d\,\tr(\Gpo)/(\tr\,\Gpo^{1/2})^2 \ge 1$, with equality if and only if
+all curvature directions are equal.
+\end{corollary}
+
+\begin{theorem}[Chebyshev unidentifiability; T6]
+\label{thm:t6}
+The sensitivity system of the structural family
+$\tau(h) = C_0 + C_1 e^{-ch}$ is an extended Chebyshev system. Any design
+with fewer than three support points has singular Fisher information, and
+since noiseless retraining trajectories have at most two effective support
+points, no retraining trajectory at any modulus identifies the response
+curvature $c$.
+\end{theorem}
+
+\begin{theorem}[Anchoring crossover; T7]
+\label{thm:t7}
+Under the value budget $B$ and horizon $T$, the budget-and-horizon-optimal
+nonparametric secant estimator has
+$\mathrm{MSE}_{\mathrm{np}} = \gpo\sigma^2/(2B) + (\tau'''(\hstar)/6)^2
+(2B/(\gpo T))^2$, so anchoring to a structural family with misspecification
+$\delta_{\mathrm{mis}}$ wins, to leading order, if and only if
+$\delta_{\mathrm{mis}} < |\tau'''(\hstar)|\,B/(3\,\gpo\,T)$.
+\end{theorem}
+
+\begin{lemma}[Perturbed modulus; L4]
+\label{lem:l4}
+If the corrected update uses an estimated response with $C^1$ error $e$, the
+closed-loop modulus satisfies $|\hat\rho - \rho| \le \eta\,\beta\,
+(\|e\|_\infty + |\hstar-\psi|\,\|e'\|_\infty)$.
+\end{lemma}
+
+\begin{proposition}[Safety under pessimism; P7.1]
+\label{prop:p71}
+Given an anytime-valid confidence sequence for the response parameters at
+level $1-\delta$, the pessimism rule, which keeps the worst-case modulus over
+the confidence set below $1 - c_{\mathrm{margin}}$ and freezes the correction
+otherwise, keeps the realized modulus within the margin for all $t$
+simultaneously with probability at least $1-\delta$. The result is
+conditional on the validity of the confidence sequence, and the register
+records it as such.
+\end{proposition}
+
+\subsection{Structure-proofness}
+
+\begin{theorem}[Structure-proofness of the floor, exact reach; T9]
+\label{thm:t9full}
+Fix the structural family $\tau_\theta(h) = C_0 + C_1 e^{-ch}$
+($C_1 > 0$, $c > 0$), the anchor $\hstar > 0$, the sensitivity
+$s(h) = \partial_\theta \tau_\theta(h)$, and the estimand gradient
+$g = \partial_\theta\,\eps(\hstar) = -s'(\hstar)$. For a finitely supported
+design $\mu$ define the normalized Cram\'er--Rao product
+\[
+R(\mu) \;=\; \big(g^\top M(\mu)^{-1} g\big)\!\int (h - \hstar)^2\,
+d\mu, \qquad M(\mu) = \int s\,s^\top d\mu,
+\]
+so that $R(\mu) \ge 1$ states that the family-knowing Cram\'er--Rao product
+$\Var(\hat\eps)\times C_T$ is at least the exchange-rate floor
+$\tfrac{1}{2}\gpo\sigma^2$ under the local-quadratic (A1) cost, for unbiased
+estimators and, in the local-asymptotic-minimax sense, for all regular
+estimators.
+(i) \emph{Within reach the floor is structure-proof:} if
+$\mathrm{supp}(\mu) \subset [\hstar - 2/c,\,\infty)$, then either
+$\eps(\hstar)$ is not estimable under $\mu$, in which case the bound is
+infinite, or $R(\mu) \ge 1$, strictly whenever $\mu$ places mass off the two
+equality points $\{\hstar,\ \hstar - 2/c\}$; and $\inf_\mu R(\mu) = 1$,
+approached but not attained by symmetric three-point designs collapsing at
+$\hstar$. In particular the floor binds on every trust-region design with
+$r \le 2/c$.
+(ii) \emph{The reach is exact:} the pointwise domination underlying (i) fails
+strictly below $\hstar - 2/c$, and an explicit four-point design with a
+single below-reach probe of weight $3\times 10^{-4}$ attains $R = 0.8517$,
+computer-verified at 50-digit precision as check V9.2.
+\end{theorem}
