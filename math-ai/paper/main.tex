@@ -19,6 +19,7 @@
 \usepackage{microtype}
 \usepackage{graphicx}
 \usepackage{xcolor}
+\usepackage{float}   % [H]: pin Table 1 under its own heading, never float it away
 \usepackage{macros}
 
 \graphicspath{{figures/}}
@@ -352,10 +353,11 @@ one group, which is a sample and not a study.
 \label{app:proofs}
 \input{appendix_proofs}
 
+\clearpage
 \section{Verification rows}
 \label{app:table}
 
-\begin{table}[h]
+\begin{table}[H]
 \centering
 \small
 \caption{Selected rows from the preregistered check harness. The full table
