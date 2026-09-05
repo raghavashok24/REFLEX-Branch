@@ -1,0 +1,178 @@
+
+This appendix proves the two results the body argues from: the exchange
+rate of Theorem \ref{thm:exchange}, in the exact pathwise form
+(Theorem \ref{thm:t2exact}), and the two-sided structure-proofness result
+of Theorem \ref{thm:reach} (Theorem \ref{thm:t9full}). Both proofs are
+reproduced from the derivation repository without change; the check
+identifiers V2.1 and V9.1 to V9.4 refer to its verification suite. Proofs of
+the remaining statements in Appendix \ref{app:statements} are in that
+repository and are not reproduced here.
+
+\subsection*{The cost-equivalence lemma}
+
+\begin{proof}[Proof of Lemma L1 (cost equivalence)]
+Taylor's theorem with Lagrange remainder gives, for each $t$,
+\[
+\Phi(\hstar) - \Phi(h_t)
+ = -\delta_0\,\dev_t + \tfrac{1}{2}\gpo\,\dev_t^2 + r_t,
+ \qquad |r_t| \le \tfrac{L_3}{6}\,|\dev_t|^3,
+\]
+with $L_3 = \sup |\Phi'''|$ on the operating interval. Summing over
+$t \le T$ and taking expectations, it remains to show
+$\E[\sum_t \dev_t] = 0$ under A2-sym. The recursion gives
+$\E[\dev_{t+1} \mid \mathcal{F}_t] = -m\,\dev_t + \E[u_t \mid \mathcal{F}_t]
+= -m\,\dev_t$, so $\E[\dev_{t+1}] = -m\,\E[\dev_t]$ by the tower property,
+and $\E[\dev_t] = (-m)^t\,\E[\dev_0] = 0$ when the loop starts at the
+operating point or in the stationary regime. The quadratic term contributes
+$\tfrac{1}{2}\gpo\,\E[\sum_t \dev_t^2]$, which is the claim.
+
+For the variance decomposition, write the realized cost (net of the cubic
+remainder) as $C = -\delta_0 X + \tfrac{1}{2}\gpo Y$ with
+$X = \sum_t \dev_t$, $Y = \sum_t \dev_t^2$. Then
+$\Var(C) = \delta_0^2 \Var(X) + \tfrac{\gpo^2}{4}\Var(Y)
+- \delta_0\gpo\,\Cov(X, Y)$. Under Gaussian innovations the vector
+$(\dev_1,\dots,\dev_T)$ is jointly Gaussian with mean zero, and every third
+moment of a zero-mean Gaussian vector vanishes; since
+$\Cov(X,Y) = \sum_{t,s}\E[\dev_t\,\dev_s^2]$ is a sum of third moments, it is
+zero. (For non-Gaussian symmetric innovations the same conclusion follows
+from the sign symmetry $\dev \mapsto -\dev$ of the stationary law.)
+Verified: V0.1--V0.3, including the necessity check that an asymmetric rule
+breaks the expectation identity by exactly $-\delta_0\,\E[\sum_t \dev_t]$.
+\end{proof}
+
+\subsection*{The exchange rate}
+
+\begin{proof}[Proof of Theorem T2 (pathwise exchange rate)]
+Under A3, conditionally on the design $\{\dev_t\}$ the observations are
+independent with means linear in $\eps$ and variance $\sigma^2$, so the
+least-squares slope has conditional variance
+$\Var(\hat\eps \mid \mathrm{design}) = \sigma^2/\Sxx$ (Gauss--Markov).
+Multiplying by the quadratic cost $\tfrac{1}{2}\gpo \sum_t \dev_t^2$ and
+using $\sum_t \dev_t^2 = \Sxx + T\bar\dev^2$ gives the displayed identity
+exactly, on every realization. In the stationary regime
+$\bar\dev = O_P(T^{-1/2})$ by the stationary long-run variance $\Var(\sum_{t\le T}\dev_t) = T v (1-m)/(1+m)(1+o(1))$, while
+$\Sxx/T \to v$ a.s., so $T\bar\dev^2/\Sxx = O_P(1/T)$. Verified: V2.1
+(machine precision).
+\end{proof}
+
+
+\subsection*{Structure-proofness, and the exactness of the reach}
+
+\begin{proof}[Proof of Theorem T9 (structure-proofness within reach)]
+Write $x = h - \hstar$, $d(h) = x$, and
+$V = \mathrm{span}\{1,\, e^{-ch},\, h e^{-ch}\}$, the span of the
+components of $s$ (a bijective correspondence $u \leftrightarrow
+\phi_u = u^\top s$ between $\mathbb{R}^3$ and $V$, since $C_1 \neq 0$).
+Differentiating $s$ gives
+$s'(h) = (0,\, -c e^{-ch},\, C_1 e^{-ch}(ch - 1))^\top$, so
+$g = -s'(\hstar)$ componentwise, which is the stated estimand gradient.
+
+\emph{Step 1: one-dimensional reduction.} For $M(\mu) \succ 0$ the
+generalized Rayleigh identity gives
+\[
+g^\top M(\mu)^{-1} g
+ = \sup_{u \neq 0} \frac{(u^\top g)^2}{u^\top M(\mu)\, u}
+ = \sup_{\phi \in V} \frac{\phi'(\hstar)^2}{\int \phi^2\, d\mu}
+ = \Big(\inf\big\{ \textstyle\int \phi^2\, d\mu :
+   \phi \in V,\ \phi'(\hstar) = 1 \big\}\Big)^{-1},
+\]
+using $u^\top M u = \int \phi_u^2\, d\mu$ and $u^\top g =
+-\phi_u'(\hstar)$ (the sign is lost in the square). Hence
+\[
+R(\mu) \;=\; \frac{\int d^2\, d\mu}
+{\inf\{\int \phi^2 d\mu : \phi \in V,\ \phi'(\hstar) = 1\}}.
+\]
+
+\emph{Step 2: the candidate and its pointwise domination.} Let
+\[
+\phi_0(h) \;=\; \frac{2}{c} - e^{-cx}\Big(\frac{2}{c} + x\Big)
+ \;=\; \frac{2}{c}\cdot 1
+ \;-\; e^{c\hstar}\Big(\frac{2}{c} - \hstar\Big)\, e^{-ch}
+ \;-\; e^{c\hstar}\, \big(h e^{-ch}\big) \;\in\; V,
+\]
+the unique element of $V$ with 2-jet $(0, 1, 0)$ at $\hstar$ (the
+2-jet map is invertible on $V$: in the basis $\{1, e^{-ch}, h e^{-ch}\}$
+its determinant is $c^2 e^{-2c\hstar} \neq 0$); the expansion is
+$\phi_0(x) = x - (c^2/6)\,x^3 + O(x^4)$. Writing
+$f(x) = \tfrac{2}{c} - e^{-cx}(\tfrac{2}{c} + x)$ we claim
+\[
+|f(x)| \le |x| \quad \text{for all } x \ge -2/c,
+\qquad \text{with equality iff } x \in \{0, -2/c\},
+\]
+and $|f(x)| > |x|$ strictly for every $x < -2/c$. Indeed:
+(a)~$v(x) = f(x) - x$ has $v(0) = 0$ and
+$v'(x) = e^{-cx}(1 + cx) - 1 < 0$ for $x \neq 0$ (since $1 + t < e^t$
+for $t = cx \neq 0$); $v' \le 0$ with equality only at the isolated
+point $0$ makes $v$ strictly decreasing on $\mathbb{R}$, so $f > x$ on
+$x < 0$ and $f < x$ on $x > 0$.
+(b)~$f(0) = 0$ and $f'(x) = e^{-cx}(1 + cx) > 0$ for $x \ge 0$, so
+$f \ge 0$ on $[0, \infty)$ and, with (a), $0 \le f \le x$ there.
+(c)~$q(x) = f(x) + x$ has $q(-2/c) = 0 = q(0)$ and
+$q'(x) = e^{-cx}(1 + cx) + 1$, where $r(x) = e^{-cx}(1 + cx)$ is
+strictly increasing on $x < 0$ ($r'(x) = -c^2 x\, e^{-cx} > 0$) from
+$r(-2/c) = -e^2 < -1$ to $r(0) = 1$; so $q'$ changes sign exactly once
+on $(-2/c, 0)$, from negative to positive, and $q \le 0$ there with
+equality only at the endpoints; with (a) ($f \ge x$, equality only at
+$0$) this gives $x \le f \le -x$ on $[-2/c, 0]$.
+(d)~For $x < -2/c$, $r(x) < -e^2$ gives $q' < 0$, so moving left from
+$-2/c$ the function $q$ increases above $0$: $f(x) > -x = |x| > 0$,
+and in fact $f(x) = 2/c + e^{c|x|}(|x| - 2/c)$ grows exponentially.
+
+\emph{Step 3: the bound.} If $\mathrm{supp}(\mu) \subset
+[\hstar - 2/c, \infty)$, Step 2 gives $\int \phi_0^2\, d\mu \le \int
+d^2\, d\mu$, so by Step 1, $R(\mu) \ge \int d^2 d\mu / \int \phi_0^2
+d\mu \ge 1$. Strictness: equality in Step 2 holds only at
+$x \in \{0, -2/c\}$, so any $\mu$ placing positive mass off
+$\{\hstar, \hstar - 2/c\}$ (in particular any with three distinct
+support points) has $\int \phi_0^2 d\mu < \int d^2 d\mu$ and
+$R(\mu) > 1$. If $M(\mu)$ is singular, two cases:
+$g \notin \mathrm{range}\,M(\mu)$ makes $\eps(\hstar)$ non-estimable
+(infinite bound); $g \in \mathrm{range}\,M(\mu)$, which does occur for
+special two-point designs (a one-parameter family of in-reach pairs;
+their finite pseudo-inverse products were checked to obey the bound,
+e.g.\ $R = 1.063$ at the pair $\{1.627, 2.127\}$), keeps
+the sup-representation valid over $\{u : u^\top M u > 0\}$, and
+$\int \phi_0^2 d\mu = 0$ would put $u_0 \in \mathrm{null}\, M$ with
+$u_0^\top g = -1 \neq 0$, contradicting $g \in \mathrm{range}\,M$; so
+$\int \phi_0^2\, d\mu > 0$ and the bound goes through verbatim.
+Throughout, the Cram\'er--Rao functional bounds unbiased estimation,
+and all regular estimators in the local-asymptotic-minimax sense.
+
+\emph{Step 4: the infimum is 1.} The Cram\'er--Rao functional is
+invariant under $C^1$ reparametrization, and the 2-jet map
+$\theta \mapsto (\tau_\theta(\hstar),\, \eps(\hstar),\,
+\tau_\theta''(\hstar))$ is a local diffeomorphism: its Jacobian
+$[\,s(\hstar)\ {-s'(\hstar)}\ s''(\hstar)\,]$ has determinant
+$C_1 c^2 e^{-2c\hstar} \neq 0$ (direct computation; V9.4). In jet
+coordinates $\eta$ the model reads $\tau = \eta_1 - \eta_2 x +
+\tfrac{1}{2}\eta_3 x^2 + O(x^3)$ with sensitivity $\tilde s(x) =
+(1, -x, x^2/2)^\top + O(x^3)$, and the estimand is $\eta_2$. For the
+symmetric three-point design $\mu_\delta$ uniform on $\{\hstar -
+\delta, \hstar, \hstar + \delta\}$, scale by $D = \mathrm{diag}(1,
+\delta, \delta^2)$: $M_\eta(\mu_\delta) = D\,\hat H_\delta\, D$ with
+$\hat H_\delta \to \hat H_0$ invertible (the exact quadratic-model
+moment matrix), so $(M_\eta^{-1})_{22} = \delta^{-2}(\hat
+H_\delta^{-1})_{22}$ and $R(\mu_\delta) \to R_{\mathrm{quad}}$. In
+the exact quadratic model, for \emph{any} symmetric design (odd
+moments $m_1 = m_3 = 0$), the $(2,2)$ cofactor gives
+$(M_\eta^{-1})_{22} = 1/m_2$ and $R_{\mathrm{quad}} = m_2 \cdot
+(1/m_2) = 1$. Hence $R(\mu_\delta) \to 1$ (measured rate
+$R(\mu_\delta) - 1 = O(\delta^2)$; V9.2), the infimum is 1, and by
+Step 3 it is not attained.
+
+\emph{Step 5: the reach is exact.} Below $\hstar - 2/c$ the
+domination of Step 2 fails strictly, and the failure is realized by a
+design, not only by the candidate: the frozen four-point witness
+(support $\{1.8726, 1.8665, 1.3073, 0.0500\}$, weights
+$\{0.003329, 0.955702, 0.040697, 0.000272\}$ after normalization, in
+the register market $c = 1.5$, frozen anchor $\hstar = 1.8461$) has
+$R = 0.851650\ldots$, verified at 50-digit precision (mpmath) and
+reproduced in float64 by \texttt{run\_open1.py} (V9.2). All its
+support except the probe at $0.05$ lies within reach: one
+vanishing-weight below-reach probe breaks the floor. Symmetric
+pair-plus-far-probe families do \emph{not} break it (their ratio
+approaches 1 from above as the probe weight vanishes); the violation
+requires the asymmetric cluster, which is why coarse searches missed
+it. Verified: V9.1--V9.4.
+\end{proof}
+
