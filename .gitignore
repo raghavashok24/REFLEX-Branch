@@ -1,2 +1,11 @@
 __pycache__/
 *.pyc
+
+# math-ai build noise
+math-ai/paper/*.aux
+math-ai/paper/*.log
+math-ai/paper/*.out
+math-ai/paper/*.fls
+math-ai/paper/*.fdb_latexmk
+math-ai/paper/*.blg
+math-ai/**/__pycache__/
