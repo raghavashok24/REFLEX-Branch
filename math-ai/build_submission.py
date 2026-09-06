@@ -17,8 +17,17 @@ OUT = os.path.join(ROOT, 'submission')
 
 EXCLUDE_DIRS = {'__pycache__', '.pytest_cache', '.git', '.ipynb_checkpoints',
                 '.mypy_cache', '.ruff_cache'}
-EXCLUDE_SUFFIX = ('.pyc', '.pyo', '.aux', '.log', '.out', '.fls',
+# LaTeX build droppings. '.log' is deliberately absent: supporting/ holds no
+# LaTeX build, and the two .log files it does hold are run records that
+# Appendix D names by path (posk-pipeline/results/full_run.log and
+# mlxor-derivations/verify/last_run.log). Excluding the suffix wholesale
+# shipped an appendix that pointed at a file not in the archive.
+EXCLUDE_SUFFIX = ('.pyc', '.pyo', '.aux', '.out', '.fls',
                   '.fdb_latexmk', '.blg', '.synctex.gz')
+
+# Anything matching these would be a LaTeX log rather than a run record, and
+# would mean supporting/ had picked up a build tree.
+LATEX_LOG_NAMES = {'main.log', 'appendix.log', 'paper.log'}
 
 
 def sha256(path):
@@ -46,7 +55,7 @@ def main():
         for base, dirs, files in os.walk(SUPPORT):
             dirs[:] = sorted(d for d in dirs if d not in EXCLUDE_DIRS)
             for name in sorted(files):
-                if name.endswith(EXCLUDE_SUFFIX):
+                if name.endswith(EXCLUDE_SUFFIX) or name in LATEX_LOG_NAMES:
                     continue
                 full = os.path.join(base, name)
                 arc = os.path.relpath(full, SUPPORT).replace(os.sep, '/')
