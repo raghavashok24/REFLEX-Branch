@@ -1,9 +1,84 @@
-\begin{thebibliography}{6}
+\begin{thebibliography}{40}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Aghion et~al.(1991)Aghion, Bolton, Harris, and
+  Jullien]{aghion1991optimal}
+Philippe Aghion, Patrick Bolton, Christopher Harris, and Bruno Jullien.
+\newblock Optimal learning by experimentation.
+\newblock \emph{The Review of Economic Studies}, 58\penalty0 (4):\penalty0
+  621--654, 1991.
+
+\bibitem[Appel and Haken(1977)]{appel1977every}
+Kenneth Appel and Wolfgang Haken.
+\newblock Every planar map is four colorable. {P}art {I}: Discharging.
+\newblock \emph{Illinois Journal of Mathematics}, 21\penalty0 (3):\penalty0
+  429--490, 1977.
+
+\bibitem[Barzykin et~al.(2026)Barzykin, Bergault, Gu{\'e}ant, and
+  Lemmel]{barzykin2026quoting}
+Alexander Barzykin, Philippe Bergault, Olivier Gu{\'e}ant, and Malo Lemmel.
+\newblock Optimal quoting under adverse selection and price reading.
+\newblock \emph{arXiv preprint arXiv:2508.20225}, 2026.
+
+\bibitem[Bombois et~al.(2006)Bombois, Scorletti, Gevers, Van~den Hof, and
+  Hildebrand]{bombois2006least}
+Xavier Bombois, G{\'e}rard Scorletti, Michel Gevers, Paul M.~J. Van~den Hof,
+  and Roland Hildebrand.
+\newblock Least costly identification experiment for control.
+\newblock \emph{Automatica}, 42\penalty0 (10):\penalty0 1651--1662, 2006.
+
+\bibitem[Borwein and Bailey(2008)]{borwein2008mathematics}
+Jonathan~M. Borwein and David~H. Bailey.
+\newblock \emph{Mathematics by Experiment: Plausible Reasoning in the 21st
+  Century}.
+\newblock A K Peters, 2nd edition, 2008.
+
+\bibitem[Bracale et~al.(2025)Bracale, Maity, Sun, and
+  Banerjee]{bracale2025reverse}
+Daniele Bracale, Subha Maity, Yuekai Sun, and Moulinath Banerjee.
+\newblock Learning the distribution map in reverse causal performative
+  prediction.
+\newblock In \emph{Proceedings of the 28th International Conference on
+  Artificial Intelligence and Statistics (AISTATS)}, volume 258 of \emph{PMLR},
+  2025.
+
+\bibitem[Broder and Rusmevichientong(2012)]{broder2012dynamic}
+Josef Broder and Paat Rusmevichientong.
+\newblock Dynamic pricing under a general parametric choice model.
+\newblock \emph{Operations Research}, 60\penalty0 (4):\penalty0 965--980, 2012.
+
+\bibitem[Brown et~al.(2022)Brown, Hod, and Kalemaj]{brown2022performative}
+Gavin Brown, Shlomi Hod, and Iden Kalemaj.
+\newblock Performative prediction in a stateful world.
+\newblock In \emph{Proceedings of the 25th International Conference on
+  Artificial Intelligence and Statistics (AISTATS)}, 2022.
+
+\bibitem[Davies et~al.(2021)Davies, Veli{\v c}kovi{\'c}, Buesing, Blackwell,
+  Zheng, Toma{\v s}ev, Tanburn, Battaglia, Blundell, Juh{\'a}sz, Lackenby,
+  Williamson, Hassabis, and Kohli]{davies2021advancing}
+Alex Davies, Petar Veli{\v c}kovi{\'c}, Lars Buesing, Sam Blackwell, Daniel
+  Zheng, Nenad Toma{\v s}ev, Richard Tanburn, Peter Battaglia, Charles
+  Blundell, Andr{\'a}s Juh{\'a}sz, Marc Lackenby, Geordie Williamson, Demis
+  Hassabis, and Pushmeet Kohli.
+\newblock Advancing mathematics by guiding human intuition with {AI}.
+\newblock \emph{Nature}, 600:\penalty0 70--74, 2021.
+
+\bibitem[Dean et~al.(2020)Dean, Mania, Matni, Recht, and Tu]{dean2020sample}
+Sarah Dean, Horia Mania, Nikolai Matni, Benjamin Recht, and Stephen Tu.
+\newblock On the sample complexity of the linear quadratic regulator.
+\newblock \emph{Foundations of Computational Mathematics}, 20\penalty0
+  (4):\penalty0 633--679, 2020.
+
+\bibitem[den Boer(2015)]{denboer2015dynamic}
+Arnoud~V. den Boer.
+\newblock Dynamic pricing and learning: Historical origins, current research,
+  and new directions.
+\newblock \emph{Surveys in Operations Research and Management Science},
+  20\penalty0 (1):\penalty0 1--18, 2015.
 
 \bibitem[Drusvyatskiy and Xiao(2023)]{drusvyatskiy2022stochastic}
 Dmitriy Drusvyatskiy and Lin Xiao.
@@ -11,10 +86,63 @@ Dmitriy Drusvyatskiy and Lin Xiao.
 \newblock \emph{Mathematics of Operations Research}, 48\penalty0 (2):\penalty0
   954--998, 2023.
 
+\bibitem[Easley and Kiefer(1988)]{easley1988controlling}
+David Easley and Nicholas~M. Kiefer.
+\newblock Controlling a stochastic process with unknown parameters.
+\newblock \emph{Econometrica}, 56\penalty0 (5):\penalty0 1045--1064, 1988.
+
+\bibitem[Feldbaum(1960)]{feldbaum1960dual}
+A.~A. Feldbaum.
+\newblock Dual control theory {I}.
+\newblock \emph{Automation and Remote Control}, 21:\penalty0 874--880, 1960.
+
+\bibitem[Gill and Levit(1995)]{gill1995applications}
+Richard~D. Gill and Boris~Y. Levit.
+\newblock Applications of the van {T}rees inequality: A {B}ayesian
+  {C}ram\'er--{R}ao bound.
+\newblock \emph{Bernoulli}, 1\penalty0 (1--2):\penalty0 59--79, 1995.
+
+\bibitem[Grossman and Stiglitz(1980)]{grossman1980impossibility}
+Sanford~J. Grossman and Joseph~E. Stiglitz.
+\newblock On the impossibility of informationally efficient markets.
+\newblock \emph{The American Economic Review}, 70\penalty0 (3):\penalty0
+  393--408, 1980.
+
+\bibitem[Gu{\'e}ant et~al.(2013)Gu{\'e}ant, Lehalle, and
+  Fernandez-Tapia]{gueant2013inventory}
+Olivier Gu{\'e}ant, Charles-Albert Lehalle, and Joaquin Fernandez-Tapia.
+\newblock Dealing with the inventory risk: A solution to the market making
+  problem.
+\newblock \emph{arXiv preprint arXiv:1105.3115}, 2013.
+
+\bibitem[Hales et~al.(2017)Hales, Adams, Bauer, Dang, Harrison, Le~Truong,
+  Kaliszyk, Magron, McLaughlin, Nguyen, et~al.]{hales2017formal}
+Thomas Hales, Mark Adams, Gertrud Bauer, Tat~Dat Dang, John Harrison, Hoang
+  Le~Truong, Cezary Kaliszyk, Victor Magron, Sean McLaughlin, Tat~Thang Nguyen,
+  et~al.
+\newblock A formal proof of the {K}epler conjecture.
+\newblock \emph{Forum of Mathematics, Pi}, 5, 2017.
+
 \bibitem[Hardt and Mendler-D{\"u}nner(2023)]{hardt2023performative}
 Moritz Hardt and Celestine Mendler-D{\"u}nner.
 \newblock Performative prediction: Past and future.
 \newblock \emph{arXiv preprint arXiv:2310.16608}, 2023.
+
+\bibitem[Harrison et~al.(2012)Harrison, Keskin, and
+  Zeevi]{harrison2012bayesian}
+J.~Michael Harrison, N.~Bora Keskin, and Assaf Zeevi.
+\newblock Bayesian dynamic pricing policies: Learning and earning under a
+  binary prior distribution.
+\newblock \emph{Management Science}, 58\penalty0 (3):\penalty0 570--586, 2012.
+
+\bibitem[Hubert et~al.(2025)Hubert, Mehta, Sartran, Horv{\'a}th, {\v Z}u{\v
+  z}i{\'c}, Wieser, Huang, Schrittwieser, and Silver]{hubert2025olympiad}
+Thomas Hubert, Rishi Mehta, Laurent Sartran, Mikl{\'o}s~Z. Horv{\'a}th, Goran
+  {\v Z}u{\v z}i{\'c}, Eric Wieser, Aja Huang, Julian Schrittwieser, and David
+  Silver.
+\newblock Olympiad-level formal mathematical reasoning with reinforcement
+  learning.
+\newblock \emph{Nature}, 651:\penalty0 607--613, 2025.
 
 \bibitem[Izzo et~al.(2021)Izzo, Ying, and Zou]{izzo2021learn}
 Zachary Izzo, Lexing Ying, and James Zou.
@@ -22,6 +150,51 @@ Zachary Izzo, Lexing Ying, and James Zou.
   descent.
 \newblock In \emph{Proceedings of the 38th International Conference on Machine
   Learning (ICML)}, 2021.
+
+\bibitem[Jagadeesan et~al.(2022)Jagadeesan, Zrnic, and
+  Mendler-D{\"u}nner]{jagadeesan2022regret}
+Meena Jagadeesan, Tijana Zrnic, and Celestine Mendler-D{\"u}nner.
+\newblock Regret minimization with performative feedback.
+\newblock In \emph{Proceedings of the 39th International Conference on Machine
+  Learning (ICML)}, 2022.
+
+\bibitem[Keskin and Zeevi(2014)]{keskin2014dynamic}
+N.~Bora Keskin and Assaf Zeevi.
+\newblock Dynamic pricing with an unknown demand model: Asymptotically optimal
+  semi-myopic policies.
+\newblock \emph{Operations Research}, 62\penalty0 (5):\penalty0 1142--1167,
+  2014.
+
+\bibitem[Kiefer and Wolfowitz(1960)]{kiefer1960equivalence}
+Jack Kiefer and Jacob Wolfowitz.
+\newblock The equivalence of two extremum problems.
+\newblock \emph{Canadian Journal of Mathematics}, 12:\penalty0 363--366, 1960.
+
+\bibitem[Lai and Robbins(1979)]{lai1979adaptive}
+Tze~Leung Lai and Herbert Robbins.
+\newblock Adaptive design and stochastic approximation.
+\newblock \emph{The Annals of Statistics}, 7\penalty0 (6):\penalty0 1196--1221,
+  1979.
+
+\bibitem[Li and Wai(2022)]{li2022state}
+Qiang Li and Hoi-To Wai.
+\newblock State dependent performative prediction with stochastic
+  approximation.
+\newblock In \emph{Proceedings of the 25th International Conference on
+  Artificial Intelligence and Statistics (AISTATS)}, 2022.
+
+\bibitem[Lin and Zrnic(2024)]{lin2024plugin}
+Licong Lin and Tijana Zrnic.
+\newblock Plug-in performative optimization.
+\newblock In \emph{Proceedings of the 41st International Conference on Machine
+  Learning (ICML)}, 2024.
+
+\bibitem[Mendler-D{\"u}nner et~al.(2020)Mendler-D{\"u}nner, Perdomo, Zrnic, and
+  Hardt]{mendler2020stochastic}
+Celestine Mendler-D{\"u}nner, Juan~C. Perdomo, Tijana Zrnic, and Moritz Hardt.
+\newblock Stochastic optimization for performative prediction.
+\newblock In \emph{Advances in Neural Information Processing Systems 33
+  (NeurIPS)}, 2020.
 
 \bibitem[Miller et~al.(2021)Miller, Perdomo, and Zrnic]{miller2021outside}
 John Miller, Juan~C. Perdomo, and Tijana Zrnic.
@@ -41,5 +214,55 @@ Juan~C. Perdomo, Tijana Zrnic, Celestine Mendler-D{\"u}nner, and Moritz Hardt.
 \newblock Performative prediction.
 \newblock In \emph{Proceedings of the 37th International Conference on Machine
   Learning (ICML)}, 2020.
+
+\bibitem[Pukelsheim(2006)]{pukelsheim2006optimal}
+Friedrich Pukelsheim.
+\newblock \emph{Optimal Design of Experiments}.
+\newblock SIAM Classics in Applied Mathematics, 2006.
+
+\bibitem[Romera-Paredes et~al.(2024)Romera-Paredes, Barekatain, Novikov, Balog,
+  Kumar, Dupont, Ruiz, Ellenberg, Wang, Fawzi, Kohli, and
+  Fawzi]{romera2024mathematical}
+Bernardino Romera-Paredes, Mohammadamin Barekatain, Alexander Novikov, Matej
+  Balog, M.~Pawan Kumar, Emilien Dupont, Francisco J.~R. Ruiz, Jordan~S.
+  Ellenberg, Pengming Wang, Omar Fawzi, Pushmeet Kohli, and Alhussein Fawzi.
+\newblock Mathematical discoveries from program search with large language
+  models.
+\newblock \emph{Nature}, 625:\penalty0 468--475, 2024.
+
+\bibitem[Rothschild(1974)]{rothschild1974two}
+Michael Rothschild.
+\newblock A two-armed bandit theory of market pricing.
+\newblock \emph{Journal of Economic Theory}, 9\penalty0 (2):\penalty0 185--202,
+  1974.
+
+\bibitem[Simchowitz and Foster(2020)]{simchowitz2020naive}
+Max Simchowitz and Dylan~J. Foster.
+\newblock Naive exploration is optimal for online {LQR}.
+\newblock In \emph{Proceedings of the 37th International Conference on Machine
+  Learning (ICML)}, 2020.
+
+\bibitem[{The mathlib Community}(2020)]{mathlib2020}
+{The mathlib Community}.
+\newblock The {L}ean mathematical library.
+\newblock In \emph{Proceedings of the 9th ACM SIGPLAN International Conference
+  on Certified Programs and Proofs (CPP)}, pages 367--381, 2020.
+
+\bibitem[Trinh et~al.(2024)Trinh, Wu, Le, He, and Luong]{trinh2024solving}
+Trieu~H. Trinh, Yuhuai Wu, Quoc~V. Le, He~He, and Thang Luong.
+\newblock Solving olympiad geometry without human demonstrations.
+\newblock \emph{Nature}, 625:\penalty0 476--482, 2024.
+
+\bibitem[Wagenmaker et~al.(2021)Wagenmaker, Simchowitz, and
+  Jamieson]{wagenmaker2021task}
+Andrew Wagenmaker, Max Simchowitz, and Kevin Jamieson.
+\newblock Task-optimal exploration in linear dynamical systems.
+\newblock In \emph{Proceedings of the 38th International Conference on Machine
+  Learning (ICML)}, 2021.
+
+\bibitem[Wagner(2021)]{wagner2021constructions}
+Adam~Zsolt Wagner.
+\newblock Constructions in combinatorics via neural networks.
+\newblock \emph{arXiv preprint arXiv:2104.14516}, 2021.
 
 \end{thebibliography}

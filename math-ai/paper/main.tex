@@ -65,23 +65,10 @@ This paper is about how a piece of mathematics got made, and it uses one
 concrete body of theory as the specimen. Our answer to the venue's guiding
 question is narrow and, we hope, checkable. In the loop we ran, machines were
 good at refuting and at certifying, people were good at proving, and the
-interesting events happened where the two disagreed. We document one such
+interesting events happened where the two disagreed
+\citep{davies2021advancing,wagner2021constructions}. We document one such
 event completely, then ask how far it generalizes using ten more of its own
 kind.
-
-That division of labour has precedent. Computation has guided mathematical
-intuition toward theorems people then proved \citep{davies2021advancing},
-search has produced explicit counterexamples to conjectures
-\citep{wagner2021constructions} and new constructions out of program spaces
-\citep{romera2024mathematical}, and proof systems now solve olympiad problems
-end to end \citep{trinh2024solving,hubert2025olympiad}, on a lineage of
-machine-assisted proof and experimental mathematics running back to the
-four-colour theorem
-\citep{appel1977every,borwein2008mathematics,hales2017formal}. What we add is
-the failure direction, recorded completely: what a search wrongly certified,
-why the proof could not reach it, and how the proof's own stopping point
-located the refutation. Appendix \ref{app:related} places the episode against
-that work.
 
 The specimen is a theory of what it costs a decision-maker to learn how its
 own deployed actions reshape the world it then retrains on. Section
@@ -98,10 +85,9 @@ attempt failed to reach the statement, and failed in a way that named the
 exact region where it stopped. A second machine search, aimed only at that
 region, refuted the statement.
 
-\textbf{What this paper is not.} It is not an autonomous mathematical agent in
-the sense of \citet{hubert2025olympiad}, and it does not search a space of
-proofs; we make no claim in either direction. The proofs here were written by
-people, and none is formalized in a proof assistant \citep{mathlib2020}. What was automated is numerical checking against declared tolerances,
+\textbf{What this paper is not.} It is not an autonomous mathematical agent
+\citep{hubert2025olympiad}, and we make no claim in that direction. The proofs
+here were written by people. What was automated is numerical checking against declared tolerances,
 adversarial search over designs, and high-precision verification of candidate
 witnesses. Section \ref{sec:loop} draws that line explicitly.
 
@@ -131,16 +117,11 @@ wants only the case study can take Theorem \ref{thm:exchange} on faith.
 Consider a decision-maker whose deployed action changes the data it will
 later retrain on. A dealer who quotes a wide spread sees different order flow
 than one who quotes a tight spread, so the flow it must price is partly its
-own doing; that channel is the dealer's adverse-selection problem
-\citep{gueant2013inventory}, and the fact that its own quotes feed the flow it
-then reads is the price-reading effect of \citet{barzykin2026quoting}. The
-structural market used throughout is that of REFLEX \citep{reflex2026}. This
-is performative prediction
+own doing. This is performative prediction
 \citep{perdomo2020performative,hardt2023performative}: retraining becomes a
 fixed-point iteration, and it converges to a point that is not the one
 maximizing value. Algorithms that close that gap
-\citep{izzo2021learn,miller2021outside,mendler2020stochastic,drusvyatskiy2022stochastic,li2022state,brown2022performative}
-all need an estimate of how the distribution responds to the action, and they
+\citep{izzo2021learn,miller2021outside,drusvyatskiy2022stochastic} all need an estimate of how the distribution responds to the action, and they
 get it by perturbing deployments. Those perturbations are deployments of a real
 decision variable, so their cost lands in the decision-maker's own objective.
 
@@ -170,17 +151,10 @@ mean-centered exploration the two coincide.
 
 Three further results sit around that identity, all in Appendix
 \ref{app:statements}. No policy at all can beat the product, only match it
-(T3, T4), by van Trees arguments in the style of \citet{gill1995applications}.
-The cheapest way to spend a multidimensional budget is to probe where the
-objective is flat (T5a, C5.1), which inverts the classical design canon
-\citep{kiefer1960equivalence,pukelsheim2006optimal} by pricing the design in
-the experimenter's own objective, and inverts ``naive exploration is optimal''
-for the linear quadratic regulator \citep{simchowitz2020naive}. And a deployed
-agent can be made to correct only when a confidence sequence certifies that
-correcting cannot destabilize the retraining loop (L4, P7.1). Pricing
-experimentation inside the objective it serves is the dual control problem
-\citep{feldbaum1960dual,bombois2006least}; what is new here is that the plant
-is a retraining learner. The theory was also instantiated
+(T3, T4). The cheapest way to spend a multidimensional budget is to probe
+where the objective is flat (T5a, C5.1). And a
+deployed agent can be made to correct only when a confidence sequence
+certifies that correcting cannot destabilize the retraining loop (L4, P7.1). The theory was also instantiated
 on a calibrated real-data problem and on a second economy, both in Table
 \ref{tab:results}.
 
@@ -244,10 +218,10 @@ $0.851650\ldots$; the check now runs on every push as V9.2.
 
 \begin{figure}[t]
 \centering
-\begin{minipage}{0.335\textwidth}
+\begin{minipage}{0.28\textwidth}
 \includegraphics[width=\textwidth]{fig1_exchange_rate.png}
 \end{minipage}\hspace{0.03\textwidth}
-\begin{minipage}{0.335\textwidth}
+\begin{minipage}{0.28\textwidth}
 \includegraphics[width=\textwidth]{fig6_open1.png}
 \end{minipage}
 \caption{\textbf{Left:} the exchange rate of Theorem \ref{thm:exchange}.
@@ -274,11 +248,8 @@ revealed the exclusion.
 \begin{theorem}[Structure-proofness, exact reach; T9]
 \label{thm:reach}
 (i) Every estimable design supported in $[\hstar - 2/c, \infty)$ satisfies
-$R(\mu) > 1$ strictly, and $\inf_\mu R(\mu) = 1$, approached by symmetric
-designs collapsing at the anchor but not attained. The one configuration on
-which the underlying inequality holds with equality, mass only on
-$\{\hstar,\ \hstar - 2/c\}$, does not identify the estimand. Within reach,
-knowing the family cannot beat the floor. (ii) The reach is exact: the four-point witness above attains
+$R(\mu) > 1$ strictly, and $\inf_\mu R(\mu) = 1$, approached but not attained.
+Within reach, knowing the family cannot beat the floor. (ii) The reach is exact: the four-point witness above attains
 $R = 0.8517$.
 \end{theorem}
 
@@ -332,13 +303,11 @@ the claim it displaced.
 project, numerical falsification was cheap and frequent, and it improved
 claims rather than merely deleting them. It supports no claim about proof
 automation, about other areas of mathematics, or about what happens without a
-person deciding where to look. It does add one thing to the line of work in
-which search refutes a conjecture outright
-\citep{wagner2021constructions,romera2024mathematical}: here the search had
-already run and returned the wrong verdict, and what redirected it was a
-proof's failure rather than a larger budget. The eleventh pivot needed a proof
-to produce the region, and no further search inside the original space would
-have found it.
+person deciding where to look. Unlike work in which search refutes a
+conjecture directly, here the search had already returned the wrong verdict,
+and a proof's failure rather than a larger budget redirected it. The eleventh
+pivot needed a proof to produce the region, and no further search inside the
+original space would have found it.
 
 \textbf{The infrastructure, which is the transferable part.} A theorem
 register lists all 26 results with per-result proof status, distinguishing
@@ -397,6 +366,7 @@ one group, which is a sample and not a study.
 \begin{table}[H]
 \centering
 \small
+\setlength{\tabcolsep}{4pt}
 \caption{Selected rows from the preregistered check harness. The full table
 (36 rows, 0 FAIL), all seeds, tolerances, and code are in the supplementary
 repository. The drift row is a deliberately out-of-scope cell, measured and

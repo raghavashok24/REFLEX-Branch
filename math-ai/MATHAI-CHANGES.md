@@ -39,7 +39,7 @@ infrastructure, is the paper's argument to this venue.
 | The baselines table and discussion (FD-PerfGD, ZO-PerfOpt, UCB-Grid, BlindRRM, 12 seeds, Pareto claim) | Algorithmic competition is not the case study's subject and cost most of a page. |
 | The LQ performative-pricing second domain as body text | Same. Survives as one table row. |
 | SafeD-PerfGD's engineering detail (the four-step explore/fit/gate/freeze loop, Newton scaling, `L_fam`) | The agent is now one clause in Section 2; its design is not the argument. |
-| The positioning paragraph (Jagadeesan, Bracale, Lin, Lai-Robbins, dual control, task-optimal design) | Written for an OR/ML audience arguing novelty against that literature. |
+| The positioning paragraph (Jagadeesan, Bracale, Lin, Lai-Robbins, dual control, task-optimal design) | Written for an OR/ML audience arguing novelty against that literature. Cut from the body, then **restored** into Appendix A on 6 September 2026: see the note below. |
 | The market microstructure setup (benign flow `Ae^{-kh}`, toxic flow `C_0 + C_1 e^{-ch}`, `psi`, `w`, echo-chamber gap, adverse selection citations) | Reduced to two sentences: a dealer whose quote reshapes the flow it prices. |
 | Free-data saturation (T1) as a headline paragraph | Demoted to an appendix statement plus one pivot mention in Section 4. |
 | The support-degeneracy (T6) and misspecification-crossover (T7) paragraphs | Stated in the appendix, referenced from Section 4's pivots and Table 1. |
@@ -103,3 +103,34 @@ can choose what to buy with it, but not how much to pay."
    `ml-or/PRICE-final/`. The appendix therefore says CI runs in the project
    repository and that the two workflow files are not part of the anonymized
    copy, rather than claiming the supplementary contains them.
+
+## Correction, 6 September 2026: the references
+
+Cutting the positioning paragraph took its citations with it, which was a
+mistake rather than a space decision. The build of 4 September printed 6
+references from 31 bibliography entries. Twenty-five were orphaned, and
+several results stood with no attribution at all: A-optimal design without
+Kiefer and Wolfowitz or Pukelsheim, van Trees minimax floors without Gill and
+Levit, an extended Chebyshev system asserted without a source, and the dual
+control lineage absent. The venue allows an unlimited number of reference
+pages, so nothing was bought by the omission.
+
+Worse for this venue, the bibliography contained no machine-assisted
+mathematics at all. A case study in how mathematics gets made with machine
+help cited no work on computation guiding mathematical intuition, on search
+refuting conjectures, or on automated proof.
+
+What changed:
+
+- Nine entries added for the machine-assisted mathematics literature, with
+  metadata verified against Crossref or arXiv.
+- A new Appendix A, `paper/appendix_related.tex`, which places the eleventh
+  pivot against that literature and restores the substrate's positioning
+  against performative prediction, learning while earning, dual control and
+  experiment design.
+- Representative citations threaded into the body where they fit inside four
+  pages, and attribution attached to the individual statements in Appendix B.
+- All 40 entries are now cited. The body still ends on page 4.
+
+The mathematics is still untouched. No experiment was re-run and no number was
+recomputed for this change set.

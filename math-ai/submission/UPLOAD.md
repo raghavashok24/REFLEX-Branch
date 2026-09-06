@@ -22,12 +22,13 @@ Nothing else in this folder gets uploaded. There is nothing else in it.
 3. **Abstract.** Paste the abstract from `main.pdf` (page 1) as plain text.
 4. **PDF.** Upload `main.pdf`. It is the anonymous build: `dblblindworkshop`
    option, Anonymous Author(s) block, no author field in the PDF metadata, no
-   identifying URLs. The only author name in the file is the third-person
-   bibliography entry for the prior REFLEX paper this work builds on, which is
-   correct practice under double blind.
+   identifying URLs. The only author names in the file are the third-person
+   bibliography entry for the prior REFLEX paper this work builds on and the
+   two in-text citations of it, in Appendix A and Appendix D, which is correct
+   practice under double blind.
 5. **Supplementary Material.** Upload `supplementary.zip`. It contains the
    anonymized derivation tree (`mlxor-derivations/`) and pipeline
-   (`posk-pipeline/`), 52 files, no author names, no emails, no URLs beyond a
+   (`posk-pipeline/`), 54 files, no author names, no emails, no URLs beyond a
    matplotlib software tag inside the PNG figures, no git metadata, no
    `__pycache__/`, no `.pytest_cache/`.
 6. **Reciprocal reviewing.** The CFP requires that at least one author of each
