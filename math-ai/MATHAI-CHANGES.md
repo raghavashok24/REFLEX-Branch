@@ -130,7 +130,30 @@ What changed:
   experiment design.
 - Representative citations threaded into the body where they fit inside four
   pages, and attribution attached to the individual statements in Appendix B.
-- All 40 entries are now cited. The body still ends on page 4.
+- Nine entries removed again on a second pass, described below.
+- All 31 entries are cited, and the body still ends on page 4.
+
+### The second pass: trimming the inherited OR cluster
+
+Restoring the ML x OR citations wholesale overshot. One paragraph in Appendix
+A carried nine references, six of them inside a single bracket, for the
+operations-research incomplete-learning literature. That bracket was doing
+adversarial-novelty work for an OR committee, which is not this venue's
+argument, and citing a survey together with six of the papers it surveys reads
+as list-stuffing rather than scholarship.
+
+Removed, with the point each was making now carried by an entry that stays:
+
+| Removed | Point now carried by |
+|---|---|
+| `rothschild1974two`, `easley1988controlling`, `aghion1991optimal`, `harrison2012bayesian`, `broder2012dynamic` | `denboer2015dynamic`, the survey covering them, plus `keskin2014dynamic` as the dynamic-pricing exemplar |
+| `grossman1980impossibility` | Nothing. It was thematically adjacent and never engaged. |
+| `dean2020sample` | `simchowitz2020naive` and `wagenmaker2021task`, which carry the linear-systems comparison |
+| `mendler2020stochastic` | The three other gap-closing algorithms already cited |
+| `li2022state` | `brown2022performative`, the stateful case |
+
+No result lost its attribution and no claim changed. The bibliography went
+from 40 entries to 31, and the paper from 14 pages to 13.
 
 The mathematics is still untouched. No experiment was re-run and no number was
 recomputed for this change set.

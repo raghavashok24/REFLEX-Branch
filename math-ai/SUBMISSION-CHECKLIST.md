@@ -26,10 +26,10 @@ does not apply to this venue. Every item below states what was measured on
 1. **Body ends page 4, references begin page 5.** Measured with `pdftotext`,
    not by eye. Page 4's last body line is the closing sentence of the
    Limitations paragraph; page 5 opens with the `References` heading.
-2. **Total 14 pages.** Body 4, references 3, appendix 7. The CFP allows an
-   unlimited number of pages for references and supplementary material, and
-   even under the stricter reading of 10 pages after page 4, the 10 pages
-   following page 4 meet it exactly.
+2. **Total 13 pages.** Body 4 (pages 1 to 4), references 2 (pages 5 to 6),
+   appendix 7 (pages 7 to 13). The CFP allows an unlimited number of pages for
+   references and supplementary material, and the 9 pages following page 4
+   also satisfy the stricter reading of a 10-page cap.
 3. **Style option is `dblblindworkshop`**, in `paper/main.tex` line 8, with
    the official `neurips_2026.sty`. The Anonymous Author(s) block is intact.
 4. **0 overfull boxes, 0 undefined references, 0 undefined citations, 0 LaTeX
@@ -68,14 +68,14 @@ does not apply to this venue. Every item below states what was measured on
     four sources, `main.tex`, `appendix_related.tex`,
     `appendix_statements.tex` and `appendix_proofs.tex`, at
     `--fail-on medium`.
-12. **The bibliography is complete and every entry is cited.** 40 entries in
-    `references.bib`, 40 `\bibitem` lines in `main.bbl`, 0 unused keys,
-    measured by extracting keys and `\cite` arguments from all four `.tex`
-    files. The previous build printed 6 references from 31 entries, leaving 25
-    orphaned; the ML x OR retarget had cut the positioning prose and taken its
-    citations with it. Nine machine-assisted-mathematics entries were added,
-    with metadata verified against Crossref or arXiv rather than written from
-    memory.
+12. **The bibliography is complete and every entry is cited.** 31 entries in
+    `references.bib`, 31 `\bibitem` lines in `main.bbl`, 0 unused keys, 0
+    undefined citations in `main.log`. The 4 September build printed 6
+    references from 31 entries, leaving 25 orphaned, because the ML x OR
+    retarget had cut the positioning prose and taken its citations with it.
+    Nine machine-assisted-mathematics entries were added, with metadata
+    verified against Crossref or arXiv rather than written from memory, and
+    nine over-cited entries were then removed: see the note below.
 13. **The headline numerical claim was recomputed independently.** The T9
     witness was rebuilt from the reported support and weights and evaluated at
     60 decimal digits outside the pipeline: `R = 0.851650472183`, matching the

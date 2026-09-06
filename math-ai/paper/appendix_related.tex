@@ -51,8 +51,8 @@ satisfy), the proof's exact stopping point, and the frozen witness.
 \textbf{Performative prediction.} The fixed-point framing and the gap between
 the stable point and the optimum are due to \citet{perdomo2020performative},
 surveyed in \citet{hardt2023performative}. Algorithms that close the gap
-\citep{izzo2021learn,miller2021outside,mendler2020stochastic,drusvyatskiy2022stochastic}
-and their stateful variants \citep{brown2022performative,li2022state} all
+\citep{izzo2021learn,miller2021outside,drusvyatskiy2022stochastic}
+and its stateful variant \citep{brown2022performative} all
 consume an estimate of the distribution's response, obtained by perturbing
 deployments, and treat those perturbations as free.
 \citet{jagadeesan2022regret} bound the regret of \emph{finding} the
@@ -65,10 +65,8 @@ level; T2 prices the same activity exactly, in the objective's own curvature.
 which T7 sharpens into a budget-explicit rule.
 
 \textbf{Learning while earning.} That myopic optimization can stall learning is
-classical in operations research and economics
-\citep{rothschild1974two,easley1988controlling,aghion1991optimal,harrison2012bayesian,broder2012dynamic,keskin2014dynamic},
-surveyed by \citet{denboer2015dynamic}, with the informational tension stated
-in its sharpest form by \citet{grossman1980impossibility}. T1 is the
+classical in operations research, surveyed by \citet{denboer2015dynamic} and
+stated for dynamic pricing by \citet{keskin2014dynamic}. T1 is the
 performative version of that stall: it comes from the optimizer converging,
 not from weak feedback, and the cap is explicit. \citet{lai1979adaptive}'s
 adaptive designs are points on the frontier T2 describes; what does not appear
@@ -81,7 +79,7 @@ identification \citep{bombois2006least}. Here the plant is a retraining
 learner, the budget is the optimizer's own objective, and the constraint is
 loop contraction. The lower bounds are van Trees arguments
 \citep{gill1995applications}. On the design side, task-optimal exploration in
-linear systems \citep{wagenmaker2021task,dean2020sample} and the finding that
+linear systems \citep{wagenmaker2021task} and the finding that
 naive exploration suffices for the linear quadratic regulator
 \citep{simchowitz2020naive} sit against C5.1, which says isotropic exploration
 overpays by an explicit curvature-dispersion factor once the design is priced
