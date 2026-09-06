@@ -77,7 +77,8 @@ $\sum_{t\le T} \dev_t^2 \le D$ almost surely and all estimators, biased
 included, the minimax risk over an interval of width $w$ satisfies
 $\inf \sup_{\eps} \E[(\hat\eps - \eps)^2] \ge \sigma^2/(D + \sigma^2
 (\pi/w)^2)$, so the exchange-rate product is a floor, attained with equality
-by symmetric probing with least squares.
+by symmetric probing with least squares. The argument is a van Trees
+reduction in the style of \citet{gill1995applications}.
 \end{theorem}
 
 \begin{lemma}[Exploitation and information; L2]
@@ -108,8 +109,13 @@ is not proved here or anywhere in the repository.
 \begin{theorem}[A-optimal exploration; T5a]
 \label{thm:t5a}
 Under the value budget $\tr(\Gpo M) \le B$ on the exploration second moment
-$M$, the A-optimal design is $M^{*} = (B/\tr\,\Gpo^{1/2})\,\Gpo^{-1/2}$,
-with value $(\tr\,\Gpo^{1/2})^2/B$: explore where the objective is flat.
+$M$, the A-optimal design in the sense of the classical design theory of
+\citet{kiefer1960equivalence} and \citet{pukelsheim2006optimal} is
+$M^{*} = (B/\tr\,\Gpo^{1/2})\,\Gpo^{-1/2}$, with value
+$(\tr\,\Gpo^{1/2})^2/B$: explore where the objective is flat. Pricing the
+design in the experimenter's own objective inverts the conclusion that naive
+exploration is optimal for the linear quadratic regulator
+\citep{simchowitz2020naive,wagenmaker2021task,dean2020sample}.
 \end{theorem}
 
 \begin{corollary}[Price of isotropic jitter; C5.1]
@@ -119,6 +125,11 @@ exactly the curvature-dispersion factor
 $F = d\,\tr(\Gpo)/(\tr\,\Gpo^{1/2})^2 \ge 1$, with equality if and only if
 all curvature directions are equal.
 \end{corollary}
+
+Extended Chebyshev systems and their Fisher-information consequences are
+standard in the design literature \citep{pukelsheim2006optimal}; the content
+below is that noiseless retraining trajectories fall on the wrong side of the
+support threshold.
 
 \begin{theorem}[Chebyshev unidentifiability; T6]
 \label{thm:t6}
@@ -136,7 +147,9 @@ Under the value budget $B$ and horizon $T$, the budget-and-horizon-optimal
 nonparametric secant estimator has
 $\mathrm{MSE}_{\mathrm{np}} = \gpo\sigma^2/(2B) + (\tau'''(\hstar)/6)^2
 (2B/(\gpo T))^2$, so anchoring to a structural family with misspecification
-$\delta_{\mathrm{mis}}$ wins, to leading order, if and only if
+$\delta_{\mathrm{mis}}$ wins, to leading order, which sharpens the message of
+\citet{lin2024plugin} that misspecified structural models still help into a
+budget-explicit rule, if and only if
 $\delta_{\mathrm{mis}} < |\tau'''(\hstar)|\,B/(3\,\gpo\,T)$.
 \end{theorem}
 

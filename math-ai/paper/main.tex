@@ -131,13 +131,17 @@ wants only the case study can take Theorem \ref{thm:exchange} on faith.
 Consider a decision-maker whose deployed action changes the data it will
 later retrain on. A dealer who quotes a wide spread sees different order flow
 than one who quotes a tight spread, so the flow it must price is partly its
-own doing. This is performative prediction
+own doing; that channel is the dealer's adverse-selection problem
+\citep{gueant2013inventory}, and the fact that its own quotes feed the flow it
+then reads is the price-reading effect of \citet{barzykin2026quoting}. The
+structural market used throughout is that of REFLEX \citep{reflex2026}. This
+is performative prediction
 \citep{perdomo2020performative,hardt2023performative}: retraining becomes a
 fixed-point iteration, and it converges to a point that is not the one
 maximizing value. Algorithms that close that gap
-\citep{izzo2021learn,miller2021outside,drusvyatskiy2022stochastic} all need
-an estimate of how the distribution responds to the action, and they get it
-by perturbing deployments. Those perturbations are deployments of a real
+\citep{izzo2021learn,miller2021outside,mendler2020stochastic,drusvyatskiy2022stochastic,li2022state,brown2022performative}
+all need an estimate of how the distribution responds to the action, and they
+get it by perturbing deployments. Those perturbations are deployments of a real
 decision variable, so their cost lands in the decision-maker's own objective.
 
 Write $h$ for the scalar action, $\hstar$ for the operating point the
@@ -166,10 +170,17 @@ mean-centered exploration the two coincide.
 
 Three further results sit around that identity, all in Appendix
 \ref{app:statements}. No policy at all can beat the product, only match it
-(T3, T4). The cheapest way to spend a multidimensional budget is to probe
-where the objective is flat (T5a, C5.1). And a deployed agent can be made to
-correct only when a confidence sequence certifies that correcting cannot
-destabilize the retraining loop (L4, P7.1). The theory was also instantiated
+(T3, T4), by van Trees arguments in the style of \citet{gill1995applications}.
+The cheapest way to spend a multidimensional budget is to probe where the
+objective is flat (T5a, C5.1), which inverts the classical design canon
+\citep{kiefer1960equivalence,pukelsheim2006optimal} by pricing the design in
+the experimenter's own objective, and inverts ``naive exploration is optimal''
+for the linear quadratic regulator \citep{simchowitz2020naive}. And a deployed
+agent can be made to correct only when a confidence sequence certifies that
+correcting cannot destabilize the retraining loop (L4, P7.1). Pricing
+experimentation inside the objective it serves is the dual control problem
+\citep{feldbaum1960dual,bombois2006least}; what is new here is that the plant
+is a retraining learner. The theory was also instantiated
 on a calibrated real-data problem and on a second economy, both in Table
 \ref{tab:results}.
 
