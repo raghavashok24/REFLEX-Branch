@@ -1,0 +1,98 @@
+This appendix does what the four-page body has no room for: it places the
+episode of Section \ref{sec:t9} against the work it resembles, and places the
+mathematical substrate of Section \ref{sec:substrate} against the literatures
+it draws on. Neither placement changes a claim in the body.
+
+\subsection{Machines and people in mathematics}
+
+The closest precedent for the shape of our loop is the use of computation to
+guide mathematical intuition toward statements people then prove
+\citep{davies2021advancing}, where a learned model's saliency over a space of
+invariants pointed at the relationships that became theorems in knot theory
+and representation theory. The direction of travel there is machine to human:
+the computation supplies a candidate, the person supplies the proof. Our
+eleventh pivot runs the other way for one leg of the cycle, since the object
+the proof supplied was not a candidate statement but a region, and the
+region is what made the second search productive.
+
+A second line lets search refute conjectures directly. Reinforcement learning
+over constructions has produced explicit counterexamples in extremal
+combinatorics and spectral graph theory \citep{wagner2021constructions}, and
+program search guided by a language model has produced both counterexample-like
+constructions and improved bounds \citep{romera2024mathematical}. Our search is
+far less sophisticated than either, and that is the point of the episode: the
+first search was not underpowered in any way its own diagnostics could see. It
+was thorough over a space that excluded the answer, and it reported a minimum
+of $1.005$ with two independent strategies agreeing. What told us the space was
+wrong was a proof that stopped at $\hstar - 2/c$ and said so.
+
+A third line automates proof itself, from olympiad geometry
+\citep{trinh2024solving} to olympiad-level formal reasoning with reinforcement
+learning \citep{hubert2025olympiad}, on the infrastructure of large formal
+libraries \citep{mathlib2020}. We do none of this. Our proofs are written and
+checked by people and are not formalized, which is a limitation we state rather
+than defend. The older lineage of machine-assisted proof, from the four-colour
+theorem \citep{appel1977every} to the formal Kepler proof
+\citep{hales2017formal}, and the experimental-mathematics tradition of treating
+computation as evidence to be believed provisionally
+\citep{borwein2008mathematics}, is the tradition our verification harness sits
+in: it is bookkeeping about how much a numerical verdict is worth, not proof.
+
+What we claim to add is narrow. It is a completely recorded instance of the
+failure direction, in which a numerical verdict was written down as a result,
+was wrong, and was corrected by a proof that could not reach it. The record
+includes the search that produced the false verdict, the reason it missed
+(a weight grid floored at $0.05$ against a violating probe of
+$3 \times 10^{-4}$, and a symmetric-pair prior the violating design does not
+satisfy), the proof's exact stopping point, and the frozen witness.
+
+\subsection{The substrate's literatures}
+
+\textbf{Performative prediction.} The fixed-point framing and the gap between
+the stable point and the optimum are due to \citet{perdomo2020performative},
+surveyed in \citet{hardt2023performative}. Algorithms that close the gap
+\citep{izzo2021learn,miller2021outside,mendler2020stochastic,drusvyatskiy2022stochastic}
+and their stateful variants \citep{brown2022performative,li2022state} all
+consume an estimate of the distribution's response, obtained by perturbing
+deployments, and treat those perturbations as free.
+\citet{jagadeesan2022regret} bound the regret of \emph{finding} the
+performative optimum; the exchange rate prices \emph{knowing your own
+feedback} instead, giving lower bounds and an invariance identity where they
+give algorithmic upper bounds. \citet{bracale2025reverse} design deployments
+to learn the distribution map and bound the regret of doing so at an order
+level; T2 prices the same activity exactly, in the objective's own curvature.
+\citet{lin2024plugin} show that misspecified structural models still help,
+which T7 sharpens into a budget-explicit rule.
+
+\textbf{Learning while earning.} That myopic optimization can stall learning is
+classical in operations research and economics
+\citep{rothschild1974two,easley1988controlling,aghion1991optimal,harrison2012bayesian,broder2012dynamic,keskin2014dynamic},
+surveyed by \citet{denboer2015dynamic}, with the informational tension stated
+in its sharpest form by \citet{grossman1980impossibility}. T1 is the
+performative version of that stall: it comes from the optimizer converging,
+not from weak feedback, and the cap is explicit. \citet{lai1979adaptive}'s
+adaptive designs are points on the frontier T2 describes; what does not appear
+in that literature is the frontier itself, its floor, or a demand curve the
+decision-maker's own actions generate.
+
+\textbf{Dual control and experiment design.} Pricing an experiment inside the
+objective it serves is dual control \citep{feldbaum1960dual} and least-costly
+identification \citep{bombois2006least}. Here the plant is a retraining
+learner, the budget is the optimizer's own objective, and the constraint is
+loop contraction. The lower bounds are van Trees arguments
+\citep{gill1995applications}. On the design side, task-optimal exploration in
+linear systems \citep{wagenmaker2021task,dean2020sample} and the finding that
+naive exploration suffices for the linear quadratic regulator
+\citep{simchowitz2020naive} sit against C5.1, which says isotropic exploration
+overpays by an explicit curvature-dispersion factor once the design is priced
+in the experimenter's own objective. The classical canon
+\citep{kiefer1960equivalence,pukelsheim2006optimal} supplies the A-optimality
+and Chebyshev-system machinery but never prices the design that way.
+
+\textbf{The market.} The structural single-book market, its calibration, and
+the corporate-bond instantiation behind the real-data row of Table
+\ref{tab:results} are those of REFLEX \citep{reflex2026}. The
+quote-summons-toxicity channel is the dealer's adverse-selection problem
+\citep{gueant2013inventory}, and the fact that a dealer's own quotes feed the
+flow it then reads is the price-reading effect studied by
+\citet{barzykin2026quoting}.
