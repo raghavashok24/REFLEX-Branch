@@ -23,6 +23,25 @@ Decision notifications for both venues are on Sept 29.
 - Aug 29 submission date, Sept 29 decision date, Dec 12/13 workshop date in Atlanta
 
 
+## IEEE Workshop Retargets
+
+Both NeurIPS workshop submissions were rejected. These are the top two IEEE workshop venues for each paper, all held at IEEE BigData 2026 (Dec 14-17, Phoenix). Unlike the NeurIPS workshops, papers are archived in IEEE Xplore, and the page limits count references with no unlimited appendix.
+
+**Econ ML** (_Herd Immunity and Learning Externalities in Markets of Adaptive Models_)
+1. 3rd IEEE Workshop on LLMs for Finance: https://intelligentfinance.github.io/IEEE-LLM-finance-2026/
+   - Oct 19 submission date (AoE), Nov 2 decision date, Nov 23 camera-ready
+   - Full papers up to 10 pages, short papers up to 4 pages, IEEE 2-column
+2. ABCSS 2026 (Application of Big Data for Computational Social Science): https://css-japan.com/abcss2026/
+   - Oct 1 submission date
+   - Up to 10 pages (6-8 recommended), IEEE 2-column, single-blind
+
+**ML x OR** (_Minimax Estimation–Regret Tradeoffs and Certified Exploration in Performative Prediction_, MATH-AI framing)
+1. BTSD 2026 (Big Data & AI-Assisted Tools for Scientific Discovery): https://sites.google.com/view/btsd2026
+   - Oct 1 abstract date, Oct 7 submission date, Nov 4 decision date, Nov 25 camera-ready
+   - Short papers 4-6 pages, full papers 8-10 pages, IEEE 2-column, single-blind
+2. Learning Representations with Limited Supervision (LRLS): https://lrls.org/
+   - Oct 30 submission date
+
 
 ## To Do
 
