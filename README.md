@@ -10,7 +10,7 @@ Built by Shriraghav Ashok and Vignesh Nagarajan.
 
 ## Proposed Tracks
 
-Decision notifications for both venues are on Sept 29.
+Both NeurIPS workshop submissions were rejected. See IEEE Workshop Retargets below for where each paper goes next.
 
 **ML x OR** https://mlxor-2026.github.io/
 - Workshop to journal pipeline for 3 journals: Stochastic Systems, Mathematics of Operations Research, Operations Research (all 3 via invitation only)
