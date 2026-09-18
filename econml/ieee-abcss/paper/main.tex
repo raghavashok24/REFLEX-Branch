@@ -204,15 +204,96 @@ Both remedies are public goods. A corrected firm pays for its correction and eve
 
 \section{Two more levers: cadence and a tax}
 \label{sec:levers}
-% TODO
+
+\subsection{Moving less per round}
+The one lever a firm can pull alone is to change less each time it retrains. A learner that takes only $K$ gradient steps per deployment has outer slope $-m+c^K(1+m)$, where $c=1-\eta\gamma$ is its per-step contraction \cite{mendlerdunner2020}. Because $c$ depends only on the firm's own step size and curvature, it does not change with the number of competitors, and that is what lets the single-firm result compose with the market.
+
+\begin{theorem}[Cadence window]
+\label{thm:cadence}
+With synchronous $K$-step retraining, the joint deployment map is $c^KI+(1-c^K)J$, and the market is stable if and only if
+\begin{equation}
+K<K_{\max}=\frac{\ln\bigl((\mN-1)/(\mN+1)\bigr)}{\ln c},
+\end{equation}
+with $K_{\max}=\infty$ when $\mN\le1$.
+\end{theorem}
+
+The window shrinks as crowding grows, and it can close. Since $K\ge1$, a stabilizing cadence exists at all only if $\mN<(1+c)/(1-c)$, which is $9$ at $c=0.8$. Past that critical crowding level, no step budget is small enough.
+
+Crowding comes from provenance, so a firm's step budget depends on its competitors' choice of vendor. At $m_1=0.15$, $\kappa=0.8$, $N=30$ and $c=0.8$, the window is $20.68$ steps at $s=0.25$, $5.28$ at $s=0.5$ and $2.53$ at $s=1$. Nobody entered the market, yet every incumbent lost most of its step budget. The price of a smaller $K$ is staleness, and it is the same number: after a round, the gap between a firm's deployed model and its best response is exactly $c^K$ times what it was.
+
+\subsection{Pricing the externality}
+Inside the stable region the market's common mode behaves like an autoregressive process with coefficient $-\mN$, so its stationary variance is $V(\mN)=\sigma^2/(1-\mN^2)$. We use $V$ as a smooth stand-in for the risk of divergence. It blows up exactly at the boundary, and nothing below needs more than $V$ being positive, increasing and convex.
+
+Each firm chooses an adaptation aggressiveness $a_i$, meaning its cadence, learning rate or responsiveness, and gets a concave benefit $B(a_i)$ through its modulus $m_i=\mu(a_i)$. Firm $i$ puts weight $w_i$ on common-mode variance and a planner puts weight $W>\sum_iw_i$, because clients also bear execution-quality variance that no dealer's objective includes. The results depend only on the sign of that gap, not its size.
+
+A firm's marginal effect on the market is $\partial\mN/\partial m_i=\Neff v_i^2$, where $v$ is the leading eigenvector of the coupling matrix. These shares add up to $\Neff$, not to one. On exchangeable $R$ each is $\Neff/N$, so a naive commons guess of $1/N$ is off by a factor of $\Neff$, which is $16.2$ at $N=20$, $\kappa=0.8$ and $s=1$.
+
+\begin{theorem}[The wedge]
+\label{thm:wedge}
+At a symmetric profile, the private and social first-order conditions differ only in the price of crowding. The marginal cost a firm ignores is
+\begin{equation}
+t^*=(W-w_i)\,V'(\mN)\,\frac{\Neff}{N}\,\mu'(a),\quad V'(\mN)=\frac{2\sigma^2\mN}{(1-\mN^2)^2},
+\end{equation}
+and a per-unit fee $t^*$ on aggressiveness makes the decentralized equilibrium coincide with the symmetric social optimum.
+\end{theorem}
+
+The fee rises with $N$, $\kappa$, $s$ and $\mN$, and diverges like $(1-\mN)^{-2}$ at the boundary. That rate is the part a regulator should worry about: a fee set when the market looked calm and then left alone will be far too low by the time the market is close to the edge.
+
+\begin{corollary}[Over-adaptation]
+\label{cor:over}
+The untaxed equilibrium adapts more aggressively than the social optimum for every $N\ge2$, even with no client exposure. At $N=1$ with no client exposure the wedge is exactly zero.
+\end{corollary}
+
+The same fee also prices shared-model adoption. Since $\partial\mN/\partial s=m_1\kappa(N-1)$, the provenance channel grows linearly in $N$ and does not decay, while a firm's private gain from adopting the shared model does not grow with market size. Left alone, adoption drifts toward the unstable configuration. That is why a diversity floor is a separate instrument from a cadence cap and not a restatement of it. The three levers are quantity regulation, a technology mandate and a price, and choosing among them under uncertainty is Weitzman's question \cite{weitzman1974}. We supply the objects needed to ask it.
 
 \section{Evidence}
 \label{sec:evidence}
-% TODO
+
+The checks in Table~\ref{tab:panels} are not all the same kind of evidence, and each row says which kind it is. \emph{Measured} means the run took place in an order-flow simulator: a real $N$-dealer market with informed flow, spreads and inventory, which reduces exactly to the single-dealer market at $N=1$. \emph{Dry run} means the run took place in a linearized reference environment that implements the model's response geometry and nothing else. A dry run checks that a formula was derived correctly from the model it claims to describe, and these checks have caught real errors, including the one in Section~\ref{sec:herd}. A dry run cannot show that a real market behaves like the model. Every closed form in the paper has a numerical certificate that fails loudly on any disagreement, and all 542 pass \cite{price2026}.
+
+\begin{table}[!t]
+\centering
+\caption{The six checks and their status}
+\label{tab:panels}
+\small
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Check & Tests & Status & Outcome \\
+\midrule
+Amplification & Sec.~\ref{sec:setup} & \textbf{measured} & $1.7428\times$, $3.1567\times$ \\
+Phase diagram & Thm.~\ref{thm:alignment} & dry run & 48 cells, error $\le7.1\mathrm{e}{-15}$ \\
+Clustered firms & Thm.~\ref{thm:alignment} & dry run & $\mN=1.30$; index $0.74$ \\
+Cadence window & Thm.~\ref{thm:cadence} & dry run & 175 cells, 0 disagree \\
+Herd immunity & Thm.~\ref{thm:mixed} & dry run & 12/14/16/20 firms \\
+Substitution & Thm.~\ref{thm:mixed} & dry run & 18 of 18 points \\
+Over-adaptation & Thm.~\ref{thm:wedge} & dry run & 12 configs, 0 contradict \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{The measured check}
+We reran the shared-pool market from our earlier work \cite{reflex2026} and measured common-mode moduli of $0.7856$, $1.3692$ and $2.4799$ at $N=1,2,3$. That is amplification of $1.7428\times$ and $3.1567\times$, matching the published $1.74\times$ and $3.16\times$ exactly. This check covers the monoculture case $R=\one\one^{\top}$, so it supports the base law the paper builds on, not any of the four new results. It is also our own earlier work, so it is not independent validation.
+
+The linear prediction at full spillover is $2$ and $3$. The market comes in $12.9\%$ below it at $N=2$ and $5.2\%$ above at $N=3$. The two gaps have opposite signs, which is what a nonlinear market with saturating flow does around a linearization. The reference environment hits the prediction exactly because it leaves out that nonlinearity. The spread between the two modes, $3.4\times10^{-3}$ against a theoretical zero, says the instability is purely common-mode, which is the mechanism Theorem~\ref{thm:alignment} generalizes.
+
+\subsection{Why the rest are dry runs}
+We built a version of the order-flow simulator in which each dealer has its own response profile. It is exact when the profiles are flat, but it failed its acceptance test. Liquidity and price impact stay shared however the profiles differ, and the leftover error is larger than several of the effects the other checks resolve. We drew no figure from it and upgraded no check. The over-adaptation check is a dry run for a different reason: the simulator has no aggressiveness choice and no welfare measure. In the reference environment the over-adaptation gap grows from $29.0\%$ at $N=2$ to $119.9\%$ at $N=20$, and is exactly zero at $N=1$, as Corollary~\ref{cor:over} predicts.
 
 \section{Limitations and conclusion}
 \label{sec:conclusion}
-% TODO
+
+\subsection{What a supervisor can see}
+Every quantity above is hidden from a supervisor, but near the boundary the market gives itself away. As $\mN$ approaches one, the leading principal component of public quotes has lag-one autocorrelation approaching one in magnitude, and its share of variance grows like $1/(1-\mN)$. A supervisor can therefore estimate the distance to instability from public prices alone, and the estimate gets sharper as the market gets closer to the edge. Its consistency and sample complexity are open.
+
+\subsection{Measuring crowding on real models}
+The most useful next step is to put a number on $\lmax(R)$ for real deployed models. Per-item outputs from many models on shared benchmarks, such as the correlated-errors data of \cite{kim2025}, give a direct proxy: estimate the correlation matrix of per-item errors across models, take its leading eigenvalue, and read off $\Neff$ for a market built on those models. The same data would show how far a mean-similarity index understates it. Error correlation is only a proxy for alignment of response directions, and closing that gap is part of the work.
+
+\subsection{Limitations}
+The analysis is linearized around equilibrium, and the measured check shows what that costs in a real market. The results with heterogeneous response directions are checked against the model, not measured, which is the largest gap in the work. Theorem~\ref{thm:alignment} is exact for equal moduli and a two-sided bound otherwise, retraining is synchronous, and the clean $1-1/R_0$ form holds only in the $\kappa=s=1$ corner. Measuring instability by stationary variance is a modeling choice. Unequal clocks, three or more correction levels, and corrections that change a firm's direction rather than its gain are named in the repository and not attempted.
+
+\subsection{Conclusion}
+Testing one model at a time cannot certify a market of models. The number that separates the two questions is effective crowding, and no test of a single model can see it. Current rules for general-purpose models tie their thresholds to model scale. We offer a market-level quantity instead, two remedies that substitute for each other, and a price.
 
 \bibliographystyle{IEEEtran}
 \bibliography{references}
