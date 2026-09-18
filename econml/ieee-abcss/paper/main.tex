@@ -52,11 +52,40 @@ sashok24@berkeley.edu}
 
 \section{Introduction}
 \label{sec:intro}
-% TODO
+
+Picture fifty dealers quoting the same bonds. Each one retrains its pricing model on the order flow it saw since the last retraining, and each one, tested on its own, is fine: replay its own history and it settles down. Put the fifty in one market and the market can still blow up. The flow a dealer sees depends on how the other forty-nine priced, so every retraining changes what everyone else learns from next. None of the fifty models accounts for that.
+
+We call this a \emph{learning externality}. The broader idea, that sensible individual behavior can add up to collective fragility, is old. Banks that each diversify optimally end up holding the same portfolios and fail together \cite{beale2011,wagner2010}. Quantitative funds running similar strategies unwound together in August 2007, and no single fund's risk report showed the crowding \cite{khandani2007}. What is new is that the agents now learn, and more and more of them learn from the same place. Firms that fine-tune one vendor's foundation model make correlated errors \cite{kim2025}. We show that they also push the market in correlated directions, and that this, rather than the number of firms, is what decides whether the market is stable.
+
+The tool people use today looks at one model at a time. A learner whose deployment reshapes its own data converges under repeated retraining when a single number, its performative modulus $m$, stays below one \cite{perdomo2020}. Certify $m<1$ and the loop is safe. In a market that certificate is not enough. The quantity that matters is a market-level number we call the \emph{feedback reproduction number} $\mN$, the factor by which a shared disturbance grows per round of retraining. The market converges exactly when $\mN<1$, and $\mN$ depends on how many independent models sit under the market. Fifty firms built on one vendor's model behave like one learner fifty times larger. Fifty firms built on fifty unrelated models behave like one firm.
+
+The result we like best started as a mistake. Our first version of the herd-immunity result took a limit in which correction is perfect, and it produced a clean threshold: correct enough firms and the market is safe. When we checked that threshold against the exact spectral radius on random markets, it was wrong in the dangerous direction. It called $11.8\%$ of configurations stable that are unstable at every finite correction strength. Working out the exact threshold turned up a formula epidemiologists already use, the coverage a population needs when the vaccine is imperfect \cite{anderson1985,fine2011}, together with an efficacy below which no coverage is enough. The clean limit is still in the paper, but as a corollary with its error direction stated.
+
+\subsection*{Contributions}
+\begin{enumerate}
+\item \emph{Effective crowding.} The stability of a market of retraining firms is governed by $\mN=\Neff m_1$, where $\Neff$ depends on the leading eigenvalue of a correlation matrix of the firms' response directions (Section~\ref{sec:crowding}). Diversity indices built on mean similarity can call an unstable market safe.
+\item \emph{Herd immunity.} An exact stability threshold for a market mixing corrected and uncorrected firms, which reduces to the imperfect-vaccine coverage law and implies a critical efficacy. Correction and model diversity substitute for each other along a frontier we compute (Section~\ref{sec:herd}).
+\item \emph{Cadence and a tax.} Retraining in smaller steps helps only below a critical crowding level, and a Pigouvian fee prices the externality. Without the fee, every market of two or more firms adapts too aggressively (Section~\ref{sec:levers}).
+\item \emph{Honest evidence.} Every numerical check carries its status. One is measured in an order-flow market, and the rest confirm the formulas against the model they came from. Full proofs, code and 542 numerical certificates are public \cite{price2026}.
+\end{enumerate}
+
+\subsection*{What this paper is not}
+It is not an empirical study of a deployed market. Our one measured result comes from an order-flow simulator we built for earlier work \cite{reflex2026}. We have not yet measured the key eigenvalue on any real set of deployed models, and Section~\ref{sec:conclusion} says how we would. What we offer is the quantity a supervisor would need to measure and the three instruments that act on it.
 
 \section{Related work}
 \label{sec:related}
-% TODO
+
+\subsection{Collective behavior and contagion}
+Threshold models explain how a behavior spreads once enough others have adopted it \cite{granovetter1978}, and informational cascades explain why people rationally copy their predecessors and why the resulting consensus is fragile \cite{bikhchandani1992}. Both are about people imitating people. In our setting nobody imitates anyone. Firms become correlated because they learn from shared data through shared models. The epidemiological link is an identity rather than an analogy: $R_0$ is defined as the spectral radius of a next-generation operator \cite{diekmann1990}, $\mN$ is the spectral radius of a linearized retraining operator, and so the two thresholds are the same statement. That is why the vaccination results carry over with their refinements, including the imperfect-vaccine law. Heterogeneous contact structure famously changes epidemic thresholds \cite{pastorsatorras2001}. Here the analogous structure is the alignment matrix.
+
+\subsection{Algorithmic monoculture}
+When many firms adopt one algorithm, welfare can fall even if that algorithm is the better one, because independent errors stop cancelling \cite{kleinberg2021}. Shared models also concentrate harm on the same individuals \cite{bommasani2022}, and a shared evaluation algorithm changes outcomes in matching markets \cite{peng2024}. These results describe a market at rest. None gives a stability boundary, so a market can look fine at equilibrium and still be one retraining away from diverging.
+
+\subsection{Performative prediction with many learners}
+Performative prediction studies learners whose deployments shift their own data \cite{perdomo2020}. With several learners in one environment, convergence conditions exist that bound scalar sensitivities against curvature \cite{narang2023}, and in the fully aligned case, increasing learning rates and agent counts can drive the dynamics into chaos \cite{piliouras2023}. Our condition bounds a spectral radius instead, and Proposition~\ref{prop:witness} shows two markets that agree on every scalar such a criterion reads but differ in stability. We also compose two single-learner tools with the market: lazy deployment, where a learner takes a few gradient steps per round \cite{mendlerdunner2020}, and feedback-aware updates that correct for the learner's own influence \cite{izzo2021,miller2021}.
+
+\subsection{Systemic risk and random matrices}
+The largest eigenvalue of a correlation matrix as the weight of a common market mode is standard in econophysics \cite{laloux1999,plerou2002}. We compute it from a different matrix, response directions instead of returns, and it enters a stability condition rather than a portfolio. Reading economic conditions from public text works through an exogenous channel \cite{pebsa2024}. The supervisory estimator in Section~\ref{sec:conclusion} reads an endogenous one, and its signal gets stronger as the market approaches the boundary it is watching for.
 
 \section{A market of retraining firms}
 \label{sec:setup}
