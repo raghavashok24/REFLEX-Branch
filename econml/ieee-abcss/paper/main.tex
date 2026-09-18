@@ -15,9 +15,9 @@
 
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{corollary}[theorem]{Corollary}
-\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{proposition}{Proposition}
 
 \newcommand{\Neff}{N_{\mathrm{eff}}}
 \newcommand{\mN}{m_N}
@@ -43,11 +43,11 @@ sashok24@berkeley.edu}
 \maketitle
 
 \begin{abstract}
-% TODO
+Firms that price, lend and rank with machine learning retrain on data their own models helped produce. When many of them fine-tune the same foundation model, one firm's retraining changes what every other firm learns from next, and no firm accounts for it. We model this as a market of retraining firms and show that it is stable exactly when one number, the feedback reproduction number, stays below one. That number depends on how many independent models sit under the market, not on how many firms there are: fifty firms built on one vendor's model behave like one learner fifty times larger. Three remedies follow. Retraining in smaller steps helps only below a critical level of crowding. Correcting for feedback works like vaccination, and the share of firms that must correct is the epidemiological coverage formula for an imperfect vaccine, including an efficacy below which no coverage is enough. A tax on aggressive adaptation closes the gap between private and social incentives, and without it every market of two or more firms over-adapts. In an order-flow market simulator, the base amplification law reproduces published runs exactly.
 \end{abstract}
 
 \begin{IEEEkeywords}
-% TODO
+learning externalities, algorithmic monoculture, foundation models, systemic risk, herd immunity, performative prediction, Pigouvian taxation
 \end{IEEEkeywords}
 
 \section{Introduction}
@@ -57,7 +57,7 @@ Picture fifty dealers quoting the same bonds. Each one retrains its pricing mode
 
 We call this a \emph{learning externality}. The broader idea, that sensible individual behavior can add up to collective fragility, is old. Banks that each diversify optimally end up holding the same portfolios and fail together \cite{beale2011,wagner2010}. Quantitative funds running similar strategies unwound together in August 2007, and no single fund's risk report showed the crowding \cite{khandani2007}. What is new is that the agents now learn, and more and more of them learn from the same place. Firms that fine-tune one vendor's foundation model make correlated errors \cite{kim2025}. We show that they also push the market in correlated directions, and that this, rather than the number of firms, is what decides whether the market is stable.
 
-The tool people use today looks at one model at a time. A learner whose deployment reshapes its own data converges under repeated retraining when a single number, its performative modulus $m$, stays below one \cite{perdomo2020}. Certify $m<1$ and the loop is safe. In a market that certificate is not enough. The quantity that matters is a market-level number we call the \emph{feedback reproduction number} $\mN$, the factor by which a shared disturbance grows per round of retraining. The market converges exactly when $\mN<1$, and $\mN$ depends on how many independent models sit under the market. Fifty firms built on one vendor's model behave like one learner fifty times larger. Fifty firms built on fifty unrelated models behave like one firm.
+The tool people use today looks at one model at a time. A learner whose deployment reshapes its own data converges under repeated retraining when a single number, its performative modulus $m$, stays below one \cite{perdomo2020}. Certify $m<1$ and the loop is safe. In a market that certificate is not enough. The quantity that matters is a market-level number we call the \emph{feedback reproduction number} $\mN$, the factor by which a shared disturbance grows per round of retraining. The market converges exactly when $\mN<1$, and $\mN$ depends on how many independent models sit under the market. Fifty firms built on one vendor's model behave like one learner fifty times larger. Fifty firms whose models push the market in unrelated directions behave like one firm.
 
 The result we like best started as a mistake. Our first version of the herd-immunity result took a limit in which correction is perfect, and it produced a clean threshold: correct enough firms and the market is safe. When we checked that threshold against the exact spectral radius on random markets, it was wrong in the dangerous direction. It called $11.8\%$ of configurations stable that are unstable at every finite correction strength. Working out the exact threshold turned up a formula epidemiologists already use, the coverage a population needs when the vaccine is imperfect \cite{anderson1985,fine2011}, together with an efficacy below which no coverage is enough. The clean limit is still in the paper, but as a corollary with its error direction stated.
 
@@ -66,7 +66,7 @@ The result we like best started as a mistake. Our first version of the herd-immu
 \item \emph{Effective crowding.} The stability of a market of retraining firms is governed by $\mN=\Neff m_1$, where $\Neff$ depends on the leading eigenvalue of a correlation matrix of the firms' response directions (Section~\ref{sec:crowding}). Diversity indices built on mean similarity can call an unstable market safe.
 \item \emph{Herd immunity.} An exact stability threshold for a market mixing corrected and uncorrected firms, which reduces to the imperfect-vaccine coverage law and implies a critical efficacy. Correction and model diversity substitute for each other along a frontier we compute (Section~\ref{sec:herd}).
 \item \emph{Cadence and a tax.} Retraining in smaller steps helps only below a critical crowding level, and a Pigouvian fee prices the externality. Without the fee, every market of two or more firms adapts too aggressively (Section~\ref{sec:levers}).
-\item \emph{Honest evidence.} Every numerical check carries its status. One is measured in an order-flow market, and the rest confirm the formulas against the model they came from. Full proofs, code and 542 numerical certificates are public \cite{price2026}.
+\item \emph{Labeled evidence.} One numerical check is measured in an order-flow market. The rest confirm the formulas against the model they came from, and each one says which kind it is. Full proofs, code and 542 numerical certificates are public \cite{price2026}.
 \end{enumerate}
 
 \subsection*{What this paper is not}
@@ -108,7 +108,7 @@ We work under four standing assumptions. (A1) Stability statements linearize the
 
 \begin{lemma}[Reduction]
 \label{lem:reduction}
-Suppose each firm's deviation from equilibrium is a scalar $x_i$ along its own unit response direction, all $\|E_i\|_F$ are equal to $\varepsilon$, each firm feels its own distortion in full and a competitor's with weight $\kappa$, both measured along its own direction, and each firm best-responds under a $\gamma$-strongly convex objective with sensitivity $\beta$. Then the joint retraining map is linear with Jacobian
+Suppose each firm's deviation from equilibrium is a scalar $x_i$ along its own unit response direction, and all $\|E_i\|_F$ equal $\varepsilon$. Each firm feels its own distortion in full and a competitor's with weight $\kappa$, both measured along its own direction. Each firm best-responds under a $\gamma$-strongly convex objective with sensitivity $\beta$. Then the joint retraining map is linear with Jacobian
 \begin{equation}
 \label{eq:reduction}
 J=-m_1\bigl[(1-\kappa)I+\kappa R\bigr].
@@ -148,7 +148,7 @@ The supply-chain form $\mN=m_1(1+\kappa s(N-1))$ says the stability condition is
 \begin{figure}[!t]
 \centering
 \includegraphics[width=0.82\columnwidth]{figures/fig_phase.pdf}
-\caption{Measured $\mN$ across 48 cells of firm count $N$ and shared-model fraction $s$, with the predicted stability boundary. The reference environment agrees with Theorem~\ref{thm:alignment} in every cell to within $7.1\times10^{-15}$ (Section~\ref{sec:evidence}).}
+\caption{Dry run in the reference environment: $\mN$ across 48 cells of firm count $N$ and shared-model fraction $s$, with the predicted stability boundary. It agrees with Theorem~\ref{thm:alignment} in every cell to within $7.1\times10^{-15}$ (Section~\ref{sec:evidence}).}
 \label{fig:phase}
 \end{figure}
 
@@ -193,7 +193,7 @@ At $\mN=2.5$, correction must improve curvature by more than a factor of $2.5$ o
 \begin{figure}[!t]
 \centering
 \includegraphics[width=0.82\columnwidth]{figures/fig_herd.pdf}
-\caption{Market modulus $\mN$ against corrected fraction at $N=20$, $m_1=0.15$, $\kappa=0.8$, $s=1$, for four efficacies. The dashed line is the perfect-correction threshold. The gap between it and each crossing is the error Section~\ref{sec:herd} describes, not noise.}
+\caption{Dry run: market modulus $\mN$ against corrected fraction at $N=20$, $m_1=0.15$, $\kappa=0.8$, $s=1$, for four efficacies. The dashed line is the perfect-correction threshold. The gap between it and each crossing is the error Section~\ref{sec:herd} describes, not noise.}
 \label{fig:herd}
 \end{figure}
 
@@ -232,9 +232,9 @@ A firm's marginal effect on the market is $\partial\mN/\partial m_i=\Neff v_i^2$
 \label{thm:wedge}
 At a symmetric profile, the private and social first-order conditions differ only in the price of crowding. The marginal cost a firm ignores is
 \begin{equation}
-t^*=(W-w_i)\,V'(\mN)\,\frac{\Neff}{N}\,\mu'(a),\quad V'(\mN)=\frac{2\sigma^2\mN}{(1-\mN^2)^2},
+t^*=(W-w_i)\,V'(\mN)\,\frac{\Neff}{N}\,\mu'(a),
 \end{equation}
-and a per-unit fee $t^*$ on aggressiveness makes the decentralized equilibrium coincide with the symmetric social optimum.
+where $V'(\mN)=2\sigma^2\mN/(1-\mN^2)^2$, and a per-unit fee $t^*$ on aggressiveness makes the decentralized equilibrium coincide with the symmetric social optimum.
 \end{theorem}
 
 The fee rises with $N$, $\kappa$, $s$ and $\mN$, and diverges like $(1-\mN)^{-2}$ at the boundary. That rate is the part a regulator should worry about: a fee set when the market looked calm and then left alone will be far too low by the time the market is close to the edge.
