@@ -2,6 +2,12 @@
 
 Retarget of _Herd Immunity and Learning Externalities in Markets of Adaptive Models_ after the NeurIPS EconML workshop rejection. Written 18 Sep 2026.
 
+## Status, 18 Sep 2026
+
+A complete draft is in `paper/` and builds to 6 pages, inside the recommended 6 to 8. `submission/` holds the upload PDF, the form text and `UPLOAD.md`. It is ready to submit once the form opens on Oct 1.
+
+Two things differ from the plan below. The measured-alignment panel is not in the draft; the Sep 22 go/no-go still decides whether it gets added. And the draft went in at 6 pages, not 8, because cadence and the wedge fit in one section without their figures. That leaves about two pages of room for the panel.
+
 ## The venue
 
 **ABCSS 2026**, Application of Big Data for Computational Social Science, a workshop at IEEE BigData 2026 (Dec 14-17, Phoenix). Site: https://css-japan.com/abcss2026/
