@@ -25,7 +25,8 @@ OUT = os.path.join(ROOT, 'submission')
 PDF_NAME = 'abcss2026-herd-immunity.pdf'
 MAX_PAGES = 10
 SOURCES = ['main.tex', 'references.bib', 'main.bbl',
-           'figures/fig_herd.pdf', 'figures/fig_phase.pdf']
+           'figures/fig_herd.pdf', 'figures/fig_phase.pdf',
+           'figures/fig_substitution.pdf']
 
 
 def sha256(path):
