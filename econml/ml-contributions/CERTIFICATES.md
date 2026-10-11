@@ -186,7 +186,7 @@ measurement is taken from the environment.
 **The simulator port carries no certificate, by decision.** Its one acceptance
 test, bit-for-bit reproduction of the unmodified base at flat profiles, passes at
 relative error `0.00e+00` for `N` in `1..6` and is recorded in
-[`../environment/HETERO-SIMULATOR-PORT-DESIGN.md`](../environment/HETERO-SIMULATOR-PORT-DESIGN.md).
+[`environment/HETERO-SIMULATOR-PORT-DESIGN.md`](environment/HETERO-SIMULATOR-PORT-DESIGN.md).
 Its step-3 gate failed and the workstream was closed on 19 Aug 2026 without
 either named repair, so no panel imports the port and no claim rests on it. A
 certificate here would guard code that nothing in the paper depends on.
@@ -235,6 +235,6 @@ direction of the error stays a theorem and is not restated as a statistic.
 ## Rule
 
 A closed form that reaches the paper without a passing certificate is stated at
-`[DERIVED]`, never at `[VERIFIED]`. The claims ledger in `../writing/` is the
+`[DERIVED]`, never at `[VERIFIED]`. The claims ledger in `../../archive/econml-neurips/writing/` is the
 enforcement point, and the status flag in the paper must match the ledger entry,
 which must match this table.

@@ -327,6 +327,6 @@ is left exactly as it stands, exact at the reduction and imported by nothing, so
 a journal version resumes from this document rather than from scratch.
 
 Nothing here upgrades any claim. Panels 2, 2b, 4 and 5 remain `[DRY RUN]` in
-[`../../writing/CLAIMS-LEDGER.md`](../../writing/CLAIMS-LEDGER.md). This document
+[`../../../archive/econml-neurips/writing/CLAIMS-LEDGER.md`](../../../archive/econml-neurips/writing/CLAIMS-LEDGER.md). This document
 records a design and a skeleton that reproduces the known case; it records no
 new measurement.

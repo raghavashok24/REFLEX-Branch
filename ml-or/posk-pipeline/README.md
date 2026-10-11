@@ -1,6 +1,6 @@
 # posk - the price-of-self-knowledge pipeline (paper: PRICE)
 
-The ML architecture and full pipeline for the ML x OR @ NeurIPS 2026 paper
+The ML architecture and full pipeline for the paper
 *"PRICE: Minimax Estimation-Regret Tradeoffs and Certified Exploration
 in Performative Prediction"* - the companion
 implementation of the `mlxor-derivations` math folder (theorem register

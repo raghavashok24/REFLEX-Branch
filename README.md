@@ -1,54 +1,59 @@
-# PRICE: Performative Risk In Coupled Environments
-PRICE is an extension of REFLEX ([GitHub](https://github.com/vignesh-nagarajan-vn/REFLEX), [arXiv cs.LG](https://arxiv.org/abs/2608.16155)) designed to take the research further by placing it in dynamic environments.
+<div align="center">
 
-This repository builds **PRICE** (Performative Risk in Coupled Environments). PRICE is a two-fold module comprising 2 research papers, both of which put a price on a feedback loop, with the difference being in how it's priced (privately vs socially): 
-- _Minimax Estimation–Regret Tradeoffs and Certified Exploration in Performative Prediction_ (ML x OR Workshop)
-- _Herd Immunity and Learning Externalities in Markets of Adaptive Models_ (Econ ML Workshop)
+# PRICE
+
+**Performative Risk In Coupled Environments**
+
+Two papers on what it costs when models retrain on data their own predictions shaped.
+
+<p align="center"><sub><b>Languages & Tools:</b></sub></p>
+<p align="center">
+  <img src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54">
+  <img src="https://img.shields.io/badge/numpy-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white">
+  <img src="https://img.shields.io/badge/latex-%23008080.svg?style=for-the-badge&logo=latex&logoColor=white">
+</p>
+
+</div>
+
+PRICE extends REFLEX ([GitHub](https://github.com/vignesh-nagarajan-vn/REFLEX), [arXiv:2608.16155](https://arxiv.org/abs/2608.16155)) from a single learner to dynamic, coupled settings. Both papers put a price on a feedback loop. One prices it privately, as the cost a single decision-maker pays to learn its own influence. The other prices it socially, as the cost each firm's retraining imposes on every other firm in the market.
 
 Built by Shriraghav Ashok and Vignesh Nagarajan.
 
+## Papers
 
-## Proposed Tracks
+| Paper | Prices the loop | Status | Read |
+| --- | --- | --- | --- |
+| **PRICE: A Certified Exploration Framework for Pricing Models That Shape Their Own Data** | Privately | IEEE draft complete. Targeting [LRLS](https://lrls.org/), deadline Oct 30, 2026 | [PDF](ml-or/price-ieee.pdf) · [folder](ml-or/) |
+| **Herd Immunity and Learning Externalities in Markets of Shared Foundation Models** | Socially | Submitted to [ABCSS 2026](https://css-japan.com/abcss2026/) at IEEE BigData on Oct 11, 2026. Decision expected Nov 1 | [PDF](econml/ieee-abcss/submission/abcss2026-herd-immunity.pdf) · [folder](econml/) |
 
-Both NeurIPS workshop submissions were rejected. See IEEE Workshop Retargets below for where each paper goes next.
+## Layout
 
-**ML x OR** https://mlxor-2026.github.io/
-- Workshop to journal pipeline for 3 journals: Stochastic Systems, Mathematics of Operations Research, Operations Research (all 3 via invitation only)
-- Aug 31 submission date, Sept 29 decision date, Dec 12/13 workshop date in Atlanta
-- Max 4 pages with references and appendices allowed unlimited extra space
+| Path | Holds |
+| --- | --- |
+| [`ml-or/`](ml-or/) | The certified-exploration paper, its derivations and the experiment pipeline |
+| [`econml/`](econml/) | The herd-immunity paper, its proofs, certificates and experiment harness |
+| [`archive/`](archive/) | Earlier submissions, the scrapped MATH-AI paper and the planning notes |
 
-**Econ ML:** https://econml26-workshop.github.io/
-- Semi-alignment so need good branch off ideas in their domains
-- Either long (9 pages) or short (4 pages) submissions. References and appendices allowed unlimited extra space.
-- Aug 29 submission date, Sept 29 decision date, Dec 12/13 workshop date in Atlanta
+Each paper folder has its own README with the results, the folder map and what is and is not verified.
 
+## Run the checks
 
-## IEEE Workshop Retargets
+Every closed form in both papers has a numerical check that fails loudly on disagreement. Both suites need only Python and NumPy.
 
-Both NeurIPS workshop submissions were rejected. These are the top two IEEE workshop venues for each paper, all held at IEEE BigData 2026 (Dec 14-17, Phoenix). Unlike the NeurIPS workshops, papers are archived in IEEE Xplore, and the page limits count references with no unlimited appendix.
+```bash
+python ml-or/mlxor-derivations/verify/verify_all.py
+```
 
-**Econ ML** (_Herd Immunity and Learning Externalities in Markets of Adaptive Models_)
+```bash
+python ml-or/posk-pipeline/tests/test_posk.py
+```
 
-Chosen venue: ABCSS 2026 (option 2 below). **Submitted Oct 11, 2026**; decision expected Nov 1. Plan, draft and submission package are in [`econml/ieee-abcss/`](econml/ieee-abcss/).
+```bash
+for f in econml/ml-contributions/certificates/verify_*.py; do python "$f" || break; done
+```
 
-1. 3rd IEEE Workshop on LLMs for Finance: https://intelligentfinance.github.io/IEEE-LLM-finance-2026/
-   - Oct 19 submission date (AoE), Nov 2 decision date, Nov 23 camera-ready
-   - Full papers up to 10 pages, short papers up to 4 pages, IEEE 2-column
-2. ABCSS 2026 (Application of Big Data for Computational Social Science): https://css-japan.com/abcss2026/
-   - Submission window Oct 1 to Oct 12 (extended), Nov 1 decision date, Nov 14 camera-ready
-   - Up to 10 pages (6-8 recommended), IEEE 2-column, single-blind
+The first runs 38 derivation checks, the second 9 unit tests, and the third 542 assertions across eight certificate files.
 
-**ML x OR** (_Minimax Estimation–Regret Tradeoffs and Certified Exploration in Performative Prediction_, MATH-AI framing)
-1. BTSD 2026 (Big Data & AI-Assisted Tools for Scientific Discovery): https://sites.google.com/view/btsd2026
-   - Oct 1 abstract date, Oct 7 submission date, Nov 4 decision date, Nov 25 camera-ready
-   - Short papers 4-6 pages, full papers 8-10 pages, IEEE 2-column, single-blind
-2. Learning Representations with Limited Supervision (LRLS): https://lrls.org/
-   - Oct 30 submission date
+## Archive
 
-
-## To Do
-
-- [x] [Both] Ideate workshop submissions today (8/14) and call to finalize this weekend (8/16).
-- [x] [Vignesh] Get endorsement for cs.LG (ML) on arXiv and preprint the original REFLEX paper (https://arxiv.org/abs/2608.16155).
-- [x] [Both] Split paper by person for writing/research, swap midway for peer-review / validation, then continue.
-- [x] [Both] Complete reivew, revisions, and submit paper to both venues by deadlines.
+Both papers were first submitted to NeurIPS 2026 workshops and rejected, and a third reframing for MATH-AI was scrapped. That material is kept under [`archive/`](archive/) with its own [README](archive/README.md). Nothing there is maintained.

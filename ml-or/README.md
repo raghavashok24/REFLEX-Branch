@@ -1,6 +1,6 @@
 <div align="center">
 
-# PRICE: Minimax Estimation–Regret Tradeoffs and Certified Exploration in Performative Prediction
+# PRICE: A Certified Exploration Framework for Pricing Models That Shape Their Own Data
 
 ### Minimax information–cost tradeoffs and optimal exploration in performative systems
 
@@ -12,6 +12,12 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow)]()
 
 </div>
+
+| | |
+| --- | --- |
+| **Paper** | [`price-ieee.pdf`](price-ieee.pdf), 5 pages, IEEE two-column |
+| **Status** | IEEE draft complete. Targeting [LRLS](https://lrls.org/), deadline Oct 30, 2026 |
+| **Earlier version** | The NeurIPS workshop submission is in [`../archive/ml-or-neurips/`](../archive/ml-or-neurips/) |
 
 ---
 
@@ -50,7 +56,6 @@ loop:
 - [Verification-first methodology](#verification-first-methodology)
 - [Real-data leg](#real-data-leg-reflex-calibration)
 - [Reproduce](#reproduce)
-- [Workshop fit (NeurIPS 2026 ML×OR)](#workshop-fit-neurips-2026-mlor)
 - [Honest limitations](#honest-limitations)
 - [Relation to REFLEX · citation](#relation-to-reflex)
 
@@ -110,7 +115,7 @@ P&L) · UCB-Grid (performative confidence bounds).
 ## Repository layout
 
 ```
-posk-repo/
+ml-or/
 ├─ mlxor-derivations/          # the mathematical foundation
 │  ├─ derivations/             # 9 derivation documents (notation → proofs)
 │  ├─ THEOREMS.md              # register: 26 results with proof status
@@ -252,32 +257,6 @@ python verify/check_docs.py              # document-consistency suite
 Deterministic from seeds · numpy-only (matplotlib for figures) ·
 CPU-only · both folders ship GitHub Actions CI running the full
 verification.
-
----
-
-## Workshop fit (NeurIPS 2026 ML×OR)
-
-Submitting to the **Second Workshop on ML×OR**, *Mathematical
-Foundations and Operational Integration of Machine Learning for
-Uncertainty-Aware Decision-Making* (NeurIPS 2026, Atlanta, Dec 12–13;
-INFORMS APS-supported; 4-page NeurIPS format + unlimited appendix;
-single-blind per the CFP as last verified on 25 Aug; this build is
-anonymous, and one template option token restores the author block;
-non-archival; workshop-to-journal pathway).
-
-This is a **core-scope foundations paper**, not a GenAI paper. Its
-connection to the 2026 special theme (decision-making with GenAI + OR)
-is through the theme's *agentic* bullet, plus motivation:
-
-| Workshop axis | This paper |
-|---|---|
-| Mathematical foundations | A conservation law, its minimax floor (van Trees / Le Cam), optimal design theory, and a stability-certified correction lemma: OR-style analysis of an ML-native problem (performative prediction) |
-| Uncertainty-aware decision-making | Anytime confidence sequences translated through the perturbed-modulus lemma into *certified* closed-loop margins; pessimism as an operational rule; freezing as the safe fallback |
-| Agentic AI for closed-loop decision-making *(2026 theme)* | SafeD-PerfGD is an agentic closed-loop agent for autonomous operation: it explores under a priced budget, certifies its own stability from its own deployment history, and only then exploits |
-| Self-influencing deployed models *(2026 theme, motivation)* | Performative feedback (a deployed model reshaping the distribution it retrains on) is the formal structure behind GenAI deployment/retraining loops; the exchange rate prices what any such system pays to learn its own influence |
-| Operational integration / OR substance | Two instantiated economies (market-making microstructure, dynamic pricing); exploration priced in the decision-maker's *own objective*; a calibrated real-data leg |
-| Journal pathway | [`OPEN-PROBLEMS.md`](mlxor-derivations/OPEN-PROBLEMS.md) is the explicit workshop→journal delta; pathway indication: *Stochastic Systems* (Mathematics of OR becomes
-the right home if OPEN-1's sharp constant is proved first) |
 
 ---
 

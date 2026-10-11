@@ -1,6 +1,6 @@
 """Certificates for the paper's one random-ensemble number.
 
-Source of the statement: ../../paper/appendix.tex, Appendix K, and the
+Source of the statement: ../../../archive/econml-neurips/paper/appendix.tex, Appendix K, and the
 optimistic-limit paragraph of Section 6.
 
 The paper reports two kinds of empirical claim and they do not get the same

@@ -26,7 +26,7 @@ s = 1 is the in-sweep control: it must reproduce panel 1's published anchor bit
 for bit, because at s = 1 the profiles are flat and the port is the base market.
 
 WHAT IT DOES NOT DO. It draws no figure, wires nothing into panels.py, and moves
-no claim in ../../writing/CLAIMS-LEDGER.md. If the gap is large the panels are
+no claim in ../../../archive/econml-neurips/writing/CLAIMS-LEDGER.md. If the gap is large the panels are
 not interpretable as planned and the design needs revisiting before any figure
 is drawn, which is the whole reason this runs first.
 

@@ -14,7 +14,7 @@ reflex_anchor.py's already-published joint moduli bit for bit. That is the
 acceptance test below and it is the only thing this file asserts.
 
 WHAT IT DOES NOT ESTABLISH. No heterogeneous sweep is run, no panel is wired to
-this, no figure is produced, and no claim in ../../writing/CLAIMS-LEDGER.md
+this, no figure is produced, and no claim in ../../../archive/econml-neurips/writing/CLAIMS-LEDGER.md
 changes status. Panels 2, 2b, 4 and 5 stay at [DRY RUN].
 
 WHAT IT DOES NOT TOUCH. The base project is read-only. This module subclasses

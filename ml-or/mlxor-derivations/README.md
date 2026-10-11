@@ -1,7 +1,7 @@
 # Mathematical Derivations - PRICE
 
 Complete, from-scratch derivations of the mathematical foundations for the
-ML x OR @ NeurIPS 2026 paper *"PRICE: Minimax
+paper *"PRICE: Minimax
 Estimation-Regret Tradeoffs and Certified Exploration in Performative
 Prediction"* - the theory that a system whose deployment reshapes its own
 training distribution must *purchase* knowledge of that feedback with the

@@ -54,7 +54,7 @@ Rules checked against the ABCSS page (IEEE conference proceedings format, templa
 
 ## Prior publication
 
-The NeurIPS EconML workshop version was non-archival and was rejected. It has not appeared in any proceedings, so this is not a duplicate submission. If the de-anonymized preprint in `econml/paper/arxiv/` gets posted to arXiv, that does not conflict either, but confirm with the organizers (abcss@css-japan.com) before posting a new version during review.
+The NeurIPS EconML workshop version was non-archival and was rejected. It has not appeared in any proceedings, so this is not a duplicate submission. If the de-anonymized preprint in `archive/econml-neurips/paper/arxiv/` gets posted to arXiv, that does not conflict either, but confirm with the organizers (abcss@css-japan.com) before posting a new version during review.
 
 ## Open items before Oct 12
 

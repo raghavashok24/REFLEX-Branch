@@ -38,7 +38,7 @@ Three constraints drive almost every decision below.
 
 ## The one piece of new work: the measured-alignment panel
 
-Both the v1 external review and the 25 Aug internal review named this as the item that most strengthens the paper (see `../STATUS.md`). For ABCSS it also buys the big-data fit.
+Both the v1 external review and the 25 Aug internal review named this as the item that most strengthens the paper (see `../../archive/econml-neurips/STATUS.md`). For ABCSS it also buys the big-data fit.
 
 The panel estimates the alignment matrix `R` and its leading eigenvalue `lambda_max(R)` from real per-item outputs of deployed models. It reports the effective crowding and the implied `N_eff` for a market built from those models.
 
@@ -69,7 +69,7 @@ What gets cut from the body: all proofs (sketches stay), the mode-swap and stric
 
 ## Voice: make it read like the math-ai paper
 
-The math-ai paper (`../../math-ai/paper/main.tex`) reads like people wrote it. The current EconML draft reads like a compressed theorem register. The rules below come from what the math-ai paper actually does, so the rewrite has something concrete to check against.
+The math-ai paper (`../../archive/math-ai/paper/main.tex`) reads like people wrote it. The current EconML draft reads like a compressed theorem register. The rules below come from what the math-ai paper actually does, so the rewrite has something concrete to check against.
 
 **What the math-ai paper does**
 
@@ -93,7 +93,7 @@ The math-ai paper (`../../math-ai/paper/main.tex`) reads like people wrote it. T
 - Internal vocabulary a reader never saw defined: "dry run", "port", "gate", "certificate" all need a one-line gloss the first time, or get replaced.
 - AI-tell words and em dashes. Run the prose linter on the `.tex` source before every commit that touches prose.
 
-**How to write it.** Rewrite each section from the outline and the math notes (`../math/`, `../writing/`), not by editing the NeurIPS LaTeX line by line. Line editing keeps the old rhythm. Read each finished section aloud once. Any sentence you'd never say out loud gets rewritten.
+**How to write it.** Rewrite each section from the outline and the math notes (`../math/`, `../../archive/econml-neurips/writing/`), not by editing the NeurIPS LaTeX line by line. Line editing keeps the old rhythm. Read each finished section aloud once. Any sentence you'd never say out loud gets rewritten.
 
 ## Folder layout
 
@@ -108,7 +108,7 @@ econml/ieee-abcss/
   submission/        final PDF as uploaded
 ```
 
-The NeurIPS files in `../paper/` stay untouched as the record of that submission.
+The NeurIPS files in `../../archive/econml-neurips/paper/` stay untouched as the record of that submission.
 
 ## Timeline
 

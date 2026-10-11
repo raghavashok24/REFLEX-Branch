@@ -4,7 +4,7 @@ Two layers. The numbered notes are per-theorem summaries: statement, anchors tha
 pin it, and the open issues. The `derivations/` folder holds the complete proofs
 those notes summarize, each one paired with an assertion-based certificate under
 `../ml-contributions/certificates/`. Settle the algebra here before any of it
-reaches `../writing/`.
+reaches `../../archive/econml-neurips/writing/`.
 
 | File | Covers |
 |---|---|
