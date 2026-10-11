@@ -30,8 +30,8 @@ Built by Shriraghav Ashok and Vignesh Nagarajan.
 
 | Path | Holds |
 | --- | --- |
-| [`ml-or/`](ml-or/) | The certified-exploration paper, its derivations and the experiment pipeline |
 | [`econml/`](econml/) | The herd-immunity paper, its proofs, certificates and experiment harness |
+| [`ml-or/`](ml-or/) | The certified-exploration paper, its derivations and the experiment pipeline |
 | [`archive/`](archive/) | Earlier submissions, the scrapped MATH-AI paper and the planning notes |
 
 Each paper folder has its own README with the results, the folder map and what is and is not verified.
