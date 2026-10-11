@@ -35,14 +35,15 @@ The form does not accept uploads before Oct 1. Submit on Oct 11 at the latest, o
 | Requirement | Status |
 | --- | --- |
 | IEEE conference template, two-column | `IEEEtran` `[conference]` |
-| At most 10 pages including references | 6 pages (6 to 8 recommended) |
+| At most 10 pages including references | 7 pages (6 to 8 recommended) |
 | Paper size | US letter |
 | Fonts | All embedded, Type 1 and TrueType, no Type 3 |
 | Build | No errors, no overfull boxes, no undefined references |
 | Prose | Clean under the repo's prose linter |
 | No appendix (main-conference rule) | None; proofs live in the repo |
 | Single-blind: names on the paper | Both authors, affiliations and emails on page 1 |
-| No page numbers, headers or footers | None |
+| No page numbers or headers | None |
+| Copyright notice | Bottom of page 1 via `\IEEEpubid`, ISBN digits as `XXXX` placeholders |
 | Abstract | 214 words, no math or citations (IEEE asks for 150 to 250) |
 | Index Terms | Present, alphabetical |
 | Tables and figures | Table caption above, figure captions below, "Fig." used throughout as the template asks |
@@ -59,5 +60,5 @@ The NeurIPS EconML workshop version was non-archival and was rejected. It has no
 
 - **Registration.** The site says the author registration deadline is TBA. IEEE BigData workshops normally require one author to register and present in person for the paper to appear in IEEE Xplore. Decide who goes.
 - **IEEE PDF eXpress.** Usually needed only at camera-ready. Check the acceptance email for a conference ID.
-- **Copyright notice, camera-ready only.** IEEE proceedings need the copyright line (ISBN, price and year) at the bottom of page 1. The acceptance email gives the exact text. Leave it off the submission.
+- **Copyright notice.** The copyright line sits at the bottom of page 1 with the ISBN digits as `XXXX` placeholders. The acceptance email gives the exact text. Replace the placeholder in the `\IEEEpubid` line of `main.tex` at camera-ready.
 - **Measured-alignment panel.** Not in this version. The plan's Sep 22 go/no-go still stands. If the panel lands before Oct 11, it goes into Section VII and the paper grows toward 7 pages.

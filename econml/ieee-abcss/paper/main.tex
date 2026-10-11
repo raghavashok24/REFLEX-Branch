@@ -42,7 +42,12 @@ Berkeley, CA, USA\\
 sashok24@berkeley.edu}
 }
 
+% Copyright notice. The ISBN digits are placeholders until the acceptance
+% email gives the real ones.
+\IEEEpubid{\makebox[\columnwidth]{979-8-XXXX-XXXX-X/26/\$31.00~\copyright2026 IEEE\hfill}\hspace{\columnsep}\makebox[\columnwidth]{}}
+
 \maketitle
+\IEEEpubidadjcol
 
 \begin{abstract}
 Every firm that prices, lends or ranks with machine learning wants its model current, so it retrains on the newest data. However, that data was produced in part by its own model and by every competitor's. When many firms fine-tune the same foundation model, one firm's retraining changes what every other firm learns from next, and no firm accounts for it. This paper models that market and shows it is stable exactly when one number, the feedback reproduction number, stays below one. That number depends on how many independent models sit under the market, not on how many firms there are: at full spillover, fifty firms built on one vendor's model behave like one learner fifty times larger. On this foundation we derive three remedies. Retraining in smaller steps helps only below a critical crowding level. Correcting for feedback works like vaccination, and the share of firms that must correct follows the epidemiological coverage formula for an imperfect vaccine, including an efficacy below which no coverage is enough. A tax on aggressive adaptation closes the gap between private and social incentives, and without it every market of two or more firms over-adapts. We confirm the base law in one measured check, which reruns an order-flow market simulator and reproduces its published amplification to every reported digit. Every other check confirms a formula against the model it came from, and is labeled that way. Ultimately, the framework gives a supervisor one market-level quantity and three instruments that act on it.
@@ -78,22 +83,22 @@ These results reveal that the provenance of the models, rather than the number o
 \section{Background}
 \label{sec:related}
 
-\subsection{Collective behavior and contagion}
+\subsection{Collective behavior}
 This paper builds upon the study of collective behavior. Threshold models explain how a behavior spreads once enough others have adopted it \cite{granovetter1978}, and informational cascades explain why people rationally copy their predecessors and why the resulting consensus is fragile \cite{bikhchandani1992}. Both describe people imitating people. In our setting nobody imitates anyone: firms become correlated because they learn from shared data through shared models. The epidemiological link is consequently an identity rather than an analogy. The reproduction number $R_0$ is defined as the spectral radius of a next-generation operator \cite{diekmann1990}, $\mN$ is the spectral radius of a linearized retraining operator, and so the two thresholds are the same statement. This is why the vaccination results carry over with their refinements, including the imperfect-vaccine law. Contact structure matters as well: on scale-free networks the epidemic threshold vanishes altogether \cite{pastorsatorras2001}. In this study the alignment matrix plays the role of the contact structure.
 
 \subsection{Algorithmic monoculture}
 When many firms adopt one algorithm, welfare can fall even if that algorithm is the better one, because independent errors stop cancelling \cite{kleinberg2021}. Shared models also concentrate harm on the same individuals \cite{bommasani2022}, and a shared evaluation algorithm changes outcomes in matching markets \cite{peng2024}. However, these results describe a market at rest. None gives a stability boundary, so a market can look sound at equilibrium and still be one retraining away from diverging.
 
-\subsection{Performative prediction with many learners}
+\subsection{Performative prediction}
 Performative prediction studies learners whose deployments shift their own data \cite{perdomo2020}. With several learners in one environment, convergence conditions exist that bound scalar sensitivities against curvature \cite{narang2023}, and in the fully aligned case, increasing learning rates and agent counts can drive the dynamics into chaos \cite{piliouras2023}. By contrast, our condition bounds a spectral radius, and Proposition~\ref{prop:witness} exhibits two markets that agree on every scalar such a criterion reads but differ in stability. This paper additionally composes two single-learner tools with the market: lazy deployment, in which a learner takes a few gradient steps per round \cite{mendlerdunner2020}, and feedback-aware updates that correct for the learner's own influence \cite{izzo2021,miller2021}.
 
-\subsection{Systemic risk and random matrices}
+\subsection{Systemic risk}
 Reading the largest eigenvalue of a correlation matrix as the weight of a common market mode is standard in econophysics \cite{laloux1999,plerou2002}. We compute it from a different matrix, response directions instead of returns, and it enters a stability condition rather than a portfolio.
 
 \section{A market of retraining firms}
 \label{sec:setup}
 
-\subsection{The symmetric market}
+\subsection{Baseline model}
 We begin with $N$ dealers quoting the same instruments and drawing on one pool of informed order flow. When one dealer tightens its quotes, more toxic flow reaches every dealer, in proportion to a spillover $\kappa\in[0,1]$. Each dealer retrains periodically on the flow it has seen, and on its own it is stable exactly when its performative modulus satisfies $m_1<1$ \cite{perdomo2020}. Formally, the modulus is
 \begin{equation*}
 m_1=\varepsilon\beta/\gamma,
@@ -104,7 +109,7 @@ Linearizing the joint retraining map around the market's equilibrium gives the J
 
 The defining feature of this setting is economic. A price change is a transfer between parties. Changing the data a competitor learns from, by contrast, changes its forecasting technology, which is a real efficiency loss and a technological externality in the classical sense \cite{buchanan1962}. Moreover, nothing in dealer A's validation data contains dealer B, so no single-model test can detect it.
 
-\subsection{Response directions and the alignment matrix}
+\subsection{Alignment matrix}
 In a real market firms do not all push the same way. We therefore give firm $i$ a response Jacobian $E_i\in\mathbb{R}^{d\times d}$, describing how its deployment reshapes the flow it faces. The \emph{alignment matrix} $R$ has entries
 \begin{equation}
 r_{ij}=\frac{\langle \mathrm{vec}\,E_i,\mathrm{vec}\,E_j\rangle}{\|E_i\|_F\,\|E_j\|_F},
@@ -149,7 +154,7 @@ Fix $N\ge2$, $\kappa\in(0,1]$ and $1/(1+\kappa(N-1))<m_1<1$. The markets with $R
 
 At $N=20$, $\kappa=0.8$ and $m_1=0.15$, the orthogonal market has $\mN=0.15$ and the monoculture has $\mN=2.43$. One converges and the other diverges, and no Lipschitz constant or curvature bound in either model distinguishes them. Only the alignment matrix does.
 
-\subsection{Provenance, not concentration}
+\subsection{Model provenance}
 The supply-chain form $\mN=m_1(1+\kappa s(N-1))$ establishes that the stability condition is driven by where the models come from. A competition regulator, by contrast, looks at concentration. Fifty equal-share firms have the lowest possible Herfindahl index \cite{hirschman1964} and look perfectly competitive, yet if all fifty fine-tune one vendor's model they are dynamically a monoculture. Error correlation across more than 350 hosted language models is substantial and clusters within providers \cite{kim2025}, so the premise of the decomposition is already visible in deployed systems. As shown in Fig.~\ref{fig:phase}, the stability boundary in the $(N,s)$ plane depends on both the firm count and the shared-model fraction.
 
 \begin{figure}[!t]
@@ -159,7 +164,7 @@ The supply-chain form $\mN=m_1(1+\kappa s(N-1))$ establishes that the stability 
 \label{fig:phase}
 \end{figure}
 
-\subsection{Why mean similarity fails}
+\subsection{Mean-similarity indices}
 A natural diversity index averages pairwise similarity. However, the average understates \emph{clustered} alignment. Consider ten firms, three tightly aligned and the rest orthogonal, with $\kappa=0.8$. Then $\Neff=2.60$, against $1.48$ for a uniform configuration with the same mean. At $m_1=0.5$ the clustered market has $\mN=1.30$ and diverges, while the mean-based index reports $0.74$ and calls it safe with room to spare. The error runs in one direction only: $\Neff\ge1+\kappa(N-1)\bar r$ for every $R$, so a mean-based index never overstates risk. It can only miss it.
 
 \section{Herd immunity}
@@ -180,10 +185,10 @@ where $P=(1-\tilde\kappa)m_1(1+\theta)+\tilde\kappa m_1(N_b+\theta N_c)$ and $Q=
 
 Because $\Neff$ sits inside $Q$, the mixed market inherits the crowding of Section~\ref{sec:crowding} directly.
 
-\subsection{The limit that was too optimistic}
+\subsection{Perfect-correction limit}
 Let correction become perfect, $\gamma_{\mathrm{PO}}\to\infty$. Then only blind firms can sustain an unstable cycle, and the market is stable when $N_b<1+(1/m_1-1)/(\kappa s)$. This is the clean threshold our first derivation produced, and it errs in the wrong direction. The radius is nondecreasing in $\theta$ (Perron--Frobenius, on a nonnegative matrix), so the perfect-correction limit understates it. On random draws it calls 2157 of 18313 configurations stable that are unstable at every finite correction strength, $11.8\%$ with exact $95\%$ interval $[11.3\%,12.3\%]$. The same monotonicity supplies the reassuring half of the result: correcting a firm never destabilizes the market.
 
-\subsection{The imperfect-vaccine law}
+\subsection{Imperfect correction}
 In the corner $\kappa=s=1$ the perfect-correction limit reads $\rho_c^*=1-1/\mN$. This is exactly the herd-immunity threshold $1-1/R_0$, with $\mN$ playing the role of the reproduction number. A market of ten firms at $\mN=2.5$ needs six of them corrected, if correction is perfect. Correction is not perfect, however, and at the same corner the exact condition solves to
 \begin{equation}
 \rho_c^*(e)=\frac{1-1/\mN}{e},\qquad e=1-\frac{\gamma}{\gamma_{\mathrm{PO}}},
@@ -204,7 +209,7 @@ At $\mN=2.5$, correction must improve curvature by more than a factor of $2.5$ o
 \label{fig:herd}
 \end{figure}
 
-\subsection{Diversity as a substitute}
+\subsection{Model diversity}
 The required coverage $\rho_c^*$ rises with $s$ wherever it is positive, so a market can reach stability along either axis. At $N=20$, $m_1=0.15$ and $\kappa=0.8$, a monoculture needs $12$ corrected firms, a market at $s=0.5$ needs five, and a market at $s=0.2$ needs none. As shown in Fig.~\ref{fig:subst}, the two remedies trade off along a single frontier.
 
 \begin{figure}[!t]
@@ -219,7 +224,7 @@ Both remedies are public goods. A corrected firm pays for its correction and eve
 \section{Two more levers: cadence and a tax}
 \label{sec:levers}
 
-\subsection{Moving less per round}
+\subsection{Retraining cadence}
 The one lever a firm can pull alone is to change less each time it retrains. A learner that takes only $K$ gradient steps per deployment has outer slope $-m+c^K(1+m)$, where $c=1-\eta\gamma$ is its per-step contraction \cite{mendlerdunner2020}. Because $c$ depends only on the firm's own step size and curvature, it does not change with the number of competitors, and this property is what lets the single-firm result compose with the market.
 
 \begin{theorem}[Cadence window]
@@ -235,7 +240,7 @@ The window shrinks as crowding grows, and it can close. Since $K\ge1$, a stabili
 
 Because crowding comes from provenance, a firm's step budget depends on its competitors' choice of vendor. At $m_1=0.15$, $\kappa=0.8$, $N=30$ and $c=0.8$, the window is $20.68$ steps at $s=0.25$, $5.28$ at $s=0.5$ and $2.53$ at $s=1$. Nobody entered the market, yet every incumbent lost most of its step budget. The price of a smaller $K$ is staleness: after a round, a firm's gap to its best response shrinks only to $c^K$ of what it was.
 
-\subsection{Pricing the externality}
+\subsection{Pigouvian fee}
 Inside the stable region the market's common mode behaves like an autoregressive process with coefficient $-\mN$, so its stationary variance is $V(\mN)=\sigma^2/(1-\mN^2)$. We use $V$ as a smooth stand-in for the risk of divergence. It diverges exactly at the boundary, and the results below require only that $V$ be positive, increasing and convex.
 
 Each firm chooses an adaptation aggressiveness $a_i$, meaning its cadence, learning rate or responsiveness, and receives a concave benefit $B(a_i)$ through its modulus $m_i=\mu(a_i)$. Firm $i$ puts weight $w_i$ on common-mode variance and a planner puts weight $W>\sum_iw_i$, because clients also bear execution-quality variance that no dealer's objective includes. The results depend only on the sign of that gap, not its size.
@@ -260,10 +265,10 @@ The untaxed equilibrium adapts more aggressively than the social optimum for eve
 
 The same fee also prices shared-model adoption. Since $\partial\mN/\partial s=m_1\kappa(N-1)$, the provenance channel grows linearly in $N$ and does not decay, while a firm's private gain from adopting the shared model does not grow with market size. Left alone, adoption drifts toward the unstable configuration. This is why a diversity floor is a separate instrument from a cadence cap and not a restatement of it. The three levers are quantity regulation, a technology mandate and a price, and choosing among them under uncertainty is Weitzman's question \cite{weitzman1974}. This paper supplies the objects needed to ask it.
 
-\section{Evidence}
+\section{Numerical experiments}
 \label{sec:evidence}
 
-\subsection{Two kinds of check}
+\subsection{Methodology}
 Before reporting results, we separate the checks in Table~\ref{tab:panels} by the kind of evidence each provides, since they are not all the same kind, and each row of the table states which it is. \emph{Measured} means the run took place in an order-flow simulator: a full nonlinear $N$-dealer market with informed flow, spreads and inventory, which reduces exactly to the single-dealer market at $N=1$. \emph{Dry run} means the run took place in a linearized reference environment that implements the model's response geometry and nothing else. A dry run checks that a formula was derived correctly from the model it claims to describe, and these checks have caught real errors. A dry run cannot establish that a real market behaves like the model. Every closed form in the paper has a numerical certificate that fails loudly on any disagreement, and all 542 pass \cite{price2026}.
 
 \begin{table}[!t]
@@ -287,12 +292,12 @@ Over-adaptation & Thm.~\ref{thm:wedge} & dry run & 12 configs, 0 contradict \\
 \end{tabular}
 \end{table}
 
-\subsection{The measured check}
+\subsection{Measured results}
 We reran the shared-pool market from our earlier work \cite{reflex2026} and measured common-mode moduli of $0.7856$, $1.3692$ and $2.4799$ at $N=1,2,3$. As shown in Table~\ref{tab:panels}, this is amplification of $1.7428\times$ and $3.1567\times$, matching the published $1.74\times$ and $3.16\times$ to every reported digit. This check covers the monoculture case $R=\one\one^{\top}$, so it supports the base law the paper builds on, not any of the four new results. It is also our own earlier work, so it does not constitute independent validation.
 
 The linear prediction at full spillover is $2$ and $3$. The market comes in $12.9\%$ below it at $N=2$ and $5.2\%$ above at $N=3$. The two gaps have opposite signs, which is the behavior expected of a nonlinear market with saturating flow around a linearization. The reference environment matches the prediction exactly because it leaves out that nonlinearity. The spread between the two modes, $3.4\times10^{-3}$ against a theoretical zero, indicates that the instability is purely common-mode, which is the mechanism Theorem~\ref{thm:alignment} generalizes.
 
-\subsection{Why the rest are dry runs}
+\subsection{Dry-run results}
 To extend the measured check, we built a version of the order-flow simulator in which each dealer has its own response profile. It is exact when the profiles are flat, but it failed its acceptance test. Liquidity and price impact stay shared however the profiles differ, and the leftover error is larger than several of the effects the other checks resolve. We therefore drew no figure from it and upgraded no check. The over-adaptation check is a dry run for a different reason: the simulator has no aggressiveness choice and no welfare measure. In the reference environment the over-adaptation gap grows from $29.0\%$ at $N=2$ to $119.9\%$ at $N=20$, and is exactly zero at $N=1$, as Corollary~\ref{cor:over} predicts.
 
 Taken together, the results form a single chain. A measured base law (Table~\ref{tab:panels}, first row) anchors the symmetric market. Replacing its all-ones matrix with the alignment matrix establishes that provenance sets the stability boundary (Fig.~\ref{fig:phase}). The same crowding fixes how many firms must correct and at what efficacy (Fig.~\ref{fig:herd}), and correction and diversity substitute for each other along one frontier (Fig.~\ref{fig:subst}). Every link after the first is verified against the model and not yet against a market.
