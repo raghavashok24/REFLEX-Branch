@@ -1,6 +1,6 @@
 <div align="center">
 
-# PRICE: A Certified Exploration Framework for Pricing Models That Shape Their Own Data
+# A Certified Exploration Framework for Pricing Models That Shape Their Own Data
 
 ### Minimax information–cost tradeoffs and optimal exploration in performative systems
 

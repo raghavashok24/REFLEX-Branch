@@ -23,8 +23,8 @@ Built by Shriraghav Ashok and Vignesh Nagarajan.
 
 | Paper | Prices the loop | Status | Read |
 | --- | --- | --- | --- |
-| **PRICE: A Certified Exploration Framework for Pricing Models That Shape Their Own Data** | Privately | IEEE draft complete. Targeting [LRLS](https://lrls.org/), deadline Oct 30, 2026 | [PDF](ml-or/price-ieee.pdf) · [folder](ml-or/) |
 | **Herd Immunity and Learning Externalities in Markets of Shared Foundation Models** | Socially | Submitted to [ABCSS 2026](https://css-japan.com/abcss2026/) at IEEE BigData on Oct 11, 2026. Decision expected Nov 1 | [PDF](econml/ieee-abcss/submission/abcss2026-herd-immunity.pdf) · [folder](econml/) |
+| **A Certified Exploration Framework for Pricing Models That Shape Their Own Data** | Privately | IEEE draft complete. Targeting [LRLS](https://lrls.org/), deadline Oct 30, 2026 | [PDF](ml-or/price-ieee.pdf) · [folder](ml-or/) |
 
 ## Layout
 
