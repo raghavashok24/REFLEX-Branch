@@ -29,7 +29,7 @@ Both NeurIPS workshop submissions were rejected. These are the top two IEEE work
 
 **Econ ML** (_Herd Immunity and Learning Externalities in Markets of Adaptive Models_)
 
-Chosen venue: ABCSS 2026 (option 2 below). Plan, draft and submission package are in [`econml/ieee-abcss/`](econml/ieee-abcss/).
+Chosen venue: ABCSS 2026 (option 2 below). **Submitted Oct 11, 2026**; decision expected Nov 1. Plan, draft and submission package are in [`econml/ieee-abcss/`](econml/ieee-abcss/).
 
 1. 3rd IEEE Workshop on LLMs for Finance: https://intelligentfinance.github.io/IEEE-LLM-finance-2026/
    - Oct 19 submission date (AoE), Nov 2 decision date, Nov 23 camera-ready
