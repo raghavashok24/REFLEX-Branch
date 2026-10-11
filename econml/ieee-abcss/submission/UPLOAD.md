@@ -43,7 +43,7 @@ The form does not accept uploads before Oct 1. Submit on Oct 11 at the latest, o
 | No appendix (main-conference rule) | None; proofs live in the repo |
 | Single-blind: names on the paper | Both authors, affiliations and emails on page 1 |
 | No page numbers or headers | None |
-| Copyright notice | Bottom of page 1 via `\IEEEpubid`, ISBN digits as `XXXX` placeholders |
+| Copyright notice | Centered in the page 1 footer, ISBN digits as `XXXX` placeholders |
 | Abstract | 214 words, no math or citations (IEEE asks for 150 to 250) |
 | Index Terms | Present, alphabetical |
 | Tables and figures | Table caption above, figure captions below, "Fig." used throughout as the template asks |
@@ -60,5 +60,5 @@ The NeurIPS EconML workshop version was non-archival and was rejected. It has no
 
 - **Registration.** The site says the author registration deadline is TBA. IEEE BigData workshops normally require one author to register and present in person for the paper to appear in IEEE Xplore. Decide who goes.
 - **IEEE PDF eXpress.** Usually needed only at camera-ready. Check the acceptance email for a conference ID.
-- **Copyright notice.** The copyright line sits at the bottom of page 1 with the ISBN digits as `XXXX` placeholders. The acceptance email gives the exact text. Replace the placeholder in the `\IEEEpubid` line of `main.tex` at camera-ready.
+- **Copyright notice.** The copyright line sits at the bottom of page 1 with the ISBN digits as `XXXX` placeholders. The acceptance email gives the exact text. Replace the placeholder in the footer definition above `\maketitle` in `main.tex` at camera-ready.
 - **Measured-alignment panel.** Not in this version. The plan's Sep 22 go/no-go still stands. If the panel lands before Oct 11, it goes into Section VII and the paper grows toward 7 pages.
